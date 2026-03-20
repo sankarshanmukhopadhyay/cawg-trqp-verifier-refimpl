@@ -2,7 +2,7 @@
 
 **Version:** v0.4.0  
 **Status:** Production-ready reference implementation  
-**Origin:** Solution to CAWG spec author question: _"Help me understand how to integrate and implement a trust registry that uses TRQP into a CAWG-based workflow."_
+
 
 ## Overview
 
