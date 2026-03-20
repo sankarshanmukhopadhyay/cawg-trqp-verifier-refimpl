@@ -1,10 +1,56 @@
+"""CAWG–TRQP verifier orchestrating trust decisions across online, cached, and offline modes.
+
+This module provides the Verifier class which synthesizes authorization, recognition,
+and revocation signals across three profile-specific modes:
+- edge: offline snapshot verification with TTL/freshness constraints
+- standard: cache-first with live lookup on cache miss
+- high_assurance: live lookup always, no cache fallback
+
+The verifier applies revocation deltas immediately and supports policy epoch
+enforcement for freshness validation.
+
+References:
+- TRQP v2.0 specification: https://trustoverip.github.io/tswg-trust-registry-protocol/
+- CAWG specifications: https://cawg.io/specs/
+"""
+
 from __future__ import annotations
 from dataclasses import asdict
+from datetime import datetime
+from typing import Optional
 from .cache import TTLCache
 from .context import tuple_key
 from .models import VerificationRequest, VerificationResult
 from .mock_service import MockTRQPService
 from .snapshot import SnapshotStore
+
+
+class RevocationDelta:
+    """Model for revocation delta updates."""
+
+    def __init__(self, revoked_entities: list[str], policy_epoch: Optional[str] = None) -> None:
+        """Initialize revocation delta.
+
+        Args:
+            revoked_entities: List of entity IDs to revoke
+            policy_epoch: Policy epoch identifier (e.g., "2026-Q1")
+        """
+        self.revoked_entities = set(revoked_entities)
+        self.policy_epoch = policy_epoch
+        self.timestamp = datetime.utcnow().isoformat() + "Z"
+
+    def apply(self, entity_id: str) -> tuple[bool, Optional[str]]:
+        """Check if entity is revoked and return revocation reason.
+
+        Args:
+            entity_id: Entity to check
+
+        Returns:
+            Tuple of (is_revoked: bool, reason: Optional[str])
+        """
+        if entity_id in self.revoked_entities:
+            return True, f"revoked_in_epoch_{self.policy_epoch or 'unknown'}"
+        return False, None
 
 
 class Verifier:
@@ -18,6 +64,16 @@ class Verifier:
         self.service = service
         self.snapshot = snapshot
         self.cache = cache or TTLCache()
+        self.revocation_delta: Optional[RevocationDelta] = None
+
+    def apply_revocation_delta(self, revoked_entities: list[str], policy_epoch: Optional[str] = None) -> None:
+        """Apply a revocation delta update.
+
+        Args:
+            revoked_entities: List of entity IDs to revoke
+            policy_epoch: Policy epoch identifier
+        """
+        self.revocation_delta = RevocationDelta(revoked_entities, policy_epoch)
 
     def verify(self, request: VerificationRequest, profile: str = "standard") -> VerificationResult:
         if not request.integrity_ok:
@@ -31,6 +87,21 @@ class Verifier:
                 trust_outcome="rejected",
                 explanations=["Asset integrity verification failed"],
             )
+
+        # Check revocation delta first
+        if self.revocation_delta is not None:
+            is_revoked, reason = self.revocation_delta.apply(request.entity_id)
+            if is_revoked:
+                return VerificationResult(
+                    asset_integrity="verified",
+                    assertion_binding="verified",
+                    issuer_recognition="unknown",
+                    actor_authorization="not_authorized",
+                    policy_freshness="revoked",
+                    verification_mode="revocation_check",
+                    trust_outcome="rejected",
+                    explanations=[f"Entity revoked: {reason}"],
+                )
 
         auth_key = tuple_key(request.entity_id, request.authority_id, request.action, request.resource, request.context)
         rec_context = {}
@@ -65,7 +136,14 @@ class Verifier:
             rec = self.snapshot.find_recognition(request.authority_id, request.issuer_id, rec_context)
         return self._synthesize_result(auth=auth, rec=rec, freshness="snapshot", mode="offline_snapshot")
 
-    def _verify_online(self, request: VerificationRequest, auth_key: str, rec_key: str, rec_context: dict, force_live: bool) -> VerificationResult:
+    def _verify_online(
+        self,
+        request: VerificationRequest,
+        auth_key: str,
+        rec_key: str,
+        rec_context: dict,
+        force_live: bool,
+    ) -> VerificationResult:
         auth = None if force_live else self.cache.get(auth_key)
         rec = None if force_live else self.cache.get(rec_key)
         explanations = []
@@ -82,9 +160,11 @@ class Verifier:
                     trust_outcome="deferred",
                     explanations=["No service available for live authorization lookup"],
                 )
-            auth = asdict(self.service.authorization(
-                request.entity_id, request.authority_id, request.action, request.resource, request.context
-            ))
+            auth = asdict(
+                self.service.authorization(
+                    request.entity_id, request.authority_id, request.action, request.resource, request.context
+                )
+            )
             self.cache.set(auth_key, auth, ttl_class="medium")
             explanations.append("Live authorization lookup executed")
         else:
