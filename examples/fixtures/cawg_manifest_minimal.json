@@ -1,0 +1,20 @@
+{
+  "asset_id": "asset-001",
+  "integrity_ok": true,
+  "actor": {
+    "entity_id": "did:web:publisher.example"
+  },
+  "issuer": {
+    "issuer_id": "did:web:issuer.example",
+    "credential_type": "vc:creator-identity"
+  },
+  "assertion": {
+    "action": "publish",
+    "resource": "cawg:news-content"
+  },
+  "context": {
+    "jurisdiction": "IN",
+    "risk_tier": "medium",
+    "content_type": "image"
+  }
+}

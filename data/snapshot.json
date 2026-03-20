@@ -1,0 +1,29 @@
+{
+  "snapshot_id": "snapshot-2026-q1",
+  "generated_at": "2026-03-20T00:00:00Z",
+  "freshness": "snapshot",
+  "authorization": [
+    {
+      "entity_id": "did:web:publisher.example",
+      "authority_id": "did:web:media-registry.example",
+      "action": "publish",
+      "resource": "cawg:news-content",
+      "context": {
+        "jurisdiction": "IN"
+      },
+      "authorized": true,
+      "policy_epoch": "2026-Q1"
+    }
+  ],
+  "recognition": [
+    {
+      "authority_id": "did:web:media-registry.example",
+      "recognized_authority_id": "did:web:issuer.example",
+      "context": {
+        "credential_type": "vc:creator-identity"
+      },
+      "recognized": true,
+      "policy_epoch": "2026-Q1"
+    }
+  ]
+}

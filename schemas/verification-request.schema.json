@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "asset_id",
+    "integrity_ok",
+    "entity_id",
+    "authority_id",
+    "action",
+    "resource",
+    "context"
+  ],
+  "properties": {
+    "asset_id": {
+      "type": "string"
+    },
+    "integrity_ok": {
+      "type": "boolean"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "authority_id": {
+      "type": "string"
+    },
+    "issuer_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action": {
+      "type": "string"
+    },
+    "resource": {
+      "type": "string"
+    },
+    "context": {
+      "type": "object"
+    }
+  }
+}

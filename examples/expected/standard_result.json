@@ -1,0 +1,9 @@
+{
+  "asset_integrity": "verified",
+  "assertion_binding": "verified",
+  "issuer_recognition": "recognized",
+  "actor_authorization": "authorized",
+  "policy_freshness": "current",
+  "verification_mode": "cached_online",
+  "trust_outcome": "trusted"
+}

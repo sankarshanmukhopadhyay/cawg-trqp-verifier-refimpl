@@ -1,0 +1,6 @@
+{
+  "revoked_entities": [
+    "did:web:blocked.example"
+  ],
+  "policy_epoch": "2026-Q1"
+}

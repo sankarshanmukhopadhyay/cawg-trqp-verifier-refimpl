@@ -1,0 +1,9 @@
+{
+  "asset_integrity": "verified",
+  "assertion_binding": "verified",
+  "issuer_recognition": "recognized",
+  "actor_authorization": "authorized",
+  "policy_freshness": "snapshot",
+  "verification_mode": "offline_snapshot",
+  "trust_outcome": "trusted_cached"
+}
