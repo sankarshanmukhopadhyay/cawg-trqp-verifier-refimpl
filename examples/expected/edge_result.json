@@ -3,7 +3,7 @@
   "assertion_binding": "verified",
   "issuer_recognition": "recognized",
   "actor_authorization": "authorized",
-  "policy_freshness": "snapshot",
+  "policy_freshness": "snapshot_verified",
   "verification_mode": "offline_snapshot",
   "trust_outcome": "trusted_cached"
 }

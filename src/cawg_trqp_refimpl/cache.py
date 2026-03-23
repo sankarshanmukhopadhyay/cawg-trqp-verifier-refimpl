@@ -21,6 +21,10 @@ class TTLCache:
     def __init__(self) -> None:
         self._store: dict[str, CacheEntry] = {}
 
+    @property
+    def cache(self) -> dict[str, CacheEntry]:
+        return self._store
+
     def set(self, key: str, value: Any, ttl_class: str = "medium") -> None:
         ttl_seconds = TTL_BY_CLASS.get(ttl_class, TTL_BY_CLASS["medium"])
         self._store[key] = CacheEntry(value=value, expires_at=time.time() + ttl_seconds)

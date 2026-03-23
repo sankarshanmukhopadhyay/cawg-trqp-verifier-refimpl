@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cawg-trqp-refimpl"
-version = "0.4.0"
+version = "0.5.0"
 description = "Reference implementation for CAWG + TRQP integration"
 requires-python = ">=3.10"
 dependencies = [
     "flask>=2.3.0",
+    "cryptography>=43.0.0",
 ]
 
 [project.optional-dependencies]
@@ -22,3 +23,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

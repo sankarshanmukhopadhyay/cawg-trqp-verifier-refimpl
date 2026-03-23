@@ -1,25 +1,27 @@
 from __future__ import annotations
-import json
+
 from pathlib import Path
+
+from .manifest_parser import CAWGManifestParser
 from .models import VerificationRequest
 
 
 def load_manifest_fixture(path: str | Path, authority_id: str) -> VerificationRequest:
-    data = json.loads(Path(path).read_text(encoding="utf-8"))
-    issuer = data.get("issuer", {})
-    actor = data.get("actor", {})
-    assertion = data.get("assertion", {})
-    context = dict(data.get("context", {}))
-    if issuer.get("credential_type"):
-        context["credential_type"] = issuer["credential_type"]
+    signal = CAWGManifestParser.parse_file(path)
+    raw = signal.raw_manifest
+    asset_id = raw.get("asset_id") or raw.get("asset", {}).get("id") or raw.get("manifest_store", {}).get("asset_id") or "asset-unknown"
+    integrity_ok = signal.integrity_status != "failed" and raw.get("integrity_ok", True)
+
+    if not signal.action or not signal.resource:
+        raise ValueError("Manifest fixture did not produce action/resource signals")
 
     return VerificationRequest(
-        asset_id=data["asset_id"],
-        integrity_ok=data["integrity_ok"],
-        entity_id=actor["entity_id"],
+        asset_id=asset_id,
+        integrity_ok=integrity_ok,
+        entity_id=signal.actor_id,
         authority_id=authority_id,
-        issuer_id=issuer.get("issuer_id"),
-        action=assertion["action"],
-        resource=assertion["resource"],
-        context=context,
+        issuer_id=signal.issuer_id,
+        action=signal.action,
+        resource=signal.resource,
+        context=dict(signal.context),
     )

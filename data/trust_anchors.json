@@ -1,0 +1,10 @@
+{
+  "keys": [
+    {
+      "key_id": "media-registry-snapshot-key-1",
+      "algorithm": "Ed25519",
+      "owner": "did:web:media-registry.example",
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEANIIEZe1x/Oeld33ejsC4pQGDExv1se88UL/PtdLWo+Y=\n-----END PUBLIC KEY-----\n"
+    }
+  ]
+}

@@ -1,6 +1,9 @@
 {
   "snapshot_id": "snapshot-2026-q1",
   "generated_at": "2026-03-20T00:00:00Z",
+  "expires_at": "2026-06-30T23:59:59Z",
+  "signer": "did:web:media-registry.example#snapshot-signer-1",
+  "policy_epoch": "2026-Q1",
   "freshness": "snapshot",
   "authorization": [
     {
@@ -25,5 +28,10 @@
       "recognized": true,
       "policy_epoch": "2026-Q1"
     }
-  ]
+  ],
+  "signature": {
+    "algorithm": "Ed25519",
+    "key_id": "media-registry-snapshot-key-1",
+    "value": "tESDvRElqY5HFUsT+olvnSWtNUAPbSPwAZ+A28qA5HywGs6ubq5TX+YAe/Z2gAEzNned1oMM2xLRCfk2pDaXCw=="
+  }
 }

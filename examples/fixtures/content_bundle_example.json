@@ -1,4 +1,4 @@
 {
-  "manifest_path": "examples/fixtures/cawg_manifest_minimal.json",
-  "notes": "Simplified content bundle placeholder for future CAWG/C2PA fixture expansion"
+  "manifest_path": "examples/fixtures/cawg_manifest_c2pa.json",
+  "notes": "C2PA-style JSON manifest-store fixture for parser and verifier integration tests"
 }

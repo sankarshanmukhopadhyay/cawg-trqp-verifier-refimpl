@@ -1,22 +1,18 @@
 # Roadmap
 
-## Near-term
+## Completed in v0.5.0
 
-1. Replace simplified fixture parsing with real CAWG/C2PA parsing.
-2. Add signed policy snapshot verification.
-3. Expose mock TRQP service over HTTP.
-4. Add revocation delta ingestion and policy epoch enforcement.
-5. Expand conformance vectors across verifier profiles.
+1. Replace simplified fixture-only parsing with a parser that also handles C2PA-style manifest-store JSON.
+2. Add signed policy snapshot verification with trust-anchor validation and expiry enforcement.
 
-## Mid-term
+## Next up: v0.6.0
 
-1. Add trust gateway component.
-2. Add bridge adapters for PKI, VC registries, and platform registries.
-3. Add metrics and throughput benchmarking for edge/high-volume scenarios.
-4. Introduce richer audit bundle generation.
+1. Add metrics and observability hooks for cache hit rate, live lookup volume, and snapshot-validation outcomes.
+2. Add throughput and latency benchmarking for edge, standard, and high_assurance profiles.
+3. Add benchmark fixtures for low-bandwidth, high-volume, and constrained-device scenarios.
 
-## Longer-term
+## After that: v0.7.0
 
-1. Align verifier profile conformance with assurance bundles.
-2. Add interoperability test harness for multi-authority ecosystems.
-3. Harden for candidate open-source release and standards-track discussion.
+1. Production hardening and deployment guide.
+2. Trust gateway component for remote policy mediation.
+3. Richer audit bundle generation and export.

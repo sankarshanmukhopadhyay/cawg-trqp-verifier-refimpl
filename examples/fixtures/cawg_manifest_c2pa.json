@@ -1,0 +1,58 @@
+{
+  "asset": {
+    "id": "asset-003",
+    "mime_type": "image/jpeg"
+  },
+  "manifest_store": {
+    "asset_id": "asset-003",
+    "active_manifest": "urn:uuid:manifest-1",
+    "manifests": {
+      "urn:uuid:manifest-1": {
+        "claim_generator": "cawg-trqp-refimpl/0.5.0",
+        "signature_info": {
+          "alg": "Ed25519",
+          "issuer": "did:web:issuer.example"
+        },
+        "assertions": [
+          {
+            "label": "cawg.actions",
+            "data": {
+              "actor": {
+                "id": "did:web:publisher.example"
+              },
+              "issuer_id": "did:web:issuer.example",
+              "credential_type": "vc:creator-identity",
+              "action": "publish",
+              "resource": "cawg:news-content",
+              "jurisdiction": "IN",
+              "risk_tier": "medium",
+              "content_type": "image"
+            }
+          },
+          {
+            "label": "c2pa.actions",
+            "data": {
+              "actions": [
+                {
+                  "action": "publish",
+                  "resource": "cawg:news-content"
+                }
+              ]
+            }
+          }
+        ],
+        "ingredients": [
+          {
+            "title": "wire-service-source"
+          }
+        ],
+        "parent_claims": [
+          {
+            "manifest": "urn:uuid:manifest-parent-0"
+          }
+        ],
+        "integrity_status": "verified"
+      }
+    }
+  }
+}
