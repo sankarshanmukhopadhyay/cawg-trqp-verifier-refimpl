@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 from datetime import datetime, timezone
-from typing import Optional
+from typing import Optional, Any
 
 from .cache import TTLCache
 from .context import tuple_key
@@ -50,6 +50,7 @@ class Verifier:
                 assertion_binding="unknown",
                 issuer_recognition="unknown",
                 actor_authorization="unknown",
+                process_integrity="unknown",
                 policy_freshness="n/a",
                 verification_mode="local_only",
                 trust_outcome="rejected",
@@ -64,6 +65,7 @@ class Verifier:
                     assertion_binding="verified",
                     issuer_recognition="unknown",
                     actor_authorization="not_authorized",
+                    process_integrity="not_evaluated",
                     policy_freshness="revoked",
                     verification_mode="revocation_check",
                     trust_outcome="rejected",
@@ -89,6 +91,7 @@ class Verifier:
                 assertion_binding="verified",
                 issuer_recognition="unknown",
                 actor_authorization="unknown",
+                process_integrity="unknown",
                 policy_freshness="missing_snapshot",
                 verification_mode="offline_snapshot",
                 trust_outcome="deferred",
@@ -101,6 +104,7 @@ class Verifier:
                 assertion_binding="verified",
                 issuer_recognition="unknown",
                 actor_authorization="unknown",
+                process_integrity="unknown",
                 policy_freshness=self.snapshot.status(),
                 verification_mode="offline_snapshot",
                 trust_outcome="rejected",
@@ -113,7 +117,7 @@ class Verifier:
         rec = None
         if request.issuer_id:
             rec = self.snapshot.find_recognition(request.authority_id, request.issuer_id, rec_context)
-        return self._synthesize_result(auth=auth, rec=rec, freshness=self.snapshot.status(), mode="offline_snapshot")
+        return self._synthesize_result(auth=auth, rec=rec, freshness=self.snapshot.status(), mode="offline_snapshot", request=request)
 
     def _verify_online(
         self,
@@ -134,6 +138,7 @@ class Verifier:
                     assertion_binding="verified",
                     issuer_recognition="unknown",
                     actor_authorization="unknown",
+                    process_integrity="unknown",
                     policy_freshness="service_unavailable",
                     verification_mode="cached_online",
                     trust_outcome="deferred",
@@ -163,13 +168,71 @@ class Verifier:
             rec=rec,
             freshness="current",
             mode="online_full" if force_live else "cached_online",
+            request=request,
         )
         result.explanations.extend(explanations)
         return result
 
-    def _synthesize_result(self, *, auth: dict | None, rec: dict | None, freshness: str, mode: str) -> VerificationResult:
+    def _appraise_process(self, request: VerificationRequest, policy_requirements: dict[str, Any]) -> tuple[str, dict[str, Any], list[str], bool]:
+        evidence = request.process_evidence
+        requires_process = bool(policy_requirements.get("requires_process_proof"))
+        min_confidence = float(policy_requirements.get("min_process_integrity", 0.0) or 0.0)
+        allowed_types = policy_requirements.get("allowed_process_types", []) or []
+
+        if not evidence:
+            if requires_process:
+                return (
+                    "missing_required_proof",
+                    {"status": "missing", "required": True, "minimum_confidence": min_confidence},
+                    ["Authorization policy requires process proof but no process evidence was supplied"],
+                    False,
+                )
+            return ("not_evaluated", {"status": "not_evaluated"}, [], True)
+
+        confidence = float(evidence.get("confidence", 0.0) or 0.0)
+        verified = bool(evidence.get("verified", False))
+        process_type = evidence.get("process_type", "unspecified")
+        summary = {
+            "status": "verified" if verified else "failed",
+            "process_type": process_type,
+            "confidence": confidence,
+            "minimum_confidence": min_confidence,
+            "evidence_ref": evidence.get("evidence_ref"),
+            "evidence_format": evidence.get("evidence_format"),
+            "appraisal": evidence.get("appraisal"),
+            "reference": evidence.get("reference"),
+        }
+        explanations = []
+        passes = True
+
+        if not verified:
+            passes = False
+            explanations.append("Process evidence was present but did not verify")
+
+        if allowed_types and process_type not in allowed_types:
+            passes = False
+            explanations.append(f"Process type {process_type} is not allowed by policy")
+
+        if confidence < min_confidence:
+            passes = False
+            explanations.append(
+                f"Process confidence {confidence:.2f} is below policy minimum {min_confidence:.2f}"
+            )
+
+        if not passes:
+            if not verified:
+                return ("failed", summary, explanations, False)
+            return ("insufficient", summary, explanations, False)
+
+        if confidence >= 0.85:
+            return ("verified_high", summary, explanations, True)
+        return ("verified", summary, explanations, True)
+
+    def _synthesize_result(self, *, auth: dict | None, rec: dict | None, freshness: str, mode: str, request: VerificationRequest) -> VerificationResult:
         actor_authorization = "authorized" if auth and auth.get("authorized") else "not_authorized"
         issuer_recognition = "recognized" if rec and rec.get("recognized") else "unknown"
+        policy_requirements = auth.get("policy_requirements", {}) if auth else {}
+        process_integrity, process_appraisal, process_explanations, process_ok = self._appraise_process(request, policy_requirements)
 
         if auth is None:
             return VerificationResult(
@@ -177,14 +240,20 @@ class Verifier:
                 assertion_binding="verified",
                 issuer_recognition=issuer_recognition,
                 actor_authorization="unknown",
+                process_integrity=process_integrity,
                 policy_freshness=freshness,
                 verification_mode=mode,
                 trust_outcome="deferred",
-                explanations=[],
+                process_appraisal=process_appraisal,
+                explanations=process_explanations,
             )
 
         trust_outcome = "trusted" if actor_authorization == "authorized" else "rejected"
-        if mode == "offline_snapshot" and actor_authorization == "authorized":
+        explanations = list(process_explanations)
+        if actor_authorization == "authorized" and not process_ok:
+            trust_outcome = "rejected"
+            explanations.insert(0, "Authorization passed but process policy requirements were not met")
+        if mode == "offline_snapshot" and actor_authorization == "authorized" and process_ok:
             trust_outcome = "trusted_cached"
 
         return VerificationResult(
@@ -192,8 +261,10 @@ class Verifier:
             assertion_binding="verified",
             issuer_recognition=issuer_recognition,
             actor_authorization=actor_authorization,
+            process_integrity=process_integrity,
             policy_freshness=freshness,
             verification_mode=mode,
             trust_outcome=trust_outcome,
-            explanations=[],
+            process_appraisal=process_appraisal,
+            explanations=explanations,
         )

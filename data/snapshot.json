@@ -15,7 +15,15 @@
         "jurisdiction": "IN"
       },
       "authorized": true,
-      "policy_epoch": "2026-Q1"
+      "policy_epoch": "2026-Q1",
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.75,
+        "allowed_process_types": [
+          "human_assisted",
+          "verified_editorial_pipeline"
+        ]
+      }
     }
   ],
   "recognition": [
@@ -32,6 +40,6 @@
   "signature": {
     "algorithm": "Ed25519",
     "key_id": "media-registry-snapshot-key-1",
-    "value": "tESDvRElqY5HFUsT+olvnSWtNUAPbSPwAZ+A28qA5HywGs6ubq5TX+YAe/Z2gAEzNned1oMM2xLRCfk2pDaXCw=="
+    "value": "JuvI28rEg/+hJ6hHMxvysos2V2pTzbCu+6oOKUau0Gyo70pGiuqnZRkR8wnjKa0U8tTlL2ttqO5mid3Si3IACQ=="
   }
 }

@@ -30,6 +30,7 @@ class MockTRQPService:
                     policy_epoch=item.get("policy_epoch"),
                     evidence=item.get("evidence", []),
                     reason=item.get("reason"),
+                    policy_requirements=item.get("policy_requirements", {}),
                 )
         return AuthorizationResponse(authorized=False, reason="no_matching_policy")
 

@@ -14,7 +14,15 @@
         "registry-entry:publisher-123",
         "policy:media-publish-v2"
       ],
-      "expires": "2026-12-31T00:00:00Z"
+      "expires": "2026-12-31T00:00:00Z",
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.75,
+        "allowed_process_types": [
+          "human_assisted",
+          "verified_editorial_pipeline"
+        ]
+      }
     },
     {
       "entity_id": "did:web:blocked.example",
@@ -30,7 +38,15 @@
         "denylist:blocked-example"
       ],
       "expires": "2026-12-31T00:00:00Z",
-      "reason": "entity_revoked"
+      "reason": "entity_revoked",
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.75,
+        "allowed_process_types": [
+          "human_assisted",
+          "verified_editorial_pipeline"
+        ]
+      }
     }
   ],
   "recognition": [

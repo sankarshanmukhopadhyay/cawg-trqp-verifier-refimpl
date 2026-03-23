@@ -2,6 +2,28 @@
 
 All notable changes to the CAWG–TRQP reference implementation are documented here.
 
+## [v0.7.0] – 2026-03-23
+
+### Added
+
+#### Process-aware trust synthesis
+- `process_evidence` on verification requests
+- `process_integrity` and `process_appraisal` on verification results
+- process appraisal logic in the verifier
+- policy-level process requirements on authorization entries
+- process-aware examples and expected results
+
+#### Proof of Process style integration path
+- parser support for process-oriented assertions in C2PA-style manifests
+- new fixtures: `cawg_manifest_c2pa_pop.json` and `cawg_manifest_c2pa_pop_failed.json`
+- compact reference path to the Proof of Process repository for deeper evidence and appraisal modeling
+
+### Changed
+- version bump to `0.7.0`
+- README, roadmap, integration guide, architecture, implementation notes, verifier profiles, and release-readiness docs refreshed
+- schemas updated for process-aware request and result shapes
+- policy and snapshot examples now carry process requirements
+
 ## [v0.5.0] – 2026-03-23
 
 ### Added

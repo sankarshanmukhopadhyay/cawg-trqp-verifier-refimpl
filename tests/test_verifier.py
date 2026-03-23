@@ -11,6 +11,7 @@ def test_standard_verifier():
     verifier = Verifier(service=MockTRQPService(Path("data/policies.json"), Path("data/revocations.json")))
     result = verifier.verify(req, profile="standard")
     assert result.trust_outcome == "trusted"
+    assert result.process_integrity == "verified_high"
 
 
 def test_edge_verifier():
@@ -19,6 +20,7 @@ def test_edge_verifier():
     result = verifier.verify(req, profile="edge")
     assert result.trust_outcome == "trusted_cached"
     assert result.policy_freshness == "snapshot_verified"
+    assert result.process_integrity == "verified_high"
 
 
 def test_blocked_entity_rejected():
@@ -34,3 +36,13 @@ def test_c2pa_manifest_fixture_supported():
     verifier = Verifier(service=MockTRQPService(Path("data/policies.json"), Path("data/revocations.json")))
     result = verifier.verify(req, profile="standard")
     assert result.trust_outcome == "trusted"
+    assert result.process_integrity in {"verified", "verified_high"}
+
+
+def test_failed_process_proof_rejected():
+    req = load_manifest_fixture(Path("examples/fixtures/cawg_manifest_c2pa_pop_failed.json"), "did:web:media-registry.example")
+    verifier = Verifier(service=MockTRQPService(Path("data/policies.json"), Path("data/revocations.json")))
+    result = verifier.verify(req, profile="standard")
+    assert result.actor_authorization == "authorized"
+    assert result.process_integrity == "failed"
+    assert result.trust_outcome == "rejected"

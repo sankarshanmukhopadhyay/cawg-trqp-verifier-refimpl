@@ -1,4 +1,4 @@
 {
-  "manifest_path": "examples/fixtures/cawg_manifest_c2pa.json",
-  "notes": "C2PA-style JSON manifest-store fixture for parser and verifier integration tests"
+  "manifest_path": "examples/fixtures/cawg_manifest_c2pa_pop.json",
+  "notes": "C2PA-style JSON manifest-store fixture including process-proof assertion for parser and verifier integration tests"
 }

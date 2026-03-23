@@ -37,6 +37,36 @@
     },
     "context": {
       "type": "object"
+    },
+    "process_evidence": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "verified": {
+          "type": "boolean"
+        },
+        "process_type": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "evidence_ref": {
+          "type": "string"
+        },
+        "evidence_format": {
+          "type": "string"
+        },
+        "appraisal": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
     }
   }
 }

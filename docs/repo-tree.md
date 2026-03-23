@@ -6,9 +6,12 @@
 ├── LICENSE
 ├── CHANGELOG.md
 ├── ROADMAP.md
+├── GITHUB_RELEASE_TEMPLATE.md
 ├── RELEASE_NOTES_v0.3.0.md
 ├── RELEASE_NOTES_v0.3.1.md
 ├── RELEASE_NOTES_v0.4.0.md
+├── RELEASE_NOTES_v0.5.0.md
+├── RELEASE_NOTES_v0.7.0.md
 ├── pyproject.toml
 ├── requirements.txt
 ├── .gitignore
@@ -34,6 +37,8 @@
 │   ├── fixtures/
 │   │   ├── cawg_manifest_blocked.json
 │   │   ├── cawg_manifest_c2pa.json
+│   │   ├── cawg_manifest_c2pa_pop.json
+│   │   ├── cawg_manifest_c2pa_pop_failed.json
 │   │   ├── cawg_manifest_minimal.json
 │   │   └── content_bundle_example.json
 │   └── expected/
@@ -50,6 +55,11 @@
 │   ├── authorization-response.schema.json
 │   ├── verification-request.schema.json
 │   └── verification-result.schema.json
+├── scripts/
+│   ├── export_repo_tree.py
+│   ├── run_demo.py
+│   ├── sign_snapshot.py
+│   └── start_http_service.py
 ├── src/
 │   ├── cawg_trqp_refimpl/
 │   │   ├── __init__.py

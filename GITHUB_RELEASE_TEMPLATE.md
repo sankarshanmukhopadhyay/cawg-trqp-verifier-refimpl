@@ -2,92 +2,51 @@
 
 ## Commit Title
 ```
-Release v0.4.0: Add HTTP service, manifest parser, and revocation deltas
+release v0.7.0 with process-aware trust synthesis
 ```
 
 ## Commit Message
 ```
-Release v0.4.0: Production-ready CAWG–TRQP reference implementation
+Release v0.7.0 with process-aware trust synthesis
 
-Upgrade the reference implementation from skeleton to production-ready by
-implementing all high-impact gaps and adding comprehensive documentation.
-
-This release directly addresses Issues #001–#005 and provides engineering
-teams with a complete executable model for integrating TRQP as the
-governance decision plane in CAWG/C2PA verification workflows.
+This release upgrades the CAWG–TRQP reference implementation from
+authorization-only decisioning to process-aware trust synthesis.
 
 ## Major Additions
 
-### HTTP TRQP Service (Issue #003)
-- Flask-based HTTP service exposing /trqp/authorization and /trqp/recognition
-- Full request validation and error handling
-- scripts/start_http_service.py for easy deployment
-- test_http_service.py for comprehensive endpoint testing
+### Process-aware verification
+- add process_evidence support on VerificationRequest
+- add process_integrity and process_appraisal on VerificationResult
+- add verifier-side appraisal logic that can reject otherwise authorized content
+  when required process conditions are not met
 
-### CAWG/C2PA Manifest Parser (Issue #001)
-- CAWGManifestParser for extracting trust signals from manifests
-- Support for simplified fixtures (primary) with C2PA fallback
-- Signal extraction: actor_id, issuer_id, assertions, provenance chain
-- Fixture validation helper for QA
+### Policy requirements for process proof
+- allow authorization entries to carry requires_process_proof,
+  min_process_integrity, and allowed_process_types
+- enforce those requirements in online and offline verification flows
+- keep TRQP as policy authority while process evidence remains an input
 
-### Revocation Delta Handling (Issue #004)
-- RevocationDelta class for managing entity revocations
-- apply_revocation_delta() method on Verifier
-- Policy epoch tracking and timestamp recording
-- Active revocation checking in verify() workflow
-- "revocation_check" verification mode for rejected revocations
+### C2PA parser extension
+- parse process-oriented assertions such as cawg.process.proof
+- add process-aware C2PA fixtures and update example bundles
+- preserve backward compatibility with simplified fixtures
 
-### Expanded Conformance Suite (Issue #005)
-- 20+ organized test cases covering all profiles and scenarios
-- TestStandardProfile: cache-first behavior, cache hits, denials
-- TestEdgeProfile: offline snapshot, missing snapshot, no network
-- TestHighAssuranceProfile: live-only, cache bypass
-- TestRevocation: delta blocking, multiple entities, unrevoked passthrough
-- TestNegativeCases: integrity failures, missing resources
-- TestContextMatching: context-sensitive authorization
-
-### Comprehensive Documentation
-- docs/INTEGRATION_GUIDE.md: Step-by-step integration workflow
-- README.md: Complete rewrite with architecture, quick start, references
-- Explicit spec references: CAWG https://cawg.io/specs/
-- Explicit spec references: TRQP v2.0 https://trustoverip.github.io/tswg-trust-registry-protocol/
-
-## Cleanup
-
-- Removed redundant docs: RELEASE_NOTES_v0.3.0.md, release-readiness.md,
-  release-assets.md, repo-tree.md (consolidated into README and CHANGELOG)
-- pyproject.toml: bumped to v0.4.0, added flask>=2.3.0 dependency
-- requirements.txt: updated with flask
+### Documentation refresh
+- update README, roadmap, architecture, implementation notes,
+  verifier profiles, integration guide, release readiness, and repo tree
+- add release notes for v0.7.0
+- include reference path to LF Decentralized Trust Labs Proof of Process repo
 
 ## Testing
-
-All new modules tested and verified:
-- manifest_parser imports and validates fixtures
-- http_service Flask endpoints return proper JSON responses
-- RevocationDelta correctly blocks/passes through entities
-- Expanded conformance suite covers 20+ scenarios
-
-## References
-
-- CAWG Specifications: https://cawg.io/specs/
-- TRQP v2.0 Specification: https://trustoverip.github.io/tswg-trust-registry-protocol/
-- C2PA Manifest Format: https://c2pa.org/specifications/
-- DIDs (Decentralized Identifiers): https://www.w3.org/TR/did-core/
-
-## See Also
-
-- RELEASE_NOTES_v0.4.0.md for detailed feature descriptions
-- CHANGELOG.md for full version history
-- docs/INTEGRATION_GUIDE.md for step-by-step integration workflow
+- expand verifier tests for successful and failed process-aware verification
+- preserve existing cache, snapshot, parser, and HTTP service coverage
 ```
-
----
 
 ## GitHub Release Notes
 
 ### Release Title
 ```
-v0.4.0 – Production-Ready CAWG–TRQP Integration
+v0.7.0 – Process-Aware CAWG–TRQP Verification
 ```
 
 ### Release Body
@@ -95,124 +54,41 @@ v0.4.0 – Production-Ready CAWG–TRQP Integration
 ```markdown
 ## Overview
 
-This release upgrades the CAWG–TRQP reference implementation to **production-ready** status by implementing all high-impact gaps and providing comprehensive documentation.
+This release upgrades the CAWG–TRQP reference implementation from authorization-only decisioning to process-aware trust synthesis.
 
-**Origin Context:** Built to answer the CAWG spec author's question: _"How do I integrate and implement a trust registry that uses TRQP into a CAWG-based workflow?"_
+The verifier can now ingest process-oriented assertions, evaluate compact process evidence, and enforce policy requirements such as mandatory process proof, minimum confidence thresholds, and allowed process types.
 
-This repository is the executable answer, complete with working examples and integration guidance.
+## What is new
 
-## What's New
+### Process-aware verification
+- `process_evidence` added to verification requests
+- `process_integrity` and `process_appraisal` added to verification results
+- trust outcomes can now be rejected when authorization passes but required process conditions are not met
 
-### 🚀 HTTP TRQP Service (Issue #003)
-- Flask-based HTTP service exposing TRQP endpoints
-- `/trqp/authorization` and `/trqp/recognition` endpoints
-- Full request validation and error handling
-- `scripts/start_http_service.py` with CLI options
-- Comprehensive HTTP endpoint tests
+### Policy and parser upgrades
+- authorization policy entries can now express process requirements
+- parser supports process-oriented assertions in C2PA-style manifest-store JSON
+- new fixtures demonstrate successful and failed process-proof paths
 
-### 🎯 CAWG/C2PA Manifest Parser (Issue #001)
-- `CAWGManifestParser` for extracting trust signals
-- Support for simplified fixtures and graceful C2PA fallback
-- Extract: actor_id, issuer_id, assertions, provenance chain
-- Fixture validation helper
+### Documentation refresh
+- README and integration docs now explain the governance plane plus process plane split
+- schemas, examples, roadmap, and release readiness updated for v0.7.0
 
-### 🔐 Revocation Delta Handling (Issue #004)
-- `RevocationDelta` class for managing entity revocations
-- `apply_revocation_delta()` method on Verifier
-- Policy epoch tracking and audit timestamps
-- Active revocation checking in verification workflow
-- "revocation_check" verification mode
+## Why this matters
 
-### 📋 Expanded Conformance Suite (Issue #005)
-- 20+ organized test cases covering all profiles and scenarios
-- Profile-specific tests: edge, standard, high_assurance
-- Revocation scenarios: blocking, multiple entities, passthrough
-- Negative cases: integrity failures, missing resources
-- Context-sensitive authorization validation
+TRQP answers whether a publishing action is authorized. Process evidence adds a way to model whether the action was carried out under the kind of process policy expects. Together they produce a more realistic trust decision.
 
-### 📖 Comprehensive Documentation
-- **INTEGRATION_GUIDE.md**: Step-by-step integration workflow with code examples
-- **README.md**: Complete rewrite with architecture, quick start, API reference
-- Explicit upstream spec references (CAWG, TRQP v2.0)
-- Cleanup: Removed redundant release documentation
+## Reference path
 
-## Key Features
-
-### Verification Profiles
-- **edge**: Offline snapshot verification for disconnected devices
-- **standard**: Cache-first with live lookup on miss (platform verification)
-- **high_assurance**: Live-only lookup for regulated/audit scenarios
-
-### Architecture
-```
-CAWG/C2PA Manifest
-    ↓ (extract signals)
-Identity Material (DIDs, credentials)
-    ↓ (build request)
-TRQP Query Layer (authorization, recognition, revocation)
-    ↓ (synthesize)
-Verifier (online, cached, offline, revocation-aware)
-    ↓
-VerificationResult (trust_outcome, integrity, authorization, freshness, mode)
-```
-
-## Dependencies
-
-**New:** `flask>=2.3.0`
-
-All existing APIs remain backward-compatible.
+This repository includes a selective integration path for ideas from LF Decentralized Trust Labs Proof of Process work and points implementers to that repository for deeper evidence and appraisal models.
 
 ## Testing
 
+Run:
+
 ```bash
-# Run all tests
 pytest tests/ -v
-
-# Run conformance suite
-pytest tests/test_conformance_vectors.py -v
-
-# Run HTTP service tests
-pytest tests/test_http_service.py -v
 ```
 
-## Usage Examples
-
-### HTTP Service
-```bash
-python scripts/start_http_service.py --port 5000
-curl -X POST http://localhost:5000/trqp/authorization \
-  -H "Content-Type: application/json" \
-  -d '{"entity_id":"did:web:example.com",...}'
-```
-
-### Manifest Parsing
-```python
-from cawg_trqp_refimpl.manifest_parser import CAWGManifestParser
-signal = CAWGManifestParser.parse_fixture("manifest.json")
-```
-
-### Revocation
-```python
-verifier.apply_revocation_delta(
-    revoked_entities=["did:web:bad-actor.example"],
-    policy_epoch="2026-Q1"
-)
-```
-
-## Roadmap
-
-**v0.5.0:** Signed snapshot verification + real C2PA parser integration  
-**v0.6.0:** Metrics/observability + performance benchmarking  
-**v0.7.0:** Production hardening + deployment guide
-
-## References
-
-- **CAWG Specifications:** https://cawg.io/specs/
-- **TRQP v2.0 Specification:** https://trustoverip.github.io/tswg-trust-registry-protocol/
-- **C2PA Manifest Format:** https://c2pa.org/specifications/
-- **DIDs (Decentralized Identifiers):** https://www.w3.org/TR/did-core/
-
-## Full Details
-
-See [RELEASE_NOTES_v0.4.0.md](RELEASE_NOTES_v0.4.0.md) for detailed feature descriptions and [CHANGELOG.md](CHANGELOG.md) for version history.
+See `RELEASE_NOTES_v0.7.0.md` for the detailed release summary.
 ```

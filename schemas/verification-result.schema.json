@@ -3,7 +3,8 @@
   "type": "object",
   "required": [
     "asset_integrity",
-    "trust_outcome"
+    "trust_outcome",
+    "process_integrity"
   ],
   "properties": {
     "asset_integrity": {
@@ -18,6 +19,9 @@
     "actor_authorization": {
       "type": "string"
     },
+    "process_integrity": {
+      "type": "string"
+    },
     "policy_freshness": {
       "type": "string"
     },
@@ -26,6 +30,9 @@
     },
     "trust_outcome": {
       "type": "string"
+    },
+    "process_appraisal": {
+      "type": "object"
     },
     "explanations": {
       "type": "array",

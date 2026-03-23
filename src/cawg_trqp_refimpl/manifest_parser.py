@@ -4,6 +4,7 @@ Supports both:
 - the simplified JSON fixture format used in earlier repo versions
 - a real C2PA-style JSON manifest-store envelope that preserves active manifest,
   assertion labels, ingredients, and signature metadata
+- process-oriented assertions that carry Proof of Process style evidence summaries
 """
 
 from __future__ import annotations
@@ -12,6 +13,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Optional
 import json
+
+
+PROCESS_ASSERTION_LABELS = {
+    "cawg.process",
+    "cawg.process.proof",
+    "org.cawg.process",
+    "org.contentauthorship.process",
+}
 
 
 @dataclass
@@ -27,6 +36,7 @@ class ManifestSignal:
     action: Optional[str] = None
     resource: Optional[str] = None
     context: dict[str, Any] = field(default_factory=dict)
+    process_evidence: dict[str, Any] | None = None
     parser_mode: str = "unknown"
     raw_manifest: dict[str, Any] = field(default_factory=dict)
 
@@ -34,7 +44,7 @@ class ManifestSignal:
 class CAWGManifestParser:
     """Parser for simplified fixtures and C2PA-style JSON manifests."""
 
-    FIXTURE_MODEL_VERSION = "0.2"
+    FIXTURE_MODEL_VERSION = "0.3"
 
     @staticmethod
     def parse_file(manifest_path: str | Path) -> ManifestSignal:
@@ -63,6 +73,7 @@ class CAWGManifestParser:
         actor = manifest_data.get("actor", {}) if isinstance(manifest_data.get("actor"), dict) else {}
         assertion = manifest_data.get("assertion", {}) if isinstance(manifest_data.get("assertion"), dict) else {}
         context = dict(manifest_data.get("context", {}))
+        process_evidence = manifest_data.get("process_evidence") if isinstance(manifest_data.get("process_evidence"), dict) else None
         credential_type = manifest_data.get("credential_type") or issuer.get("credential_type")
         if credential_type:
             context.setdefault("credential_type", credential_type)
@@ -97,6 +108,7 @@ class CAWGManifestParser:
             action=action,
             resource=resource,
             context=context,
+            process_evidence=process_evidence,
             parser_mode="fixture",
             raw_manifest=manifest_data,
         )
@@ -116,6 +128,7 @@ class CAWGManifestParser:
         context: dict[str, Any] = {}
         assertions: list[dict[str, Any]] = []
         provenance_chain: list[str] = []
+        process_evidence: dict[str, Any] | None = None
 
         signature_info = active_manifest.get("signature_info", {})
         if isinstance(signature_info, dict):
@@ -145,6 +158,10 @@ class CAWGManifestParser:
                     action = actions[0].get("action") or action
                     resource = actions[0].get("resource") or resource
 
+            if (label in PROCESS_ASSERTION_LABELS or "process" in label) and isinstance(data, dict):
+                process_evidence = dict(data)
+                context.setdefault("process_type", data.get("process_type", "unspecified"))
+
         for ingredient in active_manifest.get("ingredients", []):
             if isinstance(ingredient, dict):
                 title = ingredient.get("title") or ingredient.get("instance_id") or ingredient.get("document_id")
@@ -172,6 +189,7 @@ class CAWGManifestParser:
             action=action,
             resource=resource,
             context=context,
+            process_evidence=process_evidence,
             parser_mode="c2pa_json",
             raw_manifest=manifest_data,
         )
@@ -185,4 +203,5 @@ class CAWGManifestParser:
             "has_issuer_id": signal.issuer_id is not None,
             "has_assertions": len(signal.assertions) > 0,
             "has_credential_type": signal.credential_type is not None,
+            "has_process_evidence": signal.process_evidence is not None,
         }

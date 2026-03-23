@@ -11,5 +11,14 @@
     "credential_type": "vc:creator-identity",
     "risk_tier": "medium",
     "content_type": "image"
+  },
+  "process_evidence": {
+    "verified": true,
+    "process_type": "human_assisted",
+    "confidence": 0.91,
+    "evidence_ref": "urn:example:pop:asset-001",
+    "evidence_format": "application/cpop+cbor",
+    "appraisal": "writers_authenticity_report",
+    "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
   }
 }

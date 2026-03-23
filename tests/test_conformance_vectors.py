@@ -42,6 +42,15 @@ class TestStandardProfile:
         assert result.trust_outcome == "rejected"
         assert result.actor_authorization == "not_authorized"
 
+    def test_standard_missing_process_proof_rejected(self):
+        data = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
+        data["process_evidence"] = None
+        verifier = Verifier(service=MockTRQPService(Path("data/policies.json")))
+        result = verifier.verify(VerificationRequest(**data), profile="standard")
+        assert result.actor_authorization == "authorized"
+        assert result.process_integrity == "missing_required_proof"
+        assert result.trust_outcome == "rejected"
+
 
 class TestEdgeProfile:
     def test_edge_snapshot_authorized(self):
@@ -134,3 +143,4 @@ class TestManifestParser:
         assert signal.action == "publish"
         assert signal.resource == "cawg:news-content"
         assert signal.context["credential_type"] == "vc:creator-identity"
+        assert signal.process_evidence is not None
