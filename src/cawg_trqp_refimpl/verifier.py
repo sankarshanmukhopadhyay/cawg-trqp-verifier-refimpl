@@ -11,6 +11,7 @@ from .context import tuple_key
 from .models import VerificationRequest, VerificationResult
 from .mock_service import MockTRQPService
 from .snapshot import SnapshotStore
+from .gateway import TrustGateway
 
 
 class RevocationDelta:
@@ -34,11 +35,13 @@ class Verifier:
         service: MockTRQPService | None = None,
         snapshot: SnapshotStore | None = None,
         cache: TTLCache | None = None,
+        gateway: TrustGateway | None = None,
     ) -> None:
         self.service = service
         self.snapshot = snapshot
         self.cache = cache or TTLCache()
         self.revocation_delta: Optional[RevocationDelta] = None
+        self.gateway = gateway
 
     def apply_revocation_delta(self, revoked_entities: list[str], policy_epoch: Optional[str] = None) -> None:
         self.revocation_delta = RevocationDelta(revoked_entities, policy_epoch)
@@ -130,9 +133,10 @@ class Verifier:
         auth = None if force_live else self.cache.get(auth_key)
         rec = None if force_live else self.cache.get(rec_key)
         explanations = []
+        gateway_mediation: dict[str, Any] = {}
 
         if auth is None:
-            if self.service is None:
+            if self.service is None and self.gateway is None:
                 return VerificationResult(
                     asset_integrity="verified",
                     assertion_binding="verified",
@@ -142,21 +146,32 @@ class Verifier:
                     policy_freshness="service_unavailable",
                     verification_mode="cached_online",
                     trust_outcome="deferred",
-                    explanations=["No service available for live authorization lookup"],
+                    explanations=["No service or gateway available for live authorization lookup"],
                 )
-            auth = asdict(
-                self.service.authorization(
+            if self.gateway is not None:
+                auth, gateway_mediation = self.gateway.authorization(
                     request.entity_id, request.authority_id, request.action, request.resource, request.context
                 )
-            )
+                explanations.append("Trust gateway mediated authorization lookup")
+            else:
+                auth = asdict(
+                    self.service.authorization(
+                        request.entity_id, request.authority_id, request.action, request.resource, request.context
+                    )
+                )
+                explanations.append("Live authorization lookup executed")
             self.cache.set(auth_key, auth, ttl_class="medium")
-            explanations.append("Live authorization lookup executed")
         else:
             explanations.append("Authorization cache hit")
 
         if request.issuer_id:
             if rec is None:
-                if self.service is not None:
+                if self.gateway is not None:
+                    rec, rec_mediation = self.gateway.recognition(request.authority_id, request.issuer_id, rec_context)
+                    gateway_mediation = {**gateway_mediation, 'recognition': rec_mediation}
+                    self.cache.set(rec_key, rec, ttl_class="medium")
+                    explanations.append("Trust gateway mediated recognition lookup")
+                elif self.service is not None:
                     rec = asdict(self.service.recognition(request.authority_id, request.issuer_id, rec_context))
                     self.cache.set(rec_key, rec, ttl_class="medium")
                     explanations.append("Live recognition lookup executed")
@@ -167,8 +182,9 @@ class Verifier:
             auth=auth,
             rec=rec,
             freshness="current",
-            mode="online_full" if force_live else "cached_online",
+            mode="gateway_mediated" if self.gateway is not None else ("online_full" if force_live else "cached_online"),
             request=request,
+            gateway_mediation=gateway_mediation,
         )
         result.explanations.extend(explanations)
         return result
@@ -228,11 +244,17 @@ class Verifier:
             return ("verified_high", summary, explanations, True)
         return ("verified", summary, explanations, True)
 
-    def _synthesize_result(self, *, auth: dict | None, rec: dict | None, freshness: str, mode: str, request: VerificationRequest) -> VerificationResult:
+    def _synthesize_result(self, *, auth: dict | None, rec: dict | None, freshness: str, mode: str, request: VerificationRequest, gateway_mediation: dict[str, Any] | None = None) -> VerificationResult:
         actor_authorization = "authorized" if auth and auth.get("authorized") else "not_authorized"
         issuer_recognition = "recognized" if rec and rec.get("recognized") else "unknown"
         policy_requirements = auth.get("policy_requirements", {}) if auth else {}
         process_integrity, process_appraisal, process_explanations, process_ok = self._appraise_process(request, policy_requirements)
+        policy_evidence = {
+            'authorization_evidence': auth.get('evidence', []) if auth else [],
+            'recognition_evidence': rec.get('evidence', []) if rec else [],
+            'policy_epoch': auth.get('policy_epoch') if auth else None,
+            'policy_requirements': policy_requirements,
+        }
 
         if auth is None:
             return VerificationResult(
@@ -245,6 +267,8 @@ class Verifier:
                 verification_mode=mode,
                 trust_outcome="deferred",
                 process_appraisal=process_appraisal,
+                policy_evidence=policy_evidence,
+                gateway_mediation=gateway_mediation or {},
                 explanations=process_explanations,
             )
 
@@ -266,5 +290,7 @@ class Verifier:
             verification_mode=mode,
             trust_outcome=trust_outcome,
             process_appraisal=process_appraisal,
+            policy_evidence=policy_evidence,
+            gateway_mediation=gateway_mediation or {},
             explanations=explanations,
         )

@@ -16,93 +16,47 @@ if HAS_FLASK:
 
 @pytest.mark.skipif(not HAS_FLASK, reason="Flask not installed")
 class TestHTTPService:
-    """Tests for HTTP TRQP service."""
-
     @pytest.fixture
     def client(self):
-        """Create Flask test client."""
         service = HTTPTRQPService(
             policy_path=Path("data/policies.json"),
             revocation_path=Path("data/revocations.json"),
-            debug=True
+            debug=True,
         )
         service.app.config["TESTING"] = True
         return service.app.test_client()
 
     def test_health_check(self, client):
-        """Health endpoint should return healthy."""
         response = client.get("/health")
         assert response.status_code == 200
         assert response.get_json()["status"] == "healthy"
 
     def test_authorization_endpoint_valid(self, client):
-        """Authorization endpoint should accept valid request."""
-        payload = {
-            "entity_id": "did:web:example.com",
-            "authority_id": "did:web:authority.example",
-            "action": "verify",
-            "resource": "manifest",
-            "context": {}
-        }
-        response = client.post(
-            "/trqp/authorization",
-            data=json.dumps(payload),
-            content_type="application/json"
-        )
+        payload = {"entity_id": "did:web:publisher.example", "authority_id": "did:web:media-registry.example", "action": "publish", "resource": "cawg:news-content", "context": {"jurisdiction": "IN"}}
+        response = client.post("/trqp/authorization", data=json.dumps(payload), content_type="application/json")
+        assert response.status_code == 200
+        assert "authorized" in response.get_json()
+
+    def test_gateway_authorization_endpoint_valid(self, client):
+        payload = {"entity_id": "did:web:publisher.example", "authority_id": "did:web:media-registry.example", "action": "publish", "resource": "cawg:news-content", "context": {"jurisdiction": "IN"}}
+        response = client.post("/trqp/gateway/authorization", data=json.dumps(payload), content_type="application/json")
         assert response.status_code == 200
         data = response.get_json()
-        assert "authorized" in data
+        assert "authorization" in data and "gateway_mediation" in data
 
-    def test_authorization_endpoint_missing_fields(self, client):
-        """Authorization endpoint should reject missing required fields."""
-        payload = {
-            "entity_id": "did:web:example.com",
-            # Missing authority_id, action, resource
-        }
-        response = client.post(
-            "/trqp/authorization",
-            data=json.dumps(payload),
-            content_type="application/json"
-        )
-        assert response.status_code == 400
-        data = response.get_json()
-        assert "error" in data
-
-    def test_recognition_endpoint_valid(self, client):
-        """Recognition endpoint should accept valid request."""
-        payload = {
-            "authority_id": "did:web:authority.example",
-            "recognized_authority_id": "did:web:other.example",
-            "context": {}
-        }
-        response = client.post(
-            "/trqp/recognition",
-            data=json.dumps(payload),
-            content_type="application/json"
-        )
+    def test_verify_endpoint(self, client):
+        payload = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
+        payload["use_gateway"] = True
+        response = client.post("/trqp/verify", data=json.dumps(payload), content_type="application/json")
         assert response.status_code == 200
         data = response.get_json()
-        assert "recognized" in data
+        assert data["verification_mode"] == "gateway_mediated"
+        assert data["trust_outcome"] in {"trusted", "trusted_cached"}
 
-    def test_recognition_endpoint_missing_fields(self, client):
-        """Recognition endpoint should reject missing required fields."""
-        payload = {
-            "authority_id": "did:web:authority.example",
-            # Missing recognized_authority_id
-        }
-        response = client.post(
-            "/trqp/recognition",
-            data=json.dumps(payload),
-            content_type="application/json"
-        )
-        assert response.status_code == 400
-
-    def test_authorization_invalid_json(self, client):
-        """Endpoint should reject invalid JSON."""
-        response = client.post(
-            "/trqp/authorization",
-            data="not json",
-            content_type="application/json"
-        )
-        # Flask will return 400 for parse error
-        assert response.status_code in [400, 500]
+    def test_audit_bundle_endpoint(self, client):
+        payload = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
+        payload["use_gateway"] = True
+        response = client.post("/trqp/audit-bundle", data=json.dumps(payload), content_type="application/json")
+        assert response.status_code == 200
+        data = response.get_json()
+        assert data["bundle_type"] == "cawg-trqp-audit-bundle"

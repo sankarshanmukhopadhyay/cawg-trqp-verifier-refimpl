@@ -1,0 +1,24 @@
+{
+  "asset_id": "asset-bench-001",
+  "integrity_ok": true,
+  "entity_id": "did:web:publisher.example",
+  "authority_id": "did:web:media-registry.example",
+  "issuer_id": "did:web:issuer.example",
+  "action": "publish",
+  "resource": "cawg:news-content",
+  "context": {
+    "jurisdiction": "IN",
+    "credential_type": "vc:creator-identity",
+    "risk_tier": "medium",
+    "content_type": "image",
+    "benchmark_profile": "high_volume"
+  },
+  "process_evidence": {
+    "verified": true,
+    "process_type": "human_assisted",
+    "confidence": 0.91,
+    "evidence_ref": "urn:example:pop:asset-bench-001",
+    "evidence_format": "application/cpop+cbor",
+    "appraisal": "writers_authenticity_report"
+  }
+}

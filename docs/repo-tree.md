@@ -1,84 +1,82 @@
 # Repository Tree
 
 ```text
-.
-├── README.md
-├── LICENSE
-├── CHANGELOG.md
-├── ROADMAP.md
-├── GITHUB_RELEASE_TEMPLATE.md
-├── RELEASE_NOTES_v0.3.0.md
-├── RELEASE_NOTES_v0.3.1.md
-├── RELEASE_NOTES_v0.4.0.md
-├── RELEASE_NOTES_v0.5.0.md
-├── RELEASE_NOTES_v0.7.0.md
-├── pyproject.toml
-├── requirements.txt
-├── .gitignore
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── docs/
-│   ├── INTEGRATION_GUIDE.md
-│   ├── architecture.md
-│   ├── implementation-notes.md
-│   ├── release-assets.md
-│   ├── release-readiness.md
-│   ├── repo-tree.md
-│   └── verifier-profiles.md
-├── issues/
-│   ├── 001-real-cawg-c2pa-parser.md
-│   ├── 002-signed-policy-snapshots.md
-│   ├── 003-http-trqp-service.md
-│   ├── 004-revocation-delta-channel.md
-│   └── 005-conformance-suite-expansion.md
-├── examples/
-│   ├── verification_request.json
-│   ├── fixtures/
-│   │   ├── cawg_manifest_blocked.json
-│   │   ├── cawg_manifest_c2pa.json
-│   │   ├── cawg_manifest_c2pa_pop.json
-│   │   ├── cawg_manifest_c2pa_pop_failed.json
-│   │   ├── cawg_manifest_minimal.json
-│   │   └── content_bundle_example.json
-│   └── expected/
-│       ├── edge_result.json
-│       └── standard_result.json
-├── data/
-│   ├── policies.json
-│   ├── revocations.json
-│   ├── snapshot.json
-│   ├── snapshot_signing_key.example.pem
-│   └── trust_anchors.json
-├── schemas/
-│   ├── authorization-request.schema.json
-│   ├── authorization-response.schema.json
-│   ├── verification-request.schema.json
-│   └── verification-result.schema.json
-├── scripts/
-│   ├── export_repo_tree.py
-│   ├── run_demo.py
-│   ├── sign_snapshot.py
-│   └── start_http_service.py
-├── src/
-│   ├── cawg_trqp_refimpl/
-│   │   ├── __init__.py
-│   │   ├── cache.py
-│   │   ├── cli.py
-│   │   ├── context.py
-│   │   ├── fixture_loader.py
-│   │   ├── http_service.py
-│   │   ├── manifest_parser.py
-│   │   ├── mock_service.py
-│   │   ├── models.py
-│   │   ├── snapshot.py
-│   │   └── verifier.py
-│   └── cawg_trqp_refimpl.egg-info/
-└── tests/
-    ├── test_cache.py
-    ├── test_conformance_vectors.py
-    ├── test_fixture_loader.py
-    ├── test_http_service.py
-    ├── test_snapshot.py
-    └── test_verifier.py
+CHANGELOG.md
+GITHUB_RELEASE_TEMPLATE.md
+LICENSE
+README.md
+RELEASE_NOTES_v0.3.0.md
+RELEASE_NOTES_v0.3.1.md
+RELEASE_NOTES_v0.4.0.md
+RELEASE_NOTES_v0.5.0.md
+RELEASE_NOTES_v0.7.0.md
+RELEASE_NOTES_v0.9.0.md
+ROADMAP.md
+data/policies.json
+data/revocations.json
+data/snapshot.json
+data/snapshot_signing_key.example.pem
+data/trust_anchors.json
+docs/INTEGRATION_GUIDE.md
+docs/NON_TECHNICAL_OVERVIEW.md
+docs/architecture.md
+docs/deployment-guide.md
+docs/http-transport-patterns.md
+docs/implementation-notes.md
+docs/release-assets.md
+docs/release-readiness.md
+docs/repo-tree.md
+docs/trust-gateway.md
+docs/verifier-profiles.md
+examples/benchmark_constrained_device_request.json
+examples/benchmark_high_volume_request.json
+examples/expected/edge_result.json
+examples/expected/standard_result.json
+examples/fixtures/cawg_manifest_blocked.json
+examples/fixtures/cawg_manifest_c2pa.json
+examples/fixtures/cawg_manifest_c2pa_pop.json
+examples/fixtures/cawg_manifest_c2pa_pop_failed.json
+examples/fixtures/cawg_manifest_minimal.json
+examples/fixtures/content_bundle_example.json
+examples/interoperability_vector_gateway.json
+examples/verification_request.json
+issues/001-real-cawg-c2pa-parser.md
+issues/002-signed-policy-snapshots.md
+issues/003-http-trqp-service.md
+issues/004-revocation-delta-channel.md
+issues/005-conformance-suite-expansion.md
+pyproject.toml
+requirements.txt
+schemas/authorization-request.schema.json
+schemas/authorization-response.schema.json
+schemas/verification-request.schema.json
+schemas/verification-result.schema.json
+scripts/export_repo_tree.py
+scripts/run_demo.py
+scripts/sign_snapshot.py
+scripts/start_http_service.py
+src/cawg_trqp_refimpl.egg-info/PKG-INFO
+src/cawg_trqp_refimpl.egg-info/SOURCES.txt
+src/cawg_trqp_refimpl.egg-info/dependency_links.txt
+src/cawg_trqp_refimpl.egg-info/requires.txt
+src/cawg_trqp_refimpl.egg-info/top_level.txt
+src/cawg_trqp_refimpl/__init__.py
+src/cawg_trqp_refimpl/audit.py
+src/cawg_trqp_refimpl/cache.py
+src/cawg_trqp_refimpl/cli.py
+src/cawg_trqp_refimpl/context.py
+src/cawg_trqp_refimpl/fixture_loader.py
+src/cawg_trqp_refimpl/gateway.py
+src/cawg_trqp_refimpl/http_service.py
+src/cawg_trqp_refimpl/manifest_parser.py
+src/cawg_trqp_refimpl/mock_service.py
+src/cawg_trqp_refimpl/models.py
+src/cawg_trqp_refimpl/snapshot.py
+src/cawg_trqp_refimpl/verifier.py
+tests/test_cache.py
+tests/test_conformance_vectors.py
+tests/test_fixture_loader.py
+tests/test_http_service.py
+tests/test_snapshot.py
+tests/test_verifier.py
 ```

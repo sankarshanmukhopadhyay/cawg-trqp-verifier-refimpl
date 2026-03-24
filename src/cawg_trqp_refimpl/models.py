@@ -46,6 +46,8 @@ class VerificationResult:
     verification_mode: str
     trust_outcome: str
     process_appraisal: dict[str, Any] = field(default_factory=dict)
+    policy_evidence: dict[str, Any] = field(default_factory=dict)
+    gateway_mediation: dict[str, Any] = field(default_factory=dict)
     explanations: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:

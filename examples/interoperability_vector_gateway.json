@@ -1,0 +1,25 @@
+{
+  "asset_id": "asset-interp-001",
+  "integrity_ok": true,
+  "entity_id": "did:web:publisher.example",
+  "authority_id": "did:web:media-registry.example",
+  "issuer_id": "did:web:issuer.example",
+  "action": "publish",
+  "resource": "cawg:news-content",
+  "context": {
+    "jurisdiction": "IN",
+    "credential_type": "vc:creator-identity",
+    "risk_tier": "medium",
+    "content_type": "image"
+  },
+  "process_evidence": {
+    "verified": true,
+    "process_type": "human_assisted",
+    "confidence": 0.88,
+    "evidence_ref": "urn:example:pop:asset-interp-001",
+    "evidence_format": "application/cpop+cbor",
+    "appraisal": "gateway_vector_report"
+  },
+  "use_gateway": true,
+  "profile": "standard"
+}

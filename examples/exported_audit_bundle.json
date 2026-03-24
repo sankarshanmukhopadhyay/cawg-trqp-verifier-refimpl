@@ -1,0 +1,118 @@
+{
+  "bundle_type": "cawg-trqp-audit-bundle",
+  "bundle_version": "0.9.0",
+  "exported_at": "2026-03-24T03:54:17.792921Z",
+  "request_summary": {
+    "asset_id": "asset-001",
+    "entity_id": "did:web:publisher.example",
+    "authority_id": "did:web:media-registry.example",
+    "issuer_id": "did:web:issuer.example",
+    "action": "publish",
+    "resource": "cawg:news-content",
+    "context": {
+      "jurisdiction": "IN",
+      "credential_type": "vc:creator-identity",
+      "risk_tier": "medium",
+      "content_type": "image"
+    },
+    "has_process_evidence": true
+  },
+  "verification_result": {
+    "asset_integrity": "verified",
+    "assertion_binding": "verified",
+    "issuer_recognition": "recognized",
+    "actor_authorization": "authorized",
+    "process_integrity": "verified_high",
+    "policy_freshness": "current",
+    "verification_mode": "gateway_mediated",
+    "trust_outcome": "trusted",
+    "process_appraisal": {
+      "status": "verified",
+      "process_type": "human_assisted",
+      "confidence": 0.91,
+      "minimum_confidence": 0.75,
+      "evidence_ref": "urn:example:pop:asset-001",
+      "evidence_format": "application/cpop+cbor",
+      "appraisal": "writers_authenticity_report",
+      "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
+    },
+    "policy_evidence": {
+      "authorization_evidence": [
+        "registry-entry:publisher-123",
+        "policy:media-publish-v2"
+      ],
+      "recognition_evidence": [
+        "trust-list:issuer-77"
+      ],
+      "policy_epoch": "2026-Q1",
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.75,
+        "allowed_process_types": [
+          "human_assisted",
+          "verified_editorial_pipeline"
+        ]
+      }
+    },
+    "gateway_mediation": {
+      "gateway_id": "gateway:default",
+      "route_label": "default",
+      "mode": "remote_policy_mediation",
+      "target_authority_id": "did:web:media-registry.example",
+      "decision_type": "authorization",
+      "recognition": {
+        "gateway_id": "gateway:default",
+        "route_label": "default",
+        "mode": "remote_policy_mediation",
+        "target_authority_id": "did:web:media-registry.example",
+        "decision_type": "recognition"
+      }
+    },
+    "explanations": [
+      "Trust gateway mediated authorization lookup",
+      "Trust gateway mediated recognition lookup"
+    ]
+  },
+  "policy_evidence": {
+    "authorization_evidence": [
+      "registry-entry:publisher-123",
+      "policy:media-publish-v2"
+    ],
+    "recognition_evidence": [
+      "trust-list:issuer-77"
+    ],
+    "policy_epoch": "2026-Q1",
+    "policy_requirements": {
+      "requires_process_proof": true,
+      "min_process_integrity": 0.75,
+      "allowed_process_types": [
+        "human_assisted",
+        "verified_editorial_pipeline"
+      ]
+    }
+  },
+  "process_appraisal": {
+    "status": "verified",
+    "process_type": "human_assisted",
+    "confidence": 0.91,
+    "minimum_confidence": 0.75,
+    "evidence_ref": "urn:example:pop:asset-001",
+    "evidence_format": "application/cpop+cbor",
+    "appraisal": "writers_authenticity_report",
+    "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
+  },
+  "gateway_mediation": {
+    "gateway_id": "gateway:default",
+    "route_label": "default",
+    "mode": "remote_policy_mediation",
+    "target_authority_id": "did:web:media-registry.example",
+    "decision_type": "authorization",
+    "recognition": {
+      "gateway_id": "gateway:default",
+      "route_label": "default",
+      "mode": "remote_policy_mediation",
+      "target_authority_id": "did:web:media-registry.example",
+      "decision_type": "recognition"
+    }
+  }
+}

@@ -1,46 +1,59 @@
 # CAWG–TRQP Reference Implementation
 
-**Version:** v0.7.0  
-**Status:** Reference implementation with signed offline snapshots, C2PA-style JSON manifest ingestion, and process-aware trust synthesis
+**Version:** v0.9.0  
+**Status:** Reference implementation with signed offline snapshots, process-aware trust synthesis, exportable audit bundles, and trust gateway mediation
 
 ## Overview
 
-This repository demonstrates, in executable form, how **TRQP** operates as the **governance decision plane** in a **CAWG/C2PA** verification workflow and how that workflow can be upgraded with **Proof of Process** style evidence.
+This repository demonstrates how **TRQP** operates as the governance decision plane in a **CAWG/C2PA** verification workflow, and how that workflow can be extended with process-aware evidence, exportable audit bundles, and remote policy mediation.
 
-The architectural split is deliberate:
+By v0.9.0 the project covers the roadmap items for v0.8.0 and v0.9.0:
 
-- **CAWG/C2PA** provides content-bound provenance and assertion packaging
-- **Identity material** provides actor and issuer binding
-- **TRQP** provides authorization and issuer-recognition answers
-- **Process evidence** provides proof-oriented signals about how a content action was carried out
-- **This verifier** synthesizes the final trust decision across online, cached, and offline modes
+- exportable audit bundles that package verification result, policy evidence, and process appraisal together
+- HTTP transport patterns for process-aware authorization and verification exchange
+- benchmark fixtures for high-volume and constrained-device process-aware verification
+- trust gateway component for remote policy mediation
+- richer conformance and interoperability vectors
+- deployment guidance for process-aware verifiers and appraisal services
 
-v0.7.0 jumps directly to the next substantive release line by adding a **process appraisal layer**, **policy-enforced process requirements**, and **process-aware fixtures, schemas, and examples**.
+## What v0.9.0 adds
 
-## What v0.7.0 Adds
+### 1. Audit bundle export
 
-### Process-aware verification
+The verifier can now package portable audit bundles that include:
 
-- `process_evidence` on verification requests
-- `process_integrity` and `process_appraisal` on verification results
-- Policy-level controls for:
-  - `requires_process_proof`
-  - `min_process_integrity`
-  - `allowed_process_types`
-- Composite trust synthesis that can reject otherwise authorized content when required process conditions are not met
+- request summary
+- verification result
+- policy evidence
+- process appraisal
+- gateway mediation trace when enabled
 
-### Proof of Process style integration path
+### 2. Trust gateway mediation
 
-- Parser support for process-oriented assertions in C2PA-style manifests
-- Example fixtures carrying `cawg.process.proof` assertions
-- Structured process appraisal aligned to a selective adoption model: TRQP remains the policy authority, while process evidence acts as an input to trust synthesis
-- Repository references to the Proof of Process work for implementers exploring deeper attestation and appraisal patterns
+A trust gateway component now models remote policy mediation. This lets deployments separate verification execution from policy routing while keeping a traceable mediation record.
 
-### Documentation and packaging refresh
+### 3. HTTP transport patterns
 
-- Architecture, integration, implementation notes, verifier profiles, roadmap, and release-readiness docs refreshed
-- Schemas updated for process-aware request and result objects
-- Repo tree regenerated for new examples and release assets
+The reference HTTP service now demonstrates:
+
+- direct authorization lookup
+- recognition lookup
+- gateway-mediated authorization lookup
+- end-to-end verification over HTTP
+- audit bundle export over HTTP
+
+### 4. Interoperability and benchmark fixtures
+
+The repository now includes benchmark-style request fixtures for high-volume and constrained-device verification, along with gateway-oriented interoperability vectors.
+
+### 5. Deployment guidance and executive framing
+
+The docs now include:
+
+- a deployment guide for process-aware verifiers and appraisal services
+- a trust gateway architecture note
+- an HTTP transport patterns note
+- a non-technical overview for enterprise IT and business leaders
 
 ## Quick Start
 
@@ -55,22 +68,22 @@ pip install -e .
 ### Run standard verification
 
 ```bash
-python -m cawg_trqp_refimpl.cli   --fixture examples/fixtures/cawg_manifest_c2pa_pop.json   --profile standard
+python -m cawg_trqp_refimpl.cli --fixture examples/fixtures/cawg_manifest_c2pa_pop.json --profile standard
 ```
 
-### Run edge verification with signed snapshot
+### Run gateway-mediated verification and export an audit bundle
 
 ```bash
-python -m cawg_trqp_refimpl.cli   --fixture examples/fixtures/cawg_manifest_c2pa_pop.json   --profile edge   --snapshot data/snapshot.json   --trust-anchors data/trust_anchors.json
+python -m cawg_trqp_refimpl.cli   --fixture examples/fixtures/cawg_manifest_c2pa_pop.json   --profile standard   --use-gateway   --export-audit-bundle examples/exported_audit_bundle.json
 ```
 
-### Start HTTP TRQP service
+### Start HTTP service
 
 ```bash
 python scripts/start_http_service.py --port 5000
 ```
 
-## Verification Profiles
+## Verification profiles
 
 | Profile | Network posture | Policy source | Process posture | Primary use case |
 |---|---|---|---|---|
@@ -78,57 +91,23 @@ python scripts/start_http_service.py --port 5000
 | `standard` | stable | cache-first with live lookup on miss | policy-aware composite decision | service and platform verification |
 | `high_assurance` | stable | live lookup always | strict process policy enforcement | regulated or audit-sensitive verification |
 
-## Parser Modes
+## New components
 
-| Mode | Input shape | Purpose |
-|---|---|---|
-| `fixture` | simplified repo fixture | deterministic tests and quick demos |
-| `c2pa_json` | C2PA-style manifest-store JSON | higher-fidelity CAWG/C2PA ingestion |
+### Audit bundle
+Portable package that turns a verification event into a shareable evidence artifact.
 
-## Architecture
+### Trust gateway
+Optional mediation layer for remote policy routing and governance traceability.
 
-```text
-CAWG/C2PA Manifest or Manifest Store
-    ↓ extract actor, issuer, action, resource, assertions, provenance, process evidence
-Identity Material
-    ↓ bind issuer and actor context
-TRQP Query Layer
-    ↓ authorization + recognition + revocation signals + process requirements
-Process Appraisal Layer
-    ↓ evaluate supplied process evidence against policy thresholds
-Verifier
-    ↓ synthesize mode-specific trust decision
-VerificationResult
-```
+## Documentation map
 
-For the edge profile, the policy path is:
+- `docs/INTEGRATION_GUIDE.md`
+- `docs/architecture.md`
+- `docs/trust-gateway.md`
+- `docs/http-transport-patterns.md`
+- `docs/deployment-guide.md`
+- `docs/NON_TECHNICAL_OVERVIEW.md`
 
-```text
-Signed Snapshot → Trust Anchor Verification → Freshness Check → Offline Authorization/Recognition → Process Appraisal → Trust Decision
-```
+## Roadmap status
 
-## Example process-aware result fields
-
-```json
-{
-  "actor_authorization": "authorized",
-  "process_integrity": "verified_high",
-  "trust_outcome": "trusted",
-  "process_appraisal": {
-    "status": "verified",
-    "process_type": "human_assisted",
-    "confidence": 0.92,
-    "minimum_confidence": 0.75
-  }
-}
-```
-
-## Repository Structure
-
-See `docs/repo-tree.md` for the refreshed tree and `docs/INTEGRATION_GUIDE.md` for the end-to-end workflow.
-
-## Current Priorities
-
-v0.7.0 closes a structural gap left open by earlier releases: the verifier can now express and enforce not only **who is allowed** to publish, but also **whether required process evidence accompanied the action**.
-
-The next release track moves toward **transport realism, deployment hardening, and richer exportable audit bundles**.
+The roadmap items through v0.9.0 are implemented in this release. The next step is to harden bundle formats and expand interoperability toward production-grade assurance exchange.
