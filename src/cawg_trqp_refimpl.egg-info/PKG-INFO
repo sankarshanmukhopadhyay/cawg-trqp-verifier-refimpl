@@ -1,10 +1,12 @@
 Metadata-Version: 2.4
 Name: cawg-trqp-refimpl
-Version: 0.7.0
+Version: 0.10.0
 Summary: Reference implementation for CAWG + TRQP integration
 Requires-Python: >=3.10
 License-File: LICENSE
 Requires-Dist: flask>=2.3.0
+Requires-Dist: cryptography>=43.0.0
+Requires-Dist: jsonschema>=4.23.0
 Provides-Extra: dev
 Requires-Dist: pytest>=8.0; extra == "dev"
 Requires-Dist: pytest-cov>=4.0; extra == "dev"

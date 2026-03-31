@@ -1,0 +1,52 @@
+{
+  "authorization": [
+    {
+      "entity_id": "did:web:publisher.example",
+      "authority_id": "did:web:media-registry.example",
+      "action": "publish",
+      "resource": "cawg:news-content",
+      "context": {"jurisdiction": "IN", "risk_tier": "medium"},
+      "authorized": true,
+      "policy_epoch": "2026-03-01T00:00:00Z",
+      "evidence": ["policy:media-registry:publisher:publish"],
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.8,
+        "allowed_process_types": ["human_assisted", "human_reviewed"]
+      }
+    },
+    {
+      "entity_id": "did:web:studio.example",
+      "authority_id": "did:web:coalition-registry.example",
+      "action": "publish",
+      "resource": "cawg:partner-content",
+      "context": {"jurisdiction": "EU", "risk_tier": "high"},
+      "authorized": true,
+      "policy_epoch": "2026-03-15T00:00:00Z",
+      "evidence": ["policy:coalition-registry:studio:publish"],
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.9,
+        "allowed_process_types": ["human_reviewed"]
+      }
+    }
+  ],
+  "recognition": [
+    {
+      "authority_id": "did:web:media-registry.example",
+      "recognized_authority_id": "did:web:issuer.example",
+      "context": {"credential_type": "vc:creator-identity"},
+      "recognized": true,
+      "policy_epoch": "2026-03-01T00:00:00Z",
+      "evidence": ["recognition:media-registry:issuer"]
+    },
+    {
+      "authority_id": "did:web:coalition-registry.example",
+      "recognized_authority_id": "did:web:issuer.eu.example",
+      "context": {"credential_type": "vc:creative-studio"},
+      "recognized": true,
+      "policy_epoch": "2026-03-15T00:00:00Z",
+      "evidence": ["recognition:coalition-registry:issuer-eu"]
+    }
+  ]
+}

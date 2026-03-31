@@ -1,0 +1,52 @@
+{
+  "vectors": [
+    {
+      "name": "media-registry-gateway-route",
+      "asset_id": "asset-interp-001",
+      "integrity_ok": true,
+      "entity_id": "did:web:publisher.example",
+      "authority_id": "did:web:media-registry.example",
+      "issuer_id": "did:web:issuer.example",
+      "action": "publish",
+      "resource": "cawg:news-content",
+      "context": {
+        "jurisdiction": "IN",
+        "credential_type": "vc:creator-identity",
+        "risk_tier": "medium"
+      },
+      "process_evidence": {
+        "verified": true,
+        "process_type": "human_assisted",
+        "confidence": 0.88,
+        "evidence_ref": "urn:example:pop:asset-interp-001",
+        "evidence_format": "application/cpop+cbor"
+      }
+    },
+    {
+      "name": "coalition-registry-gateway-route",
+      "asset_id": "asset-interp-002",
+      "integrity_ok": true,
+      "entity_id": "did:web:studio.example",
+      "authority_id": "did:web:coalition-registry.example",
+      "issuer_id": "did:web:issuer.eu.example",
+      "action": "publish",
+      "resource": "cawg:partner-content",
+      "context": {
+        "jurisdiction": "EU",
+        "credential_type": "vc:creative-studio",
+        "risk_tier": "high"
+      },
+      "process_evidence": {
+        "verified": true,
+        "process_type": "human_reviewed",
+        "confidence": 0.95,
+        "evidence_ref": "urn:example:pop:asset-interp-002",
+        "evidence_format": "application/cpop+cbor"
+      }
+    }
+  ],
+  "gateway_routes": {
+    "did:web:media-registry.example": "route:media-india",
+    "did:web:coalition-registry.example": "route:coalition-eu"
+  }
+}

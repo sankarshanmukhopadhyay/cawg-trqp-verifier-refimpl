@@ -19,8 +19,14 @@
 2. Add richer conformance and interoperability vectors.
 3. Add deployment guidance for process-aware verifiers and appraisal services.
 
-## Next horizon
+## Completed in v0.10.0
 
 1. Stabilize audit bundle serialization profile.
 2. Add assurance-oriented bundle validation and replay tooling.
 3. Expand interoperability vectors toward multi-authority production patterns.
+
+## Next horizon
+
+1. Add signed bundle attestation for independently verifiable export artifacts.
+2. Externalize policy feeds so replay can target pinned policy snapshots as well as live data.
+3. Add reproducibility fixtures for cross-run and cross-implementation comparison.

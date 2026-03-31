@@ -4,41 +4,26 @@
   "required": [
     "asset_integrity",
     "trust_outcome",
-    "process_integrity"
+    "process_integrity",
+    "policy_evidence",
+    "gateway_mediation"
   ],
   "properties": {
-    "asset_integrity": {
-      "type": "string"
-    },
-    "assertion_binding": {
-      "type": "string"
-    },
-    "issuer_recognition": {
-      "type": "string"
-    },
-    "actor_authorization": {
-      "type": "string"
-    },
-    "process_integrity": {
-      "type": "string"
-    },
-    "policy_freshness": {
-      "type": "string"
-    },
-    "verification_mode": {
-      "type": "string"
-    },
-    "trust_outcome": {
-      "type": "string"
-    },
-    "process_appraisal": {
-      "type": "object"
-    },
+    "asset_integrity": {"type": "string"},
+    "assertion_binding": {"type": "string"},
+    "issuer_recognition": {"type": "string"},
+    "actor_authorization": {"type": "string"},
+    "process_integrity": {"type": "string"},
+    "policy_freshness": {"type": "string"},
+    "verification_mode": {"type": "string"},
+    "trust_outcome": {"type": "string"},
+    "process_appraisal": {"type": "object"},
+    "policy_evidence": {"type": "object"},
+    "gateway_mediation": {"type": "object"},
     "explanations": {
       "type": "array",
-      "items": {
-        "type": "string"
-      }
+      "items": {"type": "string"}
     }
-  }
+  },
+  "additionalProperties": true
 }

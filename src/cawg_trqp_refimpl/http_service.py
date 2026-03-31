@@ -70,7 +70,7 @@ class HTTPTRQPService:
             if not data:
                 return jsonify({"error": "invalid_request", "message": "Request body must be JSON"}), 400
             try:
-                req = VerificationRequest(**data)
+                req = VerificationRequest(**self._verification_request_fields(data))
             except TypeError as exc:
                 return jsonify({"error": "invalid_request", "message": str(exc)}), 400
             profile = data.get('profile', 'standard') if isinstance(data, dict) else 'standard'
@@ -84,13 +84,22 @@ class HTTPTRQPService:
             if not data:
                 return jsonify({"error": "invalid_request", "message": "Request body must be JSON"}), 400
             try:
-                req = VerificationRequest(**data)
+                req = VerificationRequest(**self._verification_request_fields(data))
             except TypeError as exc:
                 return jsonify({"error": "invalid_request", "message": str(exc)}), 400
-            verifier = Verifier(service=self.mock_service, gateway=self.gateway if data.get('use_gateway') else None)
-            result = verifier.verify(req, profile=data.get('profile', 'standard'))
-            bundle = build_audit_bundle(req, result)
+            profile = data.get('profile', 'standard')
+            use_gateway = bool(data.get('use_gateway'))
+            verifier = Verifier(service=self.mock_service, gateway=self.gateway if use_gateway else None)
+            result = verifier.verify(req, profile=profile)
+            bundle = build_audit_bundle(req, result, profile=profile, use_gateway=use_gateway)
             return jsonify(bundle.to_dict()), 200
+
+    def _verification_request_fields(self, data: dict[str, Any]) -> dict[str, Any]:
+        allowed = {
+            'asset_id', 'integrity_ok', 'entity_id', 'authority_id', 'issuer_id',
+            'action', 'resource', 'context', 'process_evidence'
+        }
+        return {key: value for key, value in data.items() if key in allowed}
 
     def _serialize_response(self, response: AuthorizationResponse | RecognitionResponse) -> dict[str, Any]:
         result = {

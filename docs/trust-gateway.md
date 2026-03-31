@@ -1,33 +1,40 @@
-# Trust Gateway Component
+# Trust Gateway
 
 ## Purpose
 
-The trust gateway introduced in v0.9.0 models remote policy mediation for CAWG–TRQP verification flows. It sits between a verifier and one or more policy services so the verifier can remain lightweight while governance logic is centrally managed.
+The trust gateway is an optional mediation layer between the verifier and one or more policy services.
 
-## Why it exists
+It exists to separate:
 
-The gateway pattern is useful when:
+- verification execution
+- policy routing
+- mediation trace production
 
-- multiple verifiers need consistent policy mediation
-- organizations want a single point for routing and policy evidence capture
-- interoperability with multiple authorities or registries is required
-- remote policy decisions must be auditable and exportable
+## Current capabilities
 
-## Reference implementation behavior
+### Single-authority mediation
 
-The gateway in this repository:
+The gateway can mediate authorization and recognition lookups against a single policy service.
 
-- wraps the TRQP mock service
-- returns a mediation receipt alongside policy decisions
-- keeps authorization and recognition semantics unchanged
-- allows the verifier to switch between direct lookup and gateway-mediated lookup
+### Multi-authority routing
 
-## Architectural split
+The gateway can also map `authority_id` values to distinct policy services and route labels. This lets one verifier interact with multiple policy domains while preserving a machine-readable mediation record.
 
-- Verifier: evaluates manifests, process evidence, and local execution posture
-- Trust gateway: mediates policy queries and records the route taken
-- Policy service: returns authorization or recognition decisions
+## Mediation output
 
-## Result impact
+Each gateway-mediated lookup produces a record containing:
 
-When gateway mediation is enabled, the verification result includes a `gateway_mediation` object and the verification mode is marked as `gateway_mediated`.
+- `gateway_id`
+- `route_label`
+- `mode`
+- `target_authority_id`
+- `decision_type`
+
+## Why this matters
+
+In production systems, verifiers often should not hard-code policy endpoints directly. A mediation layer provides:
+
+- cleaner authority separation
+- more explicit routing control
+- better audit evidence
+- simpler migration toward federated topologies

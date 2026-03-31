@@ -1,9 +1,11 @@
 {
   "bundle_type": "cawg-trqp-audit-bundle",
-  "bundle_version": "0.9.0",
-  "exported_at": "2026-03-24T03:54:17.792921Z",
+  "bundle_profile": "https://example.org/profiles/cawg-trqp-audit-bundle/v1",
+  "bundle_version": "1.0.0",
+  "exported_at": "2026-03-31T00:00:00Z",
+  "bundle_id": "urn:trqp:audit-bundle:sha256:24c3d5bdfb80068318d7da21a5c34a27c10e449e60ae9d31745f03bd7a2925fe",
   "request_summary": {
-    "asset_id": "asset-001",
+    "asset_id": "asset-004",
     "entity_id": "did:web:publisher.example",
     "authority_id": "did:web:media-registry.example",
     "issuer_id": "did:web:issuer.example",
@@ -11,9 +13,10 @@
     "resource": "cawg:news-content",
     "context": {
       "jurisdiction": "IN",
-      "credential_type": "vc:creator-identity",
       "risk_tier": "medium",
-      "content_type": "image"
+      "content_type": "image",
+      "credential_type": "vc:creator-identity",
+      "process_type": "human_assisted"
     },
     "has_process_evidence": true
   },
@@ -29,9 +32,9 @@
     "process_appraisal": {
       "status": "verified",
       "process_type": "human_assisted",
-      "confidence": 0.91,
+      "confidence": 0.92,
       "minimum_confidence": 0.75,
-      "evidence_ref": "urn:example:pop:asset-001",
+      "evidence_ref": "urn:example:pop:asset-004",
       "evidence_format": "application/cpop+cbor",
       "appraisal": "writers_authenticity_report",
       "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
@@ -94,9 +97,9 @@
   "process_appraisal": {
     "status": "verified",
     "process_type": "human_assisted",
-    "confidence": 0.91,
+    "confidence": 0.92,
     "minimum_confidence": 0.75,
-    "evidence_ref": "urn:example:pop:asset-001",
+    "evidence_ref": "urn:example:pop:asset-004",
     "evidence_format": "application/cpop+cbor",
     "appraisal": "writers_authenticity_report",
     "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
@@ -114,5 +117,37 @@
       "target_authority_id": "did:web:media-registry.example",
       "decision_type": "recognition"
     }
-  }
+  },
+  "replay_inputs": {
+    "request": {
+      "asset_id": "asset-004",
+      "integrity_ok": true,
+      "entity_id": "did:web:publisher.example",
+      "authority_id": "did:web:media-registry.example",
+      "issuer_id": "did:web:issuer.example",
+      "action": "publish",
+      "resource": "cawg:news-content",
+      "context": {
+        "jurisdiction": "IN",
+        "risk_tier": "medium",
+        "content_type": "image",
+        "credential_type": "vc:creator-identity",
+        "process_type": "human_assisted"
+      },
+      "process_evidence": {
+        "verified": true,
+        "process_type": "human_assisted",
+        "confidence": 0.92,
+        "evidence_ref": "urn:example:pop:asset-004",
+        "evidence_format": "application/cpop+cbor",
+        "appraisal": "writers_authenticity_report",
+        "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
+      }
+    },
+    "profile": "standard",
+    "use_gateway": true,
+    "verification_mode": "gateway_mediated",
+    "policy_epoch": "2026-Q1"
+  },
+  "bundle_digest_sha256": "84b11d3fc52a26c45369974d837e7f804d46d63ec5fd89a39d82ed9678367753"
 }

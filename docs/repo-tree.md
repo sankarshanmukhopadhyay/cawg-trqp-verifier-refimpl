@@ -1,6 +1,8 @@
 # Repository Tree
 
 ```text
+.github/workflows/ci.yml
+.gitignore
 CHANGELOG.md
 GITHUB_RELEASE_TEMPLATE.md
 LICENSE
@@ -13,6 +15,7 @@ RELEASE_NOTES_v0.7.0.md
 RELEASE_NOTES_v0.9.0.md
 ROADMAP.md
 data/policies.json
+data/policies_multi_authority.json
 data/revocations.json
 data/snapshot.json
 data/snapshot_signing_key.example.pem
@@ -20,9 +23,11 @@ data/trust_anchors.json
 docs/INTEGRATION_GUIDE.md
 docs/NON_TECHNICAL_OVERVIEW.md
 docs/architecture.md
+docs/audit-bundle-profile.md
 docs/deployment-guide.md
 docs/http-transport-patterns.md
 docs/implementation-notes.md
+docs/interoperability-vectors.md
 docs/release-assets.md
 docs/release-readiness.md
 docs/repo-tree.md
@@ -32,6 +37,7 @@ examples/benchmark_constrained_device_request.json
 examples/benchmark_high_volume_request.json
 examples/expected/edge_result.json
 examples/expected/standard_result.json
+examples/exported_audit_bundle.json
 examples/fixtures/cawg_manifest_blocked.json
 examples/fixtures/cawg_manifest_c2pa.json
 examples/fixtures/cawg_manifest_c2pa_pop.json
@@ -39,6 +45,7 @@ examples/fixtures/cawg_manifest_c2pa_pop_failed.json
 examples/fixtures/cawg_manifest_minimal.json
 examples/fixtures/content_bundle_example.json
 examples/interoperability_vector_gateway.json
+examples/interoperability_vector_multi_authority.json
 examples/verification_request.json
 issues/001-real-cawg-c2pa-parser.md
 issues/002-signed-policy-snapshots.md
@@ -47,19 +54,17 @@ issues/004-revocation-delta-channel.md
 issues/005-conformance-suite-expansion.md
 pyproject.toml
 requirements.txt
+schemas/audit-bundle.schema.json
 schemas/authorization-request.schema.json
 schemas/authorization-response.schema.json
 schemas/verification-request.schema.json
 schemas/verification-result.schema.json
 scripts/export_repo_tree.py
+scripts/replay_audit_bundle.py
 scripts/run_demo.py
 scripts/sign_snapshot.py
 scripts/start_http_service.py
-src/cawg_trqp_refimpl.egg-info/PKG-INFO
-src/cawg_trqp_refimpl.egg-info/SOURCES.txt
-src/cawg_trqp_refimpl.egg-info/dependency_links.txt
-src/cawg_trqp_refimpl.egg-info/requires.txt
-src/cawg_trqp_refimpl.egg-info/top_level.txt
+scripts/validate_audit_bundle.py
 src/cawg_trqp_refimpl/__init__.py
 src/cawg_trqp_refimpl/audit.py
 src/cawg_trqp_refimpl/cache.py
@@ -68,14 +73,24 @@ src/cawg_trqp_refimpl/context.py
 src/cawg_trqp_refimpl/fixture_loader.py
 src/cawg_trqp_refimpl/gateway.py
 src/cawg_trqp_refimpl/http_service.py
+src/cawg_trqp_refimpl/jsoncanon.py
 src/cawg_trqp_refimpl/manifest_parser.py
 src/cawg_trqp_refimpl/mock_service.py
 src/cawg_trqp_refimpl/models.py
+src/cawg_trqp_refimpl/replay.py
 src/cawg_trqp_refimpl/snapshot.py
+src/cawg_trqp_refimpl/validation.py
 src/cawg_trqp_refimpl/verifier.py
+src/cawg_trqp_refimpl.egg-info/PKG-INFO
+src/cawg_trqp_refimpl.egg-info/SOURCES.txt
+src/cawg_trqp_refimpl.egg-info/dependency_links.txt
+src/cawg_trqp_refimpl.egg-info/requires.txt
+src/cawg_trqp_refimpl.egg-info/top_level.txt
+tests/test_audit_bundle.py
 tests/test_cache.py
 tests/test_conformance_vectors.py
 tests/test_fixture_loader.py
+tests/test_gateway_routes.py
 tests/test_http_service.py
 tests/test_snapshot.py
 tests/test_verifier.py

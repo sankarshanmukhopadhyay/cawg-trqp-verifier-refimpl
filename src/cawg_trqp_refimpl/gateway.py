@@ -9,22 +9,37 @@ from .mock_service import MockTRQPService
 class TrustGateway:
     """Remote policy mediation component for verifier-side trust orchestration.
 
-    The gateway is intentionally simple in the reference implementation. It sits
-    between verifier logic and the underlying TRQP service so deployments can
-    centralize policy mediation, auditing, and interoperability routing without
-    changing verifier behavior.
+    The gateway now supports deterministic route selection across multiple
+    authorities so interoperability vectors can model production-style
+    deployments with separate policy domains.
     """
 
-    def __init__(self, service: MockTRQPService, gateway_id: str = 'gateway:default', route_label: str = 'default') -> None:
+    def __init__(
+        self,
+        service: MockTRQPService | None = None,
+        gateway_id: str = 'gateway:default',
+        route_label: str = 'default',
+        authority_routes: dict[str, dict[str, Any]] | None = None,
+    ) -> None:
         self.service = service
         self.gateway_id = gateway_id
         self.route_label = route_label
+        self.authority_routes = authority_routes or {}
+
+    def _resolve_route(self, authority_id: str) -> tuple[MockTRQPService, str]:
+        route = self.authority_routes.get(authority_id)
+        if route is not None:
+            return route['service'], route.get('route_label', authority_id)
+        if self.service is None:
+            raise ValueError(f'No policy route configured for authority {authority_id}')
+        return self.service, self.route_label
 
     def authorization(self, entity_id: str, authority_id: str, action: str, resource: str, context: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
-        response = asdict(self.service.authorization(entity_id, authority_id, action, resource, context))
+        service, route_label = self._resolve_route(authority_id)
+        response = asdict(service.authorization(entity_id, authority_id, action, resource, context))
         mediation = {
             'gateway_id': self.gateway_id,
-            'route_label': self.route_label,
+            'route_label': route_label,
             'mode': 'remote_policy_mediation',
             'target_authority_id': authority_id,
             'decision_type': 'authorization',
@@ -32,10 +47,11 @@ class TrustGateway:
         return response, mediation
 
     def recognition(self, authority_id: str, recognized_authority_id: str, context: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
-        response = asdict(self.service.recognition(authority_id, recognized_authority_id, context))
+        service, route_label = self._resolve_route(authority_id)
+        response = asdict(service.recognition(authority_id, recognized_authority_id, context))
         mediation = {
             'gateway_id': self.gateway_id,
-            'route_label': self.route_label,
+            'route_label': route_label,
             'mode': 'remote_policy_mediation',
             'target_authority_id': authority_id,
             'decision_type': 'recognition',

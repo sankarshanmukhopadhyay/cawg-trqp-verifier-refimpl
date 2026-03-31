@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/cawg-trqp/audit-bundle.schema.json",
+  "type": "object",
+  "required": [
+    "bundle_type",
+    "bundle_profile",
+    "bundle_version",
+    "exported_at",
+    "bundle_id",
+    "bundle_digest_sha256",
+    "request_summary",
+    "verification_result",
+    "policy_evidence",
+    "process_appraisal",
+    "replay_inputs"
+  ],
+  "properties": {
+    "bundle_type": {
+      "const": "cawg-trqp-audit-bundle"
+    },
+    "bundle_profile": {
+      "type": "string"
+    },
+    "bundle_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "exported_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "bundle_id": {
+      "type": "string"
+    },
+    "bundle_digest_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "request_summary": {
+      "type": "object"
+    },
+    "verification_result": {
+      "type": "object"
+    },
+    "policy_evidence": {
+      "type": "object"
+    },
+    "process_appraisal": {
+      "type": "object"
+    },
+    "gateway_mediation": {
+      "type": "object"
+    },
+    "replay_inputs": {
+      "type": "object",
+      "required": [
+        "request",
+        "profile",
+        "use_gateway",
+        "verification_mode",
+        "policy_epoch"
+      ],
+      "properties": {
+        "request": {
+          "type": "object"
+        },
+        "profile": {
+          "enum": [
+            "edge",
+            "standard",
+            "high_assurance"
+          ]
+        },
+        "use_gateway": {
+          "type": "boolean"
+        },
+        "verification_mode": {
+          "type": "string"
+        },
+        "policy_epoch": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

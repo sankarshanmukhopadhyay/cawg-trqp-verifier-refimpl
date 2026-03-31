@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.10.0
+
+- stabilize the audit bundle serialization profile with deterministic digest and bundle identifier fields
+- add audit bundle schema validation and replay tooling
+- add replay inputs to exported bundles so assurance workflows can re-execute trust decisions
+- add multi-authority gateway routing and production-style interoperability vectors
+- harden the HTTP wrapper to separate verification request fields from transport control fields
+- expand test coverage for deterministic export, replay, and gateway routing
+
 ## v0.9.0
 
 - add exportable audit bundle support that packages verification result, policy evidence, process appraisal, and gateway mediation

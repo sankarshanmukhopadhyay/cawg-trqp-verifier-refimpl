@@ -1,61 +1,53 @@
 # CAWG–TRQP Reference Implementation
 
-**Version:** v0.9.0  
-**Status:** Reference implementation with signed offline snapshots, process-aware trust synthesis, exportable audit bundles, and trust gateway mediation
+**Version:** v0.10.0  
+**Status:** Reference implementation with deterministic audit bundles, replay tooling, multi-authority gateway routing, signed offline snapshots, and process-aware trust synthesis
 
 ## Overview
 
-This repository demonstrates how **TRQP** operates as the governance decision plane in a **CAWG/C2PA** verification workflow, and how that workflow can be extended with process-aware evidence, exportable audit bundles, and remote policy mediation.
+This repository demonstrates how **TRQP** can operate as the governance decision plane in a **CAWG/C2PA** verification workflow. The implementation now pushes beyond basic reference behavior into a more deterministic assurance profile:
 
-By v0.9.0 the project covers the roadmap items for v0.8.0 and v0.9.0:
+- **deterministic audit bundles** with a stable serialization profile, canonical digest, and replay inputs
+- **assurance-oriented validation and replay tooling** so exported bundles can be checked and re-executed
+- **multi-authority trust gateway routing** for production-style interoperability patterns across distinct policy domains
+- **process-aware trust synthesis** that binds content verification to actor authorization and process appraisal
+- **signed snapshot support** for constrained and offline verification environments
 
-- exportable audit bundles that package verification result, policy evidence, and process appraisal together
-- HTTP transport patterns for process-aware authorization and verification exchange
-- benchmark fixtures for high-volume and constrained-device process-aware verification
-- trust gateway component for remote policy mediation
-- richer conformance and interoperability vectors
-- deployment guidance for process-aware verifiers and appraisal services
+## What this increment adds
 
-## What v0.9.0 adds
+### 1. Stable audit bundle serialization profile
 
-### 1. Audit bundle export
+Audit bundles now include:
 
-The verifier can now package portable audit bundles that include:
+- `bundle_profile`
+- `bundle_version`
+- `bundle_id`
+- `bundle_digest_sha256`
+- `replay_inputs`
 
-- request summary
-- verification result
-- policy evidence
-- process appraisal
-- gateway mediation trace when enabled
+This makes exported evidence portable, machine-checkable, and materially more deterministic across systems.
 
-### 2. Trust gateway mediation
+### 2. Validation and replay tooling
 
-A trust gateway component now models remote policy mediation. This lets deployments separate verification execution from policy routing while keeping a traceable mediation record.
+The repository now ships with:
 
-### 3. HTTP transport patterns
+- `schemas/audit-bundle.schema.json`
+- `scripts/validate_audit_bundle.py`
+- `scripts/replay_audit_bundle.py`
 
-The reference HTTP service now demonstrates:
+These support structural validation, digest verification, and replay against current policy data.
 
-- direct authorization lookup
-- recognition lookup
-- gateway-mediated authorization lookup
-- end-to-end verification over HTTP
-- audit bundle export over HTTP
+### 3. Multi-authority interoperability patterns
 
-### 4. Interoperability and benchmark fixtures
+The trust gateway can now route requests deterministically by authority. The repository includes:
 
-The repository now includes benchmark-style request fixtures for high-volume and constrained-device verification, along with gateway-oriented interoperability vectors.
+- `data/policies_multi_authority.json`
+- `examples/interoperability_vector_multi_authority.json`
+- route-aware gateway tests
 
-### 5. Deployment guidance and executive framing
+This moves the implementation closer to real multi-registry and federated deployment topologies.
 
-The docs now include:
-
-- a deployment guide for process-aware verifiers and appraisal services
-- a trust gateway architecture note
-- an HTTP transport patterns note
-- a non-technical overview for enterprise IT and business leaders
-
-## Quick Start
+## Quick start
 
 ### Install
 
@@ -68,13 +60,35 @@ pip install -e .
 ### Run standard verification
 
 ```bash
-python -m cawg_trqp_refimpl.cli --fixture examples/fixtures/cawg_manifest_c2pa_pop.json --profile standard
+python -m cawg_trqp_refimpl.cli \
+  --fixture examples/fixtures/cawg_manifest_c2pa_pop.json \
+  --profile standard
 ```
 
-### Run gateway-mediated verification and export an audit bundle
+### Export a deterministic audit bundle
 
 ```bash
-python -m cawg_trqp_refimpl.cli   --fixture examples/fixtures/cawg_manifest_c2pa_pop.json   --profile standard   --use-gateway   --export-audit-bundle examples/exported_audit_bundle.json
+python -m cawg_trqp_refimpl.cli \
+  --fixture examples/fixtures/cawg_manifest_c2pa_pop.json \
+  --profile standard \
+  --use-gateway \
+  --exported-at 2026-03-31T00:00:00Z \
+  --export-audit-bundle examples/exported_audit_bundle.json
+```
+
+### Validate an audit bundle
+
+```bash
+python scripts/validate_audit_bundle.py examples/exported_audit_bundle.json
+```
+
+### Replay an audit bundle
+
+```bash
+python scripts/replay_audit_bundle.py \
+  examples/exported_audit_bundle.json \
+  --policies data/policies.json \
+  --revocations data/revocations.json
 ```
 
 ### Start HTTP service
@@ -91,23 +105,48 @@ python scripts/start_http_service.py --port 5000
 | `standard` | stable | cache-first with live lookup on miss | policy-aware composite decision | service and platform verification |
 | `high_assurance` | stable | live lookup always | strict process policy enforcement | regulated or audit-sensitive verification |
 
-## New components
+## Deterministic assurance model
 
-### Audit bundle
-Portable package that turns a verification event into a shareable evidence artifact.
+The implementation now treats exported evidence as a machine-verifiable artifact rather than a convenience log.
 
-### Trust gateway
-Optional mediation layer for remote policy routing and governance traceability.
+Each audit bundle can now answer four operational questions:
+
+1. **What request was evaluated?** via `request_summary` and `replay_inputs.request`
+2. **What decision was reached?** via `verification_result`
+3. **What evidence and policy epoch supported it?** via `policy_evidence`
+4. **Can the result be validated and replayed?** via bundle schema validation, digest verification, and replay tooling
 
 ## Documentation map
 
 - `docs/INTEGRATION_GUIDE.md`
 - `docs/architecture.md`
-- `docs/trust-gateway.md`
-- `docs/http-transport-patterns.md`
+- `docs/audit-bundle-profile.md`
 - `docs/deployment-guide.md`
+- `docs/http-transport-patterns.md`
+- `docs/interoperability-vectors.md`
+- `docs/trust-gateway.md`
+- `docs/verifier-profiles.md`
 - `docs/NON_TECHNICAL_OVERVIEW.md`
 
 ## Roadmap status
 
-The roadmap items through v0.9.0 are implemented in this release. The next step is to harden bundle formats and expand interoperability toward production-grade assurance exchange.
+The prior next-horizon items are now implemented in this working tree:
+
+- stabilize audit bundle serialization profile
+- add assurance-oriented bundle validation and replay tooling
+- expand interoperability vectors toward multi-authority production patterns
+
+The next meaningful increment should focus on signed bundle attestations, externalized policy feeds, and cross-run reproducibility fixtures.
+
+## Validation
+
+```bash
+pytest -q
+```
+
+Current repository test status for this increment:
+
+- **25 passed**
+- **5 skipped**
+
+The skipped tests are optional Flask-dependent paths.

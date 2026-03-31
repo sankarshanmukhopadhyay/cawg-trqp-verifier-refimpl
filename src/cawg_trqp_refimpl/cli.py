@@ -25,6 +25,7 @@ def main() -> None:
     parser.add_argument("--revocations", default="data/revocations.json")
     parser.add_argument("--use-gateway", action="store_true", help="Route live policy queries through trust gateway")
     parser.add_argument("--export-audit-bundle", help="Path to write audit bundle JSON")
+    parser.add_argument("--exported-at", help="Deterministic timestamp override for audit bundle export")
     args = parser.parse_args()
 
     root = Path.cwd()
@@ -45,7 +46,13 @@ def main() -> None:
     result = verifier.verify(request, profile=args.profile)
     print(json.dumps(result.to_dict(), indent=2))
     if args.export_audit_bundle:
-        bundle = build_audit_bundle(request, result)
+        bundle = build_audit_bundle(
+            request,
+            result,
+            profile=args.profile,
+            use_gateway=args.use_gateway,
+            exported_at=args.exported_at,
+        )
         Path(args.export_audit_bundle).write_text(json.dumps(bundle.to_dict(), indent=2), encoding='utf-8')
 
 
