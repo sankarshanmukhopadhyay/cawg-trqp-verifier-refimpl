@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from .jsoncanon import canonical_json_bytes, sha256_hex
@@ -9,7 +10,7 @@ from .models import VerificationRequest, VerificationResult
 
 AUDIT_BUNDLE_TYPE = "cawg-trqp-audit-bundle"
 AUDIT_BUNDLE_PROFILE = "https://example.org/profiles/cawg-trqp-audit-bundle/v1"
-AUDIT_BUNDLE_VERSION = "1.0.0"
+AUDIT_BUNDLE_VERSION = "1.1.0"
 
 
 @dataclass
@@ -26,6 +27,7 @@ class AuditBundle:
     process_appraisal: dict[str, Any]
     gateway_mediation: dict[str, Any] = field(default_factory=dict)
     replay_inputs: dict[str, Any] = field(default_factory=dict)
+    bundle_attestation: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         content = {
@@ -42,6 +44,8 @@ class AuditBundle:
             "replay_inputs": self.replay_inputs,
         }
         content["bundle_digest_sha256"] = sha256_hex(content)
+        if self.bundle_attestation:
+            content["bundle_attestation"] = self.bundle_attestation
         return content
 
     def to_canonical_json(self) -> bytes:
@@ -61,6 +65,7 @@ def _request_to_summary(request: VerificationRequest) -> dict[str, Any]:
     }
 
 
+
 def build_audit_bundle(
     request: VerificationRequest,
     result: VerificationResult,
@@ -68,9 +73,19 @@ def build_audit_bundle(
     profile: str = "standard",
     use_gateway: bool = False,
     exported_at: str | None = None,
+    policy_path: str | Path | None = None,
+    revocation_path: str | Path | None = None,
 ) -> AuditBundle:
     exported_at = exported_at or datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     request_summary = _request_to_summary(request)
+    policy_feed = {}
+    if policy_path is not None:
+        policy_feed["policy_source"] = str(policy_path)
+        policy_feed["policy_source_sha256"] = sha256_hex(Path(policy_path).read_text(encoding="utf-8"))
+    if revocation_path is not None:
+        policy_feed["revocation_source"] = str(revocation_path)
+        policy_feed["revocation_source_sha256"] = sha256_hex(Path(revocation_path).read_text(encoding="utf-8"))
+
     replay_inputs = {
         "request": {
             "asset_id": request.asset_id,
@@ -88,6 +103,8 @@ def build_audit_bundle(
         "verification_mode": result.verification_mode,
         "policy_epoch": result.policy_evidence.get("policy_epoch"),
     }
+    if policy_feed:
+        replay_inputs["policy_feed"] = policy_feed
     bundle_seed = {
         "request_summary": request_summary,
         "verification_result": result.to_dict(),

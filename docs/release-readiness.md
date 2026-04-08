@@ -1,10 +1,10 @@
 # Release Readiness
 
-## v0.9.0 checklist
+## v0.11.0 checklist
 
-- [x] audit bundle export implemented
-- [x] trust gateway implemented
-- [x] HTTP transport patterns expanded
-- [x] interoperability vectors added
-- [x] deployment guidance added
-- [x] non-technical overview added
+- [x] audit bundle attestation implemented
+- [x] audit bundle validation extended for attestation verification
+- [x] replay supports pinned external policy feed metadata
+- [x] deterministic reproducibility fixture added
+- [x] README and architecture docs refreshed
+- [x] tests expanded for attestation and replay source pinning

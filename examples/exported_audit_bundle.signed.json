@@ -127,5 +127,10 @@
       "revocation_source_sha256": "71c9bad31ad298ba7e8bd669255bcf0ab89ffeff7268d723b5a3af46eba7ce19"
     }
   },
-  "bundle_digest_sha256": "260ed3f57bf9dc24f765f586d96dd65c698fd47e4491cce26768ac764f3c85ac"
+  "bundle_digest_sha256": "260ed3f57bf9dc24f765f586d96dd65c698fd47e4491cce26768ac764f3c85ac",
+  "bundle_attestation": {
+    "algorithm": "Ed25519",
+    "key_id": "media-registry-snapshot-key-1",
+    "value": "baC0bV25TQJWFdocnCxUGW+fF/j4iVUMwJUzGa8nmlu0lXr6oQSttOHzQ1GB5kXmCLcyiqyj/UGxQ2oCraWaAQ=="
+  }
 }

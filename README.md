@@ -1,51 +1,27 @@
 # CAWG–TRQP Reference Implementation
 
-**Version:** v0.10.0  
-**Status:** Reference implementation with deterministic audit bundles, replay tooling, multi-authority gateway routing, signed offline snapshots, and process-aware trust synthesis
+**Version:** v0.11.0  
+**Status:** Release candidate focused on attestable audit bundles, pinned replay sources, and reproducibility fixtures
 
 ## Overview
 
-This repository demonstrates how **TRQP** can operate as the governance decision plane in a **CAWG/C2PA** verification workflow. The implementation now pushes beyond basic reference behavior into a more deterministic assurance profile:
+This repository demonstrates how **TRQP** can operate as the governance decision plane in a **CAWG/C2PA** verification workflow. The current increment strengthens the evidence layer so exported verification artifacts can be signed, replayed against pinned policy sources, and compared across runs.
 
-- **deterministic audit bundles** with a stable serialization profile, canonical digest, and replay inputs
-- **assurance-oriented validation and replay tooling** so exported bundles can be checked and re-executed
-- **multi-authority trust gateway routing** for production-style interoperability patterns across distinct policy domains
-- **process-aware trust synthesis** that binds content verification to actor authorization and process appraisal
-- **signed snapshot support** for constrained and offline verification environments
+The result is a more operational assurance profile for content verification systems that need machine-verifiable evidence rather than ad hoc logs.
 
-## What this increment adds
+## What v0.11.0 adds
 
-### 1. Stable audit bundle serialization profile
+### 1. Signed audit bundle attestation
 
-Audit bundles now include:
+Audit bundles can now carry an optional `bundle_attestation` block signed with Ed25519. This allows exported evidence artifacts to be independently verified after transport, storage, or handoff.
 
-- `bundle_profile`
-- `bundle_version`
-- `bundle_id`
-- `bundle_digest_sha256`
-- `replay_inputs`
+### 2. Externalized policy feed pinning
 
-This makes exported evidence portable, machine-checkable, and materially more deterministic across systems.
+Replay inputs now carry a `policy_feed` descriptor with pinned policy and revocation sources plus content digests. Replay tooling can use those sources directly, making bundle re-execution materially more portable.
 
-### 2. Validation and replay tooling
+### 3. Reproducibility fixture workflow
 
-The repository now ships with:
-
-- `schemas/audit-bundle.schema.json`
-- `scripts/validate_audit_bundle.py`
-- `scripts/replay_audit_bundle.py`
-
-These support structural validation, digest verification, and replay against current policy data.
-
-### 3. Multi-authority interoperability patterns
-
-The trust gateway can now route requests deterministically by authority. The repository includes:
-
-- `data/policies_multi_authority.json`
-- `examples/interoperability_vector_multi_authority.json`
-- route-aware gateway tests
-
-This moves the implementation closer to real multi-registry and federated deployment topologies.
+The repository now includes deterministic reproducibility tooling so implementers can regenerate a known-good bundle and compare it byte-for-byte at the data model level.
 
 ## Quick start
 
@@ -60,41 +36,37 @@ pip install -e .
 ### Run standard verification
 
 ```bash
-python -m cawg_trqp_refimpl.cli \
-  --fixture examples/fixtures/cawg_manifest_c2pa_pop.json \
-  --profile standard
+python -m cawg_trqp_refimpl.cli   --fixture examples/fixtures/cawg_manifest_c2pa_pop.json   --profile standard
 ```
 
 ### Export a deterministic audit bundle
 
 ```bash
-python -m cawg_trqp_refimpl.cli \
-  --fixture examples/fixtures/cawg_manifest_c2pa_pop.json \
-  --profile standard \
-  --use-gateway \
-  --exported-at 2026-03-31T00:00:00Z \
-  --export-audit-bundle examples/exported_audit_bundle.json
+python -m cawg_trqp_refimpl.cli   --fixture examples/fixtures/cawg_manifest_c2pa_pop.json   --profile standard   --use-gateway   --exported-at 2026-03-31T00:00:00Z   --export-audit-bundle examples/exported_audit_bundle.json
 ```
 
-### Validate an audit bundle
+### Export and sign an audit bundle
 
 ```bash
-python scripts/validate_audit_bundle.py examples/exported_audit_bundle.json
+python -m cawg_trqp_refimpl.cli   --fixture examples/fixtures/cawg_manifest_c2pa_pop.json   --profile standard   --exported-at 2026-03-31T00:00:00Z   --export-audit-bundle examples/exported_audit_bundle.signed.json   --bundle-signing-key data/snapshot_signing_key.example.pem   --bundle-key-id media-registry-snapshot-key-1
 ```
 
-### Replay an audit bundle
+### Validate an audit bundle and its attestation
 
 ```bash
-python scripts/replay_audit_bundle.py \
-  examples/exported_audit_bundle.json \
-  --policies data/policies.json \
-  --revocations data/revocations.json
+python scripts/validate_audit_bundle.py   examples/exported_audit_bundle.signed.json   --trust-anchors data/trust_anchors.json
 ```
 
-### Start HTTP service
+### Replay using pinned policy feed metadata
 
 ```bash
-python scripts/start_http_service.py --port 5000
+python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
+```
+
+### Check reproducibility fixture
+
+```bash
+python scripts/check_reproducibility.py examples/reproducibility_bundle_standard.json
 ```
 
 ## Verification profiles
@@ -105,22 +77,23 @@ python scripts/start_http_service.py --port 5000
 | `standard` | stable | cache-first with live lookup on miss | policy-aware composite decision | service and platform verification |
 | `high_assurance` | stable | live lookup always | strict process policy enforcement | regulated or audit-sensitive verification |
 
-## Deterministic assurance model
+## Assurance model
 
-The implementation now treats exported evidence as a machine-verifiable artifact rather than a convenience log.
-
-Each audit bundle can now answer four operational questions:
+Each audit bundle can now answer six operational questions:
 
 1. **What request was evaluated?** via `request_summary` and `replay_inputs.request`
 2. **What decision was reached?** via `verification_result`
 3. **What evidence and policy epoch supported it?** via `policy_evidence`
-4. **Can the result be validated and replayed?** via bundle schema validation, digest verification, and replay tooling
+4. **What policy sources were pinned for replay?** via `replay_inputs.policy_feed`
+5. **Can the artifact be independently attested?** via `bundle_attestation`
+6. **Can the result be reproduced?** via validation, replay, and reproducibility fixture tooling
 
 ## Documentation map
 
 - `docs/INTEGRATION_GUIDE.md`
 - `docs/architecture.md`
 - `docs/audit-bundle-profile.md`
+- `docs/reproducibility-guide.md`
 - `docs/deployment-guide.md`
 - `docs/http-transport-patterns.md`
 - `docs/interoperability-vectors.md`
@@ -130,23 +103,16 @@ Each audit bundle can now answer four operational questions:
 
 ## Roadmap status
 
-The prior next-horizon items are now implemented in this working tree:
+v0.11.0 completes substantial portions of the current next horizon by introducing:
 
-- stabilize audit bundle serialization profile
-- add assurance-oriented bundle validation and replay tooling
-- expand interoperability vectors toward multi-authority production patterns
+- signed bundle attestation for exported verification artifacts
+- pinned external policy feed metadata for replay portability
+- reproducibility fixtures for cross-run comparison
 
-The next meaningful increment should focus on signed bundle attestations, externalized policy feeds, and cross-run reproducibility fixtures.
+The next release should focus on richer feed transports, delta update channels, and cross-implementation fixture exchange.
 
 ## Validation
 
 ```bash
 pytest -q
 ```
-
-Current repository test status for this increment:
-
-- **25 passed**
-- **5 skipped**
-
-The skipped tests are optional Flask-dependent paths.

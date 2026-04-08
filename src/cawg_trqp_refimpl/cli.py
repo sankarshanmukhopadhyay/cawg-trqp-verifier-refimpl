@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from .attestation import sign_audit_bundle_from_path
 from .audit import build_audit_bundle
 from .fixture_loader import load_manifest_fixture
 from .models import VerificationRequest
@@ -26,7 +27,12 @@ def main() -> None:
     parser.add_argument("--use-gateway", action="store_true", help="Route live policy queries through trust gateway")
     parser.add_argument("--export-audit-bundle", help="Path to write audit bundle JSON")
     parser.add_argument("--exported-at", help="Deterministic timestamp override for audit bundle export")
+    parser.add_argument("--bundle-signing-key", help="Path to Ed25519 private key PEM for bundle attestation")
+    parser.add_argument("--bundle-key-id", help="Trust-anchor key identifier for bundle attestation")
     args = parser.parse_args()
+
+    if args.bundle_signing_key and not args.bundle_key_id:
+        raise SystemExit("--bundle-key-id is required when --bundle-signing-key is used")
 
     root = Path.cwd()
     if args.fixture:
@@ -52,8 +58,12 @@ def main() -> None:
             profile=args.profile,
             use_gateway=args.use_gateway,
             exported_at=args.exported_at,
-        )
-        Path(args.export_audit_bundle).write_text(json.dumps(bundle.to_dict(), indent=2), encoding='utf-8')
+            policy_path=args.policies if args.profile != "edge" else None,
+            revocation_path=args.revocations if args.profile != "edge" else None,
+        ).to_dict()
+        if args.bundle_signing_key:
+            bundle = sign_audit_bundle_from_path(bundle, root / args.bundle_signing_key, key_id=args.bundle_key_id)
+        Path(args.export_audit_bundle).write_text(json.dumps(bundle, indent=2), encoding='utf-8')
 
 
 if __name__ == "__main__":

@@ -7,11 +7,12 @@ from cawg_trqp_refimpl.replay import replay_audit_bundle
 from cawg_trqp_refimpl.validation import load_json
 
 
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Replay a CAWG-TRQP audit bundle against current policy data")
+    parser = argparse.ArgumentParser(description="Replay a CAWG-TRQP audit bundle against pinned or supplied policy data")
     parser.add_argument("bundle_json", help="Path to audit bundle JSON")
-    parser.add_argument("--policies", default="data/policies.json")
-    parser.add_argument("--revocations", default="data/revocations.json")
+    parser.add_argument("--policies", help="Path to policy data JSON. Defaults to replay_inputs.policy_feed.policy_source")
+    parser.add_argument("--revocations", help="Path to revocation data JSON. Defaults to replay_inputs.policy_feed.revocation_source")
     args = parser.parse_args()
 
     bundle = load_json(args.bundle_json)
@@ -19,6 +20,7 @@ def main() -> None:
     print(json.dumps({
         "matches": report.matches,
         "differences": report.differences,
+        "policy_sources": report.policy_sources,
         "replayed_result": report.replayed_result,
     }, indent=2))
     if not report.matches:

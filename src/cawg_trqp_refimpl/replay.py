@@ -15,6 +15,7 @@ class ReplayReport:
     expected_result: dict[str, Any]
     matches: bool
     differences: list[str] = field(default_factory=list)
+    policy_sources: dict[str, str] = field(default_factory=dict)
 
 
 COMPARE_FIELDS = (
@@ -29,18 +30,25 @@ COMPARE_FIELDS = (
 )
 
 
+
 def replay_audit_bundle(
     bundle: dict[str, Any],
     *,
-    policy_path: str,
+    policy_path: str | None = None,
     revocation_path: str | None = None,
 ) -> ReplayReport:
     inputs = bundle.get("replay_inputs", {})
     request = VerificationRequest(**inputs["request"])
     profile = inputs.get("profile", "standard")
     use_gateway = bool(inputs.get("use_gateway", False))
+    policy_feed = inputs.get("policy_feed", {})
+    resolved_policy_path = policy_path or policy_feed.get("policy_source")
+    resolved_revocation_path = revocation_path or policy_feed.get("revocation_source")
 
-    service = None if profile == "edge" else MockTRQPService(policy_path, revocation_path)
+    if profile != "edge" and not resolved_policy_path:
+        raise ValueError("policy_path is required unless replay_inputs.policy_feed.policy_source is present")
+
+    service = None if profile == "edge" else MockTRQPService(resolved_policy_path, resolved_revocation_path)
     gateway = TrustGateway(service) if use_gateway and service is not None else None
     verifier = Verifier(service=service, gateway=gateway)
     result = verifier.verify(request, profile=profile).to_dict()
@@ -61,4 +69,8 @@ def replay_audit_bundle(
         expected_result=expected,
         matches=not differences,
         differences=differences,
+        policy_sources={
+            "policy_source": resolved_policy_path or "",
+            "revocation_source": resolved_revocation_path or "",
+        },
     )

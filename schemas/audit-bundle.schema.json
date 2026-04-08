@@ -83,9 +83,49 @@
             "string",
             "null"
           ]
+        },
+        "policy_feed": {
+          "type": "object",
+          "properties": {
+            "policy_source": {
+              "type": "string"
+            },
+            "policy_source_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "revocation_source": {
+              "type": "string"
+            },
+            "revocation_source_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": true
+    },
+    "bundle_attestation": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "const": "Ed25519"
+        },
+        "key_id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "algorithm",
+        "key_id",
+        "value"
+      ],
+      "additionalProperties": false
     }
   },
   "additionalProperties": true

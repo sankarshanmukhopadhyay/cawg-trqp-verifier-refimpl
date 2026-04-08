@@ -77,3 +77,23 @@ Replay compares the expected and replayed values for core trust decision fields,
 ## Scope note
 
 This profile does not yet sign audit bundles directly. The current guarantee is deterministic structure plus digest validation, not independent bundle attestation.
+
+
+## Optional attestation
+
+Audit bundles may include a `bundle_attestation` object with the following fields:
+
+- `algorithm`: currently `Ed25519`
+- `key_id`: trust-anchor key identifier
+- `value`: base64-encoded signature over the canonical bundle payload excluding `bundle_attestation`
+
+## Policy feed pinning
+
+`replay_inputs.policy_feed` may include:
+
+- `policy_source`
+- `policy_source_sha256`
+- `revocation_source`
+- `revocation_source_sha256`
+
+These fields allow replay tooling to target the same externalized policy inputs that were used when the bundle was exported.

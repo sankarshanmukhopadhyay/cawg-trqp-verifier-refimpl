@@ -25,8 +25,14 @@
 2. Add assurance-oriented bundle validation and replay tooling.
 3. Expand interoperability vectors toward multi-authority production patterns.
 
-## Next horizon
+## Completed in v0.11.0
 
 1. Add signed bundle attestation for independently verifiable export artifacts.
-2. Externalize policy feeds so replay can target pinned policy snapshots as well as live data.
-3. Add reproducibility fixtures for cross-run and cross-implementation comparison.
+2. Externalize policy feeds in replay inputs so exported bundles can target pinned policy and revocation sources.
+3. Add reproducibility fixtures for cross-run comparison.
+
+## Next horizon
+
+1. Add feed transport abstractions beyond local JSON paths.
+2. Introduce revocation delta polling and feed freshness assertions.
+3. Publish a cross-implementation fixture exchange profile.

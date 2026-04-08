@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.11.0
+
+- add optional Ed25519 bundle attestation for exported audit bundles
+- extend audit bundle validation to verify attestation against trust anchors
+- pin policy and revocation sources in replay inputs for portable evidence re-execution
+- allow replay tooling to resolve externalized policy feeds directly from bundle metadata
+- add deterministic reproducibility fixture and comparison script
+- refresh README and assurance documentation for the stronger evidence model
+
 ## v0.10.0
 
 - stabilize the audit bundle serialization profile with deterministic digest and bundle identifier fields
