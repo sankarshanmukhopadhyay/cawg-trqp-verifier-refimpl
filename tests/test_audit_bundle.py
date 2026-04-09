@@ -32,7 +32,7 @@ def test_audit_bundle_contains_policy_and_process_data():
     assert bundle["verification_result"]["trust_outcome"] == "trusted"
     assert bundle["policy_evidence"]["authorization_evidence"]
     assert bundle["process_appraisal"]["status"] == "verified"
-    assert bundle["replay_inputs"]["profile"] == "standard"
+    assert bundle["replay_inputs"]["profile"]["id"] == "standard"
     assert bundle["replay_inputs"]["policy_feed"]["policy_source"] == "data/policies.json"
     assert len(bundle["bundle_digest_sha256"]) == 64
 

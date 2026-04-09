@@ -1,0 +1,10 @@
+{
+  "id": "evidence_attested",
+  "description": "Require audit bundle emission with attestation.",
+  "controls": {
+    "evidence": {
+      "emit_audit_bundle": true,
+      "require_attestation": true
+    }
+  }
+}

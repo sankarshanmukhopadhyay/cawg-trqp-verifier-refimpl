@@ -6,6 +6,7 @@ from typing import Any
 from .gateway import TrustGateway
 from .models import VerificationRequest
 from .mock_service import MockTRQPService
+from .profile import load_profile
 from .verifier import Verifier
 
 
@@ -39,19 +40,20 @@ def replay_audit_bundle(
 ) -> ReplayReport:
     inputs = bundle.get("replay_inputs", {})
     request = VerificationRequest(**inputs["request"])
-    profile = inputs.get("profile", "standard")
+    profile_ref = inputs.get("profile", "standard")
+    resolved_profile = load_profile(profile_ref)
     use_gateway = bool(inputs.get("use_gateway", False))
     policy_feed = inputs.get("policy_feed", {})
     resolved_policy_path = policy_path or policy_feed.get("policy_source")
     resolved_revocation_path = revocation_path or policy_feed.get("revocation_source")
 
-    if profile != "edge" and not resolved_policy_path:
+    if resolved_profile.base_profile != "edge" and not resolved_policy_path:
         raise ValueError("policy_path is required unless replay_inputs.policy_feed.policy_source is present")
 
-    service = None if profile == "edge" else MockTRQPService(resolved_policy_path, resolved_revocation_path)
+    service = None if resolved_profile.base_profile == "edge" else MockTRQPService(resolved_policy_path, resolved_revocation_path)
     gateway = TrustGateway(service) if use_gateway and service is not None else None
     verifier = Verifier(service=service, gateway=gateway)
-    result = verifier.verify(request, profile=profile).to_dict()
+    result = verifier.verify(request, profile=resolved_profile).to_dict()
     expected = bundle.get("verification_result", {})
 
     differences: list[str] = []
@@ -63,6 +65,11 @@ def replay_audit_bundle(
     actual_epoch = result.get("policy_evidence", {}).get("policy_epoch")
     if expected_epoch != actual_epoch:
         differences.append(f"policy_epoch: expected={expected_epoch!r} actual={actual_epoch!r}")
+
+    expected_profile = inputs.get("profile")
+    actual_profile = result.get("policy_evidence", {}).get("verification_profile")
+    if isinstance(expected_profile, dict) and actual_profile != expected_profile:
+        differences.append("verification_profile: expected bundle replay_inputs.profile to match replayed policy_evidence.verification_profile")
 
     return ReplayReport(
         replayed_result=result,

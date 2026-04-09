@@ -66,10 +66,49 @@
           "type": "object"
         },
         "profile": {
-          "enum": [
-            "edge",
-            "standard",
-            "high_assurance"
+          "oneOf": [
+            {
+              "enum": [
+                "edge",
+                "standard",
+                "high_assurance"
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "id",
+                "base_profile",
+                "controls",
+                "overlays",
+                "source"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "base_profile": {
+                  "enum": [
+                    "edge",
+                    "standard",
+                    "high_assurance"
+                  ]
+                },
+                "controls": {
+                  "type": "object"
+                },
+                "overlays": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
           ]
         },
         "use_gateway": {

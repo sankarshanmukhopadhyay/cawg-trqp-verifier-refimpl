@@ -1,38 +1,37 @@
 # Roadmap
 
-## Completed in v0.7.0
+## Current focus after v0.12.0
 
-1. Add process-aware verification inputs and outputs.
-2. Add policy-level process requirements to authorization decisions.
-3. Add parser support for process-oriented assertions in C2PA-style manifests.
-4. Refresh examples, schemas, and docs for Proof of Process style integration.
+The repository now has an executable profile layer. The next increments should deepen transport, freshness, and cross-implementation assurance on top of that control plane.
 
-## Completed in v0.8.0
+### 1. Feed transport specialization
 
-1. Introduce exportable audit bundles that package verification result, policy evidence, and process appraisal together.
-2. Add HTTP transport patterns for process-aware authorization and verification exchange.
-3. Add benchmark fixtures for high-volume and constrained-device process-aware verification.
+- add explicit HTTP / gateway / local transport controls to the profile model
+- bind transport guarantees to replay evidence and validation expectations
+- add transport-specific negative tests for partial policy availability
 
-## Completed in v0.9.0
+### 2. Revocation freshness assertions
 
-1. Add trust gateway component for remote policy mediation.
-2. Add richer conformance and interoperability vectors.
-3. Add deployment guidance for process-aware verifiers and appraisal services.
+- define freshness windows for revocation material
+- surface freshness breach semantics in verification output and audit bundles
+- add delta-channel fixtures and expiry-driven tests
 
-## Completed in v0.10.0
+### 3. Cross-implementation fixture exchange
 
-1. Stabilize audit bundle serialization profile.
-2. Add assurance-oriented bundle validation and replay tooling.
-3. Expand interoperability vectors toward multi-authority production patterns.
+- publish a fixture profile that packages request, resolved profile, expected result, and pinned feeds
+- verify that replay results remain stable across independent implementations
+- align fixture content with broader TRQP assurance and conformance work
+
+## Completed in v0.12.0
+
+- formalized verification profiles as schema-validated JSON artifacts
+- introduced assurance overlays for tightening enforcement semantics without adding profile sprawl
+- enforced fail-open and fail-closed behavior from profile controls
+- embedded the resolved profile into audit bundles and replay workflows
+- added profile tests covering overlay application and degraded-policy behavior
 
 ## Completed in v0.11.0
 
-1. Add signed bundle attestation for independently verifiable export artifacts.
-2. Externalize policy feeds in replay inputs so exported bundles can target pinned policy and revocation sources.
-3. Add reproducibility fixtures for cross-run comparison.
-
-## Next horizon
-
-1. Add feed transport abstractions beyond local JSON paths.
-2. Introduce revocation delta polling and feed freshness assertions.
-3. Publish a cross-implementation fixture exchange profile.
+- added optional Ed25519 bundle attestation
+- pinned external policy and revocation feeds in replay metadata
+- added deterministic reproducibility fixtures and comparison tooling

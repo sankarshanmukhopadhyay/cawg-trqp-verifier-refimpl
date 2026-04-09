@@ -1,0 +1,31 @@
+{
+  "id": "high_assurance",
+  "base_profile": "high_assurance",
+  "controls": {
+    "authority": {
+      "trust_anchors_required": true,
+      "allow_untrusted": false
+    },
+    "freshness": {
+      "max_age_seconds": 300,
+      "require_live": true
+    },
+    "revocation": {
+      "mode": "live",
+      "hard_fail": true
+    },
+    "failure": {
+      "network_failure": "fail_closed",
+      "policy_unavailable": "fail_closed"
+    },
+    "evidence": {
+      "emit_audit_bundle": true,
+      "require_attestation": true
+    },
+    "determinism": {
+      "replayable": true,
+      "require_pinned_feeds": true
+    }
+  },
+  "overlays": []
+}

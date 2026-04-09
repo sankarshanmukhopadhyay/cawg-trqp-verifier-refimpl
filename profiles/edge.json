@@ -1,0 +1,31 @@
+{
+  "id": "edge",
+  "base_profile": "edge",
+  "controls": {
+    "authority": {
+      "trust_anchors_required": true,
+      "allow_untrusted": false
+    },
+    "freshness": {
+      "max_age_seconds": 86400,
+      "require_live": false
+    },
+    "revocation": {
+      "mode": "snapshot",
+      "hard_fail": false
+    },
+    "failure": {
+      "network_failure": "fail_open",
+      "policy_unavailable": "fail_open"
+    },
+    "evidence": {
+      "emit_audit_bundle": false,
+      "require_attestation": false
+    },
+    "determinism": {
+      "replayable": false,
+      "require_pinned_feeds": false
+    }
+  },
+  "overlays": []
+}

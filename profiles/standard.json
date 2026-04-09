@@ -1,0 +1,31 @@
+{
+  "id": "standard",
+  "base_profile": "standard",
+  "controls": {
+    "authority": {
+      "trust_anchors_required": false,
+      "allow_untrusted": true
+    },
+    "freshness": {
+      "max_age_seconds": 3600,
+      "require_live": false
+    },
+    "revocation": {
+      "mode": "delta",
+      "hard_fail": false
+    },
+    "failure": {
+      "network_failure": "fail_open",
+      "policy_unavailable": "fail_open"
+    },
+    "evidence": {
+      "emit_audit_bundle": true,
+      "require_attestation": false
+    },
+    "determinism": {
+      "replayable": true,
+      "require_pinned_feeds": false
+    }
+  },
+  "overlays": []
+}

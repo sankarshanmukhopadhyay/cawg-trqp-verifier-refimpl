@@ -1,97 +1,41 @@
 # Repository Tree
 
 ```text
-.github/workflows/ci.yml
-.gitignore
-CHANGELOG.md
-GITHUB_RELEASE_TEMPLATE.md
-LICENSE
-README.md
-RELEASE_NOTES_v0.11.0.md
-RELEASE_NOTES_v0.3.0.md
-RELEASE_NOTES_v0.3.1.md
-RELEASE_NOTES_v0.4.0.md
-RELEASE_NOTES_v0.5.0.md
-RELEASE_NOTES_v0.7.0.md
-RELEASE_NOTES_v0.9.0.md
-ROADMAP.md
-data/policies.json
-data/policies_multi_authority.json
-data/revocations.json
-data/snapshot.json
-data/snapshot_signing_key.example.pem
-data/trust_anchors.json
-docs/INTEGRATION_GUIDE.md
-docs/NON_TECHNICAL_OVERVIEW.md
-docs/architecture.md
-docs/audit-bundle-profile.md
-docs/deployment-guide.md
-docs/http-transport-patterns.md
-docs/implementation-notes.md
-docs/interoperability-vectors.md
-docs/release-assets.md
-docs/release-readiness.md
-docs/repo-tree.md
-docs/reproducibility-guide.md
-docs/trust-gateway.md
-docs/verifier-profiles.md
-examples/benchmark_constrained_device_request.json
-examples/benchmark_high_volume_request.json
-examples/exported_audit_bundle.json
-examples/exported_audit_bundle.signed.json
-examples/fixtures/cawg_manifest_blocked.json
-examples/fixtures/cawg_manifest_c2pa.json
-examples/fixtures/cawg_manifest_c2pa_pop.json
-examples/fixtures/cawg_manifest_c2pa_pop_failed.json
-examples/fixtures/cawg_manifest_minimal.json
-examples/fixtures/content_bundle_example.json
-examples/interoperability_vector_gateway.json
-examples/interoperability_vector_multi_authority.json
-examples/reproducibility_bundle_standard.json
-examples/verification_request.json
-issues/001-real-cawg-c2pa-parser.md
-issues/002-signed-policy-snapshots.md
-issues/003-http-trqp-service.md
-issues/004-revocation-delta-channel.md
-issues/005-conformance-suite-expansion.md
-pyproject.toml
-requirements.txt
-schemas/audit-bundle.schema.json
-schemas/authorization-request.schema.json
-schemas/authorization-response.schema.json
-schemas/verification-request.schema.json
-schemas/verification-result.schema.json
-scripts/check_reproducibility.py
-scripts/export_repo_tree.py
-scripts/replay_audit_bundle.py
-scripts/run_demo.py
-scripts/sign_audit_bundle.py
-scripts/sign_snapshot.py
-scripts/start_http_service.py
-scripts/validate_audit_bundle.py
-src/cawg_trqp_refimpl/__init__.py
-src/cawg_trqp_refimpl/attestation.py
-src/cawg_trqp_refimpl/audit.py
-src/cawg_trqp_refimpl/cache.py
-src/cawg_trqp_refimpl/cli.py
-src/cawg_trqp_refimpl/context.py
-src/cawg_trqp_refimpl/fixture_loader.py
-src/cawg_trqp_refimpl/gateway.py
-src/cawg_trqp_refimpl/http_service.py
-src/cawg_trqp_refimpl/jsoncanon.py
-src/cawg_trqp_refimpl/manifest_parser.py
-src/cawg_trqp_refimpl/mock_service.py
-src/cawg_trqp_refimpl/models.py
-src/cawg_trqp_refimpl/replay.py
-src/cawg_trqp_refimpl/snapshot.py
-src/cawg_trqp_refimpl/validation.py
-src/cawg_trqp_refimpl/verifier.py
-tests/test_audit_bundle.py
-tests/test_cache.py
-tests/test_conformance_vectors.py
-tests/test_fixture_loader.py
-tests/test_gateway_routes.py
-tests/test_http_service.py
-tests/test_snapshot.py
-tests/test_verifier.py
+.
+├── CHANGELOG.md
+├── README.md
+├── RELEASE_NOTES_v0.11.0.md
+├── RELEASE_NOTES_v0.12.0.md
+├── ROADMAP.md
+├── data/
+├── docs/
+│   ├── architecture.md
+│   ├── audit-bundle-profile.md
+│   ├── release-assets.md
+│   ├── release-readiness.md
+│   ├── reproducibility-guide.md
+│   ├── trust-gateway.md
+│   └── verifier-profiles.md
+├── examples/
+├── profiles/
+│   ├── edge.json
+│   ├── high_assurance.json
+│   ├── standard.json
+│   └── overlays/
+│       ├── evidence_attested.json
+│       └── freshness_strict.json
+├── schemas/
+│   ├── audit-bundle.schema.json
+│   └── verification-profile.schema.json
+├── scripts/
+├── src/cawg_trqp_refimpl/
+│   ├── audit.py
+│   ├── cli.py
+│   ├── profile.py
+│   ├── replay.py
+│   └── verifier.py
+└── tests/
+    ├── test_audit_bundle.py
+    ├── test_profiles.py
+    └── test_verifier.py
 ```

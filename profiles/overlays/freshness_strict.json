@@ -1,0 +1,14 @@
+{
+  "id": "freshness_strict",
+  "description": "Force live policy retrieval and fail closed when policy cannot be obtained.",
+  "controls": {
+    "freshness": {
+      "require_live": true,
+      "max_age_seconds": 300
+    },
+    "failure": {
+      "network_failure": "fail_closed",
+      "policy_unavailable": "fail_closed"
+    }
+  }
+}

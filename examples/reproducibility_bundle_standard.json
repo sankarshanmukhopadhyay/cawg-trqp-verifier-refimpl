@@ -1,9 +1,9 @@
 {
   "bundle_type": "cawg-trqp-audit-bundle",
   "bundle_profile": "https://example.org/profiles/cawg-trqp-audit-bundle/v1",
-  "bundle_version": "1.1.0",
+  "bundle_version": "1.2.0",
   "exported_at": "2026-03-31T00:00:00Z",
-  "bundle_id": "urn:trqp:audit-bundle:sha256:09778b78d95610560821a3f0629c64d06c37c0e0776c52904332c725c7653ede",
+  "bundle_id": "urn:trqp:audit-bundle:sha256:4ddf1b90aae0d0cf4d3aafc646077464a60e4322fba2cadc6c43acd2b1014903",
   "request_summary": {
     "asset_id": "asset-001",
     "entity_id": "did:web:publisher.example",
@@ -54,10 +54,43 @@
           "human_assisted",
           "verified_editorial_pipeline"
         ]
+      },
+      "verification_profile": {
+        "id": "standard",
+        "base_profile": "standard",
+        "controls": {
+          "authority": {
+            "trust_anchors_required": false,
+            "allow_untrusted": true
+          },
+          "freshness": {
+            "max_age_seconds": 3600,
+            "require_live": false
+          },
+          "revocation": {
+            "mode": "delta",
+            "hard_fail": false
+          },
+          "failure": {
+            "network_failure": "fail_open",
+            "policy_unavailable": "fail_open"
+          },
+          "evidence": {
+            "emit_audit_bundle": true,
+            "require_attestation": false
+          },
+          "determinism": {
+            "replayable": true,
+            "require_pinned_feeds": false
+          }
+        },
+        "overlays": [],
+        "source": "profiles/standard.json"
       }
     },
     "gateway_mediation": {},
     "explanations": [
+      "Verification profile: standard",
       "Live authorization lookup executed",
       "Live recognition lookup executed"
     ]
@@ -78,6 +111,38 @@
         "human_assisted",
         "verified_editorial_pipeline"
       ]
+    },
+    "verification_profile": {
+      "id": "standard",
+      "base_profile": "standard",
+      "controls": {
+        "authority": {
+          "trust_anchors_required": false,
+          "allow_untrusted": true
+        },
+        "freshness": {
+          "max_age_seconds": 3600,
+          "require_live": false
+        },
+        "revocation": {
+          "mode": "delta",
+          "hard_fail": false
+        },
+        "failure": {
+          "network_failure": "fail_open",
+          "policy_unavailable": "fail_open"
+        },
+        "evidence": {
+          "emit_audit_bundle": true,
+          "require_attestation": false
+        },
+        "determinism": {
+          "replayable": true,
+          "require_pinned_feeds": false
+        }
+      },
+      "overlays": [],
+      "source": "profiles/standard.json"
     }
   },
   "process_appraisal": {
@@ -116,7 +181,38 @@
         "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
       }
     },
-    "profile": "standard",
+    "profile": {
+      "id": "standard",
+      "base_profile": "standard",
+      "controls": {
+        "authority": {
+          "trust_anchors_required": false,
+          "allow_untrusted": true
+        },
+        "freshness": {
+          "max_age_seconds": 3600,
+          "require_live": false
+        },
+        "revocation": {
+          "mode": "delta",
+          "hard_fail": false
+        },
+        "failure": {
+          "network_failure": "fail_open",
+          "policy_unavailable": "fail_open"
+        },
+        "evidence": {
+          "emit_audit_bundle": true,
+          "require_attestation": false
+        },
+        "determinism": {
+          "replayable": true,
+          "require_pinned_feeds": false
+        }
+      },
+      "overlays": [],
+      "source": "profiles/standard.json"
+    },
     "use_gateway": false,
     "verification_mode": "cached_online",
     "policy_epoch": "2026-Q1",
@@ -127,5 +223,5 @@
       "revocation_source_sha256": "71c9bad31ad298ba7e8bd669255bcf0ab89ffeff7268d723b5a3af46eba7ce19"
     }
   },
-  "bundle_digest_sha256": "260ed3f57bf9dc24f765f586d96dd65c698fd47e4491cce26768ac764f3c85ac"
+  "bundle_digest_sha256": "02b920e6332c64a08685883e427ab131e11efeaa0f95a5ef78d8e8e90783dd0d"
 }

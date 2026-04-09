@@ -7,10 +7,11 @@ from typing import Any
 
 from .jsoncanon import canonical_json_bytes, sha256_hex
 from .models import VerificationRequest, VerificationResult
+from .profile import VerificationProfile, load_profile
 
 AUDIT_BUNDLE_TYPE = "cawg-trqp-audit-bundle"
 AUDIT_BUNDLE_PROFILE = "https://example.org/profiles/cawg-trqp-audit-bundle/v1"
-AUDIT_BUNDLE_VERSION = "1.1.0"
+AUDIT_BUNDLE_VERSION = "1.2.0"
 
 
 @dataclass
@@ -52,6 +53,7 @@ class AuditBundle:
         return canonical_json_bytes(self.to_dict())
 
 
+
 def _request_to_summary(request: VerificationRequest) -> dict[str, Any]:
     return {
         "asset_id": request.asset_id,
@@ -70,12 +72,17 @@ def build_audit_bundle(
     request: VerificationRequest,
     result: VerificationResult,
     *,
-    profile: str = "standard",
+    profile: str | dict[str, Any] | VerificationProfile = "standard",
     use_gateway: bool = False,
     exported_at: str | None = None,
     policy_path: str | Path | None = None,
     revocation_path: str | Path | None = None,
 ) -> AuditBundle:
+    resolved_profile = load_profile(profile)
+    controls = resolved_profile.controls
+    if controls["determinism"]["require_pinned_feeds"] and policy_path is None:
+        raise ValueError("profile requires pinned policy feeds for deterministic replay")
+
     exported_at = exported_at or datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     request_summary = _request_to_summary(request)
     policy_feed = {}
@@ -98,7 +105,7 @@ def build_audit_bundle(
             "context": request.context,
             "process_evidence": request.process_evidence,
         },
-        "profile": profile,
+        "profile": resolved_profile.to_dict(),
         "use_gateway": use_gateway,
         "verification_mode": result.verification_mode,
         "policy_epoch": result.policy_evidence.get("policy_epoch"),

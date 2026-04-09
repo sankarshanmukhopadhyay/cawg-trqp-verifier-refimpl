@@ -6,6 +6,7 @@ from pathlib import Path
 
 from cawg_trqp_refimpl.audit import build_audit_bundle
 from cawg_trqp_refimpl.models import VerificationRequest
+from cawg_trqp_refimpl.profile import load_profile
 from cawg_trqp_refimpl.mock_service import MockTRQPService
 from cawg_trqp_refimpl.validation import load_json
 from cawg_trqp_refimpl.verifier import Verifier
@@ -22,12 +23,13 @@ def main() -> None:
     args = parser.parse_args()
 
     request = VerificationRequest(**load_json(args.request))
+    profile = load_profile("standard")
     verifier = Verifier(service=MockTRQPService(args.policies, args.revocations))
-    result = verifier.verify(request, profile="standard")
+    result = verifier.verify(request, profile=profile)
     actual = build_audit_bundle(
         request,
         result,
-        profile="standard",
+        profile=profile,
         exported_at=args.exported_at,
         policy_path=args.policies,
         revocation_path=args.revocations,

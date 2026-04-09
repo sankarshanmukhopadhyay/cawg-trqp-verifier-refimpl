@@ -1,11 +1,11 @@
 {
   "bundle_type": "cawg-trqp-audit-bundle",
   "bundle_profile": "https://example.org/profiles/cawg-trqp-audit-bundle/v1",
-  "bundle_version": "1.1.0",
-  "exported_at": "2026-03-31T00:00:00Z",
-  "bundle_id": "urn:trqp:audit-bundle:sha256:09778b78d95610560821a3f0629c64d06c37c0e0776c52904332c725c7653ede",
+  "bundle_version": "1.2.0",
+  "exported_at": "2026-04-09T00:00:00Z",
+  "bundle_id": "urn:trqp:audit-bundle:sha256:09be2f6c4c195192bd6a25e5a0811674b800ddd7d109ba6c1148d5696357187c",
   "request_summary": {
-    "asset_id": "asset-001",
+    "asset_id": "asset-004",
     "entity_id": "did:web:publisher.example",
     "authority_id": "did:web:media-registry.example",
     "issuer_id": "did:web:issuer.example",
@@ -13,9 +13,10 @@
     "resource": "cawg:news-content",
     "context": {
       "jurisdiction": "IN",
-      "credential_type": "vc:creator-identity",
       "risk_tier": "medium",
-      "content_type": "image"
+      "content_type": "image",
+      "credential_type": "vc:creator-identity",
+      "process_type": "human_assisted"
     },
     "has_process_evidence": true
   },
@@ -26,14 +27,14 @@
     "actor_authorization": "authorized",
     "process_integrity": "verified_high",
     "policy_freshness": "current",
-    "verification_mode": "cached_online",
+    "verification_mode": "online_full",
     "trust_outcome": "trusted",
     "process_appraisal": {
       "status": "verified",
       "process_type": "human_assisted",
-      "confidence": 0.91,
+      "confidence": 0.92,
       "minimum_confidence": 0.75,
-      "evidence_ref": "urn:example:pop:asset-001",
+      "evidence_ref": "urn:example:pop:asset-004",
       "evidence_format": "application/cpop+cbor",
       "appraisal": "writers_authenticity_report",
       "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
@@ -54,10 +55,43 @@
           "human_assisted",
           "verified_editorial_pipeline"
         ]
+      },
+      "verification_profile": {
+        "id": "high_assurance",
+        "base_profile": "high_assurance",
+        "controls": {
+          "authority": {
+            "trust_anchors_required": true,
+            "allow_untrusted": false
+          },
+          "freshness": {
+            "max_age_seconds": 300,
+            "require_live": true
+          },
+          "revocation": {
+            "mode": "live",
+            "hard_fail": true
+          },
+          "failure": {
+            "network_failure": "fail_closed",
+            "policy_unavailable": "fail_closed"
+          },
+          "evidence": {
+            "emit_audit_bundle": true,
+            "require_attestation": true
+          },
+          "determinism": {
+            "replayable": true,
+            "require_pinned_feeds": true
+          }
+        },
+        "overlays": [],
+        "source": "profiles/high_assurance.json"
       }
     },
     "gateway_mediation": {},
     "explanations": [
+      "Verification profile: high_assurance",
       "Live authorization lookup executed",
       "Live recognition lookup executed"
     ]
@@ -78,14 +112,46 @@
         "human_assisted",
         "verified_editorial_pipeline"
       ]
+    },
+    "verification_profile": {
+      "id": "high_assurance",
+      "base_profile": "high_assurance",
+      "controls": {
+        "authority": {
+          "trust_anchors_required": true,
+          "allow_untrusted": false
+        },
+        "freshness": {
+          "max_age_seconds": 300,
+          "require_live": true
+        },
+        "revocation": {
+          "mode": "live",
+          "hard_fail": true
+        },
+        "failure": {
+          "network_failure": "fail_closed",
+          "policy_unavailable": "fail_closed"
+        },
+        "evidence": {
+          "emit_audit_bundle": true,
+          "require_attestation": true
+        },
+        "determinism": {
+          "replayable": true,
+          "require_pinned_feeds": true
+        }
+      },
+      "overlays": [],
+      "source": "profiles/high_assurance.json"
     }
   },
   "process_appraisal": {
     "status": "verified",
     "process_type": "human_assisted",
-    "confidence": 0.91,
+    "confidence": 0.92,
     "minimum_confidence": 0.75,
-    "evidence_ref": "urn:example:pop:asset-001",
+    "evidence_ref": "urn:example:pop:asset-004",
     "evidence_format": "application/cpop+cbor",
     "appraisal": "writers_authenticity_report",
     "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
@@ -93,7 +159,7 @@
   "gateway_mediation": {},
   "replay_inputs": {
     "request": {
-      "asset_id": "asset-001",
+      "asset_id": "asset-004",
       "integrity_ok": true,
       "entity_id": "did:web:publisher.example",
       "authority_id": "did:web:media-registry.example",
@@ -102,23 +168,55 @@
       "resource": "cawg:news-content",
       "context": {
         "jurisdiction": "IN",
-        "credential_type": "vc:creator-identity",
         "risk_tier": "medium",
-        "content_type": "image"
+        "content_type": "image",
+        "credential_type": "vc:creator-identity",
+        "process_type": "human_assisted"
       },
       "process_evidence": {
         "verified": true,
         "process_type": "human_assisted",
-        "confidence": 0.91,
-        "evidence_ref": "urn:example:pop:asset-001",
+        "confidence": 0.92,
+        "evidence_ref": "urn:example:pop:asset-004",
         "evidence_format": "application/cpop+cbor",
         "appraisal": "writers_authenticity_report",
         "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
       }
     },
-    "profile": "standard",
+    "profile": {
+      "id": "high_assurance",
+      "base_profile": "high_assurance",
+      "controls": {
+        "authority": {
+          "trust_anchors_required": true,
+          "allow_untrusted": false
+        },
+        "freshness": {
+          "max_age_seconds": 300,
+          "require_live": true
+        },
+        "revocation": {
+          "mode": "live",
+          "hard_fail": true
+        },
+        "failure": {
+          "network_failure": "fail_closed",
+          "policy_unavailable": "fail_closed"
+        },
+        "evidence": {
+          "emit_audit_bundle": true,
+          "require_attestation": true
+        },
+        "determinism": {
+          "replayable": true,
+          "require_pinned_feeds": true
+        }
+      },
+      "overlays": [],
+      "source": "profiles/high_assurance.json"
+    },
     "use_gateway": false,
-    "verification_mode": "cached_online",
+    "verification_mode": "online_full",
     "policy_epoch": "2026-Q1",
     "policy_feed": {
       "policy_source": "data/policies.json",
@@ -127,10 +225,10 @@
       "revocation_source_sha256": "71c9bad31ad298ba7e8bd669255bcf0ab89ffeff7268d723b5a3af46eba7ce19"
     }
   },
-  "bundle_digest_sha256": "260ed3f57bf9dc24f765f586d96dd65c698fd47e4491cce26768ac764f3c85ac",
+  "bundle_digest_sha256": "d05b3bfbf365a3c042db17de7ea7457b280760777940ca6c18cdd06a0a500079",
   "bundle_attestation": {
     "algorithm": "Ed25519",
     "key_id": "media-registry-snapshot-key-1",
-    "value": "baC0bV25TQJWFdocnCxUGW+fF/j4iVUMwJUzGa8nmlu0lXr6oQSttOHzQ1GB5kXmCLcyiqyj/UGxQ2oCraWaAQ=="
+    "value": "z8QDyuXK8vAx8IPByllSqDJuNhT0B1eo3jVJjhy2DogNbzAFotQbt+tDgFGm+Yv7ZdovRTW84l1aRhrbDCLBBA=="
   }
 }

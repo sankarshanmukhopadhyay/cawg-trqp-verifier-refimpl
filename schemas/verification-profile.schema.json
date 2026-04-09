@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/cawg-trqp/verification-profile.schema.json",
+  "type": "object",
+  "required": ["id", "base_profile", "controls", "overlays", "source"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_.-]*$"
+    },
+    "base_profile": {
+      "enum": ["edge", "standard", "high_assurance"]
+    },
+    "controls": {
+      "type": "object",
+      "required": ["authority", "freshness", "revocation", "failure", "evidence", "determinism"],
+      "properties": {
+        "authority": {
+          "type": "object",
+          "required": ["trust_anchors_required", "allow_untrusted"],
+          "properties": {
+            "trust_anchors_required": {"type": "boolean"},
+            "allow_untrusted": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "freshness": {
+          "type": "object",
+          "required": ["max_age_seconds", "require_live"],
+          "properties": {
+            "max_age_seconds": {"type": "integer", "minimum": 0},
+            "require_live": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "revocation": {
+          "type": "object",
+          "required": ["mode", "hard_fail"],
+          "properties": {
+            "mode": {"enum": ["snapshot", "delta", "live"]},
+            "hard_fail": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "failure": {
+          "type": "object",
+          "required": ["network_failure", "policy_unavailable"],
+          "properties": {
+            "network_failure": {"enum": ["fail_open", "fail_closed"]},
+            "policy_unavailable": {"enum": ["fail_open", "fail_closed"]}
+          },
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "object",
+          "required": ["emit_audit_bundle", "require_attestation"],
+          "properties": {
+            "emit_audit_bundle": {"type": "boolean"},
+            "require_attestation": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "determinism": {
+          "type": "object",
+          "required": ["replayable", "require_pinned_feeds"],
+          "properties": {
+            "replayable": {"type": "boolean"},
+            "require_pinned_feeds": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "overlays": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "source": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
