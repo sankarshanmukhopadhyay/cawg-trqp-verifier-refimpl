@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/schemas/cawg-trqp/verification-profile.schema.json",
+  "$id": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/schemas/verification-profile.schema.json",
   "type": "object",
   "required": [
     "id",

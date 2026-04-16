@@ -1,9 +1,9 @@
 {
   "bundle_type": "cawg-trqp-audit-bundle",
-  "bundle_profile": "https://example.org/profiles/cawg-trqp-audit-bundle/v1",
+  "bundle_profile": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/profiles/audit-bundle/v1",
   "bundle_version": "1.3.0",
-  "exported_at": "2026-04-09T00:00:00Z",
-  "bundle_id": "urn:trqp:audit-bundle:sha256:5bc01fd1add4039a6a7ae76659b5e624fcf77ff755e28ee26f78e22617aa9034",
+  "exported_at": "2026-03-31T00:00:00Z",
+  "bundle_id": "urn:trqp:audit-bundle:sha256:e1d2e0a6337db9e940d1665d3bb40c7e82c8980f169f7ba5ee34bf83e86830ea",
   "request_summary": {
     "asset_id": "asset-001",
     "entity_id": "did:web:publisher.example",
@@ -125,8 +125,8 @@
     "gateway_mediation": {},
     "explanations": [
       "Verification profile: standard",
-      "Authorization cache hit",
-      "Recognition cache hit"
+      "Live authorization lookup executed",
+      "Live recognition lookup executed"
     ]
   },
   "policy_evidence": {
@@ -330,10 +330,10 @@
       "revocation_source_sha256": "06645caaeb12c75f23b3c57490f5dc6d6936178b7dc3100c749629c1975f33e3"
     }
   },
-  "bundle_digest_sha256": "1c0c9c56e2134af796f413d2a1177c44854bfeeb1dcbe4718e0c87f76895e122",
+  "bundle_digest_sha256": "ab4b77d3d4bd583bfd138b43cb8ffef898a367072e6f6c80495be39fb6f77baf",
   "bundle_attestation": {
     "algorithm": "Ed25519",
     "key_id": "media-registry-snapshot-key-1",
-    "value": "cNjzeJvAuYPZrZ2oOQYAYYjh8NuW3qoH1OStB5XJgP0hwTLh7wdnQUmj9R2SPqrCzQeRG60u7Fc7oihS/JpHBA=="
+    "value": "wosZ659zzBY3+JLOtKpxGHFsDxkzs65QgMOVRyJMq5ptO1WE4xf4ZCB7EQiA0fbhmrRaE8rcpuiuN2tDiyx8DA=="
   }
 }

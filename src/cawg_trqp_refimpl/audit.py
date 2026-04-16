@@ -10,7 +10,7 @@ from .models import VerificationRequest, VerificationResult
 from .profile import VerificationProfile, load_profile
 
 AUDIT_BUNDLE_TYPE = "cawg-trqp-audit-bundle"
-AUDIT_BUNDLE_PROFILE = "https://example.org/profiles/cawg-trqp-audit-bundle/v1"
+AUDIT_BUNDLE_PROFILE = "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/profiles/audit-bundle/v1"
 AUDIT_BUNDLE_VERSION = "1.3.0"
 
 

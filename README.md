@@ -197,3 +197,8 @@ The next practical increment should focus on:
 - explicit freshness breach reason codes in exported evidence
 - fixture exchange for multiple profiles, including high-assurance and gateway-mediated cases
 - direct alignment hooks into external TRQP conformance and assurance suites
+
+
+## Maintenance hardening after v0.13.0
+
+The current build also hardens publication and conformance surfaces by assigning stable schema/profile URIs, validating shipped examples and fixtures in CI, consolidating revocation freshness evaluation into a single path, documenting transport compatibility asymmetry, and bounding cache growth with LRU eviction.

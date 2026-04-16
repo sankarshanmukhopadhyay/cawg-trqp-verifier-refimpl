@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: cawg-trqp-refimpl
-Version: 0.11.0
+Version: 0.13.0
 Summary: Reference implementation for CAWG + TRQP integration
 Requires-Python: >=3.10
 License-File: LICENSE

@@ -27,6 +27,10 @@ class FeedTransportMetadata:
 def evaluate_transport_constraints(required: dict[str, Any], actual: FeedTransportMetadata) -> list[str]:
     failures: list[str] = []
     required_mode = required.get("mode")
+    # gateway is treated as a stricter mediation path than direct http.
+    # Profiles requiring direct http may accept gateway transport because the
+    # gateway preserves or strengthens the trust boundary. Profiles requiring
+    # gateway transport reject plain http because the mediation guarantee is absent.
     compatible_modes = {
         'local': {'local'},
         'http': {'http', 'gateway'},

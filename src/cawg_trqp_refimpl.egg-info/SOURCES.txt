@@ -14,8 +14,10 @@ src/cawg_trqp_refimpl/jsoncanon.py
 src/cawg_trqp_refimpl/manifest_parser.py
 src/cawg_trqp_refimpl/mock_service.py
 src/cawg_trqp_refimpl/models.py
+src/cawg_trqp_refimpl/profile.py
 src/cawg_trqp_refimpl/replay.py
 src/cawg_trqp_refimpl/snapshot.py
+src/cawg_trqp_refimpl/transport.py
 src/cawg_trqp_refimpl/validation.py
 src/cawg_trqp_refimpl/verifier.py
 src/cawg_trqp_refimpl.egg-info/PKG-INFO
@@ -29,5 +31,7 @@ tests/test_conformance_vectors.py
 tests/test_fixture_loader.py
 tests/test_gateway_routes.py
 tests/test_http_service.py
+tests/test_profiles.py
 tests/test_snapshot.py
+tests/test_transport_and_replay_fidelity.py
 tests/test_verifier.py

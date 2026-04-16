@@ -51,7 +51,7 @@ class TestEdgeProfile:
         verifier = Verifier(snapshot=SnapshotStore(Path("data/snapshot.json"), Path("data/trust_anchors.json")))
         result = verifier.verify(VerificationRequest(**data), profile="edge").to_dict()
         assert result["trust_outcome"] == "trusted_cached"
-        assert result["policy_freshness"] in {"valid", "fresh", "usable", "active", "verified", "current_snapshot", "current"} or isinstance(result["policy_freshness"], str)
+        assert result["policy_freshness"] == "snapshot_verified"
 
 
 class TestHighAssuranceProfile:
@@ -98,3 +98,87 @@ class TestManifestParser:
         assert signal.resource == "cawg:news-content"
         assert signal.context["credential_type"] == "vc:creator-identity"
         assert signal.process_evidence is not None
+
+
+class TestNegativeConformanceVectors:
+    def test_gateway_profile_rejects_plain_http_runtime(self):
+        data = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
+        service = MockTRQPService(Path("data/policies.json"), Path("data/revocations.json"), transport_mode="http")
+        verifier = Verifier(service=service)
+        profile = {
+            "id": "gateway_required_negative",
+            "base_profile": "standard",
+            "controls": {
+                "transport": {
+                    "mode": "gateway",
+                    "integrity": "tls",
+                    "availability_requirement": "required"
+                }
+            },
+            "overlays": [],
+            "source": "inline"
+        }
+        result = verifier.verify(VerificationRequest(**data), profile=profile)
+        assert result.trust_outcome in {"rejected", "deferred"}
+        assert result.policy_freshness == "transport_violation"
+        assert result.policy_evidence["transport"]["satisfied"] is False
+
+    def test_revocation_stale_fail_rejects(self):
+        data = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
+        service = MockTRQPService(Path("data/policies.json"), Path("data/revocations.json"))
+        service.revocations["issued_at"] = "2020-01-01T00:00:00Z"
+        verifier = Verifier(service=service)
+        profile = {
+            "id": "stale_revocation_fail_negative",
+            "base_profile": "standard",
+            "controls": {
+                "revocation": {
+                    "max_age_seconds": 1,
+                    "enforcement": "fail",
+                    "delta_channel_required": True
+                },
+                "failure": {
+                    "network_failure": "fail_closed",
+                    "policy_unavailable": "fail_closed"
+                },
+                "transport": {
+                    "mode": "http",
+                    "integrity": "tls",
+                    "availability_requirement": "best_effort"
+                }
+            },
+            "overlays": [],
+            "source": "inline"
+        }
+        result = verifier.verify(VerificationRequest(**data), profile=profile)
+        assert result.trust_outcome == "rejected"
+        assert result.policy_freshness == "revocation_stale"
+        assert result.policy_evidence["revocation_status"]["freshness_ok"] is False
+
+    def test_revocation_stale_warn_defers_or_continues_with_warning(self):
+        data = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
+        service = MockTRQPService(Path("data/policies.json"), Path("data/revocations.json"))
+        service.revocations["issued_at"] = "2020-01-01T00:00:00Z"
+        verifier = Verifier(service=service)
+        profile = {
+            "id": "stale_revocation_warn_negative",
+            "base_profile": "standard",
+            "controls": {
+                "revocation": {
+                    "max_age_seconds": 1,
+                    "enforcement": "warn",
+                    "delta_channel_required": True
+                },
+                "transport": {
+                    "mode": "http",
+                    "integrity": "tls",
+                    "availability_requirement": "best_effort"
+                }
+            },
+            "overlays": [],
+            "source": "inline"
+        }
+        result = verifier.verify(VerificationRequest(**data), profile=profile)
+        assert result.policy_freshness == "current_with_stale_revocation_warning"
+        assert result.policy_evidence["revocation_status"]["freshness_ok"] is False
+        assert result.trust_outcome == "trusted"

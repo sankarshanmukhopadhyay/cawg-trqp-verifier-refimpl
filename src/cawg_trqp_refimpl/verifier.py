@@ -107,16 +107,26 @@ class Verifier:
             return self.service.transport_metadata
         return FeedTransportMetadata(mode='local', integrity='none', available=False, channel='none')
 
-    def _current_revocation_status(self) -> dict[str, Any]:
+    def _current_revocation_status(self, profile: VerificationProfile) -> dict[str, Any]:
+        max_age = profile.controls['revocation'].get('max_age_seconds', 0)
+        enforcement = profile.controls['revocation'].get('enforcement', 'warn')
+        failures: list[str] = []
         if self.service is not None:
-            status = self.service.revocation_status()
-            max_age = None
-            return {
-                "source": "service",
-                **status,
-                "freshness_ok": True,
-            }
-        return {"source": "none", "freshness_ok": True}
+            status = {"source": "service", **self.service.revocation_status()}
+        else:
+            status = {"source": "none", "channel": "none", "age_seconds": None}
+
+        age_seconds = status.get('age_seconds')
+        if age_seconds is not None and age_seconds > max_age:
+            failures.append(f"revocation data age {age_seconds}s exceeds allowed window {max_age}s")
+        if profile.controls['revocation'].get('delta_channel_required') and status.get('channel') not in {'delta', 'live', 'mediated'}:
+            failures.append(f"revocation channel {status.get('channel')!r} does not satisfy required delta/live semantics")
+
+        status['freshness_ok'] = not failures
+        status['max_age_seconds'] = max_age
+        status['enforcement'] = enforcement
+        status['violations'] = list(failures)
+        return status
 
     def _evaluate_transport(self, profile: VerificationProfile) -> tuple[bool, list[str]]:
         actual = self._current_transport_metadata()
@@ -130,19 +140,9 @@ class Verifier:
         return (not failures, failures)
 
     def _evaluate_revocation_freshness(self, profile: VerificationProfile) -> tuple[bool, list[str]]:
-        status = self._current_revocation_status()
-        failures: list[str] = []
-        max_age = profile.controls['revocation'].get('max_age_seconds', 0)
-        age_seconds = status.get('age_seconds')
-        if age_seconds is not None and age_seconds > max_age:
-            failures.append(f"revocation data age {age_seconds}s exceeds allowed window {max_age}s")
-        if profile.controls['revocation'].get('delta_channel_required') and status.get('channel') not in {'delta', 'live', 'mediated'}:
-            failures.append(f"revocation channel {status.get('channel')!r} does not satisfy required delta/live semantics")
-        status['freshness_ok'] = not failures
-        status['max_age_seconds'] = max_age
-        status['enforcement'] = profile.controls['revocation'].get('enforcement', 'warn')
-        status['violations'] = list(failures)
+        status = self._current_revocation_status(profile)
         self.last_revocation_status = status
+        failures = list(status.get('violations', []))
         return (not failures, failures)
 
     def _transport_or_revocation_failure_result(self, profile: VerificationProfile, freshness: str, explanation: str) -> VerificationResult:

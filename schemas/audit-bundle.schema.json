@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/schemas/cawg-trqp/audit-bundle.schema.json",
+  "$id": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/schemas/audit-bundle.schema.json",
   "type": "object",
   "required": [
     "bundle_type",

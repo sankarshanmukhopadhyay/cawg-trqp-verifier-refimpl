@@ -1,6 +1,6 @@
 {
   "bundle_type": "cawg-trqp-audit-bundle",
-  "bundle_profile": "https://example.org/profiles/cawg-trqp-audit-bundle/v1",
+  "bundle_profile": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/profiles/audit-bundle/v1",
   "bundle_version": "1.3.0",
   "exported_at": "2026-03-31T00:00:00Z",
   "bundle_id": "urn:trqp:audit-bundle:sha256:e1d2e0a6337db9e940d1665d3bb40c7e82c8980f169f7ba5ee34bf83e86830ea",
@@ -330,5 +330,5 @@
       "revocation_source_sha256": "06645caaeb12c75f23b3c57490f5dc6d6936178b7dc3100c749629c1975f33e3"
     }
   },
-  "bundle_digest_sha256": "46031224008531c0eac267593b387347ec19b193d9c60c9c26008be4704cd25c"
+  "bundle_digest_sha256": "ab4b77d3d4bd583bfd138b43cb8ffef898a367072e6f6c80495be39fb6f77baf"
 }

@@ -6,5 +6,7 @@
   "process_integrity": "verified_high",
   "policy_freshness": "snapshot_verified",
   "verification_mode": "offline_snapshot",
-  "trust_outcome": "trusted_cached"
+  "trust_outcome": "trusted_cached",
+  "policy_evidence": {},
+  "gateway_mediation": {}
 }

@@ -1,3 +1,11 @@
+## Unreleased
+
+- replace placeholder schema and audit bundle profile URIs with stable repository namespace URIs
+- add `scripts/validate_examples.py` and wire example/fixture validation into CI
+- consolidate revocation freshness evaluation to remove split logic and dead assignment risk
+- tighten edge snapshot freshness assertion and add negative transport/revocation conformance coverage
+- bound `TTLCache` with configurable LRU-style eviction
+
 # Changelog
 
 ## v0.13.0
