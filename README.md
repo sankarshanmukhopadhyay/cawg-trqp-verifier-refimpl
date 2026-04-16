@@ -105,6 +105,18 @@ python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.j
 - `docs/verifier-profiles.md`
 - `docs/release-readiness.md`
 - `docs/repo-tree.md`
+- `docs/video-verification-walkthrough.md`
+- `docs/how-trqp-enables-assurance.md`
+- `docs/decision-receipt-specification.md`
+
+## Additional assurance artifacts
+
+- `schemas/decision-receipt.schema.json` — schema for replayable decision receipts
+- `examples/decision_receipts/` — profile-specific example receipts for `standard`, `high_assurance`, and `edge`
+
+## Decision receipts and non-technical walkthroughs
+
+The repository now also includes a non-technical video verification walkthrough, a focused explanation of how TRQP and trust registries enable assurance, and a first-pass decision receipt specification with schema-backed example receipts. These artifacts make the verifier easier to explain to governance, procurement, and assurance audiences while giving downstream implementations a concrete evidence format to adopt.
 
 ## Current roadmap direction
 

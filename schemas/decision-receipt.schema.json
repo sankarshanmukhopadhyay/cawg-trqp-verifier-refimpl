@@ -1,0 +1,468 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trustgraph.dev/schemas/cawg-trqp/decision-receipt.schema.json",
+  "title": "CAWG-TRQP Decision Receipt",
+  "description": "Machine-verifiable receipt capturing the inputs, trust-registry responses, policy evaluation, decision outcome, and replay evidence for a verifier run.",
+  "type": "object",
+  "required": [
+    "receipt_version",
+    "receipt_id",
+    "timestamp",
+    "profile",
+    "verification_mode",
+    "transport_mode",
+    "input",
+    "trqp_responses",
+    "policy_evaluation",
+    "decision",
+    "evidence"
+  ],
+  "properties": {
+    "receipt_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "profile": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "high_assurance",
+        "edge"
+      ]
+    },
+    "verification_mode": {
+      "type": "string",
+      "enum": [
+        "online_full",
+        "gateway",
+        "offline_snapshot"
+      ]
+    },
+    "transport_mode": {
+      "type": "string",
+      "enum": [
+        "direct",
+        "gateway",
+        "snapshot"
+      ]
+    },
+    "input": {
+      "$ref": "#/$defs/input"
+    },
+    "trqp_responses": {
+      "$ref": "#/$defs/trqpResponses"
+    },
+    "policy_evaluation": {
+      "$ref": "#/$defs/policyEvaluation"
+    },
+    "decision": {
+      "$ref": "#/$defs/decision"
+    },
+    "evidence": {
+      "$ref": "#/$defs/evidence"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "timestampedSource": {
+      "type": "object",
+      "required": [
+        "result",
+        "source",
+        "timestamp"
+      ],
+      "properties": {
+        "result": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "response_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "input": {
+      "type": "object",
+      "required": [
+        "asset",
+        "actor",
+        "issuer",
+        "authority",
+        "action",
+        "signals"
+      ],
+      "properties": {
+        "asset": {
+          "type": "object",
+          "required": [
+            "type",
+            "id",
+            "hash"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "video",
+                "image",
+                "document",
+                "bundle",
+                "other"
+              ]
+            },
+            "id": {
+              "type": "string"
+            },
+            "hash": {
+              "type": "string"
+            },
+            "media_type": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "actor": {
+          "$ref": "#/$defs/identifier"
+        },
+        "issuer": {
+          "$ref": "#/$defs/identifier"
+        },
+        "authority": {
+          "$ref": "#/$defs/identifier"
+        },
+        "action": {
+          "type": "string"
+        },
+        "signals": {
+          "type": "object",
+          "required": [
+            "integrity",
+            "provenance",
+            "process_evidence"
+          ],
+          "properties": {
+            "integrity": {
+              "type": "string",
+              "enum": [
+                "verified",
+                "failed",
+                "unknown"
+              ]
+            },
+            "provenance": {
+              "type": "string",
+              "enum": [
+                "present",
+                "absent",
+                "partial"
+              ]
+            },
+            "process_evidence": {
+              "type": "string",
+              "enum": [
+                "declared",
+                "verified",
+                "missing"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "trqpResponses": {
+      "type": "object",
+      "required": [
+        "authorization",
+        "recognition",
+        "revocation"
+      ],
+      "properties": {
+        "authorization": {
+          "$ref": "#/$defs/timestampedSource"
+        },
+        "recognition": {
+          "$ref": "#/$defs/timestampedSource"
+        },
+        "revocation": {
+          "type": "object",
+          "required": [
+            "status",
+            "checked_at",
+            "freshness_seconds",
+            "freshness_outcome"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "revoked",
+                "unknown"
+              ]
+            },
+            "checked_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "freshness_seconds": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "freshness_outcome": {
+              "type": "string",
+              "enum": [
+                "fresh",
+                "stale",
+                "snapshot_verified",
+                "unknown"
+              ]
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "delta",
+                "full",
+                "snapshot"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "policyEvaluation": {
+      "type": "object",
+      "required": [
+        "profile_rules_applied",
+        "checks"
+      ],
+      "properties": {
+        "profile_rules_applied": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "checks": {
+          "type": "object",
+          "required": [
+            "authorization",
+            "recognition",
+            "revocation_freshness",
+            "integrity",
+            "process_evidence"
+          ],
+          "properties": {
+            "authorization": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "warn"
+              ]
+            },
+            "recognition": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "warn"
+              ]
+            },
+            "revocation_freshness": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "warn"
+              ]
+            },
+            "integrity": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "warn"
+              ]
+            },
+            "process_evidence": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "warn"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "policy_freshness": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "required": [
+        "result",
+        "confidence",
+        "reasons"
+      ],
+      "properties": {
+        "result": {
+          "type": "string",
+          "enum": [
+            "trusted",
+            "rejected",
+            "degraded"
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "verification_result": {
+          "$ref": "#/$defs/verificationResult"
+        }
+      },
+      "additionalProperties": false
+    },
+    "verificationResult": {
+      "type": "object",
+      "required": [
+        "asset_integrity",
+        "process_integrity",
+        "trust_outcome",
+        "policy_evidence",
+        "gateway_mediation"
+      ],
+      "properties": {
+        "asset_integrity": {
+          "type": "string"
+        },
+        "assertion_binding": {
+          "type": "string"
+        },
+        "issuer_recognition": {
+          "type": "string"
+        },
+        "actor_authorization": {
+          "type": "string"
+        },
+        "process_integrity": {
+          "type": "string"
+        },
+        "policy_freshness": {
+          "type": "string"
+        },
+        "verification_mode": {
+          "type": "string"
+        },
+        "trust_outcome": {
+          "type": "string"
+        },
+        "process_appraisal": {
+          "type": "object"
+        },
+        "policy_evidence": {
+          "type": "object"
+        },
+        "gateway_mediation": {
+          "type": "object"
+        },
+        "explanations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "replayable",
+        "logs_hash"
+      ],
+      "properties": {
+        "replayable": {
+          "type": "boolean"
+        },
+        "snapshot_reference": {
+          "type": "string"
+        },
+        "gateway_route": {
+          "type": "string"
+        },
+        "logs_hash": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "bundle_reference": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

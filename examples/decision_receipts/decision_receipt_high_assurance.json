@@ -1,0 +1,122 @@
+{
+  "receipt_version": "1.0",
+  "receipt_id": "receipt:high-assurance:bridge-video:2026-04-17",
+  "timestamp": "2026-04-17T09:05:00Z",
+  "profile": "high_assurance",
+  "verification_mode": "online_full",
+  "transport_mode": "gateway",
+  "input": {
+    "asset": {
+      "type": "video",
+      "id": "city-bridge-inspection.mp4",
+      "hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "media_type": "video/mp4"
+    },
+    "actor": {
+      "id": "did:web:vendor.example:inspectors:alice",
+      "label": "Bridge inspection vendor operator"
+    },
+    "issuer": {
+      "id": "did:web:issuer.example:city-vendor-ca",
+      "label": "City vendor credential issuer"
+    },
+    "authority": {
+      "id": "did:web:city.example:trust-registry",
+      "label": "City bridge inspection authority"
+    },
+    "action": "submit_inspection_video",
+    "signals": {
+      "integrity": "verified",
+      "provenance": "present",
+      "process_evidence": "verified"
+    }
+  },
+  "trqp_responses": {
+    "authorization": {
+      "result": "allowed",
+      "source": "city-trust-gateway",
+      "timestamp": "2026-04-17T09:05:01Z",
+      "authority": "city-bridge-inspection"
+    },
+    "recognition": {
+      "result": "recognized",
+      "source": "city-trust-gateway",
+      "timestamp": "2026-04-17T09:05:01Z",
+      "authority": "city-bridge-inspection"
+    },
+    "revocation": {
+      "status": "active",
+      "checked_at": "2026-04-17T09:05:02Z",
+      "freshness_seconds": 25,
+      "freshness_outcome": "fresh",
+      "mode": "delta"
+    }
+  },
+  "policy_evaluation": {
+    "profile_rules_applied": [
+      "require_authorization",
+      "require_recognized_issuer",
+      "fail_on_stale_revocation",
+      "require_gateway_transport",
+      "require_attested_evidence"
+    ],
+    "checks": {
+      "authorization": "pass",
+      "recognition": "pass",
+      "revocation_freshness": "pass",
+      "integrity": "pass",
+      "process_evidence": "pass"
+    },
+    "policy_freshness": "fresh"
+  },
+  "decision": {
+    "result": "trusted",
+    "confidence": "high",
+    "reasons": [
+      "authorized_actor",
+      "recognized_issuer",
+      "revocation_within_high_assurance_window",
+      "gateway_transport_verified",
+      "valid_process"
+    ],
+    "verification_result": {
+      "asset_integrity": "verified",
+      "assertion_binding": "verified",
+      "issuer_recognition": "recognized",
+      "actor_authorization": "authorized",
+      "process_integrity": "acceptable",
+      "policy_freshness": "fresh",
+      "verification_mode": "online_full",
+      "trust_outcome": "trusted",
+      "process_appraisal": {
+        "status": "acceptable",
+        "signals": [
+          "provenance_present",
+          "approved_workflow"
+        ]
+      },
+      "policy_evidence": {
+        "authorization_source": "mock_trqp_service",
+        "recognition_source": "mock_trqp_service"
+      },
+      "gateway_mediation": {
+        "used": true,
+        "route_label": "city-authority-gateway"
+      },
+      "explanations": [
+        "Actor is authorized for submit_inspection_video",
+        "Issuer is recognized in the city bridge inspection authority context"
+      ]
+    }
+  },
+  "evidence": {
+    "replayable": true,
+    "gateway_route": "city-authority-gateway/inspection/high-assurance",
+    "logs_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "bundle_reference": "fixtures/profile-bound/high_assurance-v1/expected_result.json",
+    "signature": "ed25519:receipt-high-assurance-signature-placeholder"
+  },
+  "notes": [
+    "High assurance profile records stronger transport and freshness constraints before accepting the same video."
+  ]
+}

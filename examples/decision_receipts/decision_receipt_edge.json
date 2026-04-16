@@ -1,0 +1,119 @@
+{
+  "receipt_version": "1.0",
+  "receipt_id": "receipt:edge:bridge-video:2026-04-17",
+  "timestamp": "2026-04-17T09:10:00Z",
+  "profile": "edge",
+  "verification_mode": "offline_snapshot",
+  "transport_mode": "snapshot",
+  "input": {
+    "asset": {
+      "type": "video",
+      "id": "city-bridge-inspection.mp4",
+      "hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "media_type": "video/mp4"
+    },
+    "actor": {
+      "id": "did:web:vendor.example:inspectors:alice",
+      "label": "Bridge inspection vendor operator"
+    },
+    "issuer": {
+      "id": "did:web:issuer.example:city-vendor-ca",
+      "label": "City vendor credential issuer"
+    },
+    "authority": {
+      "id": "did:web:city.example:trust-registry",
+      "label": "City bridge inspection authority"
+    },
+    "action": "submit_inspection_video",
+    "signals": {
+      "integrity": "verified",
+      "provenance": "present",
+      "process_evidence": "verified"
+    }
+  },
+  "trqp_responses": {
+    "authorization": {
+      "result": "allowed",
+      "source": "signed-policy-snapshot",
+      "timestamp": "2026-04-17T08:50:00Z",
+      "authority": "city-bridge-inspection"
+    },
+    "recognition": {
+      "result": "recognized",
+      "source": "signed-policy-snapshot",
+      "timestamp": "2026-04-17T08:50:00Z",
+      "authority": "city-bridge-inspection"
+    },
+    "revocation": {
+      "status": "active",
+      "checked_at": "2026-04-17T08:50:00Z",
+      "freshness_seconds": 1200,
+      "freshness_outcome": "snapshot_verified",
+      "mode": "snapshot"
+    }
+  },
+  "policy_evaluation": {
+    "profile_rules_applied": [
+      "require_snapshot_signature",
+      "require_trust_anchor_validation",
+      "allow_offline_snapshot_verification"
+    ],
+    "checks": {
+      "authorization": "pass",
+      "recognition": "pass",
+      "revocation_freshness": "pass",
+      "integrity": "pass",
+      "process_evidence": "pass"
+    },
+    "policy_freshness": "snapshot_verified"
+  },
+  "decision": {
+    "result": "trusted",
+    "confidence": "medium",
+    "reasons": [
+      "authorized_actor",
+      "recognized_issuer",
+      "snapshot_signature_verified",
+      "snapshot_revocation_state_accepted",
+      "valid_process"
+    ],
+    "verification_result": {
+      "asset_integrity": "verified",
+      "assertion_binding": "verified",
+      "issuer_recognition": "recognized",
+      "actor_authorization": "authorized",
+      "process_integrity": "acceptable",
+      "policy_freshness": "snapshot_verified",
+      "verification_mode": "offline_snapshot",
+      "trust_outcome": "trusted",
+      "process_appraisal": {
+        "status": "acceptable",
+        "signals": [
+          "provenance_present",
+          "approved_workflow"
+        ]
+      },
+      "policy_evidence": {
+        "authorization_source": "mock_trqp_service",
+        "recognition_source": "mock_trqp_service"
+      },
+      "gateway_mediation": {
+        "used": false
+      },
+      "explanations": [
+        "Actor is authorized for submit_inspection_video",
+        "Issuer is recognized in the city bridge inspection authority context"
+      ]
+    }
+  },
+  "evidence": {
+    "replayable": true,
+    "snapshot_reference": "data/snapshot.json#snapshot-2026-04-17T08:50:00Z",
+    "logs_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "bundle_reference": "examples/expected/edge_result.json",
+    "signature": "ed25519:receipt-edge-signature-placeholder"
+  },
+  "notes": [
+    "Edge profile accepts offline verification only because the signed snapshot and trust anchors are treated as authoritative evidence."
+  ]
+}
