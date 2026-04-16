@@ -1,17 +1,21 @@
 # Release Readiness
 
-## v0.12.0 checklist
+## v0.13.0 checklist
 
-- [x] version bump completed in package metadata and module version
-- [x] verification profile schema added
-- [x] built-in profiles added
-- [x] assurance overlays added
-- [x] verifier refactored to enforce resolved profile controls
-- [x] audit bundle export updated to carry resolved profile object
-- [x] replay updated to use embedded profile object
-- [x] documentation refreshed for current release scope
-- [x] example fixtures rebuilt
-- [x] automated test suite passing
-- [x] deterministic reproducibility check passing
-- [x] audit bundle validation passing
-- [x] replay validation passing
+- [x] transport controls added to profile schema
+- [x] revocation freshness controls added to profile schema
+- [x] verifier enforces transport and freshness guardrails
+- [x] audit bundles carry replay fidelity extensions
+- [x] canonical fixture package added
+- [x] example bundles rebuilt
+- [x] documentation refreshed
+- [x] test suite passes
+
+## Validation commands
+
+```bash
+pytest -q
+python scripts/check_reproducibility.py examples/reproducibility_bundle_standard.json
+python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
+python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
+```

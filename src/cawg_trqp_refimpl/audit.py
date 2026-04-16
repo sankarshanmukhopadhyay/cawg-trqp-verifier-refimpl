@@ -11,7 +11,7 @@ from .profile import VerificationProfile, load_profile
 
 AUDIT_BUNDLE_TYPE = "cawg-trqp-audit-bundle"
 AUDIT_BUNDLE_PROFILE = "https://example.org/profiles/cawg-trqp-audit-bundle/v1"
-AUDIT_BUNDLE_VERSION = "1.2.0"
+AUDIT_BUNDLE_VERSION = "1.3.0"
 
 
 @dataclass
@@ -109,6 +109,13 @@ def build_audit_bundle(
         "use_gateway": use_gateway,
         "verification_mode": result.verification_mode,
         "policy_epoch": result.policy_evidence.get("policy_epoch"),
+        "transport_metadata": result.policy_evidence.get("transport", {}),
+        "revocation_status": result.policy_evidence.get("revocation_status", {}),
+        "replay_contract": {
+            "transport_verified": bool(result.policy_evidence.get("transport", {}).get("satisfied", False)),
+            "revocation_freshness_evaluated": "revocation_status" in result.policy_evidence,
+            "deterministic_inputs": bool(policy_feed),
+        },
     }
     if policy_feed:
         replay_inputs["policy_feed"] = policy_feed

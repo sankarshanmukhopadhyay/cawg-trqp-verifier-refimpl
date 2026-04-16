@@ -12,7 +12,10 @@
     },
     "revocation": {
       "mode": "live",
-      "hard_fail": true
+      "hard_fail": true,
+      "max_age_seconds": 300,
+      "enforcement": "fail",
+      "delta_channel_required": true
     },
     "failure": {
       "network_failure": "fail_closed",
@@ -25,6 +28,11 @@
     "determinism": {
       "replayable": true,
       "require_pinned_feeds": true
+    },
+    "transport": {
+      "mode": "http",
+      "integrity": "tls",
+      "availability_requirement": "required"
     }
   },
   "overlays": []

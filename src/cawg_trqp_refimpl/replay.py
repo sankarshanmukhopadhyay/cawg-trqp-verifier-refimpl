@@ -50,8 +50,12 @@ def replay_audit_bundle(
     if resolved_profile.base_profile != "edge" and not resolved_policy_path:
         raise ValueError("policy_path is required unless replay_inputs.policy_feed.policy_source is present")
 
-    service = None if resolved_profile.base_profile == "edge" else MockTRQPService(resolved_policy_path, resolved_revocation_path)
-    gateway = TrustGateway(service) if use_gateway and service is not None else None
+    if use_gateway:
+        service = MockTRQPService(resolved_policy_path, resolved_revocation_path, transport_mode='http', transport_integrity='tls')
+        gateway = TrustGateway(service)
+    else:
+        service = None if resolved_profile.base_profile == "edge" else MockTRQPService(resolved_policy_path, resolved_revocation_path)
+        gateway = None
     verifier = Verifier(service=service, gateway=gateway)
     result = verifier.verify(request, profile=resolved_profile).to_dict()
     expected = bundle.get("verification_result", {})
@@ -70,6 +74,16 @@ def replay_audit_bundle(
     actual_profile = result.get("policy_evidence", {}).get("verification_profile")
     if isinstance(expected_profile, dict) and actual_profile != expected_profile:
         differences.append("verification_profile: expected bundle replay_inputs.profile to match replayed policy_evidence.verification_profile")
+
+    expected_transport = inputs.get('transport_metadata')
+    actual_transport = result.get('policy_evidence', {}).get('transport')
+    if expected_transport and actual_transport != expected_transport:
+        differences.append('transport_metadata: expected replay_inputs.transport_metadata to match replayed policy_evidence.transport')
+
+    expected_revocation = inputs.get('revocation_status')
+    actual_revocation = result.get('policy_evidence', {}).get('revocation_status')
+    if expected_revocation and actual_revocation != expected_revocation:
+        differences.append('revocation_status: expected replay_inputs.revocation_status to match replayed policy_evidence.revocation_status')
 
     return ReplayReport(
         replayed_result=result,

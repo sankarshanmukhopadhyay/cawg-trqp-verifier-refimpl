@@ -25,15 +25,16 @@
       "emit_audit_bundle": true,
       "require_attestation": false
     },
-    "determinism": {
-      "replayable": true,
-      "require_pinned_feeds": false
-    },
     "transport": {
       "mode": "http",
       "integrity": "tls",
       "availability_requirement": "best_effort"
+    },
+    "determinism": {
+      "replayable": true,
+      "require_pinned_feeds": false
     }
   },
-  "overlays": []
+  "overlays": [],
+  "source": "profiles/standard.json"
 }

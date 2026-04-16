@@ -1,28 +1,27 @@
 # Audit Bundle Profile
 
-## Current profile state
+## Purpose
 
-Audit bundles now carry both evidence and the **resolved verification profile** that governed the decision.
+The audit bundle captures the verification decision and the evidence needed to replay and examine that decision later.
 
-The deterministic profile for bundle export includes:
+## v0.13.0 additions
 
-- `request_summary`
-- `verification_result`
-- `policy_evidence`
-- `process_appraisal`
-- `gateway_mediation`
-- `replay_inputs`
-- optional `bundle_attestation`
+This release extends the audit bundle so that replay fidelity covers input trust as well as verification logic.
 
-## v0.12.0 addition
+New replay fields include:
 
-`replay_inputs.profile` now stores the resolved profile object rather than only the profile name. This preserves:
+- `transport_metadata`
+- `revocation_status`
+- `replay_contract`
 
-- base profile identity
-- active controls
-- overlay list
-- profile source metadata
+## Replay contract
 
-## Assurance effect
+The replay contract now states whether:
 
-A replay consumer can now validate not only whether the same inputs produce the same result, but whether they were evaluated under the same governance contract.
+- transport verification succeeded
+- revocation freshness was evaluated
+- deterministic inputs were present
+
+## Why this matters
+
+A replay artifact is more credible when it can show not only what the verifier did, but also whether the verifier had inputs that met the profile’s expectations.

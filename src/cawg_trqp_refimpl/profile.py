@@ -37,6 +37,9 @@ DEFAULT_CONTROLS: dict[str, Any] = {
     "revocation": {
         "mode": "snapshot",
         "hard_fail": False,
+        "max_age_seconds": 86400,
+        "enforcement": "warn",
+        "delta_channel_required": False,
     },
     "failure": {
         "network_failure": "fail_open",
@@ -45,6 +48,11 @@ DEFAULT_CONTROLS: dict[str, Any] = {
     "evidence": {
         "emit_audit_bundle": True,
         "require_attestation": False,
+    },
+    "transport": {
+        "mode": "local",
+        "integrity": "none",
+        "availability_requirement": "best_effort",
     },
     "determinism": {
         "replayable": True,

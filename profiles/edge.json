@@ -12,7 +12,10 @@
     },
     "revocation": {
       "mode": "snapshot",
-      "hard_fail": false
+      "hard_fail": false,
+      "max_age_seconds": 86400,
+      "enforcement": "warn",
+      "delta_channel_required": false
     },
     "failure": {
       "network_failure": "fail_open",
@@ -25,6 +28,11 @@
     "determinism": {
       "replayable": false,
       "require_pinned_feeds": false
+    },
+    "transport": {
+      "mode": "local",
+      "integrity": "signed",
+      "availability_requirement": "best_effort"
     }
   },
   "overlays": []

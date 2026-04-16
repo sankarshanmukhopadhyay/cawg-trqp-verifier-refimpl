@@ -1,47 +1,26 @@
 # Interoperability Vectors
 
-## Current scope
+## Included vectors
 
-The repository now covers two interoperability layers:
+This repository includes example vectors for:
 
-1. **single-authority gateway mediation** for remote policy lookup
-2. **multi-authority gateway routing** for production-style federation patterns
+- standard verification
+- gateway-mediated verification
+- multi-authority gateway routing
+- benchmark-style request payloads
 
-## Multi-authority routing model
+## Canonical fixture exchange
 
-The trust gateway can route by `authority_id` to distinct policy services and assign a deterministic `route_label` per authority.
+`v0.13.0` adds a more structured exchange surface for interoperability work:
 
-This models an execution environment in which:
+- `fixtures/profile-bound/standard-v1/`
 
-- different registries govern different content classes or geographies
-- the verifier uses one mediation layer
-- routing remains explicit and auditable
+That package gives another implementation everything it needs to replay a known-good case with pinned inputs.
 
-## Included fixtures
+## What should stay stable across implementations
 
-### Policy data
-
-- `data/policies_multi_authority.json`
-
-### Vectors
-
-- `examples/interoperability_vector_gateway.json`
-- `examples/interoperability_vector_multi_authority.json`
-
-## Why this matters
-
-A verifier that only supports one authority path is useful for demos but weak for real deployment planning. Multi-authority routing begins to model the actual governance topology of production trust infrastructure.
-
-This improves three properties:
-
-- **scope clarity**: each authority remains distinct
-- **auditability**: the mediation record shows which route was used
-- **determinism**: route selection is policy-domain driven, not implicit or ad hoc
-
-## Test coverage
-
-Route-aware behavior is exercised in:
-
-- `tests/test_gateway_routes.py`
-- `tests/test_http_service.py`
-- `tests/test_audit_bundle.py`
+- resolved profile semantics
+- trust outcome
+- transport evaluation result
+- revocation freshness evaluation result
+- replay contract expectations

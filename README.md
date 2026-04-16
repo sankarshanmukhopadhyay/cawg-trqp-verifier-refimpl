@@ -1,45 +1,61 @@
 # CAWG–TRQP Reference Implementation
 
-**Version:** v0.12.0  
-**Status:** Release candidate for executable verification profiles and assurance overlays
+**Version:** v0.13.0  
+**Status:** Release candidate for deterministic input trust and replay fidelity
 
 ## Overview
 
-This repository demonstrates how **TRQP** can operate as the governance decision plane in a **CAWG/C2PA** verification workflow. In `v0.12.0`, verification profiles move from simple runtime presets to **machine-readable enforcement contracts**. The verifier now resolves a profile, applies optional assurance overlays, enforces the resulting controls at runtime, and carries the resolved profile into exported evidence.
+This repository shows how **TRQP** can serve as the governance decision plane in a **CAWG/C2PA** verification workflow.
 
-That shift matters because policy execution now produces portable evidence about:
+In `v0.13.0`, the verifier stops treating policy inputs as ambient infrastructure. Profiles now govern not only how a decision is made, but also what kind of feed transport is acceptable, how fresh revocation material must be, and what replay evidence must travel with the outcome.
 
-- what authority posture was enforced
-- how freshness and revocation were handled
-- whether degraded policy conditions failed open or failed closed
-- what evidence obligations applied to exported audit artifacts
-- whether the result can be replayed deterministically
+That matters because a verifier that cannot account for the reliability of its own inputs is still operating on trust assumptions it cannot evidence.
 
-## What v0.12.0 adds
+## What v0.13.0 adds
 
-### 1. Executable verification profiles
+### 1. Transport-aware verification profiles
 
-Profiles are now first-class JSON artifacts validated by `schemas/verification-profile.schema.json` and loaded through `src/cawg_trqp_refimpl/profile.py`.
+Profiles can now declare transport requirements for policy feeds:
 
-### 2. Assurance overlays
+- `mode`: `http`, `gateway`, or `local`
+- `integrity`: `none`, `tls`, or `signed`
+- `availability_requirement`: `best_effort` or `required`
 
-A base profile can now be tightened with overlays such as:
+The verifier evaluates the runtime transport posture and records the result in policy evidence and replay inputs.
 
-- `freshness_strict`
-- `evidence_attested`
+### 2. Revocation freshness enforcement
 
-This avoids profile sprawl while still making stricter controls machine-verifiable.
+Profiles now declare revocation freshness expectations:
 
-### 3. Profile-aware audit bundles and replay
+- maximum acceptable age
+- warn vs fail behavior
+- whether delta/live channel semantics are required
 
-Exported audit bundles now carry the **resolved profile object** in `replay_inputs.profile`. Replay tooling uses that profile directly, so downstream systems can re-run the same governance contract instead of inferring behavior from surrounding context.
+This makes revocation handling explicit, testable, and exportable.
 
-### 4. Fail-open / fail-closed enforcement semantics
+### 3. Replay fidelity extensions
 
-Profiles now explicitly govern degraded-policy behavior. For example:
+Audit bundles now carry:
 
-- `standard` defers when live policy is unavailable
-- `high_assurance` rejects when live policy is unavailable
+- transport metadata
+- revocation status and freshness evaluation
+- a replay contract stating whether deterministic inputs were present
+
+Replay is no longer just “run it again with the same profile.” It now captures whether the verifier believed its inputs were trustworthy enough at decision time.
+
+### 4. Canonical profile-bound fixtures
+
+The repository now includes a canonical fixture package under `fixtures/profile-bound/standard-v1/` containing:
+
+- the request
+- the resolved profile
+- the expected result
+- pinned policy and revocation feeds
+- a fixture manifest for cross-implementation exchange
+
+### 5. Documentation refresh
+
+The documentation has been updated to explain deterministic input trust in both technical and non-technical terms, including transport constraints, revocation freshness, replay fidelity, and alignment directions for broader TRQP assurance work.
 
 ## Quick start
 
@@ -47,7 +63,7 @@ Profiles now explicitly govern degraded-policy behavior. For example:
 
 ```bash
 git clone <this-repo>
-cd cawg-trqp-verifier-refimpl
+cd cawg-trqp-refimpl
 pip install -e .
 ```
 
@@ -93,13 +109,13 @@ python scripts/validate_audit_bundle.py \
   --trust-anchors data/trust_anchors.json
 ```
 
-### Replay using the resolved profile embedded in the bundle
+### Replay an audit bundle
 
 ```bash
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
 ```
 
-### Check reproducibility fixture
+### Check deterministic reproducibility
 
 ```bash
 python scripts/check_reproducibility.py examples/reproducibility_bundle_standard.json
@@ -107,39 +123,51 @@ python scripts/check_reproducibility.py examples/reproducibility_bundle_standard
 
 ## Verification profiles
 
-| Profile | Base posture | Authority policy | Failure policy | Evidence posture | Determinism posture |
+| Profile | Base posture | Transport posture | Revocation posture | Failure policy | Evidence posture |
 |---|---|---|---|---|---|
-| `edge` | signed snapshot only | trust anchors required | fail-open on live network absence, because no live network is expected | audit export optional but not required | replay not required |
-| `standard` | cache-first with live fallback | permissive recognition posture | fail-open / defer on policy outage | audit bundle export supported | replayable |
-| `high_assurance` | live policy only | trust anchors required and untrusted recognition blocked | fail-closed on policy outage | audit bundle export plus attestation required | pinned-feed replay required |
+| `edge` | signed snapshot only | local signed data | snapshot-based, warning semantics | fail-open on network absence because no live network is expected | audit export optional |
+| `standard` | cache-first with live fallback | HTTP/TLS accepted, gateway compatible | delta-oriented with warning semantics | fail-open / defer on policy outage | audit bundle export supported |
+| `high_assurance` | live policy only | live transport required | hard-fail freshness semantics with delta/live expectations | fail-closed on policy outage | audit bundle export plus attestation required |
 
-## Assurance overlay model
+## Canonical fixture package
 
-The governing unit is now:
+The fixture exchange surface for `v0.13.0` is:
 
 ```text
-verification_profile = base_profile + assurance_overlay(s)
+fixtures/
+  profile-bound/
+    standard-v1/
+      manifest.json
+      request.json
+      resolved_profile.json
+      expected_result.json
+      pinned_feeds/
+        policies.json
+        revocations.json
 ```
 
-This lets the repository express stricter semantics without multiplying profile names.
+## Repository structure relevant to v0.13.0
 
-## Repository structure relevant to v0.12.0
-
-- `profiles/` — built-in executable profiles
+- `profiles/` — executable verification profiles
 - `profiles/overlays/` — assurance overlays
-- `schemas/verification-profile.schema.json` — profile schema
-- `src/cawg_trqp_refimpl/profile.py` — loader, validation, overlay merge logic
-- `docs/verifier-profiles.md` — profile semantics and usage
-- `tests/test_profiles.py` — assurance-oriented profile tests
+- `fixtures/profile-bound/` — canonical fixture exchange packages
+- `schemas/verification-profile.schema.json` — profile schema with transport and revocation controls
+- `schemas/audit-bundle.schema.json` — replay fidelity and audit bundle schema
+- `src/cawg_trqp_refimpl/transport.py` — transport constraint evaluation
+- `src/cawg_trqp_refimpl/verifier.py` — transport and revocation enforcement
+- `src/cawg_trqp_refimpl/replay.py` — replay fidelity comparison
+- `docs/deterministic-input-trust.md` — control-plane explanation of the new theme
 
 ## Documentation map
 
+- `docs/NON_TECHNICAL_OVERVIEW.md`
 - `docs/architecture.md`
 - `docs/audit-bundle-profile.md`
+- `docs/deterministic-input-trust.md`
 - `docs/release-assets.md`
 - `docs/release-readiness.md`
 - `docs/reproducibility-guide.md`
-- `docs/trust-gateway.md`
+- `docs/trqp-alignment.md`
 - `docs/verifier-profiles.md`
 - `docs/repo-tree.md`
 
@@ -152,11 +180,20 @@ python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.js
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
 ```
 
-## Roadmap direction after v0.12.0
+## Completed in v0.13.0
 
-This release establishes the control plane needed for:
+This release completes the `v0.12.0` roadmap items for:
 
 - transport-specific policy feed constraints
-- revocation freshness assertions and delta channels
+- revocation freshness assertions and delta-channel semantics
 - cross-implementation exchange of profile-bound audit fixtures
-- alignment with external conformance and assurance suites
+- first alignment surface for broader TRQP assurance and conformance work
+
+## Next roadmap direction after v0.13.0
+
+The next practical increment should focus on:
+
+- signed remote feed descriptors and stronger transport attestation
+- explicit freshness breach reason codes in exported evidence
+- fixture exchange for multiple profiles, including high-assurance and gateway-mediated cases
+- direct alignment hooks into external TRQP conformance and assurance suites

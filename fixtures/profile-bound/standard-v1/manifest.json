@@ -1,0 +1,18 @@
+{
+  "fixture_id": "standard-v1",
+  "description": "Canonical profile-bound fixture for cross-implementation replay of the standard verifier profile.",
+  "profile": "standard",
+  "determinism": true,
+  "inputs": {
+    "request": "request.json",
+    "resolved_profile": "resolved_profile.json",
+    "expected_result": "expected_result.json",
+    "policy_feed": "pinned_feeds/policies.json",
+    "revocation_feed": "pinned_feeds/revocations.json"
+  },
+  "replay_contract": {
+    "transport_verified": true,
+    "revocation_freshness_evaluated": true,
+    "pinned_feeds_required": false
+  }
+}

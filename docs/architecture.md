@@ -1,44 +1,60 @@
 # Architecture
 
-## Core idea
+## Release focus
 
-The verifier is no longer just a CAWG/C2PA request evaluator with TRQP-backed lookups. In `v0.12.0`, it becomes a **profile-governed policy execution engine**.
+In `v0.13.0`, the verifier moves from profile-governed policy execution to **profile-governed input trust plus replay fidelity**.
 
-## Main components
+The architecture now treats transport posture and revocation freshness as part of the same control surface as authorization, recognition, and process appraisal.
 
-- `cli.py` — request entrypoint and export workflow
-- `verifier.py` — trust decision orchestration
-- `profile.py` — profile loading, schema validation, and overlay composition
-- `mock_service.py` — TRQP policy simulation
-- `snapshot.py` — signed offline snapshot validation
-- `audit.py` — deterministic audit bundle construction
-- `replay.py` — re-execution against embedded profile and pinned feeds
-
-## Execution flow
+## Main flow
 
 1. Load a request from JSON or fixture.
-2. Resolve a verification profile from a built-in profile or supplied JSON path.
-3. Apply zero or more assurance overlays.
-4. Enforce the resulting control set during verification.
-5. Emit a verification result carrying `policy_evidence.verification_profile`.
-6. Optionally export an audit bundle containing `replay_inputs.profile`.
+2. Resolve the verification profile and any overlays.
+3. Evaluate transport constraints against the active service or gateway path.
+4. Evaluate revocation freshness against the profile contract.
+5. Execute authorization and recognition lookups when permitted.
+6. Appraise process evidence against policy requirements.
+7. Export result, policy evidence, and replay inputs.
 
-## Control domains
+## Control surfaces
 
-The profile model currently governs:
+### Verification profile
 
-- authority trust posture
-- freshness requirements
-- revocation mode
-- degraded-condition failure semantics
-- evidence requirements
-- replay determinism requirements
+The profile remains the governing unit. In `v0.13.0`, it now includes:
 
-## Why this matters
+- authority controls
+- freshness controls
+- revocation controls
+- failure behavior
+- evidence behavior
+- transport requirements
+- determinism expectations
 
-This architecture makes verification behavior inspectable and testable. A consumer can now distinguish between:
+### Transport evaluation
 
-- a result that was allowed to defer on policy outage
-- a result that was required to reject on policy outage
-- a result that required attested evidence
-- a result that must be replayable from pinned inputs
+The verifier records:
+
+- required transport posture from the profile
+- actual transport posture from the runtime path
+- whether the transport contract was satisfied
+- any transport violations
+
+### Revocation freshness evaluation
+
+The verifier records:
+
+- revocation source and channel
+- age of revocation material when available
+- max allowed age from the profile
+- whether the freshness contract was satisfied
+- any freshness violations
+
+## Export path
+
+Audit bundles now carry richer replay inputs so downstream systems can test not just the result, but also whether the same input trust conditions were asserted.
+
+## Architectural implication
+
+This is a meaningful control-plane shift.
+
+The system is no longer only saying, “here is the answer.” It is saying, “here is the answer, here is what I required from my inputs, and here is whether those requirements were actually met.”

@@ -59,7 +59,10 @@
         "profile",
         "use_gateway",
         "verification_mode",
-        "policy_epoch"
+        "policy_epoch",
+        "transport_metadata",
+        "revocation_status",
+        "replay_contract"
       ],
       "properties": {
         "request": {
@@ -142,6 +145,15 @@
             }
           },
           "additionalProperties": false
+        },
+        "transport_metadata": {
+          "type": "object"
+        },
+        "revocation_status": {
+          "type": "object"
+        },
+        "replay_contract": {
+          "type": "object"
         }
       },
       "additionalProperties": true

@@ -4,6 +4,7 @@ from dataclasses import asdict
 from typing import Any
 
 from .mock_service import MockTRQPService
+from .transport import FeedTransportMetadata
 
 
 class TrustGateway:
@@ -20,11 +21,18 @@ class TrustGateway:
         gateway_id: str = 'gateway:default',
         route_label: str = 'default',
         authority_routes: dict[str, dict[str, Any]] | None = None,
+        transport_integrity: str = 'signed',
     ) -> None:
         self.service = service
         self.gateway_id = gateway_id
         self.route_label = route_label
         self.authority_routes = authority_routes or {}
+        self.transport_metadata = FeedTransportMetadata(
+            mode='gateway',
+            integrity=transport_integrity,
+            available=service is not None or bool(authority_routes),
+            channel='mediated',
+        )
 
     def _resolve_route(self, authority_id: str) -> tuple[MockTRQPService, str]:
         route = self.authority_routes.get(authority_id)

@@ -1,96 +1,83 @@
-# Verification Profiles
+# Verifier Profiles
 
 ## Purpose
 
-Verification profiles are now **machine-readable governance contracts**. They define how the verifier should behave under normal and degraded conditions, and they travel with exported evidence so downstream systems can reproduce the same decision contract.
+Verifier profiles are machine-readable enforcement contracts.
 
-## Model
+In `v0.13.0`, they govern not only verification behavior, but also transport posture and revocation freshness.
 
-```text
-verification_profile = base_profile + assurance_overlay(s)
-```
+## Control model
 
-A profile resolves to six control domains:
+A profile now contains the following control groups:
 
 - `authority`
 - `freshness`
 - `revocation`
 - `failure`
 - `evidence`
+- `transport`
 - `determinism`
 
-The schema for these controls is defined in `schemas/verification-profile.schema.json`.
+## Transport controls
 
-## Built-in base profiles
+```json
+{
+  "transport": {
+    "mode": "http",
+    "integrity": "tls",
+    "availability_requirement": "best_effort"
+  }
+}
+```
+
+These controls express what the profile is willing to trust about the policy feed path.
+
+## Revocation controls
+
+```json
+{
+  "revocation": {
+    "mode": "delta",
+    "hard_fail": false,
+    "max_age_seconds": 3600,
+    "enforcement": "warn",
+    "delta_channel_required": false
+  }
+}
+```
+
+These controls express how revocation freshness is judged and whether stale material causes warning or failure.
+
+## Built-in profiles
 
 ### `edge`
 
-Use when verification must work from signed snapshots in disconnected or bandwidth-constrained settings.
-
-Key controls:
-
-- trust anchors required
-- snapshot revocation posture
-- no requirement to emit replayable evidence
+- local signed snapshot posture
+- no live network required
+- warning-oriented revocation posture
+- intended for offline or constrained deployments
 
 ### `standard`
 
-Use when verification is service-backed and cache-first behavior is acceptable.
-
-Key controls:
-
-- permissive authority posture
-- live lookup on cache miss
-- fail-open / defer on policy unavailability
-- replayable evidence supported
+- cache-first verification with live fallback
+- HTTP/TLS transport accepted, gateway-compatible
+- warning-oriented revocation freshness posture
+- replayable and suitable for most demonstrations and baseline interoperability work
 
 ### `high_assurance`
 
-Use when verification must fail closed under degraded policy conditions and produce attestable evidence.
+- live policy posture
+- required transport availability
+- hard-fail semantics for revocation freshness breaches
+- attested audit bundle expectations
+- pinned-feed replay expectations
 
-Key controls:
+## Overlay model
 
-- trust anchors required
-- live-only freshness posture
-- hard-fail revocation handling
-- attested audit bundles required
-- pinned-feed replay required
+The governing unit remains:
 
-## Overlays
-
-Overlays let an implementer tighten controls without inventing a new profile name.
-
-### Included overlays
-
-- `freshness_strict` — require live policy and fail closed when policy is unavailable
-- `evidence_attested` — require emitted audit bundles to be attested
-
-## CLI usage
-
-```bash
-python -m cawg_trqp_refimpl.cli \
-  --fixture examples/fixtures/cawg_manifest_c2pa_pop.json \
-  --profile standard \
-  --overlay freshness_strict \
-  --overlay evidence_attested
+```text
+verification_profile = base_profile + assurance_overlay(s)
 ```
 
-## Audit bundle behavior
-
-When a verification result is exported as an audit bundle, the **resolved** profile object is copied into `replay_inputs.profile`.
-
-That means replay no longer depends on local assumptions such as:
-
-- which profile name was intended
-- whether overlays were applied
-- whether strict evidence or freshness controls were active
-
-## Assurance posture
-
-Profiles can now be tested directly for:
-
-- trust-anchor requirements
-- live policy requirements
-- fail-open / fail-closed semantics
-- evidence obligations
-- replayability expectations
+Overlays allow stricter freshness and evidence semantics without multiplying base profile names.

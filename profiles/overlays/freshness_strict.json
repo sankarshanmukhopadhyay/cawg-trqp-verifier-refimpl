@@ -9,6 +9,10 @@
     "failure": {
       "network_failure": "fail_closed",
       "policy_unavailable": "fail_closed"
+    },
+    "revocation": {
+      "max_age_seconds": 300,
+      "enforcement": "fail"
     }
   }
 }
