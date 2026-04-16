@@ -5,7 +5,7 @@
   "actor_authorization": "authorized",
   "process_integrity": "verified_high",
   "policy_freshness": "current",
-  "verification_mode": "cached_online",
+  "verification_mode": "online_full",
   "trust_outcome": "trusted",
   "process_appraisal": {
     "status": "verified",
@@ -35,50 +35,50 @@
       ]
     },
     "verification_profile": {
-      "id": "standard",
-      "base_profile": "standard",
+      "id": "high_assurance",
+      "base_profile": "high_assurance",
       "controls": {
         "authority": {
-          "trust_anchors_required": false,
-          "allow_untrusted": true
+          "trust_anchors_required": true,
+          "allow_untrusted": false
         },
         "freshness": {
-          "max_age_seconds": 3600,
-          "require_live": false
+          "max_age_seconds": 300,
+          "require_live": true
         },
         "revocation": {
-          "mode": "delta",
-          "hard_fail": false,
-          "max_age_seconds": 3600,
-          "enforcement": "warn",
-          "delta_channel_required": false
+          "mode": "live",
+          "hard_fail": true,
+          "max_age_seconds": 300,
+          "enforcement": "fail",
+          "delta_channel_required": true
         },
         "failure": {
-          "network_failure": "fail_open",
-          "policy_unavailable": "fail_open"
+          "network_failure": "fail_closed",
+          "policy_unavailable": "fail_closed"
         },
         "evidence": {
           "emit_audit_bundle": true,
-          "require_attestation": false
+          "require_attestation": true
         },
         "transport": {
           "mode": "http",
           "integrity": "tls",
-          "availability_requirement": "best_effort"
+          "availability_requirement": "required"
         },
         "determinism": {
           "replayable": true,
-          "require_pinned_feeds": false
+          "require_pinned_feeds": true
         }
       },
       "overlays": [],
-      "source": "profiles/standard.json"
+      "source": "profiles/high_assurance.json"
     },
     "transport": {
       "required": {
         "mode": "http",
         "integrity": "tls",
-        "availability_requirement": "best_effort"
+        "availability_requirement": "required"
       },
       "actual": {
         "mode": "http",
@@ -96,14 +96,14 @@
       "channel": "delta",
       "age_seconds": 0,
       "freshness_ok": true,
-      "max_age_seconds": 3600,
-      "enforcement": "warn",
+      "max_age_seconds": 300,
+      "enforcement": "fail",
       "violations": []
     }
   },
   "gateway_mediation": {},
   "explanations": [
-    "Verification profile: standard",
+    "Verification profile: high_assurance",
     "Live authorization lookup executed",
     "Live recognition lookup executed"
   ]

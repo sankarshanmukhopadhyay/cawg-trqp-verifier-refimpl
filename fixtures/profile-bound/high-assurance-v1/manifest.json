@@ -1,8 +1,8 @@
 {
-  "fixture_id": "standard-v1",
-  "description": "Canonical profile-bound fixture for cross-implementation replay of the standard verifier profile.",
-  "profile": "standard",
-  "verification_mode": "cached_online",
+  "fixture_id": "high-assurance-v1",
+  "description": "Canonical profile-bound fixture for live-only verification under the high assurance profile.",
+  "profile": "high_assurance",
+  "verification_mode": "online_full",
   "determinism": true,
   "inputs": {
     "request": "request.json",
@@ -14,6 +14,6 @@
   "replay_contract": {
     "transport_verified": true,
     "revocation_freshness_evaluated": true,
-    "pinned_feeds_required": false
+    "pinned_feeds_required": true
   }
 }

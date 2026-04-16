@@ -1,38 +1,39 @@
 # Roadmap
 
-## Completed in v0.13.0
+## Completed after v0.13.0
 
-The roadmap direction called out after `v0.12.0` has now been implemented:
+The adoption and interoperability hardening increment is now in place:
 
-- feed transport specialization is now expressed in the profile model and enforced at runtime
-- revocation freshness assertions are now explicit and exported in evidence
-- cross-implementation fixture exchange now has a canonical package surface
-- initial alignment material for broader TRQP assurance and conformance work is now documented
+- canonical fixture packages now exist for standard, high assurance, gateway-mediated, and multi-authority cases
+- a machine-readable compatibility matrix is published under `conformance/compatibility-matrix.json`
+- the HTTP service surface is tested both through endpoint tests and a live-process integration path
+- CI uses a pinned validation dependency set and continues to validate shipped examples and fixtures
+- documentation now treats the repository as an external handoff surface rather than only as an implementation exercise
 
-## Current focus after v0.13.0
+## Current focus after the interoperability increment
 
-The next practical increment should deepen evidence about distribution trust and interoperability scale.
+The next practical work should deepen trust evidence and external alignment.
 
-### 1. Signed feed descriptors and stronger transport attestation
+### 1. Signed feed descriptors and transport attestation
 
 - bind remote feed metadata to signed descriptors
-- express gateway assertions about upstream route integrity
-- make transport evidence more portable across implementations
+- let gateways attest to upstream route integrity and freshness provenance
+- make transport evidence portable outside this implementation
 
 ### 2. Richer freshness reason codes
 
-- distinguish stale, missing, degraded, and unverifiable revocation states
-- export normalized freshness reason codes in verification results and audit bundles
-- add more negative fixtures for degraded freshness scenarios
+- distinguish stale, missing, degraded, and unverifiable states in a normalized way
+- tighten the verification-result schema around exported freshness semantics
+- expand negative vectors around degraded and partially trusted freshness states
 
-### 3. Broader fixture exchange coverage
-
-- add canonical fixture packages for `high_assurance`
-- add gateway-mediated and multi-authority fixture exchange cases
-- define expected negative outcomes for transport and freshness failures
-
-### 4. External suite integration
+### 3. External suite integration
 
 - align fixture metadata with broader TRQP conformance work
-- add compatibility notes for downstream assurance hubs
-- publish a minimal machine-readable compatibility matrix
+- let downstream assurance hubs ingest the compatibility matrix directly
+- add compatibility statements for independent implementations that replay these packages successfully
+
+### 4. Higher-fidelity CAWG/C2PA parsing
+
+- preserve the current JSON fixture path
+- add a path for real binary manifest parsing and extraction
+- keep trust-signal extraction stable while increasing ecosystem fidelity

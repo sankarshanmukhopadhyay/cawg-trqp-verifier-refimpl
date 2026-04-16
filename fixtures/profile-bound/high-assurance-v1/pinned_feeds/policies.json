@@ -1,0 +1,67 @@
+{
+  "authorization": [
+    {
+      "entity_id": "did:web:publisher.example",
+      "authority_id": "did:web:media-registry.example",
+      "action": "publish",
+      "resource": "cawg:news-content",
+      "context": {
+        "jurisdiction": "IN"
+      },
+      "authorized": true,
+      "policy_epoch": "2026-Q1",
+      "evidence": [
+        "registry-entry:publisher-123",
+        "policy:media-publish-v2"
+      ],
+      "expires": "2026-12-31T00:00:00Z",
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.75,
+        "allowed_process_types": [
+          "human_assisted",
+          "verified_editorial_pipeline"
+        ]
+      }
+    },
+    {
+      "entity_id": "did:web:blocked.example",
+      "authority_id": "did:web:media-registry.example",
+      "action": "publish",
+      "resource": "cawg:news-content",
+      "context": {
+        "jurisdiction": "IN"
+      },
+      "authorized": false,
+      "policy_epoch": "2026-Q1",
+      "evidence": [
+        "denylist:blocked-example"
+      ],
+      "expires": "2026-12-31T00:00:00Z",
+      "reason": "entity_revoked",
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.75,
+        "allowed_process_types": [
+          "human_assisted",
+          "verified_editorial_pipeline"
+        ]
+      }
+    }
+  ],
+  "recognition": [
+    {
+      "authority_id": "did:web:media-registry.example",
+      "recognized_authority_id": "did:web:issuer.example",
+      "context": {
+        "credential_type": "vc:creator-identity"
+      },
+      "recognized": true,
+      "policy_epoch": "2026-Q1",
+      "evidence": [
+        "trust-list:issuer-77"
+      ],
+      "expires": "2026-12-31T00:00:00Z"
+    }
+  ]
+}

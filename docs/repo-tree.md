@@ -5,20 +5,31 @@
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
+├── conformance/
+│   └── compatibility-matrix.json
 ├── data/
 ├── docs/
+│   ├── INTEGRATION_GUIDE.md
 │   ├── NON_TECHNICAL_OVERVIEW.md
 │   ├── architecture.md
 │   ├── audit-bundle-profile.md
+│   ├── compatibility-matrix.md
+│   ├── deployment-guide.md
 │   ├── deterministic-input-trust.md
-│   ├── release-assets.md
+│   ├── http-transport-patterns.md
+│   ├── interoperability-vectors.md
 │   ├── release-readiness.md
+│   ├── repo-tree.md
 │   ├── reproducibility-guide.md
 │   ├── trqp-alignment.md
+│   ├── trust-gateway.md
 │   └── verifier-profiles.md
 ├── examples/
 ├── fixtures/
 │   └── profile-bound/
+│       ├── gateway-standard-v1/
+│       ├── high-assurance-v1/
+│       ├── multi-authority-v1/
 │       └── standard-v1/
 ├── profiles/
 │   └── overlays/
@@ -28,8 +39,9 @@
 │   └── cawg_trqp_refimpl/
 ├── tests/
 ├── CHANGELOG.md
-├── GITHUB_RELEASE_TEMPLATE.md
 ├── README.md
-├── RELEASE_NOTES_v0.13.0.md
-└── ROADMAP.md
+├── ROADMAP.md
+├── pyproject.toml
+├── requirements-lock.txt
+└── requirements.txt
 ```

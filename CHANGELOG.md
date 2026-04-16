@@ -1,10 +1,10 @@
 ## Unreleased
 
-- replace placeholder schema and audit bundle profile URIs with stable repository namespace URIs
-- add `scripts/validate_examples.py` and wire example/fixture validation into CI
-- consolidate revocation freshness evaluation to remove split logic and dead assignment risk
-- tighten edge snapshot freshness assertion and add negative transport/revocation conformance coverage
-- bound `TTLCache` with configurable LRU-style eviction
+- add canonical fixture packages for `high-assurance`, gateway-mediated, and multi-authority verification cases
+- publish `conformance/compatibility-matrix.json` as a machine-readable adoption and assurance artifact
+- add a live-process HTTP integration test to complement endpoint-level HTTP service coverage
+- pin CI and validation dependencies in `requirements-lock.txt`
+- refresh README and documentation to treat the repository as an external interoperability handoff surface
 
 # Changelog
 

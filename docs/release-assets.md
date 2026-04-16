@@ -1,18 +1,14 @@
-# Release Assets
+# Release and Handoff Assets
 
-## v0.13.0 should ship with
+Even when the repository is not being formally released, it still needs a disciplined handoff surface.
 
-- updated source code and schemas
-- refreshed built-in profiles and overlays
-- updated example audit bundles
-- canonical reproducibility bundle
-- canonical fixture package under `fixtures/profile-bound/standard-v1/`
-- `RELEASE_NOTES_v0.13.0.md`
-- refreshed documentation set
+## Core handoff artifacts
 
-## Recommended checks before publishing
+- canonical fixture packages under `fixtures/profile-bound/`
+- machine-readable compatibility matrix under `conformance/compatibility-matrix.json`
+- reproducibility bundle under `examples/reproducibility_bundle_standard.json`
+- signed and unsigned audit bundle examples under `examples/`
 
-- full test suite passes
-- reproducibility script matches canonical bundle
-- signed audit bundle validates against trust anchors
-- repo tree and documentation reflect the current structure
+## Why these matter
+
+Together, these files let another team evaluate the repository without first adopting the implementation. They can validate schemas, replay decisions, inspect transport and revocation evidence, and compare expected results against their own runtime.

@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import sys
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -15,54 +14,40 @@ SCHEMAS = {
     'verification_result': json.loads((ROOT / 'schemas' / 'verification-result.schema.json').read_text(encoding='utf-8')),
 }
 
-FILES = {
-    'audit_bundle': [
-        'examples/exported_audit_bundle.json',
-        'examples/exported_audit_bundle.signed.json',
-        'examples/reproducibility_bundle_standard.json',
-    ],
-    'verification_profile': [
-        'fixtures/profile-bound/standard-v1/resolved_profile.json',
-    ],
-    'verification_request': [
-        'examples/verification_request.json',
-        'examples/benchmark_high_volume_request.json',
-        'examples/benchmark_constrained_device_request.json',
-        'examples/interoperability_vector_gateway.json',
-        'fixtures/profile-bound/standard-v1/request.json',
-    ],
-    'verification_result': [
-        'examples/expected/standard_result.json',
-        'examples/expected/edge_result.json',
-        'fixtures/profile-bound/standard-v1/expected_result.json',
-    ],
-}
-
+def iter_validation_targets() -> list[tuple[str, Path, object]]:
+    targets: list[tuple[str, Path, object]] = []
+    for path in sorted((ROOT / 'examples').rglob('*.json')):
+        rel = path.relative_to(ROOT)
+        if rel.parts[:2] == ('examples', 'fixtures'):
+            continue
+        data = json.loads(path.read_text(encoding='utf-8'))
+        if path.name in {'exported_audit_bundle.json', 'exported_audit_bundle.signed.json', 'reproducibility_bundle_standard.json'}:
+            targets.append(('audit_bundle', rel, data))
+        elif path.parent.name == 'expected':
+            targets.append(('verification_result', rel, data))
+        elif path.name.startswith('benchmark_') or path.name in {'verification_request.json', 'interoperability_vector_gateway.json'}:
+            targets.append(('verification_request', rel, data))
+        elif path.name == 'interoperability_vector_multi_authority.json':
+            for idx, item in enumerate(data.get('vectors', [])):
+                targets.append(('verification_request', Path(f'{rel}:vectors[{idx}]'), item))
+    for path in sorted((ROOT / 'fixtures' / 'profile-bound').glob('*/request.json')):
+        targets.append(('verification_request', path.relative_to(ROOT), json.loads(path.read_text(encoding='utf-8'))))
+    for path in sorted((ROOT / 'fixtures' / 'profile-bound').glob('*/resolved_profile.json')):
+        targets.append(('verification_profile', path.relative_to(ROOT), json.loads(path.read_text(encoding='utf-8'))))
+    for path in sorted((ROOT / 'fixtures' / 'profile-bound').glob('*/expected_result.json')):
+        targets.append(('verification_result', path.relative_to(ROOT), json.loads(path.read_text(encoding='utf-8'))))
+    return targets
 
 def main() -> int:
-    checked = 0
     failures: list[str] = []
-    for schema_name, rel_paths in FILES.items():
+    checked = 0
+    for schema_name, rel_path, data in iter_validation_targets():
         validator = Draft202012Validator(SCHEMAS[schema_name])
-        for rel_path in rel_paths:
-            path = ROOT / rel_path
-            data = json.loads(path.read_text(encoding='utf-8'))
-            errors = sorted(validator.iter_errors(data), key=lambda err: list(err.path))
-            if errors:
-                for err in errors:
-                    pointer = '/'.join(str(p) for p in err.path) or '<root>'
-                    failures.append(f'{rel_path}: {pointer}: {err.message}')
-            checked += 1
-
-    multi_authority_path = ROOT / 'examples/interoperability_vector_multi_authority.json'
-    multi_authority = json.loads(multi_authority_path.read_text(encoding='utf-8'))
-    validator = Draft202012Validator(SCHEMAS['verification_request'])
-    for idx, item in enumerate(multi_authority.get('vectors', [])):
-        errors = sorted(validator.iter_errors(item), key=lambda err: list(err.path))
+        errors = sorted(validator.iter_errors(data), key=lambda err: list(err.path))
         if errors:
             for err in errors:
                 pointer = '/'.join(str(p) for p in err.path) or '<root>'
-                failures.append(f"examples/interoperability_vector_multi_authority.json:vectors[{idx}]: {pointer}: {err.message}")
+                failures.append(f'{rel_path}: {pointer}: {err.message}')
         checked += 1
     if failures:
         print('validate_examples.py: FAIL')
@@ -71,7 +56,6 @@ def main() -> int:
         return 1
     print(f'validate_examples.py: {checked}/{checked} OK')
     return 0
-
 
 if __name__ == '__main__':
     raise SystemExit(main())

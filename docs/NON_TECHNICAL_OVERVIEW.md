@@ -2,42 +2,44 @@
 
 ## What this repository does
 
-This repository demonstrates how a trust decision can be made in a way that is not only automated, but also explainable and testable.
+This repository demonstrates how a trust decision can be made in a way that is not only automated, but also explainable, testable, and portable.
 
 It uses TRQP as the policy decision layer for verifying whether a digital asset, its issuer, and its process evidence should be trusted in a CAWG/C2PA workflow.
 
-## What is new in v0.13.0
+## What the current repository state adds
 
-Earlier versions focused on the decision itself.
+Earlier versions were mainly about reaching a decision and exporting a replayable result.
 
-This release focuses on the **quality of the information the decision relied on**.
+The current repository state extends that into a more useful public artifact. The project now carries a stronger interoperability surface, not just a stronger verifier.
 
-In plain terms, that means the verifier now asks additional questions such as:
+In practical terms, that means the repository now provides:
 
-- Where did the policy come from?
-- Was that delivery path strong enough for the profile being used?
-- Was revocation information fresh enough to matter?
-- Can another implementation replay the same decision with the same assumptions?
+- governed transport and revocation expectations inside the profile model
+- replay evidence that explains what the verifier trusted while making a decision
+- canonical fixture packages that other teams can replay outside this repository
+- a machine-readable compatibility matrix showing what the current implementation actually covers
+- a documented HTTP service surface that can be exercised as a deployment reference
 
 ## Why that matters
 
 Many systems can produce a trusted or rejected result.
 
-Far fewer can show whether the policy and revocation inputs used for that result were themselves governed in a clear and testable way.
+Far fewer can show whether the policy and revocation inputs behind that result were governed clearly enough to deserve confidence. Fewer still can hand another implementation a clean package and say, “replay this and show whether you preserve the same semantics.”
 
-This release improves that by making transport expectations, revocation freshness, and replay evidence first-class parts of the verifier.
+That is the shift this repository is making. It is becoming less like a demo and more like an executable handoff artifact.
 
-## What teams can do with it
+## Who this helps
 
 This makes the repository more useful for:
 
-- architecture teams comparing trust models
-- governance teams asking how decisions are evidenced
+- architecture teams comparing trust models and deployment choices
+- governance teams asking whether a decision can be explained and contested
 - interoperability programs running cross-implementation checks
-- assurance and audit functions reviewing whether the system failed safely
+- assurance and audit functions reviewing whether the system fails safely and reproducibly
+- implementers who need a compact starting point for TRQP-aligned verification work
 
 ## Bottom line
 
-The verifier is no longer just showing what decision it produced.
+The verifier is no longer only showing what decision it produced.
 
-It is getting better at showing **what it trusted while producing that decision**.
+It is getting better at showing what it trusted, how that trust was bounded, and how another implementation can test the same claim.

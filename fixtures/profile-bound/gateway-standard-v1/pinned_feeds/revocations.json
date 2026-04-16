@@ -1,0 +1,8 @@
+{
+  "revoked_entities": [
+    "did:web:blocked.example"
+  ],
+  "policy_epoch": "2026-Q1",
+  "issued_at": "2026-12-31T00:00:00Z",
+  "channel": "delta"
+}

@@ -2,41 +2,45 @@
 
 ## Purpose
 
-This document shows how `v0.13.0` lines up with broader TRQP assurance and conformance work.
+This document shows how the current repository state lines up with broader TRQP assurance and conformance work.
 
-The objective is not to claim full external alignment. The objective is to provide a clean handoff surface.
+The objective is not to claim full external alignment. The objective is to provide a clean handoff surface that another suite or implementation can consume.
 
-## Alignment points introduced in v0.13.0
+## Current alignment points
 
-### 1. Transport controls are now machine-readable
+### 1. Transport controls are machine-readable
 
-The profile schema now expresses transport requirements directly.
+The profile schema expresses transport requirements directly.
 
 This gives external conformance tooling a stable way to check whether an implementation:
 
 - distinguishes local, HTTP, and gateway paths
 - captures transport integrity expectations
-- differentiates required vs best-effort feed availability
+- differentiates required versus best-effort feed availability
 
-### 2. Revocation freshness is now testable
+### 2. Revocation freshness is testable
 
-The verifier now surfaces revocation freshness status as evidence.
+The verifier surfaces revocation freshness status as evidence.
 
 This supports conformance-style checks around:
 
 - stale revocation material
-- warn vs fail behavior
-- delta/live channel expectations
+- warn versus fail behavior
+- delta or live channel expectations
 
 ### 3. Replay fidelity is richer
 
-Audit bundles now include transport metadata, revocation status, and replay contract fields.
+Audit bundles include transport metadata, revocation status, and replay contract fields.
 
 This creates a stronger basis for independent re-execution and cross-implementation comparison.
 
-### 4. Fixture exchange is now structured
+### 4. Fixture exchange is structured
 
-The `fixtures/profile-bound/standard-v1/` package is intended as a starter exchange format for broader interoperability work.
+The repository now publishes canonical profile-bound packages for standard, high-assurance, gateway-mediated, and multi-authority cases.
+
+### 5. Compatibility coverage is machine-readable
+
+`conformance/compatibility-matrix.json` gives downstream tooling a compact statement of what the repository currently covers and where the evidence for that claim lives.
 
 ## Suggested mapping areas for external suites
 
@@ -46,11 +50,12 @@ The `fixtures/profile-bound/standard-v1/` package is intended as a starter excha
 | Verification result | runtime decision output | behavioral test assertions |
 | Policy evidence | transport and revocation posture | assurance review and audit trails |
 | Replay inputs | request, profile, feeds, replay contract | reproducibility testing |
-| Fixture package | canonical exchange artifact | cross-implementation interoperability |
+| Fixture packages | canonical exchange artifacts | cross-implementation interoperability |
+| Compatibility matrix | machine-readable coverage statement | assurance hub ingestion and program tracking |
 
 ## Next alignment steps
 
-- add machine-readable fixture manifests for additional profiles
-- define expected negative outcomes for transport and freshness failures
-- align fixture naming and metadata with TRQP conformance suite conventions
-- add compatibility notes for downstream assurance hubs and registry ecosystems
+- align fixture metadata with broader TRQP conformance naming conventions
+- let downstream assurance hubs ingest the compatibility matrix directly
+- add richer freshness reason codes and stronger transport attestation semantics
+- add compatibility statements for independent implementations that replay these packages successfully

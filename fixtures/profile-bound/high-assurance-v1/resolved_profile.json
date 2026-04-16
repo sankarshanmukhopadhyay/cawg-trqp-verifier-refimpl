@@ -1,0 +1,40 @@
+{
+  "id": "high_assurance",
+  "base_profile": "high_assurance",
+  "controls": {
+    "authority": {
+      "trust_anchors_required": true,
+      "allow_untrusted": false
+    },
+    "freshness": {
+      "max_age_seconds": 300,
+      "require_live": true
+    },
+    "revocation": {
+      "mode": "live",
+      "hard_fail": true,
+      "max_age_seconds": 300,
+      "enforcement": "fail",
+      "delta_channel_required": true
+    },
+    "failure": {
+      "network_failure": "fail_closed",
+      "policy_unavailable": "fail_closed"
+    },
+    "evidence": {
+      "emit_audit_bundle": true,
+      "require_attestation": true
+    },
+    "transport": {
+      "mode": "http",
+      "integrity": "tls",
+      "availability_requirement": "required"
+    },
+    "determinism": {
+      "replayable": true,
+      "require_pinned_feeds": true
+    }
+  },
+  "overlays": [],
+  "source": "profiles/high_assurance.json"
+}

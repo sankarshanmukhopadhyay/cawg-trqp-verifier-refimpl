@@ -1,22 +1,25 @@
 # HTTP Transport Patterns
 
-## Purpose
+The repository exposes a Flask-based HTTP service for authorization, recognition, verification, and audit bundle export.
 
-v0.8.0 and v0.9.0 introduce transport realism for process-aware verification. The reference HTTP service now demonstrates four patterns:
+## Why the HTTP surface matters
 
-1. direct authorization lookup
-2. direct recognition lookup
-3. gateway-mediated authorization lookup
-4. end-to-end verification and audit bundle export
+The codebase is not only a library. It is also an executable reference for how a verifier can expose TRQP-adjacent policy and evidence operations over a network boundary.
 
-## Endpoints
+## Included endpoints
 
+- `GET /health`
 - `POST /trqp/authorization`
 - `POST /trqp/recognition`
 - `POST /trqp/gateway/authorization`
 - `POST /trqp/verify`
 - `POST /trqp/audit-bundle`
 
-## Design notes
+## Testing posture
 
-The transport layer is intentionally simple. The objective is to show how process-aware verification, gateway mediation, and audit export can travel over HTTP without turning the repository into a production API gateway.
+The repository now covers this surface in two ways:
+
+- Flask test-client tests for endpoint behavior
+- an integration test that starts the real service process and verifies the live `/health` and `/trqp/verify` paths
+
+This matters because a deployment claim is stronger when both the application surface and the process startup path are exercised.

@@ -5,17 +5,17 @@
   "actor_authorization": "authorized",
   "process_integrity": "verified_high",
   "policy_freshness": "current",
-  "verification_mode": "cached_online",
+  "verification_mode": "gateway_mediated",
   "trust_outcome": "trusted",
   "process_appraisal": {
     "status": "verified",
     "process_type": "human_assisted",
-    "confidence": 0.91,
+    "confidence": 0.88,
     "minimum_confidence": 0.75,
-    "evidence_ref": "urn:example:pop:asset-001",
+    "evidence_ref": "urn:example:pop:asset-interp-001",
     "evidence_format": "application/cpop+cbor",
-    "appraisal": "writers_authenticity_report",
-    "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
+    "appraisal": "gateway_vector_report",
+    "reference": null
   },
   "policy_evidence": {
     "authorization_evidence": [
@@ -81,10 +81,10 @@
         "availability_requirement": "best_effort"
       },
       "actual": {
-        "mode": "http",
-        "integrity": "tls",
+        "mode": "gateway",
+        "integrity": "signed",
         "available": true,
-        "channel": "delta"
+        "channel": "mediated"
       },
       "violations": [],
       "satisfied": true
@@ -101,10 +101,23 @@
       "violations": []
     }
   },
-  "gateway_mediation": {},
+  "gateway_mediation": {
+    "gateway_id": "gateway:interop",
+    "route_label": "route:gateway-standard",
+    "mode": "remote_policy_mediation",
+    "target_authority_id": "did:web:media-registry.example",
+    "decision_type": "authorization",
+    "recognition": {
+      "gateway_id": "gateway:interop",
+      "route_label": "route:gateway-standard",
+      "mode": "remote_policy_mediation",
+      "target_authority_id": "did:web:media-registry.example",
+      "decision_type": "recognition"
+    }
+  },
   "explanations": [
     "Verification profile: standard",
-    "Live authorization lookup executed",
-    "Live recognition lookup executed"
+    "Trust gateway mediated authorization lookup",
+    "Trust gateway mediated recognition lookup"
   ]
 }

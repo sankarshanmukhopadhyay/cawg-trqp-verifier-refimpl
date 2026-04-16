@@ -1,12 +1,14 @@
 # Reproducibility Guide
 
-## Canonical bundle
+## Canonical replay bundle
 
-The canonical reproducibility fixture remains:
+The canonical reproducibility bundle remains:
 
 - `examples/reproducibility_bundle_standard.json`
 
-## What changed in v0.13.0
+This is the fastest way to test whether the same request, profile, feeds, and replay contract yield the same result surface.
+
+## What reproducibility now covers
 
 Replay now includes more than the request, profile, and pinned feeds.
 
@@ -16,21 +18,27 @@ The bundle also carries:
 - revocation status
 - a replay contract describing whether transport checks passed and whether revocation freshness was evaluated
 
-## Why that matters
+## Fixture exchange alongside replay
 
-Reproducibility is stronger when another implementation can compare not just the decision outcome, but also the input trust posture asserted by the original run.
-
-## Cross-implementation fixture package
-
-The repository now includes a canonical exchange package:
+The repository now also carries canonical fixture exchange packages:
 
 - `fixtures/profile-bound/standard-v1/`
+- `fixtures/profile-bound/high-assurance-v1/`
+- `fixtures/profile-bound/gateway-standard-v1/`
+- `fixtures/profile-bound/multi-authority-v1/`
 
-This package is intended to be portable across implementations.
+These packages are useful when another implementation needs a stable exchange artifact without first consuming the entire audit-bundle flow.
+
+## Recommended usage
+
+Use the reproducibility bundle when you want to confirm that a concrete audit artifact still replays correctly.
+
+Use the fixture packages when you want to compare multiple implementations against a stable expected-result contract.
 
 ## Commands
 
 ```bash
 python scripts/check_reproducibility.py examples/reproducibility_bundle_standard.json
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
+python scripts/validate_examples.py
 ```

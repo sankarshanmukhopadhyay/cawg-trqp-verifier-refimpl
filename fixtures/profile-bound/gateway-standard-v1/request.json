@@ -1,5 +1,5 @@
 {
-  "asset_id": "asset-001",
+  "asset_id": "asset-interp-001",
   "integrity_ok": true,
   "entity_id": "did:web:publisher.example",
   "authority_id": "did:web:media-registry.example",
@@ -15,10 +15,9 @@
   "process_evidence": {
     "verified": true,
     "process_type": "human_assisted",
-    "confidence": 0.91,
-    "evidence_ref": "urn:example:pop:asset-001",
+    "confidence": 0.88,
+    "evidence_ref": "urn:example:pop:asset-interp-001",
     "evidence_format": "application/cpop+cbor",
-    "appraisal": "writers_authenticity_report",
-    "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
+    "appraisal": "gateway_vector_report"
   }
 }

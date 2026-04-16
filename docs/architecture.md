@@ -1,60 +1,55 @@
 # Architecture
 
-## Release focus
+## Current architectural focus
 
-In `v0.13.0`, the verifier moves from profile-governed policy execution to **profile-governed input trust plus replay fidelity**.
+The verifier now treats transport posture, revocation freshness, replay fidelity, fixture exchange, and deployment surfaces as part of one control plane.
 
-The architecture now treats transport posture and revocation freshness as part of the same control surface as authorization, recognition, and process appraisal.
+That matters because a trust decision is only as credible as the evidence the system can produce about the conditions under which that decision was made.
 
 ## Main flow
 
-1. Load a request from JSON or fixture.
+1. Load a verification request from JSON or a manifest-derived fixture.
 2. Resolve the verification profile and any overlays.
 3. Evaluate transport constraints against the active service or gateway path.
 4. Evaluate revocation freshness against the profile contract.
 5. Execute authorization and recognition lookups when permitted.
 6. Appraise process evidence against policy requirements.
-7. Export result, policy evidence, and replay inputs.
+7. Produce a verification result with policy evidence.
+8. Optionally export an audit bundle or compare the result against a canonical fixture.
 
-## Control surfaces
+## Core control surfaces
 
 ### Verification profile
 
-The profile remains the governing unit. In `v0.13.0`, it now includes:
-
-- authority controls
-- freshness controls
-- revocation controls
-- failure behavior
-- evidence behavior
-- transport requirements
-- determinism expectations
+The profile remains the governing unit. It contains authority, freshness, revocation, failure, evidence, transport, and determinism controls.
 
 ### Transport evaluation
 
-The verifier records:
-
-- required transport posture from the profile
-- actual transport posture from the runtime path
-- whether the transport contract was satisfied
-- any transport violations
+The verifier records the required transport posture from the profile, the actual runtime posture, and any violations. This allows a downstream reviewer to distinguish between a valid decision and a decision reached under a degraded feed path.
 
 ### Revocation freshness evaluation
 
-The verifier records:
+The verifier records the source, channel, age, maximum allowed age, enforcement mode, and any violations. This makes revocation handling inspectable rather than implicit.
 
-- revocation source and channel
-- age of revocation material when available
-- max allowed age from the profile
-- whether the freshness contract was satisfied
-- any freshness violations
+### Gateway mediation
 
-## Export path
+When a trust gateway is used, the mediation layer becomes visible evidence. Route labels, target authority identifiers, and mediated recognition behavior become part of the decision surface rather than disappearing into infrastructure.
 
-Audit bundles now carry richer replay inputs so downstream systems can test not just the result, but also whether the same input trust conditions were asserted.
+### Replay and fixture exchange
+
+Replay is no longer limited to rerunning a request. The repository now publishes canonical fixture packages and a compatibility matrix so that another implementation can preserve the same decision semantics and prove what it covered.
+
+## Deployment surfaces
+
+The repository supports four deployment shapes:
+
+- direct verifier invocation against a policy service
+- gateway-mediated verification
+- offline verification against a signed snapshot
+- HTTP service deployment for authorization, recognition, verification, and audit export
 
 ## Architectural implication
 
-This is a meaningful control-plane shift.
+The repository is now closer to a reusable trust governance substrate.
 
-The system is no longer only saying, “here is the answer.” It is saying, “here is the answer, here is what I required from my inputs, and here is whether those requirements were actually met.”
+It does not only answer, “what decision was made?” It answers, “what decision was made, what transport and freshness assumptions were accepted, how was mediation handled, and how can another implementation prove semantic alignment?”

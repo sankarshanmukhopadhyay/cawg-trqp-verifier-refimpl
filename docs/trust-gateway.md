@@ -4,11 +4,7 @@
 
 The trust gateway is an optional mediation layer between the verifier and one or more policy services.
 
-It exists to separate:
-
-- verification execution
-- policy routing
-- mediation trace production
+It exists to separate verification execution, policy routing, and mediation trace production.
 
 ## Current capabilities
 
@@ -38,3 +34,8 @@ In production systems, verifiers often should not hard-code policy endpoints dir
 - more explicit routing control
 - better audit evidence
 - simpler migration toward federated topologies
+- a reusable control point for future transport attestation work
+
+## Interoperability role
+
+The gateway is no longer only an internal abstraction. The repository now publishes gateway-oriented fixture packages so another implementation can test whether it preserves mediated-route behavior, target-authority selection, and verification semantics under both single-authority and multi-authority conditions.

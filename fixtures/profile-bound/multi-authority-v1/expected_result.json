@@ -5,33 +5,31 @@
   "actor_authorization": "authorized",
   "process_integrity": "verified_high",
   "policy_freshness": "current",
-  "verification_mode": "cached_online",
+  "verification_mode": "gateway_mediated",
   "trust_outcome": "trusted",
   "process_appraisal": {
     "status": "verified",
-    "process_type": "human_assisted",
-    "confidence": 0.91,
-    "minimum_confidence": 0.75,
-    "evidence_ref": "urn:example:pop:asset-001",
+    "process_type": "human_reviewed",
+    "confidence": 0.95,
+    "minimum_confidence": 0.9,
+    "evidence_ref": "urn:example:pop:asset-interp-002",
     "evidence_format": "application/cpop+cbor",
-    "appraisal": "writers_authenticity_report",
-    "reference": "https://github.com/LF-Decentralized-Trust-labs/proof-of-process"
+    "appraisal": null,
+    "reference": null
   },
   "policy_evidence": {
     "authorization_evidence": [
-      "registry-entry:publisher-123",
-      "policy:media-publish-v2"
+      "policy:coalition-registry:studio:publish"
     ],
     "recognition_evidence": [
-      "trust-list:issuer-77"
+      "recognition:coalition-registry:issuer-eu"
     ],
-    "policy_epoch": "2026-Q1",
+    "policy_epoch": "2026-03-15T00:00:00Z",
     "policy_requirements": {
       "requires_process_proof": true,
-      "min_process_integrity": 0.75,
+      "min_process_integrity": 0.9,
       "allowed_process_types": [
-        "human_assisted",
-        "verified_editorial_pipeline"
+        "human_reviewed"
       ]
     },
     "verification_profile": {
@@ -81,30 +79,41 @@
         "availability_requirement": "best_effort"
       },
       "actual": {
-        "mode": "http",
-        "integrity": "tls",
+        "mode": "gateway",
+        "integrity": "signed",
         "available": true,
-        "channel": "delta"
+        "channel": "mediated"
       },
       "violations": [],
       "satisfied": true
     },
     "revocation_status": {
-      "source": "service",
-      "issued_at": "2026-12-31T00:00:00Z",
-      "policy_epoch": "2026-Q1",
-      "channel": "delta",
-      "age_seconds": 0,
+      "source": "none",
+      "channel": "none",
+      "age_seconds": null,
       "freshness_ok": true,
       "max_age_seconds": 3600,
       "enforcement": "warn",
       "violations": []
     }
   },
-  "gateway_mediation": {},
+  "gateway_mediation": {
+    "gateway_id": "gateway:mesh",
+    "route_label": "route:coalition-eu",
+    "mode": "remote_policy_mediation",
+    "target_authority_id": "did:web:coalition-registry.example",
+    "decision_type": "authorization",
+    "recognition": {
+      "gateway_id": "gateway:mesh",
+      "route_label": "route:coalition-eu",
+      "mode": "remote_policy_mediation",
+      "target_authority_id": "did:web:coalition-registry.example",
+      "decision_type": "recognition"
+    }
+  },
   "explanations": [
     "Verification profile: standard",
-    "Live authorization lookup executed",
-    "Live recognition lookup executed"
+    "Trust gateway mediated authorization lookup",
+    "Trust gateway mediated recognition lookup"
   ]
 }

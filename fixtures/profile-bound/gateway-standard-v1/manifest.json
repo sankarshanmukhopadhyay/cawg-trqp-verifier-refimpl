@@ -1,8 +1,8 @@
 {
-  "fixture_id": "standard-v1",
-  "description": "Canonical profile-bound fixture for cross-implementation replay of the standard verifier profile.",
+  "fixture_id": "gateway-standard-v1",
+  "description": "Canonical gateway-mediated fixture for exchanging mediated authorization and recognition behavior.",
   "profile": "standard",
-  "verification_mode": "cached_online",
+  "verification_mode": "gateway_mediated",
   "determinism": true,
   "inputs": {
     "request": "request.json",
@@ -10,6 +10,10 @@
     "expected_result": "expected_result.json",
     "policy_feed": "pinned_feeds/policies.json",
     "revocation_feed": "pinned_feeds/revocations.json"
+  },
+  "gateway": {
+    "gateway_id": "gateway:interop",
+    "route_label": "route:gateway-standard"
   },
   "replay_contract": {
     "transport_verified": true,

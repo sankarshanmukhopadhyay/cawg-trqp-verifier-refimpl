@@ -1,0 +1,95 @@
+{
+  "schema_version": "2026-04-16",
+  "profiles": {
+    "standard": {
+      "positive_vectors": [
+        "standard-v1",
+        "gateway-standard-v1",
+        "multi-authority-v1"
+      ],
+      "negative_vectors": [
+        "gateway_required_negative",
+        "stale_revocation_warn_negative"
+      ],
+      "transport": {
+        "http_tls": "pass",
+        "gateway_tls": "pass",
+        "local_signed": "not_applicable"
+      },
+      "revocation": {
+        "warn_on_stale": "pass",
+        "fail_on_stale": "supported_via_override"
+      },
+      "verification_modes": [
+        "cached_online",
+        "gateway_mediated"
+      ]
+    },
+    "high_assurance": {
+      "positive_vectors": [
+        "high-assurance-v1"
+      ],
+      "negative_vectors": [
+        "stale_revocation_fail_negative"
+      ],
+      "transport": {
+        "http_tls_required": "pass",
+        "gateway_tls": "not_tested"
+      },
+      "revocation": {
+        "warn_on_stale": "not_applicable",
+        "fail_on_stale": "pass"
+      },
+      "verification_modes": [
+        "online_full"
+      ]
+    },
+    "edge": {
+      "positive_vectors": [
+        "edge_result_example"
+      ],
+      "negative_vectors": [],
+      "transport": {
+        "local_signed": "pass"
+      },
+      "revocation": {
+        "snapshot_verified": "pass"
+      },
+      "verification_modes": [
+        "snapshot_offline"
+      ]
+    }
+  },
+  "controls": {
+    "transport_constraints": {
+      "status": "implemented",
+      "evidence": [
+        "tests/test_transport_and_replay_fidelity.py",
+        "tests/test_conformance_vectors.py"
+      ]
+    },
+    "revocation_freshness": {
+      "status": "implemented",
+      "evidence": [
+        "tests/test_transport_and_replay_fidelity.py",
+        "tests/test_conformance_vectors.py"
+      ]
+    },
+    "fixture_exchange": {
+      "status": "implemented",
+      "evidence": [
+        "fixtures/profile-bound/standard-v1/manifest.json",
+        "fixtures/profile-bound/high-assurance-v1/manifest.json",
+        "fixtures/profile-bound/gateway-standard-v1/manifest.json",
+        "fixtures/profile-bound/multi-authority-v1/manifest.json"
+      ]
+    },
+    "http_service_surface": {
+      "status": "implemented",
+      "evidence": [
+        "tests/test_http_service.py",
+        "tests/test_http_service_integration.py"
+      ]
+    }
+  }
+}

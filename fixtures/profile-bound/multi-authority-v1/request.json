@@ -1,0 +1,21 @@
+{
+  "asset_id": "asset-interp-002",
+  "integrity_ok": true,
+  "entity_id": "did:web:studio.example",
+  "authority_id": "did:web:coalition-registry.example",
+  "issuer_id": "did:web:issuer.eu.example",
+  "action": "publish",
+  "resource": "cawg:partner-content",
+  "context": {
+    "jurisdiction": "EU",
+    "credential_type": "vc:creative-studio",
+    "risk_tier": "high"
+  },
+  "process_evidence": {
+    "verified": true,
+    "process_type": "human_reviewed",
+    "confidence": 0.95,
+    "evidence_ref": "urn:example:pop:asset-interp-002",
+    "evidence_format": "application/cpop+cbor"
+  }
+}
