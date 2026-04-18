@@ -1,0 +1,504 @@
+version: "1.0"
+last_updated: "2026-04-18"
+description: >-
+  Machine-readable mapping from repository risk identifiers to controls,
+  current or planned conformance tests, evidence expectations, adversarial
+  vectors, and indicative assurance level interpretation.
+
+metadata:
+  source_documents:
+    - docs/risk-crosswalk.md
+    - docs/decision-receipt-specification.md
+    - docs/how-trqp-enables-assurance.md
+  evidence_artifacts:
+    - decision_receipt
+    - audit_bundle
+    - reproducibility_bundle
+  assurance_levels:
+    AL1: basic_runtime_trust
+    AL2: operational_trust
+    AL3: high_assurance_mediated_operation
+    AL4: critical_auditable_adversarial_operation
+
+risks:
+  - id: R1
+    name: Unauthorized Actor
+    severity: high
+    likelihood: high
+    assurance_level: AL1
+    control_category: authority
+    control_summary: Authorization check against actor, action, and resource context.
+    trqp_dependencies:
+      - authorization
+    enforcement_points:
+      - policy_evaluation
+    evidence:
+      decision_receipt:
+        - trqp_responses.authorization
+        - policy_evaluation.checks.authorization
+        - decision.reasons
+      audit_bundle:
+        - policy_evidence.authorization
+    conformance:
+      status: planned
+      tests:
+        - name: test_authorization_denied
+          intent: Reject an unauthorized actor in the relevant authority context.
+          expected_outcome: rejected
+          expected_evidence:
+            - authorization=fail
+            - explicit decision reason
+    adversarial_vectors:
+      - actor spoofing
+      - credential reuse
+      - delegated authority misuse
+
+  - id: R2
+    name: Unrecognized Issuer
+    severity: high
+    likelihood: medium
+    assurance_level: AL1
+    control_category: authority
+    control_summary: Issuer recognition must be validated against the relevant authority.
+    trqp_dependencies:
+      - recognition
+    enforcement_points:
+      - policy_evaluation
+    evidence:
+      decision_receipt:
+        - trqp_responses.recognition
+        - policy_evaluation.checks.recognition
+      audit_bundle:
+        - policy_evidence.recognition
+    conformance:
+      status: planned
+      tests:
+        - name: test_unrecognized_issuer
+          intent: Reject a credential or trust assertion from an unrecognized issuer.
+          expected_outcome: rejected
+          expected_evidence:
+            - recognition=fail
+            - issuer reason code
+    adversarial_vectors:
+      - rogue issuer injection
+      - issuer metadata substitution
+
+  - id: R3
+    name: Stale Revocation
+    severity: critical
+    likelihood: high
+    assurance_level: AL2
+    control_category: freshness
+    control_summary: Revocation state must satisfy profile freshness requirements.
+    trqp_dependencies:
+      - revocation
+    enforcement_points:
+      - profile_enforcement
+      - verification_execution
+    evidence:
+      decision_receipt:
+        - trqp_responses.revocation
+        - policy_evaluation.checks.revocation_freshness
+        - decision.result
+      audit_bundle:
+        - replay_inputs.revocation_status
+    conformance:
+      status: implemented
+      tests:
+        - name: test_revocation_stale_fail
+          intent: Reject when revocation is stale and profile enforcement is fail.
+          expected_outcome: rejected
+          expected_evidence:
+            - revocation_freshness=fail
+            - result=rejected
+        - name: test_revocation_stale_warn
+          intent: Continue with explicit degraded or warning semantics when profile enforcement is warn.
+          expected_outcome: degraded_or_accepted_with_warning
+          expected_evidence:
+            - revocation_freshness=warn
+            - warning_or_degraded_reason
+    adversarial_vectors:
+      - revocation lag exploitation
+      - stale cache reuse
+      - delayed propagation attack
+
+  - id: R4
+    name: Integrity Tampering
+    severity: high
+    likelihood: medium
+    assurance_level: AL1
+    control_category: asset
+    control_summary: Integrity signals must indicate that the asset and critical metadata are intact.
+    trqp_dependencies: []
+    enforcement_points:
+      - asset_validation
+    evidence:
+      decision_receipt:
+        - input.signals.integrity
+        - verification_result.asset_integrity
+    conformance:
+      status: planned
+      tests:
+        - name: test_integrity_failure
+          intent: Reject when integrity signals indicate corruption or tampering.
+          expected_outcome: rejected
+          expected_evidence:
+            - integrity=fail
+    adversarial_vectors:
+      - hash mismatch
+      - tampering in transit
+      - modified content payload
+
+  - id: R5
+    name: Missing Provenance
+    severity: medium
+    likelihood: high
+    assurance_level: AL1
+    control_category: asset
+    control_summary: Provenance and process origin signals must be present when required by profile or workflow.
+    trqp_dependencies: []
+    enforcement_points:
+      - asset_validation
+    evidence:
+      decision_receipt:
+        - input.signals.provenance
+        - verification_result.process_evidence
+    conformance:
+      status: planned
+      tests:
+        - name: test_missing_provenance
+          intent: Reject or degrade when required provenance metadata is absent.
+          expected_outcome: rejected_or_degraded
+          expected_evidence:
+            - provenance=missing
+    adversarial_vectors:
+      - metadata stripping
+      - provenance envelope removal
+
+  - id: R6
+    name: Process Manipulation
+    severity: high
+    likelihood: medium
+    assurance_level: AL2
+    control_category: asset
+    control_summary: Process evidence must align with the workflow conditions allowed by policy.
+    trqp_dependencies:
+      - policy_constraints
+    enforcement_points:
+      - policy_evaluation
+    evidence:
+      decision_receipt:
+        - policy_evaluation.checks.process_evidence
+        - decision.reasons
+      audit_bundle:
+        - process_appraisal
+    conformance:
+      status: planned
+      tests:
+        - name: test_invalid_process
+          intent: Reject an asset processed outside the allowed workflow.
+          expected_outcome: rejected
+          expected_evidence:
+            - process_evidence=fail
+    adversarial_vectors:
+      - pipeline bypass
+      - unauthorized transformation step
+
+  - id: R7
+    name: Transport Bypass
+    severity: high
+    likelihood: medium
+    assurance_level: AL2
+    control_category: transport
+    control_summary: Runtime transport path must match the profile's accepted transport posture.
+    trqp_dependencies:
+      - transport_mode
+      - route_metadata
+    enforcement_points:
+      - transport_enforcement
+    evidence:
+      decision_receipt:
+        - transport_mode
+        - verification_mode
+      audit_bundle:
+        - replay_inputs.transport_metadata
+    conformance:
+      status: implemented
+      tests:
+        - name: test_transport_policy_violation
+          intent: Reject when runtime transport does not satisfy the profile requirement.
+          expected_outcome: rejected
+          expected_evidence:
+            - transport_violation
+            - result=rejected
+        - name: test_gateway_requires_strict_transport
+          intent: Reject plain HTTP runtime when the profile requires gateway-mediated transport.
+          expected_outcome: rejected
+          expected_evidence:
+            - transport_violation
+    adversarial_vectors:
+      - proxy injection
+      - route downgrade
+      - unexpected intermediary
+
+  - id: R8
+    name: Gateway Misrouting
+    severity: high
+    likelihood: low
+    assurance_level: AL3
+    control_category: transport
+    control_summary: Gateway-routed decisions must preserve correct authority routing and mediation metadata.
+    trqp_dependencies:
+      - gateway_metadata
+      - route_label
+    enforcement_points:
+      - transport_enforcement
+      - gateway_mediation
+    evidence:
+      decision_receipt:
+        - evidence.gateway_route
+      audit_bundle:
+        - mediation.route_label
+        - mediation.authority_source
+    conformance:
+      status: planned
+      tests:
+        - name: test_gateway_route_mismatch
+          intent: Detect or reject a gateway decision that routes to the wrong authority.
+          expected_outcome: rejected
+          expected_evidence:
+            - gateway_route_mismatch
+    adversarial_vectors:
+      - route spoofing
+      - stale route map
+      - authority misbinding
+
+  - id: R9
+    name: Snapshot Staleness
+    severity: high
+    likelihood: medium
+    assurance_level: AL3
+    control_category: freshness
+    control_summary: Offline snapshot verification must use signed, timely trust state under the selected profile.
+    trqp_dependencies:
+      - snapshot_metadata
+      - trust_anchors
+    enforcement_points:
+      - profile_enforcement
+      - snapshot_validation
+    evidence:
+      decision_receipt:
+        - evidence.snapshot_reference
+        - verification_mode
+      audit_bundle:
+        - snapshot.signature_status
+        - snapshot.timestamp
+    conformance:
+      status: partial
+      tests:
+        - name: test_snapshot_expired
+          intent: Reject or flag an expired snapshot under profiles requiring fresh snapshot state.
+          expected_outcome: rejected_or_degraded
+          expected_evidence:
+            - snapshot_stale
+        - name: test_edge_snapshot_authorized
+          intent: Confirm successful offline authorization path using a valid signed snapshot.
+          expected_outcome: trusted
+          expected_evidence:
+            - policy_freshness=snapshot_verified
+    adversarial_vectors:
+      - replay old snapshot
+      - substitute outdated signed state
+
+  - id: R10
+    name: Authority Fragmentation
+    severity: medium
+    likelihood: medium
+    assurance_level: AL3
+    control_category: authority
+    control_summary: Multi-authority inputs must be composed consistently and not collapse conflicting authority state.
+    trqp_dependencies:
+      - authorization
+      - recognition
+      - multi_authority_route
+    enforcement_points:
+      - policy_evaluation
+      - interoperability_vector_handling
+    evidence:
+      decision_receipt:
+        - evidence.authority_sources
+      audit_bundle:
+        - policy_evidence.authority_sources
+    conformance:
+      status: planned
+      tests:
+        - name: test_multi_authority_conflict
+          intent: Detect conflicting authority responses and prevent unsafe acceptance.
+          expected_outcome: rejected_or_degraded
+          expected_evidence:
+            - authority_conflict_reason
+    adversarial_vectors:
+      - split authority attack
+      - inconsistent federation state
+
+  - id: R11
+    name: Non-Reproducible Decision
+    severity: critical
+    likelihood: medium
+    assurance_level: AL4
+    control_category: evidence
+    control_summary: Decisions must be replayable using captured inputs, responses, and execution posture.
+    trqp_dependencies:
+      - captured_trqp_responses
+      - resolved_profile
+      - transport_metadata
+    enforcement_points:
+      - evidence_generation
+      - replay_validation
+    evidence:
+      decision_receipt:
+        - evidence.replayable
+      audit_bundle:
+        - replay_inputs
+      reproducibility_bundle:
+        - bundled_request_and_expected_output
+    conformance:
+      status: implemented
+      tests:
+        - name: test_replay_determinism
+          intent: Confirm that replaying captured inputs yields the same result.
+          expected_outcome: matched
+          expected_evidence:
+            - replay_matches=true
+    adversarial_vectors:
+      - missing inputs
+      - mutable references
+      - nondeterministic runtime state
+
+  - id: R12
+    name: Opaque Decision Logic
+    severity: medium
+    likelihood: high
+    assurance_level: AL4
+    control_category: evidence
+    control_summary: Decisions must be explainable through structured policy evaluation and explicit reasons.
+    trqp_dependencies:
+      - authorization
+      - recognition
+      - revocation
+    enforcement_points:
+      - decision_construction
+    evidence:
+      decision_receipt:
+        - policy_evaluation
+        - decision.reasons
+      audit_bundle:
+        - verification_explanations
+    conformance:
+      status: planned
+      tests:
+        - name: test_decision_explainability
+          intent: Confirm that a decision includes structured checks and reasons suitable for review.
+          expected_outcome: explainable
+          expected_evidence:
+            - policy_evaluation_present
+            - decision_reasons_present
+    adversarial_vectors:
+      - black-box output
+      - suppressed reason codes
+
+  - id: R13
+    name: Policy Drift
+    severity: medium
+    likelihood: medium
+    assurance_level: AL4
+    control_category: governance
+    control_summary: Profile and policy interpretation must remain consistent across runs and environments.
+    trqp_dependencies:
+      - resolved_profile
+    enforcement_points:
+      - verification_execution
+      - schema_validation
+    evidence:
+      decision_receipt:
+        - profile
+      audit_bundle:
+        - replay_inputs.resolved_profile
+    conformance:
+      status: planned
+      tests:
+        - name: test_profile_consistency
+          intent: Confirm that equivalent environments resolve and apply the same profile behavior.
+          expected_outcome: matched
+          expected_evidence:
+            - profile_consistency=true
+    adversarial_vectors:
+      - config divergence
+      - undocumented overrides
+      - stale profile file
+
+  - id: R14
+    name: Silent Degradation
+    severity: high
+    likelihood: medium
+    assurance_level: AL4
+    control_category: governance
+    control_summary: Degraded runtime conditions must remain visible in the result and evidence artifacts.
+    trqp_dependencies:
+      - profile_rules
+      - availability_state
+    enforcement_points:
+      - decision_construction
+    evidence:
+      decision_receipt:
+        - decision.result
+        - decision.reasons
+      audit_bundle:
+        - transport_metadata
+        - revocation_status
+    conformance:
+      status: planned
+      tests:
+        - name: test_degraded_mode_flag
+          intent: Confirm that fallback or warning paths are surfaced explicitly rather than silently accepted.
+          expected_outcome: degraded_or_warning
+          expected_evidence:
+            - result=degraded
+            - warning_reason_present
+    adversarial_vectors:
+      - force fallback
+      - hide partial outage
+      - suppress warning path
+
+  - id: R15
+    name: Trust Injection
+    severity: critical
+    likelihood: low
+    assurance_level: AL4
+    control_category: transport
+    control_summary: Only trusted registries, anchors, and signing identities may be treated as authoritative.
+    trqp_dependencies:
+      - trust_anchors
+      - source_metadata
+    enforcement_points:
+      - transport_enforcement
+      - snapshot_validation
+    evidence:
+      decision_receipt:
+        - evidence.signature
+        - evidence.snapshot_reference
+      audit_bundle:
+        - trust_anchor_reference
+        - signature_validation
+    conformance:
+      status: partial
+      tests:
+        - name: test_invalid_trust_anchor
+          intent: Reject a snapshot or source signed by an untrusted anchor.
+          expected_outcome: rejected
+          expected_evidence:
+            - trust_anchor_validation=fail
+    adversarial_vectors:
+      - fake registry
+      - malicious snapshot signer
+      - compromised source metadata

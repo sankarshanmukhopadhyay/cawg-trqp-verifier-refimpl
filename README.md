@@ -40,6 +40,10 @@ The HTTP service is now documented and covered both through endpoint-level tests
 
 The documentation has been reviewed for freshness and expanded to explain the repository as an adoption surface, including fixture exchange, compatibility mapping, and the operational role of the HTTP service.
 
+### Risk and assurance mapping
+
+The repository now includes an enriched risk crosswalk and a machine-readable risk-to-test map. These artifacts connect trust risks to runtime controls, TRQP dependencies, conformance tests, adversarial vectors, and evidence surfaces such as decision receipts and audit bundles.
+
 ## Quick start
 
 ### Install
@@ -121,3 +125,12 @@ The repository now also includes a non-technical video verification walkthrough,
 ## Current roadmap direction
 
 The earlier post-v0.13.0 fixture and compatibility goals are now substantially complete. The next practical increment should focus on stronger signed feed descriptors, richer freshness reason codes, and deeper integration hooks into external TRQP assurance suites.
+
+
+## Documentation map
+
+- `docs/video-verification-walkthrough.md`: plain-language walkthrough using a real-world video verification scenario
+- `docs/how-trqp-enables-assurance.md`: explains how TRQP and trust registries enable runtime assurance
+- `docs/decision-receipt-specification.md`: defines replayable trust decision receipts
+- `docs/risk-crosswalk.md`: maps risks to controls, tests, adversarial paths, and evidence
+- `conformance/risk-to-test-map.yaml`: machine-readable linkage from risks to tests and expected evidence
