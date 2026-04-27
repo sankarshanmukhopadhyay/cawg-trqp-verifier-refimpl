@@ -46,15 +46,32 @@ def replay_audit_bundle(
     policy_feed = inputs.get("policy_feed", {})
     resolved_policy_path = policy_path or policy_feed.get("policy_source")
     resolved_revocation_path = revocation_path or policy_feed.get("revocation_source")
+    policy_descriptor_path = policy_feed.get("policy_descriptor_source")
+    revocation_descriptor_path = policy_feed.get("revocation_descriptor_source")
+    trust_anchors_path = policy_feed.get("trust_anchors_source", "data/trust_anchors.json")
 
     if resolved_profile.base_profile != "edge" and not resolved_policy_path:
         raise ValueError("policy_path is required unless replay_inputs.policy_feed.policy_source is present")
 
     if use_gateway:
-        service = MockTRQPService(resolved_policy_path, resolved_revocation_path, transport_mode='http', transport_integrity='tls')
+        service = MockTRQPService(
+            resolved_policy_path,
+            resolved_revocation_path,
+            transport_mode='http',
+            transport_integrity='tls',
+            policy_descriptor_path=policy_descriptor_path,
+            revocation_descriptor_path=revocation_descriptor_path,
+            trust_anchors_path=trust_anchors_path,
+        )
         gateway = TrustGateway(service)
     else:
-        service = None if resolved_profile.base_profile == "edge" else MockTRQPService(resolved_policy_path, resolved_revocation_path)
+        service = None if resolved_profile.base_profile == "edge" else MockTRQPService(
+            resolved_policy_path,
+            resolved_revocation_path,
+            policy_descriptor_path=policy_descriptor_path,
+            revocation_descriptor_path=revocation_descriptor_path,
+            trust_anchors_path=trust_anchors_path,
+        )
         gateway = None
     verifier = Verifier(service=service, gateway=gateway)
     result = verifier.verify(request, profile=resolved_profile).to_dict()

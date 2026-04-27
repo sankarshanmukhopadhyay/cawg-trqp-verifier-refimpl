@@ -142,6 +142,27 @@
             "revocation_source_sha256": {
               "type": "string",
               "pattern": "^[a-f0-9]{64}$"
+            },
+            "policy_descriptor_source": {
+              "type": "string"
+            },
+            "revocation_descriptor_source": {
+              "type": "string"
+            },
+            "trust_anchors_source": {
+              "type": "string"
+            },
+            "policy_descriptor_source_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "revocation_descriptor_source_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "trust_anchors_source_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
             }
           },
           "additionalProperties": false

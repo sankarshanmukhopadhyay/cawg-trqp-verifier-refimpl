@@ -1,0 +1,10 @@
+{
+  "keys": [
+    {
+      "key_id": "photography-contest-demo-key-1",
+      "algorithm": "Ed25519",
+      "owner": "did:web:media-registry.example",
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA/swrrkv2/7GiYs/Zt4R0cJRvlDHDqra1/KBHS3ebpfY=\n-----END PUBLIC KEY-----\n"
+    }
+  ]
+}

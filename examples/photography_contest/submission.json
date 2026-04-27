@@ -1,0 +1,30 @@
+{
+  "asset_id": "photo:wlm-demo:kolkata-victoria-memorial-001",
+  "integrity_ok": true,
+  "entity_id": "did:web:participant-42.example",
+  "authority_id": "did:web:media-registry.example",
+  "issuer_id": "did:web:contest-issuer.example",
+  "action": "submit",
+  "resource": "heritage:photograph",
+  "context": {
+    "campaign": "wiki-loves-monuments-style-2026",
+    "jurisdiction": "IN",
+    "monument_id": "IN-WB-KOL-VM-001",
+    "monument_name": "Victoria Memorial, Kolkata",
+    "license": "CC-BY-SA-4.0",
+    "submitted_at": "2026-09-18T10:30:00Z",
+    "claimed_capture_date": "2026-09-14",
+    "content_type": "image/jpeg",
+    "credential_type": "vc:contest-participant",
+    "participant_statement": "I photographed this monument and submit it under the contest rules."
+  },
+  "process_evidence": {
+    "verified": true,
+    "process_type": "original_photography_submission",
+    "confidence": 0.92,
+    "evidence_ref": "urn:wlm-demo:process-evidence:photo-001",
+    "evidence_format": "application/json",
+    "appraisal": "contest_submission_screening",
+    "reference": "docs/workflows/photography-contest-verification.md"
+  }
+}

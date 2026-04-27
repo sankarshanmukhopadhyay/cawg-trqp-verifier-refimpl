@@ -77,6 +77,15 @@ python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.js
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
 ```
 
+### Run the photography contest walkthrough demo
+
+```bash
+python scripts/validate_photography_contest_example.py
+python scripts/replay_audit_bundle.py examples/photography_contest/replay_bundle.json
+```
+
+This runnable example shows how a Wiki Loves Monuments-style contest can use signed policy and revocation feeds, decision receipts, and replay bundles to make participant-submission decisions explainable and auditable.
+
 ## Canonical fixture packages
 
 | Package | Verification mode | Primary use |
@@ -110,6 +119,7 @@ python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.j
 - `docs/release-readiness.md`
 - `docs/repo-tree.md`
 - `docs/video-verification-walkthrough.md`
+- `docs/workflows/photography-contest-verification.md`
 - `docs/how-trqp-enables-assurance.md`
 - `docs/decision-receipt-specification.md`
 
@@ -117,6 +127,7 @@ python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.j
 
 - `schemas/decision-receipt.schema.json` — schema for replayable decision receipts
 - `examples/decision_receipts/` — profile-specific example receipts for `standard`, `high_assurance`, and `edge`
+- `examples/photography_contest/` — runnable contest submission, decision receipt, signed feed descriptors, and replay bundle
 
 ## Decision receipts and non-technical walkthroughs
 

@@ -1,0 +1,8 @@
+{
+  "revoked_entities": [],
+  "revoked_assets": [],
+  "policy_epoch": "2026-WLM-DEMO",
+  "issued_at": "2027-04-27T00:00:00Z",
+  "channel": "delta",
+  "notes": "Demo revocation feed for the photography contest walkthrough. Empty feed means no participant or entry in the runnable example is disqualified."
+}

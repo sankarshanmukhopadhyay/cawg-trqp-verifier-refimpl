@@ -1,0 +1,39 @@
+{
+  "descriptor_type": "cawg-trqp-feed-descriptor",
+  "descriptor_version": "1.0.0",
+  "issued_at": "2026-04-27T00:00:00Z",
+  "valid_until": "2027-04-27T00:00:00Z",
+  "authority": {
+    "authority_id": "did:web:media-registry.example",
+    "key_id": "photography-contest-demo-key-1",
+    "scope": [
+      "heritage:photograph",
+      "vc:contest-participant",
+      "wiki-loves-monuments-style-2026"
+    ]
+  },
+  "freshness": {
+    "max_age_seconds": 86400,
+    "enforcement": "fail"
+  },
+  "route": {
+    "channel": "https",
+    "attested": true,
+    "route_label": "photography-contest-demo",
+    "gateway_id": "gateway:photography-contest-demo"
+  },
+  "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:revocation:2026-demo",
+  "feed": {
+    "feed_type": "revocation_feed",
+    "content_type": "application/json",
+    "source": "examples/photography_contest/contest_revocation_feed.json",
+    "digest_alg": "sha-256",
+    "digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+    "policy_epoch": "2026-WLM-DEMO"
+  },
+  "descriptor_signature": {
+    "algorithm": "Ed25519",
+    "key_id": "photography-contest-demo-key-1",
+    "value": "BNvIa5oUggDNnE+lylLyCd2BTqrdylFzkT93+nN6BJ28BSvJE5KCINrqpExAyKZZOGKDcoISKu3pcxOEiZI1Bw=="
+  }
+}

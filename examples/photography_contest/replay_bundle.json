@@ -1,0 +1,516 @@
+{
+  "bundle_type": "cawg-trqp-audit-bundle",
+  "bundle_profile": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/profiles/audit-bundle/v1",
+  "bundle_version": "1.3.0",
+  "exported_at": "2026-09-18T10:30:30Z",
+  "bundle_id": "urn:trqp:audit-bundle:sha256:4da242e2edfd7ab3166cd2eeea0eb28dde22d72c9478fa85c3984d7595cc373d",
+  "request_summary": {
+    "asset_id": "photo:wlm-demo:kolkata-victoria-memorial-001",
+    "entity_id": "did:web:participant-42.example",
+    "authority_id": "did:web:media-registry.example",
+    "issuer_id": "did:web:contest-issuer.example",
+    "action": "submit",
+    "resource": "heritage:photograph",
+    "context": {
+      "campaign": "wiki-loves-monuments-style-2026",
+      "jurisdiction": "IN",
+      "monument_id": "IN-WB-KOL-VM-001",
+      "monument_name": "Victoria Memorial, Kolkata",
+      "license": "CC-BY-SA-4.0",
+      "submitted_at": "2026-09-18T10:30:00Z",
+      "claimed_capture_date": "2026-09-14",
+      "content_type": "image/jpeg",
+      "credential_type": "vc:contest-participant",
+      "participant_statement": "I photographed this monument and submit it under the contest rules."
+    },
+    "has_process_evidence": true
+  },
+  "verification_result": {
+    "asset_integrity": "verified",
+    "assertion_binding": "verified",
+    "issuer_recognition": "recognized",
+    "actor_authorization": "authorized",
+    "process_integrity": "verified_high",
+    "policy_freshness": "fresh",
+    "verification_mode": "cached_online",
+    "trust_outcome": "trusted",
+    "process_appraisal": {
+      "status": "verified",
+      "process_type": "original_photography_submission",
+      "confidence": 0.92,
+      "minimum_confidence": 0.8,
+      "evidence_ref": "urn:wlm-demo:process-evidence:photo-001",
+      "evidence_format": "application/json",
+      "appraisal": "contest_submission_screening",
+      "reference": "docs/workflows/photography-contest-verification.md"
+    },
+    "policy_evidence": {
+      "authorization_evidence": [
+        "contest-rule:eligible-monument-list:IN-WB-KOL-VM-001",
+        "contest-rule:submission-window:2026-demo",
+        "contest-rule:license:cc-by-sa-compatible"
+      ],
+      "recognition_evidence": [
+        "trust-list:contest-participant-issuer:2026-demo"
+      ],
+      "policy_epoch": "2026-WLM-DEMO",
+      "policy_requirements": {
+        "requires_process_proof": true,
+        "min_process_integrity": 0.8,
+        "allowed_process_types": [
+          "original_photography_submission",
+          "verified_mobile_capture",
+          "moderator_confirmed_upload"
+        ]
+      },
+      "verification_profile": {
+        "id": "standard",
+        "base_profile": "standard",
+        "controls": {
+          "authority": {
+            "trust_anchors_required": false,
+            "allow_untrusted": true
+          },
+          "freshness": {
+            "max_age_seconds": 3600,
+            "require_live": false
+          },
+          "revocation": {
+            "mode": "delta",
+            "hard_fail": false,
+            "max_age_seconds": 3600,
+            "enforcement": "warn",
+            "delta_channel_required": false
+          },
+          "failure": {
+            "network_failure": "fail_open",
+            "policy_unavailable": "fail_open"
+          },
+          "evidence": {
+            "emit_audit_bundle": true,
+            "require_attestation": false
+          },
+          "transport": {
+            "mode": "http",
+            "integrity": "tls",
+            "availability_requirement": "best_effort"
+          },
+          "determinism": {
+            "replayable": true,
+            "require_pinned_feeds": false
+          }
+        },
+        "overlays": [],
+        "source": "profiles/standard.json"
+      },
+      "transport": {
+        "required": {
+          "mode": "http",
+          "integrity": "tls",
+          "availability_requirement": "best_effort"
+        },
+        "actual": {
+          "mode": "http",
+          "integrity": "tls",
+          "available": true,
+          "channel": "delta"
+        },
+        "violations": [],
+        "satisfied": true
+      },
+      "revocation_status": {
+        "source": "service",
+        "issued_at": "2027-04-27T00:00:00Z",
+        "policy_epoch": "2026-WLM-DEMO",
+        "channel": "delta",
+        "age_seconds": 0,
+        "feed_descriptor": {
+          "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:revocation:2026-demo",
+          "feed_type": "revocation_feed",
+          "authority_id": "did:web:media-registry.example",
+          "route_attested": true,
+          "integrity_ok": true,
+          "authority_ok": true,
+          "signature_ok": true,
+          "freshness_ok": true,
+          "reason_code": "fresh",
+          "violations": [],
+          "digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+          "declared_digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+          "issued_at": "2026-04-27T00:00:00Z",
+          "valid_until": "2027-04-27T00:00:00Z",
+          "max_age_seconds": 86400
+        },
+        "freshness_ok": true,
+        "max_age_seconds": 3600,
+        "enforcement": "warn",
+        "violations": []
+      },
+      "feed_descriptors": {
+        "policy": {
+          "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:policy:2026-demo",
+          "feed_type": "policy_feed",
+          "authority_id": "did:web:media-registry.example",
+          "route_attested": true,
+          "integrity_ok": true,
+          "authority_ok": true,
+          "signature_ok": true,
+          "freshness_ok": true,
+          "reason_code": "fresh",
+          "violations": [],
+          "digest_sha256": "bfc1991231e31b6dede3ca70722036d5cbce8a747666b203f39c64df8b867f89",
+          "declared_digest_sha256": "bfc1991231e31b6dede3ca70722036d5cbce8a747666b203f39c64df8b867f89",
+          "issued_at": "2026-04-27T00:00:00Z",
+          "valid_until": "2027-04-27T00:00:00Z",
+          "max_age_seconds": 86400
+        },
+        "revocation": {
+          "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:revocation:2026-demo",
+          "feed_type": "revocation_feed",
+          "authority_id": "did:web:media-registry.example",
+          "route_attested": true,
+          "integrity_ok": true,
+          "authority_ok": true,
+          "signature_ok": true,
+          "freshness_ok": true,
+          "reason_code": "fresh",
+          "violations": [],
+          "digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+          "declared_digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+          "issued_at": "2026-04-27T00:00:00Z",
+          "valid_until": "2027-04-27T00:00:00Z",
+          "max_age_seconds": 86400
+        }
+      }
+    },
+    "gateway_mediation": {},
+    "explanations": [
+      "Verification profile: standard",
+      "Live authorization lookup executed",
+      "Live recognition lookup executed"
+    ]
+  },
+  "policy_evidence": {
+    "authorization_evidence": [
+      "contest-rule:eligible-monument-list:IN-WB-KOL-VM-001",
+      "contest-rule:submission-window:2026-demo",
+      "contest-rule:license:cc-by-sa-compatible"
+    ],
+    "recognition_evidence": [
+      "trust-list:contest-participant-issuer:2026-demo"
+    ],
+    "policy_epoch": "2026-WLM-DEMO",
+    "policy_requirements": {
+      "requires_process_proof": true,
+      "min_process_integrity": 0.8,
+      "allowed_process_types": [
+        "original_photography_submission",
+        "verified_mobile_capture",
+        "moderator_confirmed_upload"
+      ]
+    },
+    "verification_profile": {
+      "id": "standard",
+      "base_profile": "standard",
+      "controls": {
+        "authority": {
+          "trust_anchors_required": false,
+          "allow_untrusted": true
+        },
+        "freshness": {
+          "max_age_seconds": 3600,
+          "require_live": false
+        },
+        "revocation": {
+          "mode": "delta",
+          "hard_fail": false,
+          "max_age_seconds": 3600,
+          "enforcement": "warn",
+          "delta_channel_required": false
+        },
+        "failure": {
+          "network_failure": "fail_open",
+          "policy_unavailable": "fail_open"
+        },
+        "evidence": {
+          "emit_audit_bundle": true,
+          "require_attestation": false
+        },
+        "transport": {
+          "mode": "http",
+          "integrity": "tls",
+          "availability_requirement": "best_effort"
+        },
+        "determinism": {
+          "replayable": true,
+          "require_pinned_feeds": false
+        }
+      },
+      "overlays": [],
+      "source": "profiles/standard.json"
+    },
+    "transport": {
+      "required": {
+        "mode": "http",
+        "integrity": "tls",
+        "availability_requirement": "best_effort"
+      },
+      "actual": {
+        "mode": "http",
+        "integrity": "tls",
+        "available": true,
+        "channel": "delta"
+      },
+      "violations": [],
+      "satisfied": true
+    },
+    "revocation_status": {
+      "source": "service",
+      "issued_at": "2027-04-27T00:00:00Z",
+      "policy_epoch": "2026-WLM-DEMO",
+      "channel": "delta",
+      "age_seconds": 0,
+      "feed_descriptor": {
+        "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:revocation:2026-demo",
+        "feed_type": "revocation_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+        "declared_digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      },
+      "freshness_ok": true,
+      "max_age_seconds": 3600,
+      "enforcement": "warn",
+      "violations": []
+    },
+    "feed_descriptors": {
+      "policy": {
+        "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:policy:2026-demo",
+        "feed_type": "policy_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "bfc1991231e31b6dede3ca70722036d5cbce8a747666b203f39c64df8b867f89",
+        "declared_digest_sha256": "bfc1991231e31b6dede3ca70722036d5cbce8a747666b203f39c64df8b867f89",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      },
+      "revocation": {
+        "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:revocation:2026-demo",
+        "feed_type": "revocation_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+        "declared_digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      }
+    }
+  },
+  "process_appraisal": {
+    "status": "verified",
+    "process_type": "original_photography_submission",
+    "confidence": 0.92,
+    "minimum_confidence": 0.8,
+    "evidence_ref": "urn:wlm-demo:process-evidence:photo-001",
+    "evidence_format": "application/json",
+    "appraisal": "contest_submission_screening",
+    "reference": "docs/workflows/photography-contest-verification.md"
+  },
+  "gateway_mediation": {},
+  "replay_inputs": {
+    "request": {
+      "asset_id": "photo:wlm-demo:kolkata-victoria-memorial-001",
+      "integrity_ok": true,
+      "entity_id": "did:web:participant-42.example",
+      "authority_id": "did:web:media-registry.example",
+      "issuer_id": "did:web:contest-issuer.example",
+      "action": "submit",
+      "resource": "heritage:photograph",
+      "context": {
+        "campaign": "wiki-loves-monuments-style-2026",
+        "jurisdiction": "IN",
+        "monument_id": "IN-WB-KOL-VM-001",
+        "monument_name": "Victoria Memorial, Kolkata",
+        "license": "CC-BY-SA-4.0",
+        "submitted_at": "2026-09-18T10:30:00Z",
+        "claimed_capture_date": "2026-09-14",
+        "content_type": "image/jpeg",
+        "credential_type": "vc:contest-participant",
+        "participant_statement": "I photographed this monument and submit it under the contest rules."
+      },
+      "process_evidence": {
+        "verified": true,
+        "process_type": "original_photography_submission",
+        "confidence": 0.92,
+        "evidence_ref": "urn:wlm-demo:process-evidence:photo-001",
+        "evidence_format": "application/json",
+        "appraisal": "contest_submission_screening",
+        "reference": "docs/workflows/photography-contest-verification.md"
+      }
+    },
+    "profile": {
+      "id": "standard",
+      "base_profile": "standard",
+      "controls": {
+        "authority": {
+          "trust_anchors_required": false,
+          "allow_untrusted": true
+        },
+        "freshness": {
+          "max_age_seconds": 3600,
+          "require_live": false
+        },
+        "revocation": {
+          "mode": "delta",
+          "hard_fail": false,
+          "max_age_seconds": 3600,
+          "enforcement": "warn",
+          "delta_channel_required": false
+        },
+        "failure": {
+          "network_failure": "fail_open",
+          "policy_unavailable": "fail_open"
+        },
+        "evidence": {
+          "emit_audit_bundle": true,
+          "require_attestation": false
+        },
+        "transport": {
+          "mode": "http",
+          "integrity": "tls",
+          "availability_requirement": "best_effort"
+        },
+        "determinism": {
+          "replayable": true,
+          "require_pinned_feeds": false
+        }
+      },
+      "overlays": [],
+      "source": "profiles/standard.json"
+    },
+    "use_gateway": false,
+    "verification_mode": "cached_online",
+    "policy_epoch": "2026-WLM-DEMO",
+    "transport_metadata": {
+      "required": {
+        "mode": "http",
+        "integrity": "tls",
+        "availability_requirement": "best_effort"
+      },
+      "actual": {
+        "mode": "http",
+        "integrity": "tls",
+        "available": true,
+        "channel": "delta"
+      },
+      "violations": [],
+      "satisfied": true
+    },
+    "revocation_status": {
+      "source": "service",
+      "issued_at": "2027-04-27T00:00:00Z",
+      "policy_epoch": "2026-WLM-DEMO",
+      "channel": "delta",
+      "age_seconds": 0,
+      "feed_descriptor": {
+        "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:revocation:2026-demo",
+        "feed_type": "revocation_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+        "declared_digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      },
+      "freshness_ok": true,
+      "max_age_seconds": 3600,
+      "enforcement": "warn",
+      "violations": []
+    },
+    "feed_descriptors": {
+      "policy": {
+        "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:policy:2026-demo",
+        "feed_type": "policy_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "bfc1991231e31b6dede3ca70722036d5cbce8a747666b203f39c64df8b867f89",
+        "declared_digest_sha256": "bfc1991231e31b6dede3ca70722036d5cbce8a747666b203f39c64df8b867f89",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      },
+      "revocation": {
+        "descriptor_id": "urn:trqp:feed-descriptor:photography-contest:revocation:2026-demo",
+        "feed_type": "revocation_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+        "declared_digest_sha256": "00395f6e43e6ad7a2b268aaf2cca08fcbada939cff49d25fb3619f55c7683d1c",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      }
+    },
+    "replay_contract": {
+      "transport_verified": true,
+      "revocation_freshness_evaluated": true,
+      "feed_descriptor_evidence_available": true,
+      "deterministic_inputs": true
+    },
+    "policy_feed": {
+      "policy_source": "examples/photography_contest/contest_policy_feed.json",
+      "policy_source_sha256": "826eb6927fcd2e9d9d06fe0b130c7f3d159c8f4f8db0347fe76aa5997f321e1c",
+      "revocation_source": "examples/photography_contest/contest_revocation_feed.json",
+      "revocation_source_sha256": "d47331aa0997bee6583cca0f9e9e7b850f5bf7f789e11baa26b4b52c5b4b635e",
+      "policy_descriptor_source": "examples/photography_contest/policy-feed.signed.json",
+      "policy_descriptor_source_sha256": "ac908a0624354a10cbc0cf4ffdab03bb602bdaef0992a67dc4980db9a0f8efa0",
+      "revocation_descriptor_source": "examples/photography_contest/revocation-feed.signed.json",
+      "revocation_descriptor_source_sha256": "8684337b22a7c71e9e4efa00c4f241786c9bcba9aa587a857a12daf7cd69c57d",
+      "trust_anchors_source": "examples/photography_contest/trust_anchors.json",
+      "trust_anchors_source_sha256": "191f667ebc6747352b457102ff49ee2840d1abbfdd8c56cdd629c9bdcb8cbb45"
+    }
+  },
+  "bundle_digest_sha256": "512bcffa47ef0b4515d9b6a1d73b3a70d8c9a464124a3f0635211f882519ef5b"
+}
