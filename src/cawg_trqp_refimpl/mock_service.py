@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from .models import AuthorizationResponse, RecognitionResponse
 from .transport import FeedTransportMetadata
+from .feed_descriptor import load_feed_descriptor, validate_feed_descriptor
 
 
 def _parse_utc(ts: str | None) -> datetime | None:
@@ -21,18 +22,38 @@ class MockTRQPService:
         transport_mode: str = "http",
         transport_integrity: str = "tls",
         transport_available: bool = True,
+        policy_descriptor_path: str | Path | None = None,
+        revocation_descriptor_path: str | Path | None = None,
+        trust_anchors_path: str | Path | None = "data/trust_anchors.json",
     ) -> None:
         self.policy_path = Path(policy_path)
-        self.data = json.loads(self.policy_path.read_text(encoding="utf-8"))
+        self.policy_body_text = self.policy_path.read_text(encoding="utf-8")
+        self.data = json.loads(self.policy_body_text)
         self.revocations = {"revoked_entities": [], "channel": "delta", "issued_at": "2026-12-31T00:00:00Z"}
+        self.revocation_body_text = json.dumps(self.revocations, sort_keys=True, separators=(",", ":"))
         if revocation_path is not None:
-            self.revocations = json.loads(Path(revocation_path).read_text(encoding="utf-8"))
+            self.revocation_body_text = Path(revocation_path).read_text(encoding="utf-8")
+            self.revocations = json.loads(self.revocation_body_text)
         self.transport_metadata = FeedTransportMetadata(
             mode=transport_mode,
             integrity=transport_integrity,
             available=transport_available,
             channel=self.revocations.get("channel", "full"),
         )
+        self.policy_descriptor = load_feed_descriptor(policy_descriptor_path)
+        self.revocation_descriptor = load_feed_descriptor(revocation_descriptor_path)
+        self.trust_anchors = json.loads(Path(trust_anchors_path).read_text(encoding="utf-8")) if trust_anchors_path else None
+        self.feed_validation = self._validate_feed_descriptors()
+
+    def _validate_feed_descriptors(self) -> dict:
+        expected = {"did:web:media-registry.example"}
+        return {
+            "policy": validate_feed_descriptor(self.policy_descriptor, self.policy_body_text, trust_anchors=self.trust_anchors, expected_authorities=expected).to_dict(),
+            "revocation": validate_feed_descriptor(self.revocation_descriptor, self.revocation_body_text, trust_anchors=self.trust_anchors, expected_authorities=expected).to_dict(),
+        }
+
+    def feed_descriptor_evidence(self) -> dict:
+        return self.feed_validation
 
     def authorization(self, entity_id: str, authority_id: str, action: str, resource: str, context: dict) -> AuthorizationResponse:
         if entity_id in self.revocations.get("revoked_entities", []):
@@ -79,6 +100,7 @@ class MockTRQPService:
             "policy_epoch": self.revocations.get("policy_epoch"),
             "channel": self.revocations.get("channel", "snapshot"),
             "age_seconds": self.revocation_age_seconds(),
+            "feed_descriptor": self.feed_validation.get("revocation", {}),
         }
 
     def revocation_age_seconds(self) -> int | None:

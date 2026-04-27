@@ -253,3 +253,14 @@ This repository does not just verify inputs.
 It mitigates defined risks, enforces controls at runtime, and produces evidence that those controls were applied.
 
 The risk crosswalk makes that control model explicit, testable, and auditable.
+
+
+## v0.14.0 feed descriptor risk controls
+
+| Risk | Control | Evidence |
+| --- | --- | --- |
+| Unauthorized policy feed substitution | Signed descriptor + trust anchor validation | `signature_ok`, `authority_ok` |
+| Feed body tampering | Descriptor digest validation | `integrity_ok`, `descriptor_digest_mismatch` |
+| Stale revocation state | Freshness window and reason codes | `stale_but_warned`, `stale_rejected` |
+| Gateway route laundering | Route attestation field | `route_attested`, `route_unattested` |
+| Weak replay evidence | Descriptor report copied into replay inputs | `replay_inputs.feed_descriptors` |

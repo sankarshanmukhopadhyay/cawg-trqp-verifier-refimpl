@@ -502,3 +502,30 @@ risks:
       - fake registry
       - malicious snapshot signer
       - compromised source metadata
+
+
+- risk_id: FEED-DESCRIPTOR-SUBSTITUTION
+  risk: Policy or revocation feed is substituted without authority.
+  control: Signed feed descriptor validation against configured trust anchors.
+  tests:
+    - tests/test_feed_descriptors.py::test_feed_descriptor_signature_mismatch_is_detected
+    - tests/test_feed_descriptor_conformance_vectors.py::test_unknown_authority_is_negative_conformance_vector
+  evidence:
+    - policy_evidence.feed_descriptors
+    - replay_inputs.feed_descriptors
+
+- risk_id: FEED-DESCRIPTOR-DIGEST-MISMATCH
+  risk: Feed body does not match the descriptor-pinned digest.
+  control: SHA-256 digest comparison over feed body.
+  tests:
+    - tests/test_feed_descriptors.py::test_feed_descriptor_digest_mismatch_is_detected
+  evidence:
+    - descriptor_digest_mismatch
+
+- risk_id: GATEWAY-ROUTE-UNATTESTED
+  risk: Gateway-mediated authorization path lacks route evidence.
+  control: Route attestation field in feed descriptor and gateway mediation evidence.
+  tests:
+    - tests/test_feed_descriptor_conformance_vectors.py::test_unattested_gateway_route_is_negative_conformance_vector
+  evidence:
+    - route_unattested

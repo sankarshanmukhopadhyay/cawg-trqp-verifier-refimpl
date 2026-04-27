@@ -1,6 +1,6 @@
 # CAWG–TRQP Reference Implementation
 
-**Version line:** post-v0.13.0 interoperability and documentation hardening  
+**Version line:** v0.14.0 signed feed descriptors and runtime evidence hardening  
 **Status:** reference implementation with canonical fixture exchange, compatibility metadata, and HTTP integration coverage
 
 ## Overview
@@ -124,7 +124,7 @@ The repository now also includes a non-technical video verification walkthrough,
 
 ## Current roadmap direction
 
-The earlier post-v0.13.0 fixture and compatibility goals are now substantially complete. The next practical increment should focus on stronger signed feed descriptors, richer freshness reason codes, and deeper integration hooks into external TRQP assurance suites.
+The v0.14.0 feed descriptor increment is now implemented. The next practical increment should focus on external assurance-suite interoperability and production-grade descriptor policy configuration.
 
 
 ## Documentation map
@@ -134,3 +134,26 @@ The earlier post-v0.13.0 fixture and compatibility goals are now substantially c
 - `docs/decision-receipt-specification.md`: defines replayable trust decision receipts
 - `docs/risk-crosswalk.md`: maps risks to controls, tests, adversarial paths, and evidence
 - `conformance/risk-to-test-map.yaml`: machine-readable linkage from risks to tests and expected evidence
+
+
+## v0.14.0 adoption path: signed feed descriptors
+
+This release adds a concrete control-plane increment: policy, revocation, snapshot, and gateway route feeds can now be described by signed feed descriptors. A descriptor binds a feed to an authority, a digest, a freshness window, and route evidence. The verifier exports the resulting descriptor evidence into `policy_evidence.feed_descriptors` and carries it into audit bundle replay inputs.
+
+Start here:
+
+```bash
+python scripts/validate_feed_descriptors.py
+python scripts/validate_examples.py
+pytest -q
+```
+
+Key files:
+
+- `schemas/feed-descriptor.schema.json`
+- `schemas/feed-attestation.schema.json`
+- `examples/feed_descriptors/*.signed.json`
+- `docs/feed-descriptor-profile.md`
+- `src/cawg_trqp_refimpl/feed_descriptor.py`
+
+The practical adoption model is intentionally incremental: observe descriptor reason codes first, then move high-assurance paths toward fail-closed enforcement for invalid signatures, digest mismatches, stale descriptors, unrecognized authority, or unattested gateway routes.

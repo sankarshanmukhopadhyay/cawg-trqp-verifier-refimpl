@@ -179,6 +179,6 @@ class TestNegativeConformanceVectors:
             "source": "inline"
         }
         result = verifier.verify(VerificationRequest(**data), profile=profile)
-        assert result.policy_freshness == "current_with_stale_revocation_warning"
+        assert result.policy_freshness == "stale_but_warned"
         assert result.policy_evidence["revocation_status"]["freshness_ok"] is False
         assert result.trust_outcome == "trusted"

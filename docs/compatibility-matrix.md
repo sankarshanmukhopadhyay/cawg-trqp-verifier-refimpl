@@ -20,3 +20,15 @@ A reference implementation becomes more useful when it can declare not only what
 - canonical fixture packages now exist for standard, high assurance, gateway-mediated, and multi-authority cases
 - transport and revocation behaviors have explicit evidence references
 - the HTTP service surface is part of the compatibility statement rather than an undocumented side path
+
+
+## v0.14.0 descriptor compatibility surface
+
+| Capability | Status | Evidence |
+| --- | --- | --- |
+| Signed policy feed descriptor | Supported | `examples/feed_descriptors/policy-feed.signed.json` |
+| Signed revocation feed descriptor | Supported | `examples/feed_descriptors/revocation-feed.signed.json` |
+| Signed snapshot feed descriptor | Supported | `examples/feed_descriptors/snapshot-feed.signed.json` |
+| Signed gateway route descriptor | Supported | `examples/feed_descriptors/gateway-route-feed.signed.json` |
+| Runtime descriptor evidence export | Supported | `policy_evidence.feed_descriptors` |
+| Replay descriptor evidence preservation | Supported | `replay_inputs.feed_descriptors` |

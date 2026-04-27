@@ -22,3 +22,15 @@ python scripts/check_reproducibility.py examples/reproducibility_bundle_standard
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
 ```
+
+
+## v0.14.0 readiness checklist
+
+- [x] Signed feed descriptor schema added.
+- [x] Feed attestation schema added.
+- [x] Policy, revocation, snapshot, and gateway route descriptor examples added.
+- [x] Runtime verifier exports descriptor evidence under `policy_evidence.feed_descriptors`.
+- [x] Audit bundle replay inputs carry descriptor evidence.
+- [x] Negative descriptor vectors cover invalid signature, digest mismatch, unknown authority, and route attestation failure.
+- [x] Validation script added: `python scripts/validate_feed_descriptors.py`.
+- [x] Test suite passes: `52 passed, 6 skipped`.

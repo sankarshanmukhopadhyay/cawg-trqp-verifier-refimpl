@@ -1,0 +1,38 @@
+{
+  "descriptor_type": "cawg-trqp-feed-descriptor",
+  "descriptor_version": "1.0.0",
+  "descriptor_id": "urn:trqp:feed-descriptor:revocation:2026-q1",
+  "issued_at": "2026-04-27T00:00:00Z",
+  "valid_until": "2027-04-27T00:00:00Z",
+  "authority": {
+    "authority_id": "did:web:media-registry.example",
+    "key_id": "media-registry-snapshot-key-1",
+    "scope": [
+      "cawg:news-content",
+      "vc:creator-identity"
+    ]
+  },
+  "feed": {
+    "feed_type": "revocation_feed",
+    "content_type": "application/json",
+    "source": "data/revocations.json",
+    "digest_alg": "sha-256",
+    "digest_sha256": "94c13171b7205566ba18ae6fc467d4c12c2d69919689cc73828a535fcc6185e4",
+    "policy_epoch": "2026-Q1"
+  },
+  "freshness": {
+    "max_age_seconds": 86400,
+    "enforcement": "fail"
+  },
+  "route": {
+    "channel": "https",
+    "attested": true,
+    "route_label": "revocation-feed",
+    "gateway_id": "gateway:reference"
+  },
+  "descriptor_signature": {
+    "algorithm": "Ed25519",
+    "key_id": "media-registry-snapshot-key-1",
+    "value": "6/d3BRb/5KaWmnsnbdj/knPSOJ4FAyrvu6jCvHv5GudhxTmlJ5kc3UC2eYGQSe+OPvPSUps5gRqS1+WblNy1Cw=="
+  }
+}

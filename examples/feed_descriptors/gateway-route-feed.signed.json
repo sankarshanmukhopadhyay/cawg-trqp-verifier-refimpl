@@ -1,0 +1,38 @@
+{
+  "descriptor_type": "cawg-trqp-feed-descriptor",
+  "descriptor_version": "1.0.0",
+  "descriptor_id": "urn:trqp:feed-descriptor:gateway-route:2026-q1",
+  "issued_at": "2026-04-27T00:00:00Z",
+  "valid_until": "2027-04-27T00:00:00Z",
+  "authority": {
+    "authority_id": "did:web:media-registry.example",
+    "key_id": "media-registry-snapshot-key-1",
+    "scope": [
+      "cawg:news-content",
+      "vc:creator-identity"
+    ]
+  },
+  "feed": {
+    "feed_type": "gateway_route_feed",
+    "content_type": "application/json",
+    "source": "data/policies.json",
+    "digest_alg": "sha-256",
+    "digest_sha256": "143e3e4f2a93645f7284652f42b93e0d018fb401eac5da03390a1d84a272196c",
+    "policy_epoch": "2026-Q1"
+  },
+  "freshness": {
+    "max_age_seconds": 86400,
+    "enforcement": "fail"
+  },
+  "route": {
+    "channel": "https",
+    "attested": true,
+    "route_label": "gateway-route-feed",
+    "gateway_id": "gateway:reference"
+  },
+  "descriptor_signature": {
+    "algorithm": "Ed25519",
+    "key_id": "media-registry-snapshot-key-1",
+    "value": "U/hrheqal1JaleUuy2caUH0JodQI3DdltAG5rVigj+BPKFFR/YC/XHWjpYR35kh1msQkN4pqNcZHrb9Rgf3bBA=="
+  }
+}

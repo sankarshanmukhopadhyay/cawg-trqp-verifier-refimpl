@@ -12,6 +12,7 @@ SCHEMAS = {
     'verification_profile': json.loads((ROOT / 'schemas' / 'verification-profile.schema.json').read_text(encoding='utf-8')),
     'verification_request': json.loads((ROOT / 'schemas' / 'verification-request.schema.json').read_text(encoding='utf-8')),
     'verification_result': json.loads((ROOT / 'schemas' / 'verification-result.schema.json').read_text(encoding='utf-8')),
+    'feed_descriptor': json.loads((ROOT / 'schemas' / 'feed-descriptor.schema.json').read_text(encoding='utf-8')),
 }
 
 def iter_validation_targets() -> list[tuple[str, Path, object]]:
@@ -30,6 +31,8 @@ def iter_validation_targets() -> list[tuple[str, Path, object]]:
         elif path.name == 'interoperability_vector_multi_authority.json':
             for idx, item in enumerate(data.get('vectors', [])):
                 targets.append(('verification_request', Path(f'{rel}:vectors[{idx}]'), item))
+    for path in sorted((ROOT / 'examples' / 'feed_descriptors').glob('*.json')):
+        targets.append(('feed_descriptor', path.relative_to(ROOT), json.loads(path.read_text(encoding='utf-8'))))
     for path in sorted((ROOT / 'fixtures' / 'profile-bound').glob('*/request.json')):
         targets.append(('verification_request', path.relative_to(ROOT), json.loads(path.read_text(encoding='utf-8'))))
     for path in sorted((ROOT / 'fixtures' / 'profile-bound').glob('*/resolved_profile.json')):

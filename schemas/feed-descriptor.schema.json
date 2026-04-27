@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/schemas/feed-descriptor.schema.json",
+  "type": "object",
+  "required": ["descriptor_type", "descriptor_version", "descriptor_id", "issued_at", "valid_until", "authority", "feed", "freshness", "route", "descriptor_signature"],
+  "properties": {
+    "descriptor_type": {"const": "cawg-trqp-feed-descriptor"},
+    "descriptor_version": {"type": "string"},
+    "descriptor_id": {"type": "string"},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "valid_until": {"type": "string", "format": "date-time"},
+    "authority": {"type": "object", "required": ["authority_id", "key_id", "scope"], "properties": {"authority_id": {"type": "string"}, "key_id": {"type": "string"}, "scope": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": true},
+    "feed": {"type": "object", "required": ["feed_type", "source", "digest_alg", "digest_sha256"], "properties": {"feed_type": {"enum": ["policy_feed", "revocation_feed", "snapshot_feed", "gateway_route_feed"]}, "content_type": {"type": "string"}, "source": {"type": "string"}, "digest_alg": {"const": "sha-256"}, "digest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "policy_epoch": {"type": "string"}}, "additionalProperties": true},
+    "freshness": {"type": "object", "required": ["max_age_seconds", "enforcement"], "properties": {"max_age_seconds": {"type": "integer", "minimum": 0}, "enforcement": {"enum": ["warn", "fail"]}}, "additionalProperties": true},
+    "route": {"type": "object", "required": ["channel", "attested"], "properties": {"channel": {"type": "string"}, "attested": {"type": "boolean"}, "route_label": {"type": "string"}, "gateway_id": {"type": "string"}}, "additionalProperties": true},
+    "descriptor_signature": {"type": "object", "required": ["algorithm", "key_id", "value"], "properties": {"algorithm": {"const": "Ed25519"}, "key_id": {"type": "string"}, "value": {"type": "string"}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

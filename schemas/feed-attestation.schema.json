@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/schemas/feed-attestation.schema.json",
+  "type": "object",
+  "required": ["descriptor_id", "feed_type", "authority_id", "signature_ok", "integrity_ok", "authority_ok", "freshness_ok", "reason_code", "violations"],
+  "properties": {
+    "descriptor_id": {"type": ["string", "null"]},
+    "feed_type": {"type": ["string", "null"]},
+    "authority_id": {"type": ["string", "null"]},
+    "route_attested": {"type": "boolean"},
+    "signature_ok": {"type": "boolean"},
+    "integrity_ok": {"type": "boolean"},
+    "authority_ok": {"type": "boolean"},
+    "freshness_ok": {"type": "boolean"},
+    "reason_code": {"enum": ["fresh", "stale_but_warned", "stale_rejected", "missing_feed_descriptor", "descriptor_signature_invalid", "descriptor_digest_mismatch", "authority_not_recognized", "route_unattested", "revocation_channel_degraded"]},
+    "violations": {"type": "array", "items": {"type": "string"}},
+    "digest_sha256": {"type": ["string", "null"]},
+    "declared_digest_sha256": {"type": ["string", "null"]},
+    "issued_at": {"type": ["string", "null"]},
+    "valid_until": {"type": ["string", "null"]},
+    "max_age_seconds": {"type": ["integer", "null"]}
+  },
+  "additionalProperties": false
+}

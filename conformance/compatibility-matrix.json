@@ -91,5 +91,28 @@
         "tests/test_http_service_integration.py"
       ]
     }
+  },
+  "v0_14_0_signed_feed_descriptors": {
+    "status": "supported",
+    "schemas": [
+      "schemas/feed-descriptor.schema.json",
+      "schemas/feed-attestation.schema.json"
+    ],
+    "examples": [
+      "examples/feed_descriptors/policy-feed.signed.json",
+      "examples/feed_descriptors/revocation-feed.signed.json",
+      "examples/feed_descriptors/snapshot-feed.signed.json",
+      "examples/feed_descriptors/gateway-route-feed.signed.json"
+    ],
+    "runtime_evidence": [
+      "policy_evidence.feed_descriptors",
+      "replay_inputs.feed_descriptors"
+    ],
+    "negative_vectors": [
+      "descriptor_signature_invalid",
+      "descriptor_digest_mismatch",
+      "authority_not_recognized",
+      "route_unattested"
+    ]
   }
 }

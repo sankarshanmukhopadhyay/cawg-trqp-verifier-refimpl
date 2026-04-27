@@ -10,9 +10,8 @@ from .transport import FeedTransportMetadata
 class TrustGateway:
     """Remote policy mediation component for verifier-side trust orchestration.
 
-    The gateway now supports deterministic route selection across multiple
-    authorities so interoperability vectors can model production-style
-    deployments with separate policy domains.
+    The gateway supports deterministic route selection and exports route/feed
+    evidence so mediated authorization can be replayed and audited.
     """
 
     def __init__(
@@ -42,26 +41,24 @@ class TrustGateway:
             raise ValueError(f'No policy route configured for authority {authority_id}')
         return self.service, self.route_label
 
-    def authorization(self, entity_id: str, authority_id: str, action: str, resource: str, context: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
-        service, route_label = self._resolve_route(authority_id)
-        response = asdict(service.authorization(entity_id, authority_id, action, resource, context))
-        mediation = {
+    def _mediation(self, service: MockTRQPService, route_label: str, authority_id: str, decision_type: str) -> dict[str, Any]:
+        feed = service.feed_descriptor_evidence().get('policy', {})
+        return {
             'gateway_id': self.gateway_id,
             'route_label': route_label,
             'mode': 'remote_policy_mediation',
             'target_authority_id': authority_id,
-            'decision_type': 'authorization',
+            'decision_type': decision_type,
+            'route_attested': bool(feed.get('route_attested', False)),
+            'feed_descriptor': feed,
         }
-        return response, mediation
+
+    def authorization(self, entity_id: str, authority_id: str, action: str, resource: str, context: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+        service, route_label = self._resolve_route(authority_id)
+        response = asdict(service.authorization(entity_id, authority_id, action, resource, context))
+        return response, self._mediation(service, route_label, authority_id, 'authorization')
 
     def recognition(self, authority_id: str, recognized_authority_id: str, context: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
         service, route_label = self._resolve_route(authority_id)
         response = asdict(service.recognition(authority_id, recognized_authority_id, context))
-        mediation = {
-            'gateway_id': self.gateway_id,
-            'route_label': route_label,
-            'mode': 'remote_policy_mediation',
-            'target_authority_id': authority_id,
-            'decision_type': 'recognition',
-        }
-        return response, mediation
+        return response, self._mediation(service, route_label, authority_id, 'recognition')

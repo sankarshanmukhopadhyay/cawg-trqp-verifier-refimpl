@@ -8,6 +8,15 @@
 
 # Changelog
 
+## v0.14.0
+
+- Added signed feed descriptor and feed attestation schemas.
+- Added signed example descriptors for policy, revocation, snapshot, and gateway route feeds.
+- Added runtime feed descriptor validation and evidence export.
+- Added stable freshness and descriptor reason codes.
+- Added audit/replay propagation for feed descriptor evidence.
+- Added descriptor validation script and conformance tests.
+
 ## v0.13.0
 
 - add transport controls to verification profiles

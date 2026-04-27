@@ -66,7 +66,7 @@ def test_revocation_freshness_warn_path_keeps_verification_running():
     result = verifier.verify(_request(), profile=profile)
     stale_path.unlink()
     assert result.trust_outcome == "trusted"
-    assert result.policy_freshness == "current_with_stale_revocation_warning"
+    assert result.policy_freshness == "stale_but_warned"
     assert result.policy_evidence["revocation_status"]["freshness_ok"] is False
 
 

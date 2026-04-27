@@ -111,9 +111,11 @@ def build_audit_bundle(
         "policy_epoch": result.policy_evidence.get("policy_epoch"),
         "transport_metadata": result.policy_evidence.get("transport", {}),
         "revocation_status": result.policy_evidence.get("revocation_status", {}),
+        "feed_descriptors": result.policy_evidence.get("feed_descriptors", {}),
         "replay_contract": {
             "transport_verified": bool(result.policy_evidence.get("transport", {}).get("satisfied", False)),
             "revocation_freshness_evaluated": "revocation_status" in result.policy_evidence,
+            "feed_descriptor_evidence_available": bool(result.policy_evidence.get("feed_descriptors")),
             "deterministic_inputs": bool(policy_feed),
         },
     }

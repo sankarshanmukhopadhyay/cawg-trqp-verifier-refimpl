@@ -46,6 +46,7 @@ class Verifier:
         self.gateway = gateway
         self.last_transport_metadata: dict[str, Any] = {}
         self.last_revocation_status: dict[str, Any] = {}
+        self.last_feed_descriptor_evidence: dict[str, Any] = {}
 
     def apply_revocation_delta(self, revoked_entities: list[str], policy_epoch: Optional[str] = None) -> None:
         self.revocation_delta = RevocationDelta(revoked_entities, policy_epoch)
@@ -84,7 +85,7 @@ class Verifier:
                     verification_mode="revocation_check",
                     trust_outcome="rejected",
                     explanations=[f"Entity revoked: {reason}", f"Verification profile: {resolved_profile.id}"],
-                    policy_evidence={"verification_profile": resolved_profile.to_dict(), "revocation_status": self.last_revocation_status},
+                    policy_evidence={"verification_profile": resolved_profile.to_dict(), "revocation_status": self.last_revocation_status, "feed_descriptors": self.last_feed_descriptor_evidence},
                 )
 
         auth_key = tuple_key(request.entity_id, request.authority_id, request.action, request.resource, request.context)
@@ -106,6 +107,13 @@ class Verifier:
         if self.service is not None:
             return self.service.transport_metadata
         return FeedTransportMetadata(mode='local', integrity='none', available=False, channel='none')
+
+    def _current_feed_descriptor_evidence(self) -> dict[str, Any]:
+        if self.gateway is not None and self.gateway.service is not None:
+            return self.gateway.service.feed_descriptor_evidence()
+        if self.service is not None:
+            return self.service.feed_descriptor_evidence()
+        return {}
 
     def _current_revocation_status(self, profile: VerificationProfile) -> dict[str, Any]:
         max_age = profile.controls['revocation'].get('max_age_seconds', 0)
@@ -143,6 +151,11 @@ class Verifier:
         status = self._current_revocation_status(profile)
         self.last_revocation_status = status
         failures = list(status.get('violations', []))
+        self.last_feed_descriptor_evidence = self._current_feed_descriptor_evidence()
+        for name, report in self.last_feed_descriptor_evidence.items():
+            reason = report.get("reason_code")
+            if reason in {"descriptor_signature_invalid", "descriptor_digest_mismatch", "authority_not_recognized", "route_unattested", "stale_rejected"}:
+                failures.append(f"{name} feed descriptor: {reason}")
         return (not failures, failures)
 
     def _transport_or_revocation_failure_result(self, profile: VerificationProfile, freshness: str, explanation: str) -> VerificationResult:
@@ -161,6 +174,7 @@ class Verifier:
                 'verification_profile': profile.to_dict(),
                 'transport': self.last_transport_metadata,
                 'revocation_status': self.last_revocation_status,
+                'feed_descriptors': self.last_feed_descriptor_evidence,
             },
             explanations=[explanation],
         )
@@ -182,7 +196,7 @@ class Verifier:
             policy_freshness="service_unavailable",
             verification_mode="online_full" if profile.controls["freshness"]["require_live"] else "cached_online",
             trust_outcome=trust_outcome,
-            policy_evidence={"verification_profile": profile.to_dict(), "transport": self.last_transport_metadata, "revocation_status": self.last_revocation_status},
+            policy_evidence={"verification_profile": profile.to_dict(), "transport": self.last_transport_metadata, "revocation_status": self.last_revocation_status, "feed_descriptors": self.last_feed_descriptor_evidence},
             explanations=[explanation],
         )
 
@@ -204,7 +218,7 @@ class Verifier:
                 policy_freshness="missing_snapshot",
                 verification_mode="offline_snapshot",
                 trust_outcome="rejected" if profile.controls["authority"]["trust_anchors_required"] else "deferred",
-                policy_evidence={"verification_profile": profile.to_dict(), "transport": self.last_transport_metadata, "revocation_status": self.last_revocation_status},
+                policy_evidence={"verification_profile": profile.to_dict(), "transport": self.last_transport_metadata, "revocation_status": self.last_revocation_status, "feed_descriptors": self.last_feed_descriptor_evidence},
                 explanations=["No snapshot available for edge verification"],
             )
 
@@ -218,7 +232,7 @@ class Verifier:
                 policy_freshness=self.snapshot.status(),
                 verification_mode="offline_snapshot",
                 trust_outcome="rejected",
-                policy_evidence={"verification_profile": profile.to_dict(), "transport": self.last_transport_metadata, "revocation_status": self.last_revocation_status},
+                policy_evidence={"verification_profile": profile.to_dict(), "transport": self.last_transport_metadata, "revocation_status": self.last_revocation_status, "feed_descriptors": self.last_feed_descriptor_evidence},
                 explanations=[f"Snapshot validation failed: {err}" for err in self.snapshot.validation_errors],
             )
 
@@ -306,7 +320,7 @@ class Verifier:
         result = self._synthesize_result(
             auth=auth,
             rec=rec,
-            freshness="current" if revocation_ok else 'current_with_stale_revocation_warning',
+            freshness="fresh" if revocation_ok else 'stale_but_warned',
             mode="gateway_mediated" if self.gateway is not None else ("online_full" if force_live else "cached_online"),
             request=request,
             profile=profile,
@@ -392,6 +406,7 @@ class Verifier:
             "verification_profile": profile.to_dict(),
             "transport": self.last_transport_metadata,
             "revocation_status": self.last_revocation_status,
+            "feed_descriptors": self.last_feed_descriptor_evidence,
         }
 
         if auth is None:
