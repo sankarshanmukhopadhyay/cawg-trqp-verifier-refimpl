@@ -152,9 +152,19 @@ class Verifier:
         self.last_revocation_status = status
         failures = list(status.get('violations', []))
         self.last_feed_descriptor_evidence = self._current_feed_descriptor_evidence()
+        descriptor_failure_reasons = {
+            "descriptor_malformed",
+            "descriptor_signature_invalid",
+            "descriptor_digest_mismatch",
+            "authority_not_recognized",
+            "route_unattested",
+            "stale_rejected",
+        }
+        if profile.controls["evidence"].get("require_feed_descriptors"):
+            descriptor_failure_reasons.add("missing_feed_descriptor")
         for name, report in self.last_feed_descriptor_evidence.items():
             reason = report.get("reason_code")
-            if reason in {"descriptor_signature_invalid", "descriptor_digest_mismatch", "authority_not_recognized", "route_unattested", "stale_rejected"}:
+            if reason in descriptor_failure_reasons:
                 failures.append(f"{name} feed descriptor: {reason}")
         return (not failures, failures)
 

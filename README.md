@@ -1,7 +1,7 @@
 # CAWG–TRQP Reference Implementation
 
-**Version line:** v0.14.0 signed feed descriptors and runtime evidence hardening  
-**Status:** reference implementation with canonical fixture exchange, compatibility metadata, and HTTP integration coverage
+**Version line:** v0.15.0 security hardening and roadmap closure  
+**Status:** reference implementation with canonical fixture exchange, compatibility metadata, HTTP hardening, signed feed descriptors, and replay boundary controls
 
 ## Overview
 
@@ -12,6 +12,12 @@ The current state of the project goes beyond demonstrating a single verification
 The result is a stronger handoff surface for developers, assurance teams, and governance programs that need more than a working demo. They need a verifier that can explain what it trusted, how it reached a decision, and how another implementation can reproduce the same outcome.
 
 ## What is now in place
+
+### Security hardening and replay boundary controls
+
+The HTTP service now rejects non-JSON payloads, oversized requests, malformed verification requests, and unsafe profile path references. API callers can select built-in profiles and overlays, but cannot cause filesystem profile loading through the HTTP boundary.
+
+Audit replay now treats bundle-referenced policy, revocation, descriptor, and trust-anchor files as governed inputs. Referenced files must resolve under a trusted replay root and match pinned digests before they can influence replay.
 
 ### Deterministic input trust and replay fidelity
 
@@ -135,7 +141,7 @@ The repository now also includes a non-technical video verification walkthrough,
 
 ## Current roadmap direction
 
-The v0.14.0 feed descriptor increment is now implemented. The next practical increment should focus on external assurance-suite interoperability and production-grade descriptor policy configuration.
+The v0.15.0 hardening release closes the prior signed feed descriptor and runtime evidence roadmap items. The next practical increment should focus on external assurance-suite ingestion, binary CAWG/C2PA parser adapter work, and production-grade descriptor policy configuration.
 
 
 ## Documentation map
@@ -168,3 +174,23 @@ Key files:
 - `src/cawg_trqp_refimpl/feed_descriptor.py`
 
 The practical adoption model is intentionally incremental: observe descriptor reason codes first, then move high-assurance paths toward fail-closed enforcement for invalid signatures, digest mismatches, stale descriptors, unrecognized authority, or unattested gateway routes.
+
+
+## v0.15.0 security hardening path
+
+Run the hardening checks with:
+
+```bash
+python scripts/validate_examples.py
+python scripts/validate_feed_descriptors.py
+python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
+python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
+pytest -q
+```
+
+Key controls:
+
+- HTTP request handling enforces `application/json`, bounded request size, typed verification request fields, and safe API profile resolution.
+- High-assurance verification requires valid policy and revocation feed descriptor evidence.
+- Replay uses pinned digests and a trusted replay root before loading bundle-referenced feeds.
+- Descriptor validation emits stable reason codes for malformed, missing, invalid, mismatched, unauthorized, stale, and unattested feed states.

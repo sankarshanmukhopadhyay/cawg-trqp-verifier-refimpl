@@ -23,7 +23,8 @@
     },
     "evidence": {
       "emit_audit_bundle": true,
-      "require_attestation": true
+      "require_attestation": true,
+      "require_feed_descriptors": true
     },
     "determinism": {
       "replayable": true,

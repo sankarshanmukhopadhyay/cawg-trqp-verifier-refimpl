@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
+from .jsoncanon import sha256_hex
 from .gateway import TrustGateway
 from .models import VerificationRequest
 from .mock_service import MockTRQPService
@@ -37,6 +39,7 @@ def replay_audit_bundle(
     *,
     policy_path: str | None = None,
     revocation_path: str | None = None,
+    trusted_root: str | Path = ".",
 ) -> ReplayReport:
     inputs = bundle.get("replay_inputs", {})
     request = VerificationRequest(**inputs["request"])
@@ -44,11 +47,41 @@ def replay_audit_bundle(
     resolved_profile = load_profile(profile_ref)
     use_gateway = bool(inputs.get("use_gateway", False))
     policy_feed = inputs.get("policy_feed", {})
-    resolved_policy_path = policy_path or policy_feed.get("policy_source")
-    resolved_revocation_path = revocation_path or policy_feed.get("revocation_source")
-    policy_descriptor_path = policy_feed.get("policy_descriptor_source")
-    revocation_descriptor_path = policy_feed.get("revocation_descriptor_source")
-    trust_anchors_path = policy_feed.get("trust_anchors_source", "data/trust_anchors.json")
+    root = Path(trusted_root).resolve()
+    resolved_policy_path = _verified_bundle_path(
+        policy_path or policy_feed.get("policy_source"),
+        policy_feed.get("policy_source_sha256") if policy_path is None else None,
+        root,
+        "policy_source",
+    )
+    resolved_revocation_path = _verified_bundle_path(
+        revocation_path or policy_feed.get("revocation_source"),
+        policy_feed.get("revocation_source_sha256") if revocation_path is None else None,
+        root,
+        "revocation_source",
+        required=False,
+    )
+    policy_descriptor_path = _verified_bundle_path(
+        policy_feed.get("policy_descriptor_source"),
+        policy_feed.get("policy_descriptor_source_sha256"),
+        root,
+        "policy_descriptor_source",
+        required=False,
+    )
+    revocation_descriptor_path = _verified_bundle_path(
+        policy_feed.get("revocation_descriptor_source"),
+        policy_feed.get("revocation_descriptor_source_sha256"),
+        root,
+        "revocation_descriptor_source",
+        required=False,
+    )
+    trust_anchors_path = _verified_bundle_path(
+        policy_feed.get("trust_anchors_source", "data/trust_anchors.json"),
+        policy_feed.get("trust_anchors_source_sha256"),
+        root,
+        "trust_anchors_source",
+        required=False,
+    )
 
     if resolved_profile.base_profile != "edge" and not resolved_policy_path:
         raise ValueError("policy_path is required unless replay_inputs.policy_feed.policy_source is present")
@@ -108,7 +141,46 @@ def replay_audit_bundle(
         matches=not differences,
         differences=differences,
         policy_sources={
-            "policy_source": resolved_policy_path or "",
-            "revocation_source": resolved_revocation_path or "",
+            "policy_source": _display_replay_path(resolved_policy_path, root),
+            "revocation_source": _display_replay_path(resolved_revocation_path, root),
         },
     )
+
+
+def _verified_bundle_path(
+    path_value: str | None,
+    expected_digest: str | None,
+    trusted_root: Path,
+    label: str,
+    *,
+    required: bool = True,
+) -> str | None:
+    if not path_value:
+        if required:
+            raise ValueError(f"{label} is required for replay")
+        return None
+    path = Path(path_value)
+    resolved = path.resolve() if path.is_absolute() else (trusted_root / path).resolve()
+    try:
+        resolved.relative_to(trusted_root)
+    except ValueError as exc:
+        raise ValueError(f"{label} must resolve under trusted replay root {trusted_root}") from exc
+    if not resolved.exists():
+        if required:
+            raise ValueError(f"{label} does not exist: {path_value}")
+        return None
+    if expected_digest:
+        actual = sha256_hex(resolved.read_text(encoding="utf-8"))
+        if actual != expected_digest:
+            raise ValueError(f"{label} digest mismatch")
+    return str(resolved)
+
+
+def _display_replay_path(path_value: str | None, trusted_root: Path) -> str:
+    if not path_value:
+        return ""
+    path = Path(path_value).resolve()
+    try:
+        return str(path.relative_to(trusted_root))
+    except ValueError:
+        return str(path)

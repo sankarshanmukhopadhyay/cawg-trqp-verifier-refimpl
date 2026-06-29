@@ -12,6 +12,7 @@ PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_PATH = PACKAGE_ROOT / "schemas" / "verification-profile.schema.json"
 BUILTIN_PROFILE_DIR = PACKAGE_ROOT / "profiles"
 BUILTIN_OVERLAY_DIR = BUILTIN_PROFILE_DIR / "overlays"
+BUILTIN_PROFILE_NAMES = {"edge", "standard", "high_assurance"}
 
 
 def _display_path(path: Path) -> str:
@@ -48,6 +49,7 @@ DEFAULT_CONTROLS: dict[str, Any] = {
     "evidence": {
         "emit_audit_bundle": True,
         "require_attestation": False,
+        "require_feed_descriptors": False,
     },
     "transport": {
         "mode": "local",
@@ -195,6 +197,18 @@ def load_profile(profile: str | Path | dict[str, Any] | VerificationProfile, ove
     if overlays:
         return apply_overlays(resolved, overlays)
     return resolved
+
+
+
+def load_api_profile(profile: str | dict[str, Any] | VerificationProfile, overlays: list[str] | None = None) -> VerificationProfile:
+    """Load a profile from an API boundary without resolving filesystem paths."""
+    if isinstance(profile, str) and profile not in BUILTIN_PROFILE_NAMES:
+        raise VerificationProfileError(f"API profile must be one of {sorted(BUILTIN_PROFILE_NAMES)}")
+    if overlays:
+        unknown = [overlay for overlay in overlays if Path(overlay).name != overlay]
+        if unknown:
+            raise VerificationProfileError("API overlays must use built-in overlay names, not filesystem paths")
+    return load_profile(profile, overlays=overlays)
 
 
 

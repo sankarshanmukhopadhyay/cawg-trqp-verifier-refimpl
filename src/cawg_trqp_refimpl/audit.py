@@ -77,6 +77,9 @@ def build_audit_bundle(
     exported_at: str | None = None,
     policy_path: str | Path | None = None,
     revocation_path: str | Path | None = None,
+    policy_descriptor_path: str | Path | None = None,
+    revocation_descriptor_path: str | Path | None = None,
+    trust_anchors_path: str | Path | None = None,
 ) -> AuditBundle:
     resolved_profile = load_profile(profile)
     controls = resolved_profile.controls
@@ -92,6 +95,15 @@ def build_audit_bundle(
     if revocation_path is not None:
         policy_feed["revocation_source"] = str(revocation_path)
         policy_feed["revocation_source_sha256"] = sha256_hex(Path(revocation_path).read_text(encoding="utf-8"))
+    if policy_descriptor_path is not None:
+        policy_feed["policy_descriptor_source"] = str(policy_descriptor_path)
+        policy_feed["policy_descriptor_source_sha256"] = sha256_hex(Path(policy_descriptor_path).read_text(encoding="utf-8"))
+    if revocation_descriptor_path is not None:
+        policy_feed["revocation_descriptor_source"] = str(revocation_descriptor_path)
+        policy_feed["revocation_descriptor_source_sha256"] = sha256_hex(Path(revocation_descriptor_path).read_text(encoding="utf-8"))
+    if trust_anchors_path is not None:
+        policy_feed["trust_anchors_source"] = str(trust_anchors_path)
+        policy_feed["trust_anchors_source_sha256"] = sha256_hex(Path(trust_anchors_path).read_text(encoding="utf-8"))
 
     replay_inputs = {
         "request": {

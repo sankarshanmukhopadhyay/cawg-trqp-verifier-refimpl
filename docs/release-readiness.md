@@ -20,8 +20,21 @@ python scripts/validate_examples.py
 pytest -q
 python scripts/check_reproducibility.py examples/reproducibility_bundle_standard.json
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
-python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
+python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
+python scripts/validate_feed_descriptors.py
 ```
+
+
+## v0.15.0 readiness checklist
+
+- [x] HTTP service rejects non-JSON payloads, oversized requests, malformed verification requests, and unsafe profile path references.
+- [x] API profile loading is restricted to built-in profiles and built-in overlay names.
+- [x] High-assurance profile requires feed descriptor evidence and fails closed when descriptor evidence is missing or invalid.
+- [x] Feed descriptor validation emits stable reason codes for malformed descriptors and malformed timestamps.
+- [x] Audit bundle replay inputs can carry policy, revocation, descriptor, and trust-anchor source digests.
+- [x] Replay checks bundle-referenced paths against a trusted root and verifies pinned digests before use.
+- [x] Compatibility matrix declares v0.15.0 hardening controls and negative vectors.
+- [x] Test coverage includes red-team regression cases in `tests/test_security_hardening.py`.
 
 
 ## v0.14.0 readiness checklist
@@ -33,4 +46,4 @@ python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.j
 - [x] Audit bundle replay inputs carry descriptor evidence.
 - [x] Negative descriptor vectors cover invalid signature, digest mismatch, unknown authority, and route attestation failure.
 - [x] Validation script added: `python scripts/validate_feed_descriptors.py`.
-- [x] Test suite passes: `52 passed, 6 skipped`.
+- [x] Test suite command documented for CI and local validation.

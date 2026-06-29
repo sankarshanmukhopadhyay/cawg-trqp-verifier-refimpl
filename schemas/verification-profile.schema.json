@@ -128,13 +128,17 @@
           "type": "object",
           "required": [
             "emit_audit_bundle",
-            "require_attestation"
+            "require_attestation",
+            "require_feed_descriptors"
           ],
           "properties": {
             "emit_audit_bundle": {
               "type": "boolean"
             },
             "require_attestation": {
+              "type": "boolean"
+            },
+            "require_feed_descriptors": {
               "type": "boolean"
             }
           },

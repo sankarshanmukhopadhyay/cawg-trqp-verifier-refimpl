@@ -13,10 +13,16 @@ def main() -> None:
     parser.add_argument("bundle_json", help="Path to audit bundle JSON")
     parser.add_argument("--policies", help="Path to policy data JSON. Defaults to replay_inputs.policy_feed.policy_source")
     parser.add_argument("--revocations", help="Path to revocation data JSON. Defaults to replay_inputs.policy_feed.revocation_source")
+    parser.add_argument("--trusted-root", default=".", help="Directory boundary for replay bundle referenced files")
     args = parser.parse_args()
 
     bundle = load_json(args.bundle_json)
-    report = replay_audit_bundle(bundle, policy_path=args.policies, revocation_path=args.revocations)
+    report = replay_audit_bundle(
+        bundle,
+        policy_path=args.policies,
+        revocation_path=args.revocations,
+        trusted_root=args.trusted_root,
+    )
     print(json.dumps({
         "matches": report.matches,
         "differences": report.differences,

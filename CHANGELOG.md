@@ -1,12 +1,19 @@
 ## Unreleased
 
-- add canonical fixture packages for `high-assurance`, gateway-mediated, and multi-authority verification cases
-- publish `conformance/compatibility-matrix.json` as a machine-readable adoption and assurance artifact
-- add a live-process HTTP integration test to complement endpoint-level HTTP service coverage
-- pin CI and validation dependencies in `requirements-lock.txt`
-- refresh README and documentation to treat the repository as an external interoperability handoff surface
+- No unreleased changes.
 
 # Changelog
+
+## v0.15.0
+
+- Hardened HTTP request handling with content-type, request-size, typed-field, and safe profile-resolution checks.
+- Added safe API profile loading so HTTP callers cannot resolve arbitrary local profile paths.
+- Added high-assurance fail-closed behavior for missing or invalid policy and revocation feed descriptor evidence.
+- Hardened feed descriptor validation for malformed descriptors, malformed timestamps, invalid base64, and invalid Ed25519 signature lengths.
+- Extended audit bundles to preserve policy, revocation, descriptor, and trust-anchor source digests for deterministic replay.
+- Hardened audit replay with trusted-root path boundaries and pinned feed digest validation before use.
+- Added security regression tests covering unsafe API profile references, non-JSON requests, missing descriptors, malformed descriptors, replay path boundaries, and replay digest mismatch.
+- Updated roadmap, compatibility matrix, README, release readiness notes, and version metadata for the v0.15.0 release.
 
 ## v0.14.0
 

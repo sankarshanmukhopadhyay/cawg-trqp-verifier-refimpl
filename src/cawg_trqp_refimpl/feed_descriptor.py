@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import binascii
 import hashlib
 import json
 from dataclasses import dataclass, field
@@ -28,13 +29,17 @@ FRESHNESS_REASON_CODES = {
     "authority_not_recognized",
     "route_unattested",
     "revocation_channel_degraded",
+    "descriptor_malformed",
 }
 
 
 def _parse_utc(ts: str | None) -> datetime | None:
     if not ts:
         return None
-    return datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(timezone.utc)
+    try:
+        return datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return None
 
 
 def canonical_descriptor_payload(descriptor: dict[str, Any]) -> bytes:
@@ -79,7 +84,12 @@ def validate_feed_descriptor_signature(descriptor: dict[str, Any], trust_anchors
         public_key = serialization.load_pem_public_key(anchor["public_key_pem"].encode("utf-8"))
         if not isinstance(public_key, Ed25519PublicKey):
             raise TypeError("not an Ed25519 public key")
-        public_key.verify(base64.b64decode(signature["value"]), canonical_descriptor_payload(descriptor))
+        raw_signature = base64.b64decode(signature["value"], validate=True)
+        if len(raw_signature) != 64:
+            return False, "descriptor signature verification failed"
+        public_key.verify(raw_signature, canonical_descriptor_payload(descriptor))
+    except (KeyError, TypeError, ValueError, binascii.Error):
+        return False, "descriptor signature verification failed"
     except Exception:
         return False, "descriptor signature verification failed"
     return True, None
@@ -135,6 +145,8 @@ def validate_feed_descriptor(
     now = now or datetime.now(timezone.utc)
     if descriptor is None:
         return FeedValidationReport(None, None, None, False, False, False, False, False, "missing_feed_descriptor", ["feed descriptor is missing"])
+    if not isinstance(descriptor, dict):
+        return FeedValidationReport(None, None, None, False, False, False, False, False, "descriptor_malformed", ["feed descriptor must be a JSON object"])
 
     violations: list[str] = []
     if isinstance(feed_body, bytes):
@@ -147,7 +159,11 @@ def validate_feed_descriptor(
         body_bytes = json.dumps(feed_body, sort_keys=True, separators=(",", ":")).encode("utf-8")
 
     actual_digest = hashlib.sha256(body_bytes).hexdigest()
-    declared_digest = descriptor.get("feed", {}).get("digest_sha256")
+    feed = descriptor.get("feed", {})
+    if not isinstance(feed, dict):
+        feed = {}
+        violations.append("feed descriptor feed section is malformed")
+    declared_digest = feed.get("digest_sha256")
     integrity_ok = bool(declared_digest and actual_digest == declared_digest)
     if not integrity_ok:
         violations.append("feed descriptor digest does not match feed body")
@@ -160,23 +176,36 @@ def validate_feed_descriptor(
         if not signature_ok and signature_error:
             violations.append(signature_error)
 
-    authority_id = descriptor.get("authority", {}).get("authority_id")
+    authority = descriptor.get("authority", {})
+    if not isinstance(authority, dict):
+        authority = {}
+        violations.append("feed descriptor authority section is malformed")
+    authority_id = authority.get("authority_id")
     authority_ok = bool(authority_id) and (not expected_authorities or authority_id in expected_authorities)
     if not authority_ok:
         violations.append(f"feed authority {authority_id!r} is not recognized for this verification scope")
 
     route = descriptor.get("route", {})
+    if not isinstance(route, dict):
+        route = {}
+        violations.append("feed descriptor route section is malformed")
     route_attested = bool(route.get("attested", False))
     if route_required and not route_attested:
         violations.append("feed route is not attested")
 
-    valid_until = _parse_utc(descriptor.get("valid_until"))
+    valid_until_raw = descriptor.get("valid_until")
+    valid_until = _parse_utc(valid_until_raw)
     freshness_ok = True
+    if valid_until_raw and valid_until is None:
+        freshness_ok = False
+        violations.append("feed descriptor validity timestamp is malformed")
     if valid_until is not None and now > valid_until:
         freshness_ok = False
         violations.append("feed descriptor validity window has expired")
 
-    if not signature_ok:
+    if any("malformed" in item for item in violations):
+        reason = "descriptor_malformed"
+    elif not signature_ok:
         reason = "descriptor_signature_invalid"
     elif not integrity_ok:
         reason = "descriptor_digest_mismatch"
@@ -191,7 +220,7 @@ def validate_feed_descriptor(
 
     return FeedValidationReport(
         descriptor_id=descriptor.get("descriptor_id"),
-        feed_type=descriptor.get("feed", {}).get("feed_type"),
+        feed_type=feed.get("feed_type"),
         authority_id=authority_id,
         route_attested=route_attested,
         integrity_ok=integrity_ok,
@@ -204,7 +233,7 @@ def validate_feed_descriptor(
         declared_digest_sha256=declared_digest,
         issued_at=descriptor.get("issued_at"),
         valid_until=descriptor.get("valid_until"),
-        max_age_seconds=descriptor.get("freshness", {}).get("max_age_seconds"),
+        max_age_seconds=descriptor.get("freshness", {}).get("max_age_seconds") if isinstance(descriptor.get("freshness", {}), dict) else None,
     )
 
 

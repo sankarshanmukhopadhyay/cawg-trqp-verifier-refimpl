@@ -27,6 +27,8 @@ def main() -> None:
     parser.add_argument("--snapshot", default="data/snapshot.json")
     parser.add_argument("--trust-anchors", default="data/trust_anchors.json")
     parser.add_argument("--revocations", default="data/revocations.json")
+    parser.add_argument("--policy-descriptor", help="Path to signed policy feed descriptor")
+    parser.add_argument("--revocation-descriptor", help="Path to signed revocation feed descriptor")
     parser.add_argument("--use-gateway", action="store_true", help="Route live policy queries through trust gateway")
     parser.add_argument("--export-audit-bundle", help="Path to write audit bundle JSON")
     parser.add_argument("--exported-at", help="Deterministic timestamp override for audit bundle export")
@@ -50,7 +52,13 @@ def main() -> None:
     else:
         raise SystemExit("Provide either request_json or --fixture")
 
-    service = None if resolved_profile.base_profile == "edge" else MockTRQPService(root / args.policies, root / args.revocations)
+    service = None if resolved_profile.base_profile == "edge" else MockTRQPService(
+        root / args.policies,
+        root / args.revocations,
+        policy_descriptor_path=root / args.policy_descriptor if args.policy_descriptor else None,
+        revocation_descriptor_path=root / args.revocation_descriptor if args.revocation_descriptor else None,
+        trust_anchors_path=root / args.trust_anchors,
+    )
     snapshot = None
     gateway = TrustGateway(service) if args.use_gateway and service is not None else None
     if resolved_profile.base_profile == "edge":
@@ -67,6 +75,9 @@ def main() -> None:
             exported_at=args.exported_at,
             policy_path=args.policies if resolved_profile.base_profile != "edge" else None,
             revocation_path=args.revocations if resolved_profile.base_profile != "edge" else None,
+            policy_descriptor_path=args.policy_descriptor,
+            revocation_descriptor_path=args.revocation_descriptor,
+            trust_anchors_path=args.trust_anchors,
         ).to_dict()
         if args.bundle_signing_key:
             bundle = sign_audit_bundle_from_path(bundle, root / args.bundle_signing_key, key_id=args.bundle_key_id)
