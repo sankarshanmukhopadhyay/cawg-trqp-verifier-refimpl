@@ -1,12 +1,16 @@
-# Issue 002: Add signed policy snapshots
+# Issue 002: Add Signed Policy Snapshots
 
-## Problem
-Offline snapshot behavior is modeled but snapshot signatures are not verified.
+**Status:** closed in v0.16.0  
+**Resolution:** signed snapshot verification and descriptor freshness restored
 
-## Why it matters
-Edge and disconnected verification need trustworthy snapshot provenance.
+## Outcome
 
-## Proposed work
-- define snapshot signature format
-- verify signatures before loading
-- add snapshot freshness and expiry enforcement
+The repository verifies offline snapshot signatures using configured trust anchors. v0.16.0 refreshes `data/snapshot.json`, re-signs it, and updates `examples/feed_descriptors/snapshot-feed.signed.json` so descriptor digest validation passes.
+
+## Evidence
+
+- `src/cawg_trqp_refimpl/snapshot.py`
+- `scripts/sign_snapshot.py`
+- `data/snapshot.json`
+- `examples/feed_descriptors/snapshot-feed.signed.json`
+- `tests/test_snapshot.py`

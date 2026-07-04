@@ -13,6 +13,7 @@ src/cawg_trqp_refimpl/fixture_loader.py
 src/cawg_trqp_refimpl/gateway.py
 src/cawg_trqp_refimpl/http_service.py
 src/cawg_trqp_refimpl/jsoncanon.py
+src/cawg_trqp_refimpl/manifest_adapters.py
 src/cawg_trqp_refimpl/manifest_parser.py
 src/cawg_trqp_refimpl/mock_service.py
 src/cawg_trqp_refimpl/models.py
@@ -30,12 +31,18 @@ src/cawg_trqp_refimpl.egg-info/top_level.txt
 tests/test_audit_bundle.py
 tests/test_cache.py
 tests/test_conformance_vectors.py
+tests/test_decision_receipt_reason_codes.py
+tests/test_feed_descriptor_conformance_vectors.py
+tests/test_feed_descriptors.py
 tests/test_fixture_loader.py
+tests/test_fixture_packages.py
 tests/test_gateway_routes.py
 tests/test_http_service.py
 tests/test_http_service_integration.py
+tests/test_photography_contest_example.py
 tests/test_profiles.py
-tests/test_snapshot.py
+tests/test_replay_feed_descriptor_evidence.py
 tests/test_security_hardening.py
+tests/test_snapshot.py
 tests/test_transport_and_replay_fidelity.py
 tests/test_verifier.py

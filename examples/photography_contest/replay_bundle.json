@@ -3,7 +3,7 @@
   "bundle_profile": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/profiles/audit-bundle/v1",
   "bundle_version": "1.3.0",
   "exported_at": "2026-09-18T10:30:30Z",
-  "bundle_id": "urn:trqp:audit-bundle:sha256:4da242e2edfd7ab3166cd2eeea0eb28dde22d72c9478fa85c3984d7595cc373d",
+  "bundle_id": "urn:trqp:audit-bundle:sha256:fd6ca3ca89a299b2e2958a1f5d32ed8f9ff4c4559d5a48cad941ab9a64d04ab3",
   "request_summary": {
     "asset_id": "photo:wlm-demo:kolkata-victoria-memorial-001",
     "entity_id": "did:web:participant-42.example",
@@ -88,7 +88,14 @@
           },
           "evidence": {
             "emit_audit_bundle": true,
-            "require_attestation": false
+            "require_attestation": false,
+            "require_feed_descriptors": false
+          },
+          "descriptor_policy": {
+            "policy": "observe",
+            "revocation": "observe",
+            "snapshot": "observe",
+            "gateway_route": "observe"
           },
           "transport": {
             "mode": "http",
@@ -234,7 +241,14 @@
         },
         "evidence": {
           "emit_audit_bundle": true,
-          "require_attestation": false
+          "require_attestation": false,
+          "require_feed_descriptors": false
+        },
+        "descriptor_policy": {
+          "policy": "observe",
+          "revocation": "observe",
+          "snapshot": "observe",
+          "gateway_route": "observe"
         },
         "transport": {
           "mode": "http",
@@ -396,7 +410,14 @@
         },
         "evidence": {
           "emit_audit_bundle": true,
-          "require_attestation": false
+          "require_attestation": false,
+          "require_feed_descriptors": false
+        },
+        "descriptor_policy": {
+          "policy": "observe",
+          "revocation": "observe",
+          "snapshot": "observe",
+          "gateway_route": "observe"
         },
         "transport": {
           "mode": "http",
@@ -512,5 +533,5 @@
       "trust_anchors_source_sha256": "191f667ebc6747352b457102ff49ee2840d1abbfdd8c56cdd629c9bdcb8cbb45"
     }
   },
-  "bundle_digest_sha256": "512bcffa47ef0b4515d9b6a1d73b3a70d8c9a464124a3f0635211f882519ef5b"
+  "bundle_digest_sha256": "ac102c37437c0518cc3f260b0368796130d12113a3930d4b024bf6a9baf10b2b"
 }

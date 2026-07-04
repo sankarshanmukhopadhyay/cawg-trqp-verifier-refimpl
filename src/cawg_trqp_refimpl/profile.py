@@ -51,6 +51,12 @@ DEFAULT_CONTROLS: dict[str, Any] = {
         "require_attestation": False,
         "require_feed_descriptors": False,
     },
+    "descriptor_policy": {
+        "policy": "observe",
+        "revocation": "observe",
+        "snapshot": "observe",
+        "gateway_route": "observe",
+    },
     "transport": {
         "mode": "local",
         "integrity": "none",

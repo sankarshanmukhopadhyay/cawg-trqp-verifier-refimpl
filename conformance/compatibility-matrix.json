@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-06-28",
-  "release": "v0.15.0",
+  "release": "v0.16.0",
   "profiles": {
     "standard": {
       "positive_vectors": [
@@ -172,6 +172,27 @@
       "unsafe_api_profile_reference",
       "bundle_policy_path_outside_trusted_root",
       "bundle_policy_digest_mismatch"
+    ]
+  },
+  "v0_16_0_roadmap_closure": {
+    "status": "supported",
+    "runtime_evidence": [
+      "conformance/assurance-suite-manifest.json",
+      "policy_evidence.feed_descriptors",
+      "release-assets/checksums-v0.16.0.json",
+      "structured_http_audit_events"
+    ],
+    "controls": [
+      "descriptor_policy_by_feed_type",
+      "parser_adapter_contract",
+      "external_assurance_suite_ingestion",
+      "release_asset_checksums",
+      "http_audit_event_logging"
+    ],
+    "validation": [
+      "scripts/export_conformance_pack.py --check",
+      "scripts/generate_release_checksums.py --check",
+      "scripts/validate_photography_contest_example.py"
     ]
   }
 }

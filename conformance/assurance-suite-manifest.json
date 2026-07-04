@@ -1,0 +1,102 @@
+{
+  "evidence_artifacts": [
+    "verification_result",
+    "decision_receipt",
+    "audit_bundle",
+    "replay_bundle",
+    "feed_descriptor_evidence"
+  ],
+  "fixtures": [
+    {
+      "assurance_level": "AL2",
+      "fixture_id": "gateway-standard-v1",
+      "fixture_path": "fixtures/profile-bound/gateway-standard-v1",
+      "implementation_identity": "cawg-trqp-refimpl",
+      "inputs": {
+        "expected_result": "expected_result.json",
+        "policy_feed": "pinned_feeds/policies.json",
+        "request": "request.json",
+        "resolved_profile": "resolved_profile.json",
+        "revocation_feed": "pinned_feeds/revocations.json"
+      },
+      "profile": "standard",
+      "replay_contract": {
+        "pinned_feeds_required": false,
+        "revocation_freshness_evaluated": true,
+        "transport_verified": true
+      },
+      "vector_class": "positive",
+      "verification_mode": "gateway_mediated"
+    },
+    {
+      "assurance_level": "AL4",
+      "fixture_id": "high-assurance-v1",
+      "fixture_path": "fixtures/profile-bound/high-assurance-v1",
+      "implementation_identity": "cawg-trqp-refimpl",
+      "inputs": {
+        "expected_result": "expected_result.json",
+        "policy_feed": "pinned_feeds/policies.json",
+        "request": "request.json",
+        "resolved_profile": "resolved_profile.json",
+        "revocation_feed": "pinned_feeds/revocations.json"
+      },
+      "profile": "high_assurance",
+      "replay_contract": {
+        "pinned_feeds_required": true,
+        "revocation_freshness_evaluated": true,
+        "transport_verified": true
+      },
+      "vector_class": "positive",
+      "verification_mode": "online_full"
+    },
+    {
+      "assurance_level": "AL2",
+      "fixture_id": "multi-authority-v1",
+      "fixture_path": "fixtures/profile-bound/multi-authority-v1",
+      "implementation_identity": "cawg-trqp-refimpl",
+      "inputs": {
+        "expected_result": "expected_result.json",
+        "policy_feed": "pinned_feeds/policies.json",
+        "request": "request.json",
+        "resolved_profile": "resolved_profile.json",
+        "revocation_feed": "pinned_feeds/revocations.json"
+      },
+      "profile": "standard",
+      "replay_contract": {
+        "pinned_feeds_required": false,
+        "revocation_freshness_evaluated": true,
+        "transport_verified": true
+      },
+      "vector_class": "positive",
+      "verification_mode": "gateway_mediated"
+    },
+    {
+      "assurance_level": "AL2",
+      "fixture_id": "standard-v1",
+      "fixture_path": "fixtures/profile-bound/standard-v1",
+      "implementation_identity": "cawg-trqp-refimpl",
+      "inputs": {
+        "expected_result": "expected_result.json",
+        "policy_feed": "pinned_feeds/policies.json",
+        "request": "request.json",
+        "resolved_profile": "resolved_profile.json",
+        "revocation_feed": "pinned_feeds/revocations.json"
+      },
+      "profile": "standard",
+      "replay_contract": {
+        "pinned_feeds_required": false,
+        "revocation_freshness_evaluated": true,
+        "transport_verified": true
+      },
+      "vector_class": "positive",
+      "verification_mode": "cached_online"
+    }
+  ],
+  "implementation_identity": {
+    "authority_scope": "CAWG manifest verification using TRQP-governed trust decisions",
+    "id": "cawg-trqp-refimpl",
+    "role": "reference_implementation"
+  },
+  "release": "v0.16.0",
+  "schema_version": "2026-07-03"
+}

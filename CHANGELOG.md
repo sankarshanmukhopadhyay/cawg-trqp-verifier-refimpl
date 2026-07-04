@@ -4,6 +4,17 @@
 
 # Changelog
 
+## v0.16.0
+
+- Restored full validation health across schemas, feed descriptors, audit bundles, replay bundles, the photography contest walkthrough, and tests.
+- Added explicit descriptor policy controls with observe, warn, and fail semantics by feed type.
+- Added external assurance-suite ingestion through `conformance/assurance-suite-manifest.json` and `scripts/export_conformance_pack.py`.
+- Added parser adapter contract for future binary CAWG/C2PA extraction.
+- Added structured HTTP audit events for verification and audit-bundle routes.
+- Added release checksum tooling and `release-assets/checksums-v0.16.0.json`.
+- Refreshed signed snapshot evidence, profile-bound fixture packages, expected results, audit bundles, and replay bundles.
+- Rewrote README and roadmap content for the current assurance posture.
+
 ## v0.15.0
 
 - Hardened HTTP request handling with content-type, request-size, typed-field, and safe profile-resolution checks.

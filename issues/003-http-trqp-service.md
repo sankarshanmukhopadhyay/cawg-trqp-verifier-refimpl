@@ -1,12 +1,19 @@
-# Issue 003: Add HTTP TRQP service
+# Issue 003: Add HTTP TRQP Service
 
-## Problem
-The current mock TRQP service is in-process only.
+**Status:** closed in v0.16.0  
+**Resolution:** HTTP service exists, is hardened, and emits structured audit events
 
-## Why it matters
-It does not yet exercise transport, serialization, or service deployment behavior.
+## Outcome
 
-## Proposed work
-- expose authorization and recognition endpoints over HTTP
-- preserve in-process mode for tests
-- add service error handling
+The HTTP service exposes authorization, recognition, gateway authorization, verification, and audit-bundle routes. It rejects malformed input, non-JSON payloads, oversized requests, and unsafe profile references.
+
+v0.16.0 adds structured HTTP audit events for verification and audit-bundle calls.
+
+## Evidence
+
+- `src/cawg_trqp_refimpl/http_service.py`
+- `scripts/start_http_service.py`
+- `tests/test_http_service.py`
+- `tests/test_http_service_integration.py`
+- `tests/test_security_hardening.py`
+- `docs/operational-hardening.md`

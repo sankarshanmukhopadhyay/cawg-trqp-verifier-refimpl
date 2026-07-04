@@ -26,6 +26,12 @@
       "require_attestation": false,
       "require_feed_descriptors": false
     },
+    "descriptor_policy": {
+      "policy": "observe",
+      "revocation": "observe",
+      "snapshot": "fail",
+      "gateway_route": "observe"
+    },
     "determinism": {
       "replayable": false,
       "require_pinned_feeds": false

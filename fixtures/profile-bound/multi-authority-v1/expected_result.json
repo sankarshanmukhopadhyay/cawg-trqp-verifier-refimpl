@@ -4,7 +4,7 @@
   "issuer_recognition": "recognized",
   "actor_authorization": "authorized",
   "process_integrity": "verified_high",
-  "policy_freshness": "current",
+  "policy_freshness": "fresh",
   "verification_mode": "gateway_mediated",
   "trust_outcome": "trusted",
   "process_appraisal": {
@@ -57,7 +57,14 @@
         },
         "evidence": {
           "emit_audit_bundle": true,
-          "require_attestation": false
+          "require_attestation": false,
+          "require_feed_descriptors": false
+        },
+        "descriptor_policy": {
+          "policy": "observe",
+          "revocation": "observe",
+          "snapshot": "observe",
+          "gateway_route": "observe"
         },
         "transport": {
           "mode": "http",
@@ -95,7 +102,8 @@
       "max_age_seconds": 3600,
       "enforcement": "warn",
       "violations": []
-    }
+    },
+    "feed_descriptors": {}
   },
   "gateway_mediation": {
     "gateway_id": "gateway:mesh",
@@ -103,12 +111,52 @@
     "mode": "remote_policy_mediation",
     "target_authority_id": "did:web:coalition-registry.example",
     "decision_type": "authorization",
+    "route_attested": false,
+    "feed_descriptor": {
+      "descriptor_id": null,
+      "feed_type": null,
+      "authority_id": null,
+      "route_attested": false,
+      "integrity_ok": false,
+      "authority_ok": false,
+      "signature_ok": false,
+      "freshness_ok": false,
+      "reason_code": "missing_feed_descriptor",
+      "violations": [
+        "feed descriptor is missing"
+      ],
+      "digest_sha256": null,
+      "declared_digest_sha256": null,
+      "issued_at": null,
+      "valid_until": null,
+      "max_age_seconds": null
+    },
     "recognition": {
       "gateway_id": "gateway:mesh",
       "route_label": "route:coalition-eu",
       "mode": "remote_policy_mediation",
       "target_authority_id": "did:web:coalition-registry.example",
-      "decision_type": "recognition"
+      "decision_type": "recognition",
+      "route_attested": false,
+      "feed_descriptor": {
+        "descriptor_id": null,
+        "feed_type": null,
+        "authority_id": null,
+        "route_attested": false,
+        "integrity_ok": false,
+        "authority_ok": false,
+        "signature_ok": false,
+        "freshness_ok": false,
+        "reason_code": "missing_feed_descriptor",
+        "violations": [
+          "feed descriptor is missing"
+        ],
+        "digest_sha256": null,
+        "declared_digest_sha256": null,
+        "issued_at": null,
+        "valid_until": null,
+        "max_age_seconds": null
+      }
     }
   },
   "explanations": [

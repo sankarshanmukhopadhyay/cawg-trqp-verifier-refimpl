@@ -29,6 +29,7 @@
         "revocation",
         "failure",
         "evidence",
+        "descriptor_policy",
         "transport",
         "determinism"
       ],
@@ -140,6 +141,46 @@
             },
             "require_feed_descriptors": {
               "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "descriptor_policy": {
+          "type": "object",
+          "required": [
+            "policy",
+            "revocation",
+            "snapshot",
+            "gateway_route"
+          ],
+          "properties": {
+            "policy": {
+              "enum": [
+                "observe",
+                "warn",
+                "fail"
+              ]
+            },
+            "revocation": {
+              "enum": [
+                "observe",
+                "warn",
+                "fail"
+              ]
+            },
+            "snapshot": {
+              "enum": [
+                "observe",
+                "warn",
+                "fail"
+              ]
+            },
+            "gateway_route": {
+              "enum": [
+                "observe",
+                "warn",
+                "fail"
+              ]
             }
           },
           "additionalProperties": false

@@ -6,40 +6,67 @@
 │   └── workflows/
 │       └── ci.yml
 ├── conformance/
-│   └── compatibility-matrix.json
+│   ├── assurance-suite-manifest.json
+│   ├── compatibility-matrix.json
+│   └── risk-to-test-map.yaml
 ├── data/
+│   ├── policies.json
+│   ├── policies_multi_authority.json
+│   ├── revocations.json
+│   ├── snapshot.json
+│   ├── snapshot_signing_key.example.pem
+│   └── trust_anchors.json
 ├── docs/
-│   ├── INTEGRATION_GUIDE.md
-│   ├── NON_TECHNICAL_OVERVIEW.md
-│   ├── architecture.md
-│   ├── audit-bundle-profile.md
-│   ├── compatibility-matrix.md
-│   ├── deployment-guide.md
-│   ├── deterministic-input-trust.md
-│   ├── http-transport-patterns.md
-│   ├── interoperability-vectors.md
+│   ├── assurance-suite-ingestion.md
+│   ├── descriptor-policy.md
+│   ├── operational-hardening.md
+│   ├── parser-adapter-contract.md
 │   ├── release-readiness.md
-│   ├── repo-tree.md
-│   ├── reproducibility-guide.md
-│   ├── trqp-alignment.md
-│   ├── trust-gateway.md
-│   └── verifier-profiles.md
+│   └── workflows/
 ├── examples/
+│   ├── decision_receipts/
+│   ├── feed_descriptors/
+│   ├── fixtures/
+│   ├── photography_contest/
+│   ├── exported_audit_bundle.json
+│   ├── exported_audit_bundle.signed.json
+│   └── reproducibility_bundle_standard.json
 ├── fixtures/
 │   └── profile-bound/
 │       ├── gateway-standard-v1/
 │       ├── high-assurance-v1/
 │       ├── multi-authority-v1/
 │       └── standard-v1/
+├── issues/
+│   ├── 001-real-cawg-c2pa-parser.md
+│   ├── 002-signed-policy-snapshots.md
+│   ├── 003-http-trqp-service.md
+│   ├── 004-revocation-delta-channel.md
+│   └── 005-conformance-suite-expansion.md
 ├── profiles/
-│   └── overlays/
+│   ├── overlays/
+│   ├── edge.json
+│   ├── high_assurance.json
+│   └── standard.json
+├── release-assets/
+│   └── checksums-v0.16.0.json
 ├── schemas/
 ├── scripts/
+│   ├── export_conformance_pack.py
+│   ├── generate_release_checksums.py
+│   ├── replay_audit_bundle.py
+│   └── validate_*.py
 ├── src/
 │   └── cawg_trqp_refimpl/
+│       ├── manifest_adapters.py
+│       ├── profile.py
+│       ├── verifier.py
+│       └── ...
 ├── tests/
 ├── CHANGELOG.md
+├── GITHUB_COMMIT_MESSAGE_v0.16.0.md
 ├── README.md
+├── RELEASE_NOTES_v0.16.0.md
 ├── ROADMAP.md
 ├── pyproject.toml
 ├── requirements-lock.txt

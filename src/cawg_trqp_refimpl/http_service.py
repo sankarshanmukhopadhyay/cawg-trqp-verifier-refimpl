@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 from flask import Flask, request, jsonify
@@ -93,6 +94,7 @@ class HTTPTRQPService:
                 return jsonify({"error": "invalid_request", "message": str(exc)}), 400
             verifier = Verifier(service=self.mock_service, gateway=self.gateway if data.get('use_gateway') else None)
             result = verifier.verify(req, profile=profile)
+            self._emit_audit_event("verify", profile, bool(data.get("use_gateway")), result.to_dict())
             return jsonify(result.to_dict()), 200
 
         @self.app.route("/trqp/audit-bundle", methods=["POST"])
@@ -108,6 +110,7 @@ class HTTPTRQPService:
             use_gateway = bool(data.get('use_gateway'))
             verifier = Verifier(service=self.mock_service, gateway=self.gateway if use_gateway else None)
             result = verifier.verify(req, profile=profile)
+            self._emit_audit_event("audit_bundle", profile, use_gateway, result.to_dict())
             try:
                 bundle = build_audit_bundle(req, result, profile=profile, use_gateway=use_gateway)
             except ValueError as exc:
@@ -171,6 +174,17 @@ class HTTPTRQPService:
             if value is not None:
                 result[field] = value
         return result
+
+    def _emit_audit_event(self, event_type: str, profile: Any, use_gateway: bool, result: dict[str, Any]) -> None:
+        event = {
+            "event_type": event_type,
+            "profile": getattr(profile, "id", str(profile)),
+            "use_gateway": use_gateway,
+            "verification_mode": result.get("verification_mode"),
+            "trust_outcome": result.get("trust_outcome"),
+            "policy_freshness": result.get("policy_freshness"),
+        }
+        self.app.logger.info("cawg_trqp_http_audit %s", json.dumps(event, sort_keys=True))
 
     def run(self, host: str = "127.0.0.1", port: int = 5000) -> None:
         self.app.run(host=host, port=port)

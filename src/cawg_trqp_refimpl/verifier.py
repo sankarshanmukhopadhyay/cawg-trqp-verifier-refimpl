@@ -152,6 +152,7 @@ class Verifier:
         self.last_revocation_status = status
         failures = list(status.get('violations', []))
         self.last_feed_descriptor_evidence = self._current_feed_descriptor_evidence()
+        descriptor_policy = profile.controls.get("descriptor_policy", {})
         descriptor_failure_reasons = {
             "descriptor_malformed",
             "descriptor_signature_invalid",
@@ -164,7 +165,9 @@ class Verifier:
             descriptor_failure_reasons.add("missing_feed_descriptor")
         for name, report in self.last_feed_descriptor_evidence.items():
             reason = report.get("reason_code")
-            if reason in descriptor_failure_reasons:
+            feed_policy = descriptor_policy.get(name, "observe")
+            must_fail = feed_policy == "fail" or profile.controls["evidence"].get("require_feed_descriptors")
+            if reason in descriptor_failure_reasons and must_fail:
                 failures.append(f"{name} feed descriptor: {reason}")
         return (not failures, failures)
 

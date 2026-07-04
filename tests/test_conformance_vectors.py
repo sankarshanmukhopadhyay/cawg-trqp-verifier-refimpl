@@ -25,7 +25,12 @@ class TestStandardProfile:
     def test_standard_cache_hit(self):
         data = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
         cache = TTLCache()
-        service = MockTRQPService(Path("data/policies.json"))
+        service = MockTRQPService(
+            Path("data/policies.json"),
+            Path("data/revocations.json"),
+            policy_descriptor_path="examples/feed_descriptors/policy-feed.signed.json",
+            revocation_descriptor_path="examples/feed_descriptors/revocation-feed.signed.json",
+        )
         verifier = Verifier(service=service, cache=cache)
 
         result1 = verifier.verify(VerificationRequest(**data), profile="standard")
@@ -58,7 +63,12 @@ class TestHighAssuranceProfile:
     def test_high_assurance_always_live(self):
         data = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
         cache = TTLCache()
-        service = MockTRQPService(Path("data/policies.json"))
+        service = MockTRQPService(
+            Path("data/policies.json"),
+            Path("data/revocations.json"),
+            policy_descriptor_path="examples/feed_descriptors/policy-feed.signed.json",
+            revocation_descriptor_path="examples/feed_descriptors/revocation-feed.signed.json",
+        )
         verifier = Verifier(service=service, cache=cache)
         verifier.verify(VerificationRequest(**data), profile="standard")
         assert len(cache.cache) > 0

@@ -23,7 +23,14 @@
     },
     "evidence": {
       "emit_audit_bundle": true,
-      "require_attestation": true
+      "require_attestation": true,
+      "require_feed_descriptors": true
+    },
+    "descriptor_policy": {
+      "policy": "fail",
+      "revocation": "fail",
+      "snapshot": "warn",
+      "gateway_route": "fail"
     },
     "transport": {
       "mode": "http",

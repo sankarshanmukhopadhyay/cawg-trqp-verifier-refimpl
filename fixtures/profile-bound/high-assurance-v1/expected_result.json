@@ -4,7 +4,7 @@
   "issuer_recognition": "recognized",
   "actor_authorization": "authorized",
   "process_integrity": "verified_high",
-  "policy_freshness": "current",
+  "policy_freshness": "fresh",
   "verification_mode": "online_full",
   "trust_outcome": "trusted",
   "process_appraisal": {
@@ -59,7 +59,14 @@
         },
         "evidence": {
           "emit_audit_bundle": true,
-          "require_attestation": true
+          "require_attestation": true,
+          "require_feed_descriptors": true
+        },
+        "descriptor_policy": {
+          "policy": "fail",
+          "revocation": "fail",
+          "snapshot": "warn",
+          "gateway_route": "fail"
         },
         "transport": {
           "mode": "http",
@@ -95,10 +102,63 @@
       "policy_epoch": "2026-Q1",
       "channel": "delta",
       "age_seconds": 0,
+      "feed_descriptor": {
+        "descriptor_id": "urn:trqp:feed-descriptor:revocation:2026-q1",
+        "feed_type": "revocation_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "94c13171b7205566ba18ae6fc467d4c12c2d69919689cc73828a535fcc6185e4",
+        "declared_digest_sha256": "94c13171b7205566ba18ae6fc467d4c12c2d69919689cc73828a535fcc6185e4",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      },
       "freshness_ok": true,
       "max_age_seconds": 300,
       "enforcement": "fail",
       "violations": []
+    },
+    "feed_descriptors": {
+      "policy": {
+        "descriptor_id": "urn:trqp:feed-descriptor:policy:2026-q1",
+        "feed_type": "policy_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "143e3e4f2a93645f7284652f42b93e0d018fb401eac5da03390a1d84a272196c",
+        "declared_digest_sha256": "143e3e4f2a93645f7284652f42b93e0d018fb401eac5da03390a1d84a272196c",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      },
+      "revocation": {
+        "descriptor_id": "urn:trqp:feed-descriptor:revocation:2026-q1",
+        "feed_type": "revocation_feed",
+        "authority_id": "did:web:media-registry.example",
+        "route_attested": true,
+        "integrity_ok": true,
+        "authority_ok": true,
+        "signature_ok": true,
+        "freshness_ok": true,
+        "reason_code": "fresh",
+        "violations": [],
+        "digest_sha256": "94c13171b7205566ba18ae6fc467d4c12c2d69919689cc73828a535fcc6185e4",
+        "declared_digest_sha256": "94c13171b7205566ba18ae6fc467d4c12c2d69919689cc73828a535fcc6185e4",
+        "issued_at": "2026-04-27T00:00:00Z",
+        "valid_until": "2027-04-27T00:00:00Z",
+        "max_age_seconds": 86400
+      }
     }
   },
   "gateway_mediation": {},

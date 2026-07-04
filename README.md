@@ -1,196 +1,151 @@
-# CAWG–TRQP Reference Implementation
+# CAWG-TRQP Reference Implementation
 
-**Version line:** v0.15.0 security hardening and roadmap closure  
-**Status:** reference implementation with canonical fixture exchange, compatibility metadata, HTTP hardening, signed feed descriptors, and replay boundary controls
+**Version line:** v0.16.0 roadmap closure and assurance hardening  
+**Status:** executable reference implementation with schema-backed profiles, signed feed descriptors, deterministic replay, fixture exchange, HTTP service hardening, and external assurance-suite ingestion
 
 ## Overview
 
-This repository shows how **TRQP** can serve as the governance decision plane in a **CAWG/C2PA** verification workflow.
+This repository shows how TRQP can operate as the governance decision plane for CAWG/C2PA-style content verification.
 
-The current state of the project goes beyond demonstrating a single verification loop. It now packages the repository as a reusable interoperability artifact. That means the code, fixtures, schemas, audit bundles, and compatibility signals are intended to travel together.
+The verifier does more than return an allow or deny result. It records what authority was queried, which issuer was recognized, what process evidence was evaluated, which revocation posture was used, whether feed descriptors were valid, and whether the decision can be replayed from pinned inputs.
 
-The result is a stronger handoff surface for developers, assurance teams, and governance programs that need more than a working demo. They need a verifier that can explain what it trusted, how it reached a decision, and how another implementation can reproduce the same outcome.
+That makes the repository useful as:
 
-## What is now in place
+- a developer reference implementation
+- a conformance fixture source
+- an assurance evidence model
+- an HTTP deployment pattern
+- a replayable governance decision example
 
-### Security hardening and replay boundary controls
+## What v0.16.0 Adds
 
-The HTTP service now rejects non-JSON payloads, oversized requests, malformed verification requests, and unsafe profile path references. API callers can select built-in profiles and overlays, but cannot cause filesystem profile loading through the HTTP boundary.
+- Restores full test and validation health across examples, feed descriptors, audit bundles, replay bundles, and fixture packages.
+- Adds profile-level descriptor policy with `observe`, `warn`, and `fail` semantics by feed type.
+- Adds an external assurance-suite manifest at `conformance/assurance-suite-manifest.json`.
+- Adds a parser adapter contract for future binary CAWG/C2PA extraction while preserving JSON fixture compatibility.
+- Adds structured HTTP audit events for verification and audit-bundle routes.
+- Adds release checksum tooling and `release-assets/checksums-v0.16.0.json`.
+- Refreshes snapshot, fixture, replay, and audit-bundle artifacts so repository evidence is deterministic again.
 
-Audit replay now treats bundle-referenced policy, revocation, descriptor, and trust-anchor files as governed inputs. Referenced files must resolve under a trusted replay root and match pinned digests before they can influence replay.
-
-### Deterministic input trust and replay fidelity
-
-Profiles govern feed transport, revocation freshness, and replay evidence. The verifier records the transport posture and revocation status it relied on at decision time, and the audit bundle carries this forward as replayable evidence.
-
-### Canonical fixture exchange for multiple deployment shapes
-
-The repository now includes reusable profile-bound packages for:
-
-- `standard-v1`
-- `high-assurance-v1`
-- `gateway-standard-v1`
-- `multi-authority-v1`
-
-These packages make the project usable as a conformance handoff artifact rather than only as source code.
-
-### Machine-readable compatibility metadata
-
-A compatibility matrix now lives under `conformance/compatibility-matrix.json`. It records which profiles, transport behaviors, revocation behaviors, and deployment surfaces are covered by the current repository state.
-
-### HTTP deployment path coverage
-
-The HTTP service is now documented and covered both through endpoint-level tests and a live-process integration test. This strengthens the claim that the repository is executable as a deployment reference, not only importable as a package.
-
-### Documentation refresh
-
-The documentation has been reviewed for freshness and expanded to explain the repository as an adoption surface, including fixture exchange, compatibility mapping, and the operational role of the HTTP service.
-
-### Risk and assurance mapping
-
-The repository now includes an enriched risk crosswalk and a machine-readable risk-to-test map. These artifacts connect trust risks to runtime controls, TRQP dependencies, conformance tests, adversarial vectors, and evidence surfaces such as decision receipts and audit bundles.
-
-## Quick start
-
-### Install
+## Quick Start
 
 ```bash
 git clone <this-repo>
 cd cawg-trqp-refimpl
+python -m venv .venv
+. .venv/bin/activate
 pip install -r requirements-lock.txt
 pip install -e .
 ```
 
-### Run standard verification
+Run a standard verification:
 
 ```bash
-python -m cawg_trqp_refimpl.cli       --fixture examples/fixtures/cawg_manifest_c2pa_pop.json       --profile standard
+python -m cawg_trqp_refimpl.cli examples/verification_request.json --profile standard
 ```
 
-### Start the HTTP service
+Run high-assurance verification with signed feed descriptors:
 
 ```bash
-python scripts/start_http_service.py       --policy-path data/policies.json       --revocation-path data/revocations.json       --host 127.0.0.1       --port 5000
+python -m cawg_trqp_refimpl.cli examples/verification_request.json \
+  --profile high_assurance \
+  --policy-descriptor examples/feed_descriptors/policy-feed.signed.json \
+  --revocation-descriptor examples/feed_descriptors/revocation-feed.signed.json
 ```
 
-### Validate shipped artifacts
+Start the HTTP service:
 
 ```bash
-python scripts/validate_examples.py
-pytest -q
-python scripts/check_reproducibility.py examples/reproducibility_bundle_standard.json
-python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
-python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
+python scripts/start_http_service.py \
+  --policy-path data/policies.json \
+  --revocation-path data/revocations.json \
+  --host 127.0.0.1 \
+  --port 5000
 ```
 
-### Run the photography contest walkthrough demo
+## Validation
 
-```bash
-python scripts/validate_photography_contest_example.py
-python scripts/replay_audit_bundle.py examples/photography_contest/replay_bundle.json
-```
-
-This runnable example shows how a Wiki Loves Monuments-style contest can use signed policy and revocation feeds, decision receipts, and replay bundles to make participant-submission decisions explainable and auditable.
-
-## Canonical fixture packages
-
-| Package | Verification mode | Primary use |
-|---|---|---|
-| `standard-v1` | `cached_online` | baseline exchange and replay |
-| `high-assurance-v1` | `online_full` | strict live-only verification |
-| `gateway-standard-v1` | `gateway_mediated` | mediated route evidence |
-| `multi-authority-v1` | `gateway_mediated` | deterministic authority routing |
-
-## Repository structure relevant to the current increment
-
-- `fixtures/profile-bound/` — canonical fixture exchange packages for multiple deployment shapes
-- `conformance/compatibility-matrix.json` — machine-readable compatibility declaration
-- `docs/interoperability-vectors.md` — narrative guide to exchange artifacts
-- `docs/compatibility-matrix.md` — explanation of the compatibility artifact
-- `docs/http-transport-patterns.md` — deployment and testing guidance for the HTTP surface
-- `tests/test_http_service_integration.py` — live-process HTTP test
-- `requirements-lock.txt` — pinned validation dependency set used by CI
-
-## Documentation map
-
-- `docs/NON_TECHNICAL_OVERVIEW.md`
-- `docs/architecture.md`
-- `docs/INTEGRATION_GUIDE.md`
-- `docs/interoperability-vectors.md`
-- `docs/compatibility-matrix.md`
-- `docs/http-transport-patterns.md`
-- `docs/reproducibility-guide.md`
-- `docs/trqp-alignment.md`
-- `docs/verifier-profiles.md`
-- `docs/release-readiness.md`
-- `docs/repo-tree.md`
-- `docs/video-verification-walkthrough.md`
-- `docs/workflows/photography-contest-verification.md`
-- `docs/how-trqp-enables-assurance.md`
-- `docs/decision-receipt-specification.md`
-
-## Additional assurance artifacts
-
-- `schemas/decision-receipt.schema.json` — schema for replayable decision receipts
-- `examples/decision_receipts/` — profile-specific example receipts for `standard`, `high_assurance`, and `edge`
-- `examples/photography_contest/` — runnable contest submission, decision receipt, signed feed descriptors, and replay bundle
-
-## Decision receipts and non-technical walkthroughs
-
-The repository now also includes a non-technical video verification walkthrough, a focused explanation of how TRQP and trust registries enable assurance, and a first-pass decision receipt specification with schema-backed example receipts. These artifacts make the verifier easier to explain to governance, procurement, and assurance audiences while giving downstream implementations a concrete evidence format to adopt.
-
-## Current roadmap direction
-
-The v0.15.0 hardening release closes the prior signed feed descriptor and runtime evidence roadmap items. The next practical increment should focus on external assurance-suite ingestion, binary CAWG/C2PA parser adapter work, and production-grade descriptor policy configuration.
-
-
-## Documentation map
-
-- `docs/video-verification-walkthrough.md`: plain-language walkthrough using a real-world video verification scenario
-- `docs/how-trqp-enables-assurance.md`: explains how TRQP and trust registries enable runtime assurance
-- `docs/decision-receipt-specification.md`: defines replayable trust decision receipts
-- `docs/risk-crosswalk.md`: maps risks to controls, tests, adversarial paths, and evidence
-- `conformance/risk-to-test-map.yaml`: machine-readable linkage from risks to tests and expected evidence
-
-
-## v0.14.0 adoption path: signed feed descriptors
-
-This release adds a concrete control-plane increment: policy, revocation, snapshot, and gateway route feeds can now be described by signed feed descriptors. A descriptor binds a feed to an authority, a digest, a freshness window, and route evidence. The verifier exports the resulting descriptor evidence into `policy_evidence.feed_descriptors` and carries it into audit bundle replay inputs.
-
-Start here:
-
-```bash
-python scripts/validate_feed_descriptors.py
-python scripts/validate_examples.py
-pytest -q
-```
-
-Key files:
-
-- `schemas/feed-descriptor.schema.json`
-- `schemas/feed-attestation.schema.json`
-- `examples/feed_descriptors/*.signed.json`
-- `docs/feed-descriptor-profile.md`
-- `src/cawg_trqp_refimpl/feed_descriptor.py`
-
-The practical adoption model is intentionally incremental: observe descriptor reason codes first, then move high-assurance paths toward fail-closed enforcement for invalid signatures, digest mismatches, stale descriptors, unrecognized authority, or unattested gateway routes.
-
-
-## v0.15.0 security hardening path
-
-Run the hardening checks with:
+Run the release validation gate:
 
 ```bash
 python scripts/validate_examples.py
 python scripts/validate_feed_descriptors.py
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
+python scripts/validate_photography_contest_example.py
+python scripts/export_conformance_pack.py --check
+python scripts/generate_release_checksums.py --check
 pytest -q
 ```
 
-Key controls:
+Expected result for v0.16.0:
 
-- HTTP request handling enforces `application/json`, bounded request size, typed verification request fields, and safe API profile resolution.
-- High-assurance verification requires valid policy and revocation feed descriptor evidence.
-- Replay uses pinned digests and a trusted replay root before loading bundle-referenced feeds.
-- Descriptor validation emits stable reason codes for malformed, missing, invalid, mismatched, unauthorized, stale, and unattested feed states.
+```text
+68 passed
+```
+
+## Profiles
+
+| Profile | Purpose | Descriptor posture |
+|---|---|---|
+| `standard` | Normal online or cached verification | Observe descriptor evidence |
+| `high_assurance` | Live verification with fail-closed evidence requirements | Fail on policy, revocation, and gateway-route descriptor defects |
+| `edge` | Offline snapshot verification | Fail on snapshot descriptor policy when configured |
+
+Profiles are schema-backed by `schemas/verification-profile.schema.json`.
+
+## Key Artifacts
+
+| Path | Purpose |
+|---|---|
+| `src/cawg_trqp_refimpl/` | Verifier, service, replay, profile, descriptor, and parser code |
+| `profiles/` | Built-in verification profiles and overlays |
+| `schemas/` | JSON schemas for requests, results, profiles, receipts, descriptors, and audit bundles |
+| `fixtures/profile-bound/` | Canonical fixture packages for external implementation comparison |
+| `conformance/compatibility-matrix.json` | Machine-readable compatibility declaration |
+| `conformance/assurance-suite-manifest.json` | External assurance-suite ingestion manifest |
+| `examples/reproducibility_bundle_standard.json` | Canonical replay bundle |
+| `examples/photography_contest/` | End-to-end contest verification walkthrough |
+| `release-assets/checksums-v0.16.0.json` | Release asset checksum manifest |
+
+## Documentation Map
+
+- `docs/architecture.md`
+- `docs/INTEGRATION_GUIDE.md`
+- `docs/verifier-profiles.md`
+- `docs/descriptor-policy.md`
+- `docs/feed-descriptor-profile.md`
+- `docs/reproducibility-guide.md`
+- `docs/assurance-suite-ingestion.md`
+- `docs/parser-adapter-contract.md`
+- `docs/operational-hardening.md`
+- `docs/how-trqp-enables-assurance.md`
+- `docs/decision-receipt-specification.md`
+- `docs/workflows/photography-contest-verification.md`
+
+## Governance Model
+
+The repository treats trust as executable governance:
+
+- **Authority:** profile and policy feeds determine who can authorize or recognize.
+- **Delegation:** gateway-mediated flows preserve route evidence and authority scope.
+- **Enforcement:** revocation, descriptor policy, transport constraints, and process requirements affect outcomes.
+- **Evidence:** decision results, decision receipts, audit bundles, replay bundles, and conformance manifests preserve auditability.
+- **Revocation:** delta, live, and snapshot revocation postures are profile-controlled.
+- **Replay:** pinned feeds and trusted replay roots make reliance decisions reproducible.
+
+## Release Assets
+
+Generate the external conformance manifest:
+
+```bash
+python scripts/export_conformance_pack.py
+```
+
+Generate release checksums:
+
+```bash
+python scripts/generate_release_checksums.py
+```
+
+The v0.16.0 release notes are in `RELEASE_NOTES_v0.16.0.md`.

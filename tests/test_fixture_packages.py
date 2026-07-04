@@ -16,7 +16,12 @@ FIXTURE_ROOT = Path('fixtures/profile-bound')
     'fixture_name, verifier_factory, profile',
     [
         ('standard-v1', lambda: Verifier(service=MockTRQPService(Path('data/policies.json'), Path('data/revocations.json'))), 'standard'),
-        ('high-assurance-v1', lambda: Verifier(service=MockTRQPService(Path('data/policies.json'), Path('data/revocations.json'))), 'high_assurance'),
+        ('high-assurance-v1', lambda: Verifier(service=MockTRQPService(
+            Path('data/policies.json'),
+            Path('data/revocations.json'),
+            policy_descriptor_path='examples/feed_descriptors/policy-feed.signed.json',
+            revocation_descriptor_path='examples/feed_descriptors/revocation-feed.signed.json',
+        )), 'high_assurance'),
         (
             'gateway-standard-v1',
             lambda: Verifier(
