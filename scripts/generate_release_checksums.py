@@ -6,7 +6,8 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "release-assets" / "checksums-v0.16.0.json"
+RELEASE = "v0.17.0"
+OUTPUT = ROOT / "release-assets" / "checksums-v0.17.0.json"
 TARGETS = [
     "conformance/compatibility-matrix.json",
     "conformance/risk-to-test-map.yaml",
@@ -32,7 +33,7 @@ def build_manifest() -> dict:
             "bytes": path.stat().st_size,
         })
     return {
-        "release": "v0.16.0",
+        "release": RELEASE,
         "algorithm": "sha256",
         "assets": assets,
     }

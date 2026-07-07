@@ -1,7 +1,7 @@
 # CAWG-TRQP Reference Implementation
 
-**Version line:** v0.16.0 roadmap closure and assurance hardening  
-**Status:** executable reference implementation with schema-backed profiles, signed feed descriptors, deterministic replay, fixture exchange, HTTP service hardening, and external assurance-suite ingestion
+**Version line:** v0.17.0 verified quickstart and CI parity  
+**Status:** executable reference implementation with schema-backed profiles, signed feed descriptors, deterministic replay, fixture exchange, HTTP service hardening, external assurance-suite ingestion, and release-gated validation parity
 
 ## Overview
 
@@ -17,15 +17,14 @@ That makes the repository useful as:
 - an HTTP deployment pattern
 - a replayable governance decision example
 
-## What v0.16.0 Adds
+## What v0.17.0 Adds
 
-- Restores full test and validation health across examples, feed descriptors, audit bundles, replay bundles, and fixture packages.
-- Adds profile-level descriptor policy with `observe`, `warn`, and `fail` semantics by feed type.
-- Adds an external assurance-suite manifest at `conformance/assurance-suite-manifest.json`.
-- Adds a parser adapter contract for future binary CAWG/C2PA extraction while preserving JSON fixture compatibility.
-- Adds structured HTTP audit events for verification and audit-bundle routes.
-- Adds release checksum tooling and `release-assets/checksums-v0.16.0.json`.
-- Refreshes snapshot, fixture, replay, and audit-bundle artifacts so repository evidence is deterministic again.
+- Brings CI into parity with the documented release validation gate.
+- Fixes the repository license grant so downstream reuse is legally inspectable.
+- Adds contributor and conduct guidance for external implementers.
+- Adds minimal Docker packaging for the HTTP verifier service.
+- Adds release-triggered PyPI publishing workflow for package reuse.
+- Reframes documentation into role-based reading paths for adoption.
 
 ## Quick Start
 
@@ -63,6 +62,13 @@ python scripts/start_http_service.py \
   --port 5000
 ```
 
+Run the HTTP service with Docker:
+
+```bash
+docker compose up --build
+curl -sf http://127.0.0.1:5000/health
+```
+
 ## Validation
 
 Run the release validation gate:
@@ -78,7 +84,7 @@ python scripts/generate_release_checksums.py --check
 pytest -q
 ```
 
-Expected result for v0.16.0:
+Expected result for v0.17.0:
 
 ```text
 68 passed
@@ -106,22 +112,37 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 | `conformance/assurance-suite-manifest.json` | External assurance-suite ingestion manifest |
 | `examples/reproducibility_bundle_standard.json` | Canonical replay bundle |
 | `examples/photography_contest/` | End-to-end contest verification walkthrough |
-| `release-assets/checksums-v0.16.0.json` | Release asset checksum manifest |
+| `release-assets/checksums-v0.17.0.json` | Release asset checksum manifest |
 
 ## Documentation Map
 
-- `docs/architecture.md`
+### Implementers
+
 - `docs/INTEGRATION_GUIDE.md`
 - `docs/verifier-profiles.md`
 - `docs/descriptor-policy.md`
 - `docs/feed-descriptor-profile.md`
-- `docs/reproducibility-guide.md`
-- `docs/assurance-suite-ingestion.md`
 - `docs/parser-adapter-contract.md`
-- `docs/operational-hardening.md`
-- `docs/how-trqp-enables-assurance.md`
-- `docs/decision-receipt-specification.md`
 - `docs/workflows/photography-contest-verification.md`
+
+### Integrators
+
+- `docs/architecture.md`
+- `docs/deployment-guide.md`
+- `docs/http-transport-patterns.md`
+- `docs/operational-hardening.md`
+- `docs/trqp-alignment.md`
+- `docs/trust-gateway.md`
+
+### Assurance Reviewers
+
+- `docs/reproducibility-guide.md`
+- `docs/audit-bundle-profile.md`
+- `docs/assurance-suite-ingestion.md`
+- `docs/compatibility-matrix.md`
+- `docs/decision-receipt-specification.md`
+- `docs/how-trqp-enables-assurance.md`
+- `docs/risk-crosswalk.md`
 
 ## Governance Model
 
@@ -148,4 +169,4 @@ Generate release checksums:
 python scripts/generate_release_checksums.py
 ```
 
-The v0.16.0 release notes are in `RELEASE_NOTES_v0.16.0.md`.
+The v0.17.0 release notes are in `RELEASE_NOTES_v0.17.0.md`.

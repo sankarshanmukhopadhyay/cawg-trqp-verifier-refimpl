@@ -1,0 +1,17 @@
+services:
+  verifier:
+    build: .
+    image: cawg-trqp-refimpl:0.17.0
+    ports:
+      - "5000:5000"
+    command:
+      - python
+      - scripts/start_http_service.py
+      - --policy-path
+      - data/policies.json
+      - --revocation-path
+      - data/revocations.json
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"

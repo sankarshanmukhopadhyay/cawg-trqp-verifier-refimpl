@@ -1,0 +1,41 @@
+{
+  "algorithm": "sha256",
+  "assets": [
+    {
+      "bytes": 5680,
+      "path": "conformance/compatibility-matrix.json",
+      "sha256": "2bfe10b4604e31b18bbbb5b152569a9a4639d501dee091609ecbf07a26489060"
+    },
+    {
+      "bytes": 16727,
+      "path": "conformance/risk-to-test-map.yaml",
+      "sha256": "111ad83eecd99f32b18afc3ceaf9cf4502f3d27dff7513122627233f0eb050b5"
+    },
+    {
+      "bytes": 3429,
+      "path": "conformance/assurance-suite-manifest.json",
+      "sha256": "f3dc3e09673b5e0b48b3742ebdd44d02af96c1f9caea16a0468dfd6d222aa9b6"
+    },
+    {
+      "bytes": 15988,
+      "path": "examples/reproducibility_bundle_standard.json",
+      "sha256": "93f629d8c13788eeec54b26e87aaca1cf4242adc9eb86dec400da29a050a9a3b"
+    },
+    {
+      "bytes": 15988,
+      "path": "examples/exported_audit_bundle.json",
+      "sha256": "93f629d8c13788eeec54b26e87aaca1cf4242adc9eb86dec400da29a050a9a3b"
+    },
+    {
+      "bytes": 16199,
+      "path": "examples/exported_audit_bundle.signed.json",
+      "sha256": "1a782d4ce8c2a74faf83a8263bc3669cf474a49852c44609435a76745a138e51"
+    },
+    {
+      "bytes": 19431,
+      "path": "examples/photography_contest/replay_bundle.json",
+      "sha256": "b9bc2b243f7ac87b82bb102e38d38afdec5ed3281acda01084bff2d8db5c4970"
+    }
+  ],
+  "release": "v0.17.0"
+}
