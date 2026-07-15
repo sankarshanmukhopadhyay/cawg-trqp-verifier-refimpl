@@ -1,5 +1,19 @@
 # CAWG-TRQP Reference Implementation
 
+> **Portfolio status:** Tier 1 flagship · Active · Beta
+
+| Attribute | Value |
+|---|---|
+| Portfolio tier | Flagship |
+| Lifecycle | Active |
+| Primary role | reference verifier implementation |
+| Primary output | Decision receipt and replayable audit bundle |
+| Validation | `make validate` |
+| Evidence output | See repository-specific output contract and examples |
+| Governance authority | [`GOVERNANCE.md`](GOVERNANCE.md) |
+| Stack adoption path | [`docs/trqp-adoption-path.md`](docs/trqp-adoption-path.md) |
+
+
 **Version line:** v0.17.0 verified quickstart and CI parity  
 **Status:** executable reference implementation with schema-backed profiles, signed feed descriptors, deterministic replay, fixture exchange, HTTP service hardening, external assurance-suite ingestion, and release-gated validation parity
 

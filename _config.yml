@@ -1,0 +1,9 @@
+title: CAWG-TRQP Reference Implementation
+description: Executable verifier, decision receipt, and replayable assurance evidence for TRQP-integrated content authenticity workflows.
+theme: minima
+markdown: kramdown
+exclude:
+  - .venv
+  - tests
+  - src
+  - requirements-lock.txt

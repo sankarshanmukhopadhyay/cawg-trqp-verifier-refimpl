@@ -1,0 +1,22 @@
+schema_version: "1.0"
+repository: cawg-trqp-verifier-refimpl
+portfolio_tier: flagship
+lifecycle: active
+role: reference-verifier-implementation
+stability: beta
+current_version: "0.17.0"
+primary_output: Decision receipt and replayable audit bundle
+authority:
+  owns:
+    - reference verifier behavior
+    - implementation profiles and fixtures
+    - replayable decision and audit evidence
+  does_not_own:
+    - the TRQP protocol specification
+    - CAWG or C2PA normative standards
+    - ecosystem certification decisions
+validation_command: make validate
+documentation_url: https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/
+release_policy: substantive
+last_portfolio_review: 2026-07-15
+next_portfolio_review: 2026-10-15

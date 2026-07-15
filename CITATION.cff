@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this repository, cite the repository and the version or commit evaluated."
+title: "CAWG-TRQP Reference Implementation"
+type: software
+authors:
+  - family-names: Mukhopadhyay
+    given-names: Sankarshan
+repository-code: "https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl"
+url: "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/"
+version: "0.17.0"
+date-released: 2026-07-15
+license: Apache-2.0
