@@ -1,0 +1,21 @@
+<!-- Render fenced Mermaid blocks in GitHub Pages/Just the Docs. -->
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("pre > code.language-mermaid").forEach((code) => {
+      const container = document.createElement("div");
+      container.className = "mermaid";
+      container.textContent = code.textContent;
+      code.parentElement.replaceWith(container);
+    });
+
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: "strict",
+      theme: "neutral",
+      flowchart: { htmlLabels: false },
+      sequence: { useMaxWidth: true }
+    });
+  });
+</script>

@@ -15,6 +15,23 @@ That matters because a trust decision is only as credible as the evidence the sy
 
 ## Main flow
 
+```mermaid
+flowchart TD
+    A[Verification request] --> B[Resolve profile and overlays]
+    B --> C[Validate descriptors and input trust]
+    C --> D{Transport and freshness acceptable?}
+    D -- No --> E[Apply profile failure posture]
+    D -- Yes --> F[Query authorization and recognition]
+    F --> G[Appraise process evidence]
+    G --> H[Produce verification result]
+    E --> H
+    H --> I[Issue decision receipt]
+    I --> J{Audit export requested?}
+    J -- Yes --> K[Create replayable audit bundle]
+    J -- No --> L[Return decision]
+    K --> L
+```
+
 1. Load a verification request from JSON or a manifest-derived fixture.
 2. Resolve the verification profile and any overlays.
 3. Evaluate transport constraints against the active service or gateway path.

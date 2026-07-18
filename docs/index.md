@@ -36,7 +36,6 @@ accountable, testable, and interoperable verifier looks like.
 | If you are&hellip; | Start with |
 |---|---|
 | New to this space, or reviewing it for context (governance, editorial, program management) | [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) |
-| Evaluating this for a CAWG member presentation or briefing | [Monday Presentation Brief](PRESENTATION_BRIEF.md) |
 | A developer integrating a verifier into your own system | [Quickstart](../QUICKSTART.md), then [Integration Guide](INTEGRATION_GUIDE.md) |
 | Standing up or operating a deployment | [Architecture](architecture.md), then [Deployment Guide](deployment-guide.md) |
 | Reviewing assurance, evidence, or audit posture | [How TRQP Enables Assurance](how-trqp-enables-assurance.md), then [Decision Receipt Specification](decision-receipt-specification.md) and [Audit Bundle Profile](audit-bundle-profile.md) |

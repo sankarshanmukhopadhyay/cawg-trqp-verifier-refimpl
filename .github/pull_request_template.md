@@ -31,3 +31,10 @@ Paste the actual output of the commands you ran (pass/fail counts), not just a c
 <!-- Does this change something the repository owns (verifier behavior,
      profiles/fixtures, evidence formats) or touch something it explicitly
      does not own (TRQP spec, CAWG/C2PA standards)? See GOVERNANCE.md. -->
+
+## AI assistance
+
+- [ ] No material AI assistance was used.
+- [ ] Material AI assistance was used and is described below, including human validation performed.
+
+Details: 

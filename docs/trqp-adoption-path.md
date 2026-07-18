@@ -9,16 +9,16 @@ nav_order: 3
 
 The TRQP portfolio separates protocol definition, security posture, reference implementation, conformance execution, and assurance publication so that authority does not collapse into one repository.
 
-```text
-Read the TRQP protocol
-    ↓
-Select TSPP security and privacy posture
-    ↓
-Exercise a reference implementation
-    ↓
-Run the TRQP Conformance Suite
-    ↓
-Compose and publish evidence through the Assurance Hub
+```mermaid
+flowchart LR
+    A[TRQP protocol] --> B[TSPP security and privacy posture]
+    B --> C[Reference implementation]
+    C --> D[TRQP Conformance Suite]
+    D --> E[Assurance Hub]
+    A -. normative semantics .-> D
+    B -. posture requirements .-> D
+    C -. receipts and audit bundles .-> E
+    D -. conformance report .-> E
 ```
 
 ## This repository

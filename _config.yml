@@ -106,3 +106,5 @@ include:
   - CONTRIBUTING.md
   - CODE_OF_CONDUCT.md
   - CITATION.cff
+
+  - AI_USAGE.md

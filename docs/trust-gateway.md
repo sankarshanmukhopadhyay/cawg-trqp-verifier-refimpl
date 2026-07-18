@@ -13,6 +13,26 @@ The trust gateway is an optional mediation layer between the verifier and one or
 
 It exists to separate verification execution, policy routing, and mediation trace production.
 
+## Mediation flow
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant V as Verifier
+    participant G as Trust Gateway
+    participant P as Policy Service
+
+    C->>V: Verification request
+    V->>G: Authorization or recognition query
+    G->>G: Resolve authority and route policy
+    G->>P: Routed TRQP query
+    P-->>G: Policy decision and evidence
+    G-->>V: Decision plus mediation record
+    V-->>C: Verification result and receipt
+```
+
+The mediation record makes delegation and routing decisions auditable without granting the gateway authority to redefine the target policy.
+
 ## Current capabilities
 
 ### Single-authority mediation

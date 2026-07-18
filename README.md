@@ -207,3 +207,7 @@ python scripts/generate_release_checksums.py
 ```
 
 The v0.17.0 release notes are in `RELEASE_NOTES_v0.17.0.md`.
+
+## Responsible AI-assisted contribution
+
+AI-assisted work is permitted only under accountable human review. See the [AI Usage Policy](AI_USAGE.md) and disclose material assistance in pull requests.
