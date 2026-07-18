@@ -1,8 +1,10 @@
 ---
-title: Video Verification Walkthrough
-description: End-to-end explanation of how a video file is verified using TRQP, trust registries, and profile-driven assurance workflows.
+layout: default
+title: "Video Verification Walkthrough"
+description: "End-to-end explanation of how a video file is verified using TRQP, trust registries, and profile-driven assurance workflows."
+parent: "Walkthroughs"
+nav_order: 2
 ---
-
 # Video Verification Walkthrough
 
 This document explains how the verifier works using a real-world scenario. It is written for readers who do not need to understand the code, but need to understand how trust decisions are made, what is being checked, and why the result can be relied upon.

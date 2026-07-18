@@ -128,7 +128,20 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 | `examples/photography_contest/` | End-to-end contest verification walkthrough |
 | `release-assets/checksums-v0.17.0.json` | Release asset checksum manifest |
 
-## Documentation Map
+## Documentation
+
+The full documentation set — all 30+ pages, organized by audience — is
+published as a GitHub Pages site at
+**https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/**,
+built on the [Just the Docs](https://just-the-docs.com) theme with search.
+The site is the recommended way to browse; the raw files below remain
+authoritative and readable directly in the repository.
+
+### New to this repository
+
+- `docs/NON_TECHNICAL_OVERVIEW.md` — what this repository does, without assuming a technical background
+- `docs/PRESENTATION_BRIEF.md` — ten-minute walkthrough with a live demo script
+- `QUICKSTART.md` — first result in under ten minutes
 
 ### Implementers
 
@@ -137,7 +150,9 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 - `docs/descriptor-policy.md`
 - `docs/feed-descriptor-profile.md`
 - `docs/parser-adapter-contract.md`
+- `docs/deterministic-input-trust.md`
 - `docs/workflows/photography-contest-verification.md`
+- `docs/video-verification-walkthrough.md`
 
 ### Integrators
 
@@ -147,6 +162,7 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 - `docs/operational-hardening.md`
 - `docs/trqp-alignment.md`
 - `docs/trust-gateway.md`
+- `docs/implementation-notes.md`
 
 ### Assurance Reviewers
 
@@ -157,6 +173,13 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 - `docs/decision-receipt-specification.md`
 - `docs/how-trqp-enables-assurance.md`
 - `docs/risk-crosswalk.md`
+- `docs/release-readiness.md`
+- `docs/release-assets.md`
+
+### Interoperability
+
+- `docs/interoperability-vectors.md`
+- `docs/trqp-adoption-path.md`
 
 ## Governance Model
 

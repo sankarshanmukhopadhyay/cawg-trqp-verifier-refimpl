@@ -5,3 +5,11 @@ __pycache__/
 dist/
 build/
 *.zip
+.venv/
+venv/
+*.egg-info/
+_site/
+.jekyll-cache/
+.bundle/
+vendor/bundle/
+.sass-cache/

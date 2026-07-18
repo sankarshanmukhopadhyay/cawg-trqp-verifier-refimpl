@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Trust Gateway"
+description: "Optional mediation layer between the verifier and one or more policy services."
+parent: "Architecture & Deployment"
+nav_order: 2
+---
 # Trust Gateway
 
 ## Purpose

@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Audit Bundle Profile"
+description: "What the audit bundle captures and how it supports replay."
+parent: "Assurance & Evidence"
+nav_order: 3
+---
 # Audit Bundle Profile
 
 ## Purpose

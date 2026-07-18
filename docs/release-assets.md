@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Release & Handoff Assets"
+description: "The disciplined handoff surface maintained independent of formal releases."
+parent: "Assurance & Evidence"
+nav_order: 9
+---
 # Release and Handoff Assets
 
 Even when the repository is not being formally released, it still needs a disciplined handoff surface.

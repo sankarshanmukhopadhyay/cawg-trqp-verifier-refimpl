@@ -1,0 +1,25 @@
+name: Adoption / interoperability report
+description: You implemented against, replayed, or compared results with this reference implementation.
+title: "[adoption]: "
+labels: ["adoption", "interoperability"]
+body:
+  - type: textarea
+    id: what-you-did
+    attributes:
+      label: What did you do?
+      description: e.g. replayed a canonical fixture package, compared results against the compatibility matrix, integrated the CLI/HTTP service.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome
+      description: Did results match? If not, what diverged and where?
+    validations:
+      required: true
+  - type: input
+    id: implementation
+    attributes:
+      label: Your implementation (name/link, optional)
+    validations:
+      required: false

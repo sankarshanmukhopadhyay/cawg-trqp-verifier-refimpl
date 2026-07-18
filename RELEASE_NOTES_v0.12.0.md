@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.12.0"
+parent: "Releases"
+nav_order: 9
+---
 # v0.12.0 — Executable Verification Profiles and Assurance Overlays
 
 ## Overview

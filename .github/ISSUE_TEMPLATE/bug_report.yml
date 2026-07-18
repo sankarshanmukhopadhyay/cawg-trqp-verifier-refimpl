@@ -1,0 +1,50 @@
+name: Bug report
+description: Something in the verifier, schemas, fixtures, or scripts behaves incorrectly.
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get instead?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Repository version / commit
+      placeholder: v0.17.0 or commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      description: Exact command(s) run, including profile and any descriptor flags.
+      render: bash
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Paste the decision receipt, audit bundle, or validation script output.
+      render: json
+    validations:
+      required: false
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Affected surface
+      options:
+        - Verifier / CLI
+        - Verification profiles
+        - Feed descriptors
+        - HTTP service
+        - Schemas
+        - Fixtures / examples
+        - Documentation
+        - Other
+    validations:
+      required: true

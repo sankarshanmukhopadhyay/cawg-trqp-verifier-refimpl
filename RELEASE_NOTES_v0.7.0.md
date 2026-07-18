@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.7.0"
+parent: "Releases"
+nav_order: 6
+---
 # v0.7.0 – Process-Aware CAWG–TRQP Verification
 
 ## Overview

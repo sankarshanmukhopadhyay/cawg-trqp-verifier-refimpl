@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.3.1"
+parent: "Releases"
+nav_order: 3
+---
 # Release Notes: v0.3.1
 
 This release focuses on packaging quality and public-repo usability.

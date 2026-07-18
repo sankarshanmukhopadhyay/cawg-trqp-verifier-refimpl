@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Integration Guide"
+description: "Four operational integration patterns for adopting the verifier."
+parent: "Implementation Guides"
+nav_order: 1
+---
 # Integration Guide
 
 The repository now supports four operational integration patterns:

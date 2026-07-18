@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Security Policy"
+description: "How to report vulnerabilities and what response to expect."
+parent: "Governance & Policy"
+nav_order: 2
+---
 # Security Policy
 
 ## Supported version

@@ -1,8 +1,10 @@
 ---
-title: How TRQP Enables Assurance
-description: Explains how TRQP and trust registries turn governance into executable, testable, and replayable trust decisions.
+layout: default
+title: "How TRQP Enables Assurance"
+description: "Explains how TRQP and trust registries turn governance into executable, testable, and replayable trust decisions."
+parent: "Assurance & Evidence"
+nav_order: 1
 ---
-
 # How TRQP Enables Assurance
 
 This document explains how TRQP (Trust Registry Query Protocol) and trust registries enable assurance workflows in this repository.

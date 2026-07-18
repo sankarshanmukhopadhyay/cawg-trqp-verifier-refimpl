@@ -1,8 +1,10 @@
 ---
-title: Risk Crosswalk
-description: Maps trust risks to verifier controls, TRQP queries, enforcement mechanisms, evidence artifacts, conformance tests, and assurance frameworks.
+layout: default
+title: "Risk Crosswalk"
+description: "Maps trust risks to verifier controls, TRQP queries, enforcement mechanisms, evidence artifacts, conformance tests, and assurance frameworks."
+parent: "Assurance & Evidence"
+nav_order: 7
 ---
-
 # Risk Crosswalk
 
 This document maps key trust risks to:

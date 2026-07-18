@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Feed Descriptor Profile"
+description: "Making policy, revocation, snapshot, and gateway feed inputs independently attestable."
+parent: "Implementation Guides"
+nav_order: 4
+---
 # Feed Descriptor Profile
 
 **Release:** v0.14.0  

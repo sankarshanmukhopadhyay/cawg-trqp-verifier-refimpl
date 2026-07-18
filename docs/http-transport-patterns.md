@@ -1,3 +1,10 @@
+---
+layout: default
+title: "HTTP Transport Patterns"
+description: "The Flask-based HTTP surface for authorization, recognition, verification, and audit export."
+parent: "Architecture & Deployment"
+nav_order: 3
+---
 # HTTP Transport Patterns
 
 The repository exposes a Flask-based HTTP service for authorization, recognition, verification, and audit bundle export.

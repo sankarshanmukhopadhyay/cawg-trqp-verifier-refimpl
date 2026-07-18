@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Descriptor Policy"
+description: "Profile-level observe/warn/fail semantics for feed descriptor enforcement."
+parent: "Implementation Guides"
+nav_order: 3
+---
 # Descriptor Policy
 
 ## Purpose

@@ -1,15 +1,39 @@
-## Unreleased
-
-- No unreleased changes.
-
+---
+layout: default
+title: "Changelog"
+parent: "Releases"
+nav_order: 1
+---
 # Changelog
 
 ## Unreleased
 
-### Changed
+### Added
 
-- Establishes a Tier 1 flagship repository contract with explicit authority boundaries, machine-readable portfolio metadata, a common validation entry point, citation metadata, and a documented TRQP adoption path.
-- Adds CI enforcement for required governance, adoption, evidence, and documentation artifacts without creating a new release.
+- GitHub Pages documentation site rebuilt on the Just the Docs theme, covering every existing document under an audience-organized navigation (Start Here, Architecture & Deployment, Implementation Guides, Assurance & Evidence, Interoperability, Walkthroughs, Governance & Policy, Releases).
+- `docs/PRESENTATION_BRIEF.md`, a speaker-ready ten-minute walkthrough for external presentations.
+- `.github/ISSUE_TEMPLATE/` (bug report, adoption/interoperability report) and `.github/pull_request_template.md`.
+- `.github/dependabot.yml` for Python and GitHub Actions dependency updates.
+- `.github/workflows/pages.yml` to build and deploy the documentation site on every push to `main`.
+- `.github/workflows/pypi-publish.yml` implementing the PyPI publication step previously described in the v0.17.0 release notes but not present as a workflow file.
+
+### Fixed
+
+- `CITATION.cff` declared `license: Apache-2.0` while `LICENSE` is MIT; corrected to `license: MIT`.
+- Added the missing `v0.17.0` changelog entry (release notes existed at `RELEASE_NOTES_v0.17.0.md` but were never reflected here).
+- Removed a duplicated, out-of-order `## Unreleased` block that preceded the `# Changelog` heading.
+- Refreshed `GITHUB_RELEASE_TEMPLATE.md`, which still referenced the v0.15.0 release.
+
+## v0.17.0
+
+- Completed the previously truncated MIT `LICENSE` file.
+- Expanded CI to run the full documented validation gate: examples, feed descriptors, audit bundles, replay bundles, photography-contest walkthrough, conformance-pack export, release checksums, and tests.
+- Added `CONTRIBUTING.md` with the release validation checklist and evidence expectations.
+- Added `CODE_OF_CONDUCT.md`.
+- Added minimal Docker packaging for the HTTP verifier service.
+- Documented a GitHub Actions workflow for PyPI publication on GitHub Release publication (workflow file added in Unreleased above).
+- Reframed documentation into role-based reading paths in the README.
+- No schema, fixture, profile, conformance-matrix, or CLI behavior changes; downstream conformance consumers do not need to update fixtures or expected results.
 
 ## v0.16.0
 

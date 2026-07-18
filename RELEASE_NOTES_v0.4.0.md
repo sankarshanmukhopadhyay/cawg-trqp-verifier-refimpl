@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.4.0"
+parent: "Releases"
+nav_order: 4
+---
 # Release Notes: v0.4.0
 
 **Release Date:** March 20, 2026  

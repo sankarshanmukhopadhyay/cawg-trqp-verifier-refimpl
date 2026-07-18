@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.13.0"
+parent: "Releases"
+nav_order: 10
+---
 # v0.13.0 — Deterministic Input Trust and Replay Fidelity
 
 This release makes the verifier more accountable about the information it trusts while producing a decision.

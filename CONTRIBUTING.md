@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Contributing"
+description: "The change workflow, pull request checklist, and evidence expectations."
+parent: "Governance & Policy"
+nav_order: 3
+---
 # Contributing
 
 This repository is an executable reference implementation. Contributions should preserve the core adoption contract: examples must remain runnable, fixture packages must remain deterministic, and every governance decision must leave inspectable evidence.

@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Implementation Notes"
+description: "Compatibility notes and implementation-level clarifications."
+parent: "Architecture & Deployment"
+nav_order: 6
+---
 # Implementation Notes
 
 - The verifier remains backward compatible with v0.7.0 request shapes.

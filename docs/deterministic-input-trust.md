@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Deterministic Input Trust"
+description: "Why input quality, not just policy consistency, determines verifier strength."
+parent: "Implementation Guides"
+nav_order: 6
+---
 # Deterministic Input Trust
 
 ## Why this exists

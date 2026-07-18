@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Quickstart"
+description: "Get a first verification result in under ten minutes."
+nav_order: 3
+---
 # Quickstart
 
 ## Install

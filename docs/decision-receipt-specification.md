@@ -1,8 +1,10 @@
 ---
-title: Decision Receipt Specification
-description: Defines the structure, semantics, and lifecycle of replayable trust decisions produced by the verifier.
+layout: default
+title: "Decision Receipt Specification"
+description: "Defines the structure, semantics, and lifecycle of replayable trust decisions produced by the verifier."
+parent: "Assurance & Evidence"
+nav_order: 2
 ---
-
 # Decision Receipt Specification
 
 This document defines the structure and semantics of a **decision receipt**.

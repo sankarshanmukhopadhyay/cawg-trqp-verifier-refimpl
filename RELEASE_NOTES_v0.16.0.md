@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.16.0"
+parent: "Releases"
+nav_order: 13
+---
 # Release Notes: v0.16.0
 
 ## Release Theme

@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Code of Conduct"
+parent: "Governance & Policy"
+nav_order: 4
+---
 # Code of Conduct
 
 Contributors are expected to participate professionally, assume good faith, and keep technical disagreement focused on evidence, reproducibility, and user impact.

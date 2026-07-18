@@ -1,3 +1,10 @@
+---
+layout: default
+title: "TRQP Alignment Surface"
+description: "How the current repository state lines up with broader TRQP work."
+parent: "Interoperability"
+nav_order: 2
+---
 # TRQP Alignment Surface
 
 ## Purpose

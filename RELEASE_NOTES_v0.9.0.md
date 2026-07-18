@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.9.0"
+parent: "Releases"
+nav_order: 7
+---
 # Release Notes v0.9.0
 
 ## Overview

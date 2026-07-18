@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Verifier Profiles"
+description: "Machine-readable enforcement contracts: standard, high_assurance, edge."
+parent: "Implementation Guides"
+nav_order: 2
+---
 # Verifier Profiles
 
 ## Purpose

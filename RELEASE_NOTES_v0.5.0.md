@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.5.0"
+parent: "Releases"
+nav_order: 5
+---
 # v0.5.0 – Signed Offline Trust and C2PA-Style Manifest Ingestion
 
 ## Overview

@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Non-Technical Overview"
+description: "What this repository does and why it matters, without requiring a technical background."
+nav_order: 2
+---
 # Non-Technical Overview
 
 ## What this repository does

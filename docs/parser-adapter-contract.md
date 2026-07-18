@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Parser Adapter Contract"
+description: "The stable signal contract behind manifest extraction backends."
+parent: "Implementation Guides"
+nav_order: 5
+---
 # Parser Adapter Contract
 
 ## Purpose

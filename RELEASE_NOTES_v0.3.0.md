@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.3.0"
+parent: "Releases"
+nav_order: 2
+---
 # Release Notes: v0.3.0
 
 This release moves the CAWG–TRQP reference implementation from a basic executable skeleton to a more repo-ready engineering artifact.

@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Governance"
+description: "Authority, decision rights, delegation, enforcement, and evidence obligations."
+parent: "Governance & Policy"
+nav_order: 1
+---
 # Governance
 
 ## Repository mandate
@@ -42,4 +49,4 @@ Every substantive change should identify:
 4. compatibility or migration impact; and
 5. known limitations or unresolved risks.
 
-Repository state is declared in [`data/repository-metadata.yaml`](data/repository-metadata.yaml).
+Repository state is declared in [`data/repository-metadata.yaml`](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/blob/main/data/repository-metadata.yaml).

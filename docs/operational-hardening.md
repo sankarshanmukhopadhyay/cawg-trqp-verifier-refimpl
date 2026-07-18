@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Operational Hardening"
+description: "HTTP boundary hardening and structured audit events."
+parent: "Architecture & Deployment"
+nav_order: 5
+---
 # Operational Hardening
 
 ## HTTP Boundary

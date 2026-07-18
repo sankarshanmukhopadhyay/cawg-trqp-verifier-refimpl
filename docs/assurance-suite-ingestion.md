@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Assurance Suite Ingestion"
+description: "The machine-readable entry point for external TRQP/CAWG conformance suites."
+parent: "Assurance & Evidence"
+nav_order: 5
+---
 # Assurance Suite Ingestion
 
 ## Purpose

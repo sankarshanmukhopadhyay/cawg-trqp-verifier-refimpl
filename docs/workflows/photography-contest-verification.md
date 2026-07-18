@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Photography Contest Verification"
+description: "End-to-end walkthrough for organisers, judges, and non-specialist stakeholders."
+parent: "Walkthroughs"
+nav_order: 1
+---
 # Photography Contest Verification Walkthrough
 
 ## Purpose

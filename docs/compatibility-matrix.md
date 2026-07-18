@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Compatibility Matrix"
+description: "Machine-readable statement of current coverage for downstream consumers."
+parent: "Assurance & Evidence"
+nav_order: 6
+---
 # Compatibility Matrix
 
 The machine-readable compatibility matrix lives at `conformance/compatibility-matrix.json`.

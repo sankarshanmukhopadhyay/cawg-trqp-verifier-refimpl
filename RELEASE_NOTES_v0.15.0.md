@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.15.0"
+parent: "Releases"
+nav_order: 12
+---
 # Release Notes: v0.15.0
 
 ## Security Hardening and Roadmap Closure

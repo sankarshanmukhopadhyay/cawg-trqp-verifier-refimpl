@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Release Readiness"
+description: "Whether repository artifacts are fit for external consumption."
+parent: "Assurance & Evidence"
+nav_order: 8
+---
 # Repository Readiness
 
 This repository is no longer only organized around releases. It is also organized around whether its artifacts are fit for external consumption.

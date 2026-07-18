@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Deployment Guide"
+description: "Deployment modes for edge, gateway, and service verifiers."
+parent: "Architecture & Deployment"
+nav_order: 4
+---
 # Deployment Guidance for Process-Aware Verifiers and Appraisal Services
 
 ## Deployment modes

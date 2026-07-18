@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Reproducibility Guide"
+description: "Canonical replay bundles and deterministic re-verification."
+parent: "Assurance & Evidence"
+nav_order: 4
+---
 # Reproducibility Guide
 
 ## Canonical replay bundle

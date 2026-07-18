@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.17.0"
+parent: "Releases"
+nav_order: 14
+---
 ## v0.17.0 - Verified Quickstart & CI Parity
 
 This adoption release closes the gap between the documented release gate and what CI actually enforces. It also fixes reuse blockers that would matter to downstream implementers, assurance teams, and security reviewers.

@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Release Notes v0.14.0"
+parent: "Releases"
+nav_order: 11
+---
 # v0.14.0 — Signed Feed Descriptors and Runtime Evidence Hardening
 
 This release moves the reference implementation from recording policy inputs to proving the authority, integrity, freshness, and route posture of the feeds used by the verifier.

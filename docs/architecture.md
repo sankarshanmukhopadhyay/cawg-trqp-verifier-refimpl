@@ -1,3 +1,10 @@
+---
+layout: default
+title: "Architecture"
+description: "How the verifier, profiles, descriptors, and evidence surfaces fit together."
+parent: "Architecture & Deployment"
+nav_order: 1
+---
 # Architecture
 
 ## Current architectural focus
