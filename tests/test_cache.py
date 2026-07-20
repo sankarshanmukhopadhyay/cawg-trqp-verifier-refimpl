@@ -16,3 +16,15 @@ def test_cache_evicts_least_recently_used_when_maxsize_reached():
     assert cache.get("a") == 1
     assert cache.get("b") is None
     assert cache.get("c") == 3
+
+
+def test_cache_metrics_and_clear():
+    cache = TTLCache(maxsize=2)
+    assert cache.get("missing") is None
+    cache.set("a", 1)
+    assert cache.get("a") == 1
+    stats = cache.stats()
+    assert stats["hits"] == 1
+    assert stats["misses"] == 1
+    cache.clear()
+    assert cache.stats()["entries"] == 0

@@ -6,6 +6,17 @@ nav_order: 1
 ---
 # Changelog
 
+### Added — scalability and governed cache semantics
+
+- Added scale architecture, cache/freshness and high-volume deployment guidance.
+- Added machine-readable cache-policy and performance-evidence schemas.
+- Added reproducible library and HTTP benchmark harnesses without asserting a fixed throughput.
+- Added a thread-safe cache contract, metrics and a no-op live-only adapter.
+
+### Fixed
+
+- Reused long-lived verifier and cache instances across HTTP requests so the standard cache-first posture is implemented at the service boundary.
+
 ## Unreleased
 
 ### Added

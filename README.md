@@ -134,6 +134,11 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 
 ## Documentation
 
+- [Scalability and performance](docs/scalability-and-performance.md)
+- [Cache, freshness, and revocation](docs/cache-freshness-and-revocation.md)
+- [High-volume deployment profile](docs/high-volume-deployment-profile.md)
+
+
 The full documentation set — all 30+ pages, organized by audience — is
 published as a GitHub Pages site at
 **https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/**,

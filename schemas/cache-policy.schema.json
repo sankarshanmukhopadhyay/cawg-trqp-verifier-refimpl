@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/cache-policy.schema.json",
+  "title": "CAWG-TRQP Cache Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["mode", "maximum_ttl_seconds", "failure_behavior"],
+  "properties": {
+    "mode": {"enum": ["disabled", "cache_first", "live_on_miss", "live_on_risk", "live_only"]},
+    "maximum_ttl_seconds": {"type": "integer", "minimum": 0},
+    "negative_ttl_seconds": {"type": "integer", "minimum": 0},
+    "stale_while_revalidate_seconds": {"type": "integer", "minimum": 0},
+    "require_policy_epoch": {"type": "boolean"},
+    "invalidate_on_revocation_delta": {"type": "boolean"},
+    "live_on_risk_tiers": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "failure_behavior": {"enum": ["fail_closed", "deferred", "indeterminate"]}
+  }
+}

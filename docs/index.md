@@ -77,3 +77,8 @@ for the full authority and decision-rights model.
 | Validation gate | `make validate` — see [Contributing](../CONTRIBUTING.md) |
 | Documentation | This site — see the section navigation on the left |
 {: .note }
+
+
+- [Scalability and performance](scalability-and-performance.md)
+- [Cache, freshness, and revocation](cache-freshness-and-revocation.md)
+- [High-volume deployment profile](high-volume-deployment-profile.md)

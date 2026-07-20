@@ -1,0 +1,23 @@
+scenarios:
+  - id: warm-cache-standard
+    profile: standard
+    cache_state: warm
+    evidence_mode: receipt
+  - id: cold-cache-standard
+    profile: standard
+    cache_state: cold
+    evidence_mode: receipt
+  - id: mixed-cache-99
+    profile: standard
+    cache_state: mixed
+    target_hit_ratio: 0.99
+    evidence_mode: receipt
+  - id: gateway-mediated
+    profile: standard
+    cache_state: mixed
+    use_gateway: true
+    evidence_mode: receipt
+  - id: audit-bundle
+    profile: high_assurance
+    cache_state: live
+    evidence_mode: full_bundle

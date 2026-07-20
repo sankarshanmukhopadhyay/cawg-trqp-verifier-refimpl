@@ -8,6 +8,7 @@ from typing import Any
 from flask import Flask, request, jsonify
 
 from .audit import build_audit_bundle
+from .cache import TTLCache
 from .gateway import TrustGateway
 from .mock_service import MockTRQPService
 from .models import AuthorizationResponse, RecognitionResponse, VerificationRequest
@@ -23,6 +24,12 @@ class HTTPTRQPService:
     def __init__(self, policy_path: str | Path, revocation_path: str | None = None, debug: bool = False) -> None:
         self.mock_service = MockTRQPService(policy_path, revocation_path)
         self.gateway = TrustGateway(self.mock_service, gateway_id='gateway:http', route_label='http-pattern')
+        # Long-lived L1 cache and verifier instances preserve cache semantics across
+        # HTTP requests. Production deployments can replace this adapter with a
+        # shared DecisionCache implementation.
+        self.cache = TTLCache(maxsize=4096)
+        self.verifier = Verifier(service=self.mock_service, cache=self.cache)
+        self.gateway_verifier = Verifier(service=self.mock_service, gateway=self.gateway, cache=self.cache)
         self.app = Flask(__name__)
         self.app.config["DEBUG"] = debug
         self.app.config["MAX_CONTENT_LENGTH"] = MAX_REQUEST_BYTES
@@ -92,7 +99,7 @@ class HTTPTRQPService:
                 profile = self._resolve_api_profile(data)
             except (TypeError, VerificationProfileError, ValueError) as exc:
                 return jsonify({"error": "invalid_request", "message": str(exc)}), 400
-            verifier = Verifier(service=self.mock_service, gateway=self.gateway if data.get('use_gateway') else None)
+            verifier = self.gateway_verifier if data.get('use_gateway') else self.verifier
             result = verifier.verify(req, profile=profile)
             self._emit_audit_event("verify", profile, bool(data.get("use_gateway")), result.to_dict())
             return jsonify(result.to_dict()), 200
@@ -108,7 +115,7 @@ class HTTPTRQPService:
             except (TypeError, VerificationProfileError, ValueError) as exc:
                 return jsonify({"error": "invalid_request", "message": str(exc)}), 400
             use_gateway = bool(data.get('use_gateway'))
-            verifier = Verifier(service=self.mock_service, gateway=self.gateway if use_gateway else None)
+            verifier = self.gateway_verifier if use_gateway else self.verifier
             result = verifier.verify(req, profile=profile)
             self._emit_audit_event("audit_bundle", profile, use_gateway, result.to_dict())
             try:

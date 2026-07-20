@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/performance-evidence.schema.json",
+  "title": "CAWG-TRQP Performance Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scenario", "implementation_commit", "duration_seconds", "requests", "throughput_rps", "latency_ms", "cache_hit_ratio", "errors"],
+  "properties": {
+    "scenario": {"type": "string", "minLength": 1},
+    "implementation_commit": {"type": "string", "minLength": 1},
+    "workers": {"type": "integer", "minimum": 1},
+    "duration_seconds": {"type": "number", "exclusiveMinimum": 0},
+    "requests": {"type": "integer", "minimum": 1},
+    "throughput_rps": {"type": "number", "minimum": 0},
+    "latency_ms": {
+      "type": "object",
+      "required": ["p50", "p95", "p99"],
+      "properties": {
+        "p50": {"type": "number", "minimum": 0},
+        "p95": {"type": "number", "minimum": 0},
+        "p99": {"type": "number", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "cache_hit_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+    "live_lookup_rate": {"type": "number", "minimum": 0},
+    "errors": {"type": "integer", "minimum": 0},
+    "environment": {"type": "object"}
+  }
+}

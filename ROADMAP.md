@@ -77,3 +77,7 @@ Add a containerized deployment profile with reverse-proxy examples, rate-limit p
 ### 4. Cross-Repository Alignment
 
 Map the assurance-suite manifest and descriptor policy controls into related TRQP conformance, assurance hub, TSPP, and trust infrastructure schema repositories.
+
+## Scale and cache assurance
+
+The reference implementation now provides persistent HTTP cache semantics, replaceable cache interfaces, scale architecture guidance and reproducible benchmark contracts. Production-grade distributed cache adapters, single-flight refresh and environment-specific load evidence remain deployment work rather than fixed throughput claims.

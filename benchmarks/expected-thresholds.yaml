@@ -1,0 +1,5 @@
+# Smoke thresholds only. They are not production claims.
+thresholds:
+  benchmark_contract_valid: true
+  errors: 0
+  p99_ms_max: 5000
