@@ -26,6 +26,43 @@ if manifest_path.is_file():
     except (KeyError, json.JSONDecodeError) as exc:
         errors.append(f"invalid presentation manifest: {exc}")
 
+
+# GitHub Pages/Just the Docs integrity checks. Every rendered documentation
+# page must opt into the theme layout, and every declared parent must resolve
+# to a navigation node that advertises children.
+doc_pages = sorted((root / "docs").rglob("*.md"))
+nav_nodes = {}
+page_front_matter = {}
+front_matter_pattern = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
+
+for page in doc_pages:
+    rel = page.relative_to(root)
+    text = page.read_text(encoding="utf-8", errors="replace")
+    match = front_matter_pattern.match(text)
+    if not match:
+        errors.append(f"GitHub Pages document missing front matter: {rel}")
+        continue
+
+    fields = {}
+    for line in match.group(1).splitlines():
+        if ":" not in line or line.lstrip().startswith("#"):
+            continue
+        key, value = line.split(":", 1)
+        fields[key.strip()] = value.strip().strip('"').strip("'")
+    page_front_matter[rel] = fields
+
+    if fields.get("layout") != "default":
+        errors.append(f"GitHub Pages document must use layout default: {rel}")
+
+    title = fields.get("title")
+    if title and fields.get("has_children", "").lower() == "true":
+        nav_nodes[title] = rel
+
+for rel, fields in page_front_matter.items():
+    parent = fields.get("parent")
+    if parent and parent not in nav_nodes:
+        errors.append(f"GitHub Pages document has unresolved navigation parent '{parent}': {rel}")
+
 readme=(root/'README.md').read_text(encoding='utf-8')
 for marker in ['Portfolio tier','Validation','Evidence output','Governance authority']:
     if marker not in readme: errors.append(f"README missing status contract marker: {marker}")

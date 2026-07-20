@@ -1,3 +1,10 @@
+## [Unreleased]
+
+### Fixed
+
+- Restored the Just the Docs layout and navigation parent for the scalability, cache freshness, and high-volume deployment pages so GitHub Pages renders the theme, navigation, tables, and Mermaid diagrams correctly.
+- Added repository validation for documentation front matter and navigation-parent integrity to prevent unthemed or orphaned pages from being deployed.
+
 ---
 layout: default
 title: "Changelog"

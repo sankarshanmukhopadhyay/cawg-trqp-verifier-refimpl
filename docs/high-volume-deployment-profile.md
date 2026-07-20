@@ -1,6 +1,7 @@
 ---
+layout: default
 title: High-Volume Deployment Profile
-parent: Implementation Guide
+parent: "Implementation Guides"
 nav_order: 72
 ---
 

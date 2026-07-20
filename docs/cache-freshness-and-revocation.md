@@ -1,6 +1,7 @@
 ---
+layout: default
 title: Cache, Freshness, and Revocation
-parent: Implementation Guide
+parent: "Implementation Guides"
 nav_order: 71
 ---
 

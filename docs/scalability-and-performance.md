@@ -1,6 +1,7 @@
 ---
+layout: default
 title: Scalability and Performance
-parent: Implementation Guide
+parent: "Implementation Guides"
 nav_order: 70
 ---
 
