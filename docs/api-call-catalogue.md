@@ -7,6 +7,8 @@ nav_order: 3
 ---
 # API Call Catalogue
 
+For the CAWG-side decisions, required outputs, sequencing guidance, and readiness gates, see [CAWG-to-TRQP Integration Enablement](cawg-trqp-integration-enablement.md).
+
 This catalogue is the human-readable index of every network call implemented by the reference service. The machine-readable source is [`api/openapi.json`](../api/openapi.json).
 
 ## Complete operation inventory

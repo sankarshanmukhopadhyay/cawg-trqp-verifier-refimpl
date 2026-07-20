@@ -121,7 +121,8 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 |---|---|
 | `src/cawg_trqp_refimpl/` | Verifier, service, replay, profile, descriptor, and parser code |
 | `profiles/` | Built-in verification profiles and overlays |
-| `schemas/` | JSON schemas for requests, results, profiles, receipts, descriptors, and audit bundles |
+| `schemas/` | JSON schemas for requests, results, profiles, receipts, descriptors, audit bundles, and the CAWG-TRQP integration signal |
+| `conformance/cawg-trqp-readiness-matrix.yaml` | Machine-readable CAWG integration-readiness gates |
 | `fixtures/profile-bound/` | Canonical fixture packages for external implementation comparison |
 | `conformance/compatibility-matrix.json` | Machine-readable compatibility declaration |
 | `conformance/assurance-suite-manifest.json` | External assurance-suite ingestion manifest |
@@ -148,6 +149,7 @@ authoritative and readable directly in the repository.
 
 ### Implementers
 
+- `docs/cawg-trqp-integration-enablement.md` — concrete CAWG work programme, specification ownership, readiness gates, and definition of done
 - `docs/cawg-input-contract.md` — mandatory/optional CAWG signal mapping into TRQP verification requests
 - `docs/api-call-catalogue.md` — complete implemented request/response and error surface
 - `api/openapi.json` — machine-readable OpenAPI 3.1 contract

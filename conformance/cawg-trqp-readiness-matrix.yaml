@@ -1,0 +1,25 @@
+profile: cawg-trqp-integration-readiness
+version: "0.1"
+authority_status: non-normative-reference-profile
+readiness_gates:
+  - id: CAWG-TRQP-01
+    requirement: Integration boundary and responsibility allocation are approved.
+    evidence: docs/cawg-trqp-integration-enablement.md
+  - id: CAWG-TRQP-02
+    requirement: Actor and issuer identifiers are typed and bound to validated assertions.
+    evidence: schemas/cawg-trqp-integration-signal.schema.json
+  - id: CAWG-TRQP-03
+    requirement: Action and resource mappings are deterministic and versioned.
+    evidence: examples/cawg-trqp/
+  - id: CAWG-TRQP-04
+    requirement: Validation evidence is referenceable and time-stamped.
+    evidence: schemas/cawg-trqp-integration-signal.schema.json
+  - id: CAWG-TRQP-05
+    requirement: Positive and negative fixtures pass the integration-signal conformance tests.
+    evidence: tests/test_cawg_trqp_integration_signal.py
+  - id: CAWG-TRQP-06
+    requirement: Privacy minimization excludes raw manifests by default.
+    evidence: docs/cawg-trqp-integration-enablement.md
+  - id: CAWG-TRQP-07
+    requirement: TRQP call sequencing and outcome ownership are documented.
+    evidence: docs/api-call-catalogue.md

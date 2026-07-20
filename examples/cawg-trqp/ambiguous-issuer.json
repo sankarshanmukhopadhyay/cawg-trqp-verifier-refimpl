@@ -1,0 +1,8 @@
+{
+  "type": "CawgTrqpIntegrationSignal", "version": "0.1",
+  "asset": {"id": "urn:asset:photo:2026-001"},
+  "validation": {"status": "verified", "validator": "validator.example", "validated_at": "2026-07-20T12:00:00Z", "evidence_ref": "urn:evidence:1"},
+  "actor": {"id": "did:web:creator.example:alice", "identifier_type": "did"},
+  "issuer": {"id": "", "identifier_type": "did"},
+  "action": {"type": "submit", "resource": "contest-entry"}, "context": {}
+}

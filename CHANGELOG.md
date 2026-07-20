@@ -10,6 +10,11 @@ nav_order: 1
 
 ### Added
 
+- Added a CAWG-to-TRQP integration enablement guide that defines the CAWG work programme, responsibility allocation, minimum portable signal, specification ownership, privacy posture, call sequence, conformance criteria, and definition of done.
+- Added a versioned CAWG-TRQP integration-signal JSON Schema, positive and negative canonical fixtures, a machine-readable readiness matrix, and conformance tests.
+
+### Added
+
 - Explicit CAWG/C2PA-to-TRQP input contract documenting accepted input forms, mandatory and optional attributes, field derivation, validation, and candidate specification gaps.
 - Complete API call catalogue for all six implemented HTTP operations, including request/response structures, transport errors, governance purpose, and review ownership.
 - Machine-readable OpenAPI 3.1 contract, canonical API examples, recognition/gateway/error schemas, and an API contract validation gate.

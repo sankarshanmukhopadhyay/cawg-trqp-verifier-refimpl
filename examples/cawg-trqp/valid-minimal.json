@@ -1,0 +1,9 @@
+{
+  "type": "CawgTrqpIntegrationSignal",
+  "version": "0.1",
+  "asset": {"id": "urn:asset:photo:2026-001"},
+  "validation": {"status": "verified", "validator": "c2pa-validator.example", "validated_at": "2026-07-20T12:00:00Z", "evidence_ref": "urn:evidence:c2pa-validation:001"},
+  "actor": {"id": "did:web:creator.example:alice", "identifier_type": "did"},
+  "action": {"type": "submit", "resource": "photography-contest-entry"},
+  "context": {}
+}

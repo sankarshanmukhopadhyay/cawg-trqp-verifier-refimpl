@@ -1,0 +1,15 @@
+{
+  "type": "CawgTrqpIntegrationSignal",
+  "version": "0.1",
+  "asset": {"id": "urn:asset:photo:2026-001", "media_type": "image/jpeg"},
+  "validation": {"status": "verified", "validator": "c2pa-validator.example", "validated_at": "2026-07-20T12:00:00Z", "evidence_ref": "urn:evidence:c2pa-validation:001"},
+  "actor": {"id": "did:web:creator.example:alice", "identifier_type": "did"},
+  "issuer": {"id": "did:web:issuer.example", "identifier_type": "did"},
+  "action": {"type": "submit", "resource": "photography-contest-entry"},
+  "context": {"jurisdiction": "global", "credential_type": "CreatorCredential", "risk_tier": "standard"},
+  "process_evidence": {"type": "camera-capture", "verified": true, "evidence_ref": "urn:evidence:process:001"},
+  "source_bindings": [
+    {"field": "actor.id", "assertion_ref": "self#jumbf=/c2pa/urn:uuid:manifest/cawg.identity"},
+    {"field": "action.type", "assertion_ref": "self#jumbf=/c2pa/urn:uuid:manifest/c2pa.actions"}
+  ]
+}

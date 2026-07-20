@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/schemas/cawg-trqp-integration-signal.schema.json",
+  "title": "CAWG-TRQP Integration Signal",
+  "description": "Non-normative, portable handoff from validated CAWG/C2PA assertions to a TRQP client or verifier.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "version", "asset", "validation", "actor", "action", "context"],
+  "properties": {
+    "type": {"const": "CawgTrqpIntegrationSignal"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "asset": {
+      "type": "object", "additionalProperties": false, "required": ["id"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "media_type": {"type": "string", "minLength": 1}
+      }
+    },
+    "validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "validator", "validated_at", "evidence_ref"],
+      "properties": {
+        "status": {"enum": ["verified", "failed", "indeterminate"]},
+        "validator": {"type": "string", "minLength": 1},
+        "validated_at": {"type": "string", "format": "date-time"},
+        "evidence_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "actor": {"$ref": "#/$defs/typedIdentifier"},
+    "issuer": {"$ref": "#/$defs/typedIdentifier"},
+    "action": {
+      "type": "object", "additionalProperties": false, "required": ["type", "resource"],
+      "properties": {
+        "type": {"type": "string", "minLength": 1},
+        "resource": {"type": "string", "minLength": 1}
+      }
+    },
+    "context": {"type": "object"},
+    "process_evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "verified", "evidence_ref"],
+      "properties": {
+        "type": {"type": "string", "minLength": 1},
+        "verified": {"type": "boolean"},
+        "evidence_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_bindings": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["field", "assertion_ref"],
+        "properties": {
+          "field": {"type": "string", "minLength": 1},
+          "assertion_ref": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "typedIdentifier": {
+      "type": "object", "additionalProperties": false, "required": ["id", "identifier_type"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "identifier_type": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -7,6 +7,8 @@ nav_order: 2
 ---
 # CAWG Input Contract
 
+For the standards and work-programme view, start with [What CAWG Must Provide to Enable TRQP Integration](cawg-trqp-integration-enablement.md). This page documents the implemented parser and request boundary.
+
 This document makes the CAWG-to-TRQP handoff explicit. It describes the **implemented input contract** of this repository, not a normative amendment to either the CAWG/C2PA or TRQP specifications.
 
 ## Boundary model

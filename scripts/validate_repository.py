@@ -2,7 +2,7 @@
 from pathlib import Path
 import hashlib, json, re, sys
 root=Path(__file__).resolve().parents[1]
-required=["README.md","LICENSE","CHANGELOG.md","ROADMAP.md","GOVERNANCE.md","CONTRIBUTING.md","SECURITY.md","CODE_OF_CONDUCT.md","CITATION.cff","QUICKSTART.md","data/repository-metadata.yaml","docs/trqp-adoption-path.md","docs/cawg-input-contract.md","docs/api-call-catalogue.md","api/openapi.json","docs/presentation.md","assets/presentations/cawg-trqp-explainer-v2.pdf","assets/presentations/cawg-trqp-explainer-v2-cover.png","assets/presentations/manifest.json"]
+required=["README.md","LICENSE","CHANGELOG.md","ROADMAP.md","GOVERNANCE.md","CONTRIBUTING.md","SECURITY.md","CODE_OF_CONDUCT.md","CITATION.cff","QUICKSTART.md","data/repository-metadata.yaml","docs/trqp-adoption-path.md","docs/cawg-input-contract.md","docs/cawg-trqp-integration-enablement.md","docs/api-call-catalogue.md","schemas/cawg-trqp-integration-signal.schema.json","conformance/cawg-trqp-readiness-matrix.yaml","api/openapi.json","docs/presentation.md","assets/presentations/cawg-trqp-explainer-v2.pdf","assets/presentations/cawg-trqp-explainer-v2-cover.png","assets/presentations/manifest.json"]
 errors=[]
 for rel in required:
     if not (root/rel).is_file(): errors.append(f"missing required flagship artifact: {rel}")

@@ -37,6 +37,7 @@ accountable, testable, and interoperable verifier looks like.
 | If you are&hellip; | Start with |
 |---|---|
 | New to this space, or reviewing it for context (governance, editorial, program management) | [Presentation](presentation.md), [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) |
+| A CAWG or C2PA participant deciding what must change for TRQP integration | [CAWG-to-TRQP Integration Enablement](cawg-trqp-integration-enablement.md), then [CAWG Input Contract](cawg-input-contract.md) and [API Call Catalogue](api-call-catalogue.md) |
 | A developer integrating a verifier into your own system | [Quickstart](../QUICKSTART.md), then [CAWG Input Contract](cawg-input-contract.md), [API Call Catalogue](api-call-catalogue.md), and [Integration Guide](INTEGRATION_GUIDE.md) |
 | Standing up or operating a deployment | [Architecture](architecture.md), then [Deployment Guide](deployment-guide.md) |
 | Reviewing assurance, evidence, or audit posture | [How TRQP Enables Assurance](how-trqp-enables-assurance.md), then [Decision Receipt Specification](decision-receipt-specification.md) and [Audit Bundle Profile](audit-bundle-profile.md) |
