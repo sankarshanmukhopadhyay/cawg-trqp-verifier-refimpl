@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artifact_type": "presentation",
+  "title": "CAWG-TRQP Verifier Reference Implementation: From content provenance to verifiable trust decisions",
+  "artifact_version": "v2",
+  "implementation_version": "v0.17.0",
+  "status": "non-normative",
+  "media_type": "application/pdf",
+  "page_count": 15,
+  "path": "assets/presentations/cawg-trqp-explainer-v2.pdf",
+  "sha256": "3d3fccf366b87fc74b1620c9eb86bc9a33f1395669304dfe63356d27ee6fde3f",
+  "cover_path": "assets/presentations/cawg-trqp-explainer-v2-cover.png",
+  "cover_sha256": "42820624766b19b1067eea92834e466d9ac29462f9f1aa17f27aacbae4666d08",
+  "documentation_path": "docs/presentation.md",
+  "authority": {
+    "normative": false,
+    "authoritative_sources": [
+      "api/openapi.json",
+      "schemas/",
+      "profiles/",
+      "docs/cawg-input-contract.md",
+      "docs/api-call-catalogue.md"
+    ]
+  },
+  "update_triggers": [
+    "implementation version change",
+    "public API contract change",
+    "CAWG input contract change",
+    "verifier profile semantic change",
+    "evidence or replay guarantee change",
+    "portfolio stack or maturity change"
+  ]
+}

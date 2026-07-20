@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/cawg-trqp/schemas/gateway-authorization-response.schema.json",
+  "type": "object",
+  "required": ["authorization", "gateway_mediation"],
+  "properties": {
+    "authorization": {"$ref": "authorization-response.schema.json"},
+    "gateway_mediation": {
+      "type": "object",
+      "required": ["gateway_id", "route_label", "authority_id", "decision_type", "route_attested"],
+      "properties": {
+        "gateway_id": {"type": "string"},
+        "route_label": {"type": "string"},
+        "authority_id": {"type": "string"},
+        "decision_type": {"const": "authorization"},
+        "route_attested": {"type": "boolean"},
+        "feed_descriptor": {"type": "object"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

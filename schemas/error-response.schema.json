@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/cawg-trqp/schemas/error-response.schema.json",
+  "type": "object",
+  "required": ["error", "message"],
+  "properties": {
+    "error": {"type": "string", "minLength": 1},
+    "message": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

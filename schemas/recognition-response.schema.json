@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/cawg-trqp/schemas/recognition-response.schema.json",
+  "type": "object",
+  "required": ["recognized"],
+  "properties": {
+    "recognized": {"type": "boolean"},
+    "expires": {"type": "string"},
+    "policy_epoch": {"type": "string"},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "reason": {"type": "string"}
+  },
+  "additionalProperties": false
+}

@@ -145,6 +145,7 @@ class HTTPTRQPService:
             'action', 'resource', 'context', 'process_evidence'
         }
         fields = {key: value for key, value in data.items() if key in allowed}
+        fields.setdefault("issuer_id", None)
         required = {"asset_id", "integrity_ok", "entity_id", "authority_id", "action", "resource"}
         missing = sorted(required - set(fields))
         if missing:

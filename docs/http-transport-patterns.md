@@ -7,7 +7,7 @@ nav_order: 3
 ---
 # HTTP Transport Patterns
 
-The repository exposes a Flask-based HTTP service for authorization, recognition, verification, and audit bundle export.
+The repository exposes a Flask-based HTTP service for authorization, recognition, verification, and audit bundle export. The complete human-readable interface is the [API Call Catalogue](api-call-catalogue.md); the machine-readable contract is [`api/openapi.json`](../api/openapi.json).
 
 ## Why the HTTP surface matters
 

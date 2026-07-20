@@ -88,6 +88,7 @@ curl -sf http://127.0.0.1:5000/health
 Run the release validation gate:
 
 ```bash
+python scripts/validate_api_contract.py
 python scripts/validate_examples.py
 python scripts/validate_feed_descriptors.py
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
@@ -101,7 +102,7 @@ pytest -q
 Expected result for v0.17.0:
 
 ```text
-68 passed
+70 passed
 ```
 
 ## Profiles
@@ -127,6 +128,8 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 | `examples/reproducibility_bundle_standard.json` | Canonical replay bundle |
 | `examples/photography_contest/` | End-to-end contest verification walkthrough |
 | `release-assets/checksums-v0.17.0.json` | Release asset checksum manifest |
+| `assets/presentations/cawg-trqp-explainer-v2.pdf` | Non-normative explainer deck for standards and adoption review |
+| `assets/presentations/manifest.json` | Presentation version, authority, checksum, and update triggers |
 
 ## Documentation
 
@@ -140,11 +143,14 @@ authoritative and readable directly in the repository.
 ### New to this repository
 
 - `docs/NON_TECHNICAL_OVERVIEW.md` — what this repository does, without assuming a technical background
-- `docs/PRESENTATION_BRIEF.md` — ten-minute walkthrough with a live demo script
+- `docs/presentation.md` — presentation, slide-by-slide documentation map, embedded viewer, and maintenance policy
 - `QUICKSTART.md` — first result in under ten minutes
 
 ### Implementers
 
+- `docs/cawg-input-contract.md` — mandatory/optional CAWG signal mapping into TRQP verification requests
+- `docs/api-call-catalogue.md` — complete implemented request/response and error surface
+- `api/openapi.json` — machine-readable OpenAPI 3.1 contract
 - `docs/INTEGRATION_GUIDE.md`
 - `docs/verifier-profiles.md`
 - `docs/descriptor-policy.md`

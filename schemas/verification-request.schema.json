@@ -7,21 +7,23 @@
     "entity_id",
     "authority_id",
     "action",
-    "resource",
-    "context"
+    "resource"
   ],
   "properties": {
     "asset_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "integrity_ok": {
       "type": "boolean"
     },
     "entity_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "authority_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "issuer_id": {
       "type": [
@@ -30,13 +32,16 @@
       ]
     },
     "action": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "resource": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "context": {
-      "type": "object"
+      "type": "object",
+      "default": {}
     },
     "process_evidence": {
       "type": [
@@ -68,5 +73,7 @@
       },
       "additionalProperties": true
     }
-  }
+  },
+  "$id": "https://example.org/cawg-trqp/schemas/verification-request.schema.json",
+  "additionalProperties": true
 }

@@ -15,6 +15,7 @@ replayable audit evidence.
 
 [Quickstart](../QUICKSTART.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Presentation](presentation.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -35,8 +36,8 @@ accountable, testable, and interoperable verifier looks like.
 
 | If you are&hellip; | Start with |
 |---|---|
-| New to this space, or reviewing it for context (governance, editorial, program management) | [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) |
-| A developer integrating a verifier into your own system | [Quickstart](../QUICKSTART.md), then [Integration Guide](INTEGRATION_GUIDE.md) |
+| New to this space, or reviewing it for context (governance, editorial, program management) | [Presentation](presentation.md), [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) |
+| A developer integrating a verifier into your own system | [Quickstart](../QUICKSTART.md), then [CAWG Input Contract](cawg-input-contract.md), [API Call Catalogue](api-call-catalogue.md), and [Integration Guide](INTEGRATION_GUIDE.md) |
 | Standing up or operating a deployment | [Architecture](architecture.md), then [Deployment Guide](deployment-guide.md) |
 | Reviewing assurance, evidence, or audit posture | [How TRQP Enables Assurance](how-trqp-enables-assurance.md), then [Decision Receipt Specification](decision-receipt-specification.md) and [Audit Bundle Profile](audit-bundle-profile.md) |
 | Building or running a conformance/interoperability program | [Assurance Suite Ingestion](assurance-suite-ingestion.md), [Interoperability Vectors](interoperability-vectors.md), [Compatibility Matrix](compatibility-matrix.md) |
@@ -71,7 +72,7 @@ for the full authority and decision-rights model.
 | Attribute | Value |
 |---|---|
 | Current release | v0.17.0 |
-| Test suite | 68/68 passing |
+| Test suite | 70/70 passing |
 | Validation gate | `make validate` — see [Contributing](../CONTRIBUTING.md) |
 | Documentation | This site — see the section navigation on the left |
 {: .note }

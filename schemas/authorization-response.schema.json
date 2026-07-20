@@ -22,6 +22,11 @@
     },
     "reason": {
       "type": "string"
+    },
+    "policy_requirements": {
+      "type": "object"
     }
-  }
+  },
+  "$id": "https://example.org/cawg-trqp/schemas/authorization-response.schema.json",
+  "additionalProperties": false
 }

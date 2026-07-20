@@ -9,20 +9,26 @@
   ],
   "properties": {
     "entity_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "authority_id": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "action": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "resource": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "context": {
-      "type": "object"
+      "type": "object",
+      "default": {}
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$id": "https://example.org/cawg-trqp/schemas/authorization-request.schema.json"
 }

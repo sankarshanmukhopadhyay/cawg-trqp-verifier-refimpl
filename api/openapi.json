@@ -1,0 +1,454 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CAWG-TRQP Reference Implementation API",
+    "version": "0.17.0",
+    "description": "Implemented HTTP contract for CAWG/C2PA signal verification and TRQP policy calls. This is an implementation contract, not a normative CAWG, C2PA, or TRQP specification."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Report service health and implemented capabilities",
+        "responses": {
+          "200": {
+            "description": "Healthy service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "capabilities"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "healthy"
+                    },
+                    "capabilities": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "examples": {
+                  "canonical": {
+                    "externalValue": "../examples/api/health-response.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trqp/authorization": {
+      "post": {
+        "operationId": "queryAuthorization",
+        "summary": "Query entity authorization",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas/authorization-request.schema.json"
+              },
+              "examples": {
+                "canonical": {
+                  "externalValue": "../examples/api/authorization-request.json"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful domain response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/authorization-response.schema.json"
+                },
+                "examples": {
+                  "canonical": {
+                    "externalValue": "../examples/api/authorization-response.json"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trqp/recognition": {
+      "post": {
+        "operationId": "queryRecognition",
+        "summary": "Query authority recognition",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas/recognition-request.schema.json"
+              },
+              "examples": {
+                "canonical": {
+                  "externalValue": "../examples/api/recognition-request.json"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful domain response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/recognition-response.schema.json"
+                },
+                "examples": {
+                  "canonical": {
+                    "externalValue": "../examples/api/recognition-response.json"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trqp/gateway/authorization": {
+      "post": {
+        "operationId": "queryGatewayAuthorization",
+        "summary": "Query authorization through trust gateway",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas/authorization-request.schema.json"
+              },
+              "examples": {
+                "canonical": {
+                  "externalValue": "../examples/api/authorization-request.json"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful domain response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/gateway-authorization-response.schema.json"
+                },
+                "examples": {
+                  "canonical": {
+                    "externalValue": "../examples/api/gateway-authorization-response.json"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trqp/verify": {
+      "post": {
+        "operationId": "verifyAsset",
+        "summary": "Verify CAWG/C2PA-derived signals against TRQP policy",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "../schemas/verification-request.schema.json"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "profile": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "overlays": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "use_gateway": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    },
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "examples": {
+                "canonical": {
+                  "externalValue": "../examples/api/verification-request.json"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful verification-domain response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/verification-result.schema.json"
+                },
+                "examples": {
+                  "canonical": {
+                    "externalValue": "../examples/api/verification-response.json"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trqp/audit-bundle": {
+      "post": {
+        "operationId": "exportAuditBundle",
+        "summary": "Verify and export replayable audit evidence",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "../schemas/verification-request.schema.json"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "profile": {
+                        "oneOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "overlays": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "use_gateway": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    },
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "examples": {
+                "canonical": {
+                  "externalValue": "../examples/api/verification-request.json"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful verification-domain response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/audit-bundle.schema.json"
+                },
+                "examples": {
+                  "canonical": {
+                    "externalValue": "../examples/api/audit-bundle-response.json"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error-response.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

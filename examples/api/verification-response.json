@@ -1,0 +1,164 @@
+{
+  "actor_authorization": "not_authorized",
+  "assertion_binding": "verified",
+  "asset_integrity": "verified",
+  "explanations": [
+    "Verification profile: standard",
+    "Live authorization lookup executed",
+    "Live recognition lookup executed"
+  ],
+  "gateway_mediation": {},
+  "issuer_recognition": "unknown",
+  "policy_evidence": {
+    "authorization_evidence": [],
+    "feed_descriptors": {
+      "policy": {
+        "authority_id": null,
+        "authority_ok": false,
+        "declared_digest_sha256": null,
+        "descriptor_id": null,
+        "digest_sha256": null,
+        "feed_type": null,
+        "freshness_ok": false,
+        "integrity_ok": false,
+        "issued_at": null,
+        "max_age_seconds": null,
+        "reason_code": "missing_feed_descriptor",
+        "route_attested": false,
+        "signature_ok": false,
+        "valid_until": null,
+        "violations": [
+          "feed descriptor is missing"
+        ]
+      },
+      "revocation": {
+        "authority_id": null,
+        "authority_ok": false,
+        "declared_digest_sha256": null,
+        "descriptor_id": null,
+        "digest_sha256": null,
+        "feed_type": null,
+        "freshness_ok": false,
+        "integrity_ok": false,
+        "issued_at": null,
+        "max_age_seconds": null,
+        "reason_code": "missing_feed_descriptor",
+        "route_attested": false,
+        "signature_ok": false,
+        "valid_until": null,
+        "violations": [
+          "feed descriptor is missing"
+        ]
+      }
+    },
+    "policy_epoch": null,
+    "policy_requirements": {},
+    "recognition_evidence": [],
+    "revocation_status": {
+      "age_seconds": 0,
+      "channel": "delta",
+      "enforcement": "warn",
+      "feed_descriptor": {
+        "authority_id": null,
+        "authority_ok": false,
+        "declared_digest_sha256": null,
+        "descriptor_id": null,
+        "digest_sha256": null,
+        "feed_type": null,
+        "freshness_ok": false,
+        "integrity_ok": false,
+        "issued_at": null,
+        "max_age_seconds": null,
+        "reason_code": "missing_feed_descriptor",
+        "route_attested": false,
+        "signature_ok": false,
+        "valid_until": null,
+        "violations": [
+          "feed descriptor is missing"
+        ]
+      },
+      "freshness_ok": true,
+      "issued_at": "2026-12-31T00:00:00Z",
+      "max_age_seconds": 3600,
+      "policy_epoch": "2026-Q1",
+      "source": "service",
+      "violations": []
+    },
+    "transport": {
+      "actual": {
+        "available": true,
+        "channel": "delta",
+        "integrity": "tls",
+        "mode": "http"
+      },
+      "required": {
+        "availability_requirement": "best_effort",
+        "integrity": "tls",
+        "mode": "http"
+      },
+      "satisfied": true,
+      "violations": []
+    },
+    "verification_profile": {
+      "base_profile": "standard",
+      "controls": {
+        "authority": {
+          "allow_untrusted": true,
+          "trust_anchors_required": false
+        },
+        "descriptor_policy": {
+          "gateway_route": "observe",
+          "policy": "observe",
+          "revocation": "observe",
+          "snapshot": "observe"
+        },
+        "determinism": {
+          "replayable": true,
+          "require_pinned_feeds": false
+        },
+        "evidence": {
+          "emit_audit_bundle": true,
+          "require_attestation": false,
+          "require_feed_descriptors": false
+        },
+        "failure": {
+          "network_failure": "fail_open",
+          "policy_unavailable": "fail_open"
+        },
+        "freshness": {
+          "max_age_seconds": 3600,
+          "require_live": false
+        },
+        "revocation": {
+          "delta_channel_required": false,
+          "enforcement": "warn",
+          "hard_fail": false,
+          "max_age_seconds": 3600,
+          "mode": "delta"
+        },
+        "transport": {
+          "availability_requirement": "best_effort",
+          "integrity": "tls",
+          "mode": "http"
+        }
+      },
+      "id": "standard",
+      "overlays": [],
+      "source": "profiles/standard.json"
+    }
+  },
+  "policy_freshness": "fresh",
+  "process_appraisal": {
+    "appraisal": null,
+    "confidence": null,
+    "evidence_format": "cawg.process.proof",
+    "evidence_ref": "urn:evidence:process:001",
+    "minimum_confidence": null,
+    "process_type": "camera-capture",
+    "reference": null,
+    "status": "not_required"
+  },
+  "process_integrity": "not_required",
+  "trust_outcome": "rejected",
+  "verification_mode": "cached_online"
+}

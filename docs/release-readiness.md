@@ -49,7 +49,7 @@ python scripts/generate_release_checksums.py --check
 - [x] Parser adapter contract is documented and importable.
 - [x] HTTP verification and audit-bundle routes emit structured audit events.
 - [x] Release checksums are generated and checkable.
-- [x] Test suite passes with `68 passed`.
+- [x] Test suite passes with `70 passed`.
 
 
 ## v0.15.0 readiness checklist

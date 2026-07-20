@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/cawg-trqp/schemas/recognition-request.schema.json",
+  "type": "object",
+  "required": ["authority_id", "recognized_authority_id"],
+  "properties": {
+    "authority_id": {"type": "string", "minLength": 1},
+    "recognized_authority_id": {"type": "string", "minLength": 1},
+    "context": {"type": "object", "default": {}}
+  },
+  "additionalProperties": false
+}

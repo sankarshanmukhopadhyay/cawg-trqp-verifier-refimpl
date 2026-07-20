@@ -10,6 +10,11 @@ nav_order: 1
 
 ### Added
 
+- Explicit CAWG/C2PA-to-TRQP input contract documenting accepted input forms, mandatory and optional attributes, field derivation, validation, and candidate specification gaps.
+- Complete API call catalogue for all six implemented HTTP operations, including request/response structures, transport errors, governance purpose, and review ownership.
+- Machine-readable OpenAPI 3.1 contract, canonical API examples, recognition/gateway/error schemas, and an API contract validation gate.
+- CI tests that prevent the documented operation inventory and canonical payloads from drifting from the implementation.
+
 - GitHub Pages documentation site rebuilt on the Just the Docs theme, covering every existing document under an audience-organized navigation (Start Here, Architecture & Deployment, Implementation Guides, Assurance & Evidence, Interoperability, Walkthroughs, Governance & Policy, Releases).
 - `docs/PRESENTATION_BRIEF.md`, a speaker-ready ten-minute walkthrough for external presentations.
 - `.github/ISSUE_TEMPLATE/` (bug report, adoption/interoperability report) and `.github/pull_request_template.md`.

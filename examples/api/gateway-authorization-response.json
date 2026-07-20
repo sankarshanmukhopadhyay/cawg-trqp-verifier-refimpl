@@ -1,0 +1,1 @@
+{"authorization":{"authorized":true,"policy_epoch":"2026-07-01","evidence":[],"policy_requirements":{}},"gateway_mediation":{"gateway_id":"gateway:http","route_label":"http-pattern","authority_id":"urn:trqp:authority:photography-contest","decision_type":"authorization","route_attested":false}}

@@ -7,7 +7,8 @@ nav_order: 1
 ---
 # Integration Guide
 
-The repository now supports four operational integration patterns:
+The repository now supports four operational integration patterns. Before selecting one, implementers should review the [CAWG Input Contract](cawg-input-contract.md) for the manifest-to-verification handoff and the [API Call Catalogue](api-call-catalogue.md) for the complete network call surface.
+
 
 1. direct verifier invocation against a live TRQP-style policy service
 2. gateway-mediated verification where route metadata becomes part of the evidence surface
