@@ -32,6 +32,14 @@ nav_order: 1
 
 - Reused long-lived verifier and cache instances across HTTP requests so the standard cache-first posture is implemented at the service boundary.
 
+### Privacy and personal-information governance
+
+- Added a GitHub Pages-ready privacy documentation section with Mermaid data-flow, evidence-lifecycle, rights, federation, and threat diagrams.
+- Added machine-readable data inventory, processing-purpose, responsibility, privacy, context, retention, and redaction artifacts.
+- Added minimal receipt, replay bundle, and regulated evidence profiles.
+- Made the HTTP audit endpoint default to a redacted minimal receipt and require an explicit scope for raw replay exports.
+- Added privacy-control conformance tests and repository validation gates.
+
 ## Unreleased
 
 ### Added

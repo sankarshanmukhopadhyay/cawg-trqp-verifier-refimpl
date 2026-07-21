@@ -1,0 +1,11 @@
+version: 1
+purposes:
+  - id: verify_authorization
+    description: determine whether an actor is authorized for a scoped action
+    compatible_outputs: [minimal_receipt, replay_bundle]
+  - id: resolve_recognition
+    description: determine whether an authority is recognized under a policy
+    compatible_outputs: [minimal_receipt]
+  - id: dispute_replay
+    description: reproduce a prior verification for review or appeal
+    compatible_outputs: [replay_bundle, regulated_evidence]

@@ -1,0 +1,4 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","required":["id","rules"],
+  "properties":{"id":{"type":"string"},"rules":{"type":"array","items":{"type":"object","required":["field","action"],"properties":{"field":{"type":"string"},"action":{"enum":["retain","remove","digest","reference"]}},"additionalProperties":false}}},"additionalProperties":false
+}

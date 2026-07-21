@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/schemas/privacy-profile.schema.json",
+  "type":"object","required":["id","status","processing_purpose","data_categories","retention_days","access_scope","audit_mode"],
+  "properties":{
+    "id":{"type":"string"},"status":{"const":"non-normative"},"processing_purpose":{"type":"string"},
+    "lawful_basis":{"type":"string"},"data_categories":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "retention_days":{"type":"integer","minimum":0},"access_scope":{"type":"string"},
+    "audit_mode":{"enum":["minimal_receipt","replay_bundle","regulated_evidence"]},
+    "cross_border_transfer":{"type":"boolean"},"human_review_required":{"type":"boolean"}
+  },"additionalProperties":false
+}

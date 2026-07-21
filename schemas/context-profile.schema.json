@@ -1,0 +1,4 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","required":["id","allowed_fields"],
+  "properties":{"id":{"type":"string"},"allowed_fields":{"type":"array","items":{"type":"object","required":["name","purpose","personal_data"],"properties":{"name":{"type":"string"},"purpose":{"type":"string"},"personal_data":{"type":"boolean"},"required":{"type":"boolean"}},"additionalProperties":false}},"allow_extensions":{"type":"boolean"}},"additionalProperties":false
+}

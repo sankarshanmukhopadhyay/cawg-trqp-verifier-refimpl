@@ -1,0 +1,1 @@
+{"id":"recorded-music-distribution-v1","allowed_fields":[{"name":"territory","purpose":"scope authorization","personal_data":false,"required":true},{"name":"platform","purpose":"scope authorization","personal_data":false,"required":true},{"name":"release_type","purpose":"select policy","personal_data":false,"required":false}],"allow_extensions":false}

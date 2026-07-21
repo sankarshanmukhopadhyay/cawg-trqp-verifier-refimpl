@@ -1,0 +1,14 @@
+version: 1
+roles:
+  - component: relying_platform
+    likely_role: controller_or_data_fiduciary
+    responsibility: determine purpose, notice, rights handling and final action
+  - component: trust_gateway
+    likely_role: processor_or_independent_controller
+    responsibility: minimize routing data, protect mediation traces and enforce retention
+  - component: trust_registry
+    likely_role: processor_or_independent_controller
+    responsibility: govern query logging, accuracy, correction and disclosure
+  - component: assurance_provider
+    likely_role: processor_or_independent_controller
+    responsibility: protect evidence and limit secondary use

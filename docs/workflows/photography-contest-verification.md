@@ -66,27 +66,6 @@ With this verifier, each contest decision can produce a decision receipt and an 
 
 ## End-to-end workflow
 
-```mermaid
-sequenceDiagram
-    participant O as Contest organiser
-    participant P as Participant
-    participant V as Verifier
-    participant R as Trust registry
-    participant A as Appeals reviewer
-
-    O->>V: Signed policy and revocation feeds
-    P->>V: Photograph, provenance and submission metadata
-    V->>V: Validate integrity and descriptor evidence
-    V->>R: Query recognition and authorization
-    R-->>V: Current policy decision
-    V-->>P: Decision receipt
-    V-->>A: Replayable audit bundle
-    A->>V: Replay pinned decision inputs
-    V-->>A: Match or explained difference
-```
-
-The sequence shows where authority enters the workflow and where evidence leaves it. The organiser controls contest policy, the registry answers current recognition and authorization questions, and the verifier records enough pinned evidence for an independent appeal or audit.
-
 ### 1. The organiser publishes contest rules
 
 Before entries are judged, the organiser publishes a machine-readable policy feed. For a photography contest, the policy feed may declare:

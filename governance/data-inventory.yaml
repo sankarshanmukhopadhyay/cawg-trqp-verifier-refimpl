@@ -1,0 +1,23 @@
+version: 1
+status: non-normative
+fields:
+  - field: asset_id
+    classification: [personal_data_possible, confidential_business_data_possible]
+    purpose: bind decision to asset
+    default_retention: transient
+  - field: entity_id
+    classification: [personal_data_possible, pseudonymous_identifier]
+    purpose: identify authorization subject
+    default_retention: profile_defined
+  - field: issuer_id
+    classification: [personal_data_possible, organizational_identifier]
+    purpose: identify asserted issuer
+    default_retention: profile_defined
+  - field: context
+    classification: [personal_data_possible, sensitive_data_prohibited_by_default]
+    purpose: scope policy decision
+    default_retention: profile_defined
+  - field: process_evidence
+    classification: [personal_data_possible, confidential_business_data_possible]
+    purpose: appraise process controls
+    default_retention: privileged_only

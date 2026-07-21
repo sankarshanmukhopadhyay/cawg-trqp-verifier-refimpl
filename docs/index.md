@@ -87,3 +87,7 @@ for the full authority and decision-rights model.
 - [Scalability and performance](scalability-and-performance.md)
 - [Cache, freshness, and revocation](cache-freshness-and-revocation.md)
 - [High-volume deployment profile](high-volume-deployment-profile.md)
+
+## Privacy and personal information
+
+Deployers, privacy teams, and assurance reviewers should begin with the [Privacy and Personal Information](privacy/index.md) section. It covers data flow, role allocation, context minimization, evidence profiles, retention, correction, cross-border federation, and privacy threats.

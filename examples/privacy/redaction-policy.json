@@ -1,0 +1,1 @@
+{"id":"minimal-receipt-v1","rules":[{"field":"asset_id","action":"digest"},{"field":"entity_id","action":"digest"},{"field":"issuer_id","action":"digest"},{"field":"resource","action":"digest"},{"field":"context","action":"digest"},{"field":"process_evidence","action":"remove"}]}

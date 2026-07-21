@@ -13,6 +13,8 @@ from .gateway import TrustGateway
 from .mock_service import MockTRQPService
 from .models import AuthorizationResponse, RecognitionResponse, VerificationRequest
 from .profile import VerificationProfileError, load_api_profile
+from .privacy import load_privacy_profile
+from .access_control import require_scope
 from .verifier import Verifier
 
 MAX_REQUEST_BYTES = 64 * 1024
@@ -118,8 +120,17 @@ class HTTPTRQPService:
             verifier = self.gateway_verifier if use_gateway else self.verifier
             result = verifier.verify(req, profile=profile)
             self._emit_audit_event("audit_bundle", profile, use_gateway, result.to_dict())
+            privacy_name = data.get("privacy_profile", "minimal_receipt")
             try:
-                bundle = build_audit_bundle(req, result, profile=profile, use_gateway=use_gateway)
+                privacy_profile = load_privacy_profile(privacy_name)
+                scopes = {scope.strip() for scope in request.headers.get("X-TRQP-Scopes", "").split(",") if scope.strip()}
+                if privacy_profile.include_raw_request:
+                    require_scope(scopes, privacy_profile.access_scope)
+                bundle = build_audit_bundle(
+                    req, result, profile=profile, use_gateway=use_gateway, privacy_profile=privacy_profile
+                )
+            except PermissionError as exc:
+                return jsonify({"error": "forbidden", "message": str(exc)}), 403
             except ValueError as exc:
                 return jsonify({"error": "invalid_request", "message": str(exc)}), 400
             return jsonify(bundle.to_dict()), 200

@@ -8,6 +8,8 @@ from typing import Any
 from .jsoncanon import canonical_json_bytes, sha256_hex
 from .models import VerificationRequest, VerificationResult
 from .profile import VerificationProfile, load_profile
+from .privacy import PrivacyProfile, load_privacy_profile
+from .redaction import redact_request
 
 AUDIT_BUNDLE_TYPE = "cawg-trqp-audit-bundle"
 AUDIT_BUNDLE_PROFILE = "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/profiles/audit-bundle/v1"
@@ -80,8 +82,10 @@ def build_audit_bundle(
     policy_descriptor_path: str | Path | None = None,
     revocation_descriptor_path: str | Path | None = None,
     trust_anchors_path: str | Path | None = None,
+    privacy_profile: str | PrivacyProfile | None = "replay_bundle",
 ) -> AuditBundle:
     resolved_profile = load_profile(profile)
+    resolved_privacy = load_privacy_profile(privacy_profile)
     controls = resolved_profile.controls
     if controls["determinism"]["require_pinned_feeds"] and policy_path is None:
         raise ValueError("profile requires pinned policy feeds for deterministic replay")
@@ -105,17 +109,30 @@ def build_audit_bundle(
         policy_feed["trust_anchors_source"] = str(trust_anchors_path)
         policy_feed["trust_anchors_source_sha256"] = sha256_hex(Path(trust_anchors_path).read_text(encoding="utf-8"))
 
+    raw_request = {
+        "asset_id": request.asset_id,
+        "integrity_ok": request.integrity_ok,
+        "entity_id": request.entity_id,
+        "authority_id": request.authority_id,
+        "issuer_id": request.issuer_id,
+        "action": request.action,
+        "resource": request.resource,
+        "context": request.context,
+        "process_evidence": request.process_evidence,
+    }
+    protected_request = redact_request(
+        raw_request,
+        include_raw=resolved_privacy.include_raw_request,
+        include_process_evidence=resolved_privacy.include_process_evidence,
+        pseudonymize=resolved_privacy.pseudonymize_identifiers,
+    )
     replay_inputs = {
-        "request": {
-            "asset_id": request.asset_id,
-            "integrity_ok": request.integrity_ok,
-            "entity_id": request.entity_id,
-            "authority_id": request.authority_id,
-            "issuer_id": request.issuer_id,
-            "action": request.action,
-            "resource": request.resource,
-            "context": request.context,
-            "process_evidence": request.process_evidence,
+        "request": protected_request,
+        "privacy": {
+            "profile": resolved_privacy.id,
+            "retention_days": resolved_privacy.retention_days,
+            "access_scope": resolved_privacy.access_scope,
+            "contains_raw_request": resolved_privacy.include_raw_request,
         },
         "profile": resolved_profile.to_dict(),
         "use_gateway": use_gateway,

@@ -137,6 +137,8 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 
 ## Documentation
 
+- [Privacy and Personal Information](docs/privacy/index.md): executable privacy profiles, minimization, retention, redaction, rights, and threat controls.
+
 - [Scalability and performance](docs/scalability-and-performance.md)
 - [Cache, freshness, and revocation](docs/cache-freshness-and-revocation.md)
 - [High-volume deployment profile](docs/high-volume-deployment-profile.md)

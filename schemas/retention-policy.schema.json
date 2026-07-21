@@ -1,0 +1,4 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","type":"object",
+  "required":["profile","artifacts"],"properties":{"profile":{"type":"string"},"artifacts":{"type":"array","items":{"type":"object","required":["type","retention_days","disposition"],"properties":{"type":{"type":"string"},"retention_days":{"type":"integer","minimum":0},"disposition":{"enum":["delete","anonymize","legal_hold"]},"legal_hold_override":{"type":"boolean"}},"additionalProperties":false}}},"additionalProperties":false
+}
