@@ -1,0 +1,28 @@
+id: THR-SUPPLY-007
+title: Build or dependency compromise
+adversary_ids:
+- ADV-09
+surface_ids:
+- SURF-SUPPLY
+impact: critical
+likelihood: medium
+controls:
+  preventive:
+  - dependency pinning
+  - least-privilege CI
+  - protected workflows
+  detective:
+  - artifact checksum verification
+  - dependency and workflow review
+  recovery:
+  - revoke compromised credentials
+  - rebuild and republish from trusted source
+evidence:
+- dependency lockfile
+- CI run record
+- artifact digest
+tests:
+- test_release_assets_manifest
+test_status: implemented
+residual_risk: medium
+assurance_level: AL3

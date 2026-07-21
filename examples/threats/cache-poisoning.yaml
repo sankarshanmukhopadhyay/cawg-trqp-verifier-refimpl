@@ -1,0 +1,27 @@
+id: THR-CACHE-003
+title: Cache poisoning or tenant collision
+adversary_ids:
+- ADV-05
+- ADV-08
+surface_ids:
+- SURF-CACHE
+impact: high
+likelihood: medium
+controls:
+  preventive:
+  - canonical scoped keys
+  - tenant isolation
+  detective:
+  - cache provenance
+  - mismatch metrics
+  recovery:
+  - targeted invalidation
+  - live re-query
+evidence:
+- cache key digest
+- source authority
+tests:
+- test_no_cross_authority_cache_collision
+test_status: implemented
+residual_risk: low
+assurance_level: AL2

@@ -42,6 +42,10 @@ nav_order: 1
 
 ## Unreleased
 
+### Security and assurance
+
+- Added a complete adversarial threat and risk documentation package with diagram-rich GitHub Pages content, machine-readable registers, scenarios, and conformance tests.
+
 ### Added
 
 - Added a CAWG-to-TRQP integration enablement guide that defines the CAWG work programme, responsibility allocation, minimum portable signal, specification ownership, privacy posture, call sequence, conformance criteria, and definition of done.

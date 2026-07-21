@@ -1,0 +1,101 @@
+version: '1.0'
+surfaces:
+- id: SURF-HTTP
+  name: HTTP API
+  boundaries:
+  - external_client_to_service
+  assets:
+  - requests
+  - audit_exports
+  required_controls:
+  - authentication
+  - authorization
+  - rate_limiting
+  - request_limits
+- id: SURF-PARSER
+  name: CAWG/C2PA parser boundary
+  boundaries:
+  - untrusted_asset_to_validator
+  assets:
+  - validation_result
+  required_controls:
+  - isolation
+  - resource_limits
+  - deterministic_mapping
+- id: SURF-CACHE
+  name: Decision cache
+  boundaries:
+  - verifier_to_cache
+  assets:
+  - decisions
+  - policy_evidence
+  required_controls:
+  - canonical_keys
+  - tenant_isolation
+  - ttl
+  - invalidation
+- id: SURF-GATEWAY
+  name: Trust gateway
+  boundaries:
+  - verifier_to_gateway
+  - gateway_to_registry
+  assets:
+  - routes
+  - queries
+  - mediation_traces
+  required_controls:
+  - route_signing
+  - authority_pinning
+  - timeouts
+- id: SURF-REGISTRY
+  name: Trust registry
+  boundaries:
+  - gateway_to_registry
+  assets:
+  - recognition_state
+  - authorization_state
+  - revocation_state
+  required_controls:
+  - authenticated_responses
+  - policy_epochs
+  - equivocation_detection
+- id: SURF-EVIDENCE
+  name: Evidence and replay
+  boundaries:
+  - verifier_to_store
+  - assessor_to_store
+  assets:
+  - receipts
+  - audit_bundles
+  required_controls:
+  - digests
+  - access_control
+  - retention
+  - redaction
+- id: SURF-SUPPLY
+  name: Build and release
+  boundaries:
+  - source_to_ci
+  - ci_to_artifact
+  assets:
+  - source
+  - dependencies
+  - artifacts
+  required_controls:
+  - pinning
+  - least_privilege
+  - checksums
+  - attestations
+- id: SURF-GOV
+  name: Governance configuration
+  boundaries:
+  - administrator_to_control_plane
+  assets:
+  - profiles
+  - recognition_rules
+  - overrides
+  required_controls:
+  - approval
+  - signatures
+  - audit
+  - expiry

@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Threat record",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "adversary_ids",
+    "surface_ids",
+    "impact",
+    "likelihood",
+    "controls",
+    "evidence",
+    "test_status",
+    "residual_risk"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^THR-[A-Z]+-[0-9]{3}$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "adversary_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "surface_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "impact": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "likelihood": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "controls": {
+      "type": "object",
+      "required": [
+        "preventive",
+        "detective",
+        "recovery"
+      ],
+      "properties": {
+        "preventive": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "detective": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "recovery": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "test_status": {
+      "enum": [
+        "implemented",
+        "planned",
+        "not_applicable"
+      ]
+    },
+    "residual_risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "assurance_level": {
+      "enum": [
+        "AL1",
+        "AL2",
+        "AL3",
+        "AL4"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

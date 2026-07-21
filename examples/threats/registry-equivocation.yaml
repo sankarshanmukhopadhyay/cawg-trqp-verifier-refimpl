@@ -1,0 +1,25 @@
+id: THR-REG-002
+title: Registry equivocation
+adversary_ids:
+- ADV-04
+surface_ids:
+- SURF-REGISTRY
+impact: critical
+likelihood: medium
+controls:
+  preventive:
+  - signed responses
+  - policy epoch binding
+  detective:
+  - cross-observer digest comparison
+  recovery:
+  - distrust registry
+  - re-evaluate affected decisions
+evidence:
+- response digest
+- equivocation report
+tests:
+- test_registry_equivocation_vector
+test_status: planned
+residual_risk: medium
+assurance_level: AL4

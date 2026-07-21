@@ -1,0 +1,27 @@
+id: THR-GW-001
+title: Gateway route substitution
+adversary_ids:
+- ADV-05
+- ADV-07
+surface_ids:
+- SURF-GATEWAY
+impact: critical
+likelihood: medium
+controls:
+  preventive:
+  - signed route descriptors
+  - authority pinning
+  detective:
+  - route evidence in receipt
+  - route mismatch alert
+  recovery:
+  - route-key revocation
+  - cache invalidation
+evidence:
+- mediation trace
+- route descriptor digest
+tests:
+- test_gateway_route_mismatch
+test_status: planned
+residual_risk: medium
+assurance_level: AL3

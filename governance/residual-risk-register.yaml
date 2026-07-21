@@ -1,0 +1,40 @@
+version: '1.0'
+risks:
+- risk_id: THR-REG-002
+  title: Registry equivocation
+  inherent_risk: critical
+  controls:
+  - signed responses
+  - policy epoch evidence
+  - observer comparison
+  residual_risk: medium
+  accepted_by: deployment governance authority
+  acceptance_expiry: '2027-01-31'
+  monitoring:
+  - equivocation alert rate
+  - cross-observer digest mismatch
+  evidence:
+  - assurance report
+  - test vector
+  reassessment_triggers:
+  - registry key rotation
+  - material incident
+- risk_id: THR-GOV-006
+  title: Governance policy capture
+  inherent_risk: critical
+  controls:
+  - multi-party approval
+  - published criteria
+  - appeal process
+  residual_risk: high
+  accepted_by: pilot steering committee
+  acceptance_expiry: '2026-12-31'
+  monitoring:
+  - appeal overturn rate
+  - override count
+  evidence:
+  - governance charter
+  - decision log
+  reassessment_triggers:
+  - participant concentration change
+  - appeal suppression allegation

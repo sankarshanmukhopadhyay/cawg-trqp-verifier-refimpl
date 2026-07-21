@@ -1,0 +1,27 @@
+id: THR-PARSER-004
+title: Parser resource exhaustion
+adversary_ids:
+- ADV-01
+- ADV-10
+surface_ids:
+- SURF-PARSER
+- SURF-HTTP
+impact: high
+likelihood: high
+controls:
+  preventive:
+  - request size limit
+  - parser resource budget
+  detective:
+  - latency and saturation alerts
+  recovery:
+  - quarantine input
+  - shed load
+evidence:
+- request rejection event
+- resource metrics
+tests:
+- test_request_size_limit
+test_status: implemented
+residual_risk: medium
+assurance_level: AL2

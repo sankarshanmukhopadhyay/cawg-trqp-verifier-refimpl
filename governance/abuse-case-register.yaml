@@ -1,0 +1,38 @@
+version: '1.0'
+abuse_cases:
+- id: ABUSE-001
+  title: Unknown treated as fraudulent
+  legitimate_capability: authorization outcome
+  harm: unjust exclusion
+  guardrails:
+  - distinct reason codes
+  - human review
+  - appeal
+  owner: deployment governance authority
+- id: ABUSE-002
+  title: Trust registry used as industry blacklist
+  legitimate_capability: recognition governance
+  harm: market exclusion and concentration
+  guardrails:
+  - transparent criteria
+  - independent review
+  - time-bounded decisions
+  owner: sector governance authority
+- id: ABUSE-003
+  title: Audit bundle used for surveillance
+  legitimate_capability: replay evidence
+  harm: activity profiling
+  guardrails:
+  - minimal receipt default
+  - purpose binding
+  - retention limit
+  owner: data controller
+- id: ABUSE-004
+  title: Human review bypassed
+  legitimate_capability: automated decision
+  harm: material adverse action without redress
+  guardrails:
+  - binding/advisory declaration
+  - review route
+  - restoration evidence
+  owner: relying party

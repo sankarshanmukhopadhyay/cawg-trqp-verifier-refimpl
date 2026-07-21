@@ -1,0 +1,104 @@
+version: '1.0'
+adversaries:
+- id: ADV-01
+  name: Malicious content submitter
+  capabilities:
+  - controls asset and assertions
+  objectives:
+  - bypass validation
+  - exhaust resources
+  constraints:
+  - deployment-dependent
+- id: ADV-02
+  name: Fraudulent actor
+  capabilities:
+  - uses stolen identifiers
+  objectives:
+  - obtain false authorization
+  constraints:
+  - deployment-dependent
+- id: ADV-03
+  name: Compromised issuer
+  capabilities:
+  - issues misleading assertions
+  objectives:
+  - elevate authority
+  constraints:
+  - deployment-dependent
+- id: ADV-04
+  name: Malicious registry operator
+  capabilities:
+  - controls registry responses
+  objectives:
+  - publish false state
+  - equivocate
+  constraints:
+  - deployment-dependent
+- id: ADV-05
+  name: Compromised gateway
+  capabilities:
+  - controls routing and mediation
+  objectives:
+  - substitute authority
+  - correlate queries
+  constraints:
+  - deployment-dependent
+- id: ADV-06
+  name: Network attacker
+  capabilities:
+  - observes and replays traffic
+  objectives:
+  - steal data
+  - delay decisions
+  constraints:
+  - deployment-dependent
+- id: ADV-07
+  name: Privileged insider
+  capabilities:
+  - administrative access
+  objectives:
+  - alter policy
+  - exfiltrate evidence
+  constraints:
+  - deployment-dependent
+- id: ADV-08
+  name: Tenant attacker
+  capabilities:
+  - valid tenant credentials
+  objectives:
+  - cross-tenant inference
+  constraints:
+  - deployment-dependent
+- id: ADV-09
+  name: Supply-chain attacker
+  capabilities:
+  - changes dependencies or build
+  objectives:
+  - compromise artifacts
+  constraints:
+  - deployment-dependent
+- id: ADV-10
+  name: Resource-exhaustion attacker
+  capabilities:
+  - generates costly traffic
+  objectives:
+  - deny service
+  constraints:
+  - deployment-dependent
+- id: ADV-11
+  name: Evidence manipulator
+  capabilities:
+  - access to evidence path
+  objectives:
+  - falsify replay
+  constraints:
+  - deployment-dependent
+- id: ADV-12
+  name: Governance attacker
+  capabilities:
+  - influences policy decisions
+  objectives:
+  - exclude competitors
+  - suppress redress
+  constraints:
+  - deployment-dependent

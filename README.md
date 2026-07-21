@@ -135,6 +135,10 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 | `assets/presentations/cawg-trqp-explainer-v2.pdf` | Non-normative explainer deck for standards and adoption review |
 | `assets/presentations/manifest.json` | Presentation version, authority, checksum, and update triggers |
 
+## Threat and adversarial assurance
+
+The [Threats and Risks](docs/threats-and-risks/index.md) package defines system assets, trust boundaries, adversary profiles, attack surfaces, multi-stage scenarios, abuse cases, recovery controls, and machine-verifiable residual-risk decisions.
+
 ## Documentation
 
 - [Privacy and Personal Information](docs/privacy/index.md): executable privacy profiles, minimization, retention, redaction, rights, and threat controls.

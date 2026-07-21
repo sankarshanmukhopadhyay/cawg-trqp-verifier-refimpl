@@ -1,0 +1,27 @@
+id: THR-GOV-006
+title: Governance policy capture
+adversary_ids:
+- ADV-12
+surface_ids:
+- SURF-GOV
+impact: critical
+likelihood: medium
+controls:
+  preventive:
+  - multi-party approval
+  - published criteria
+  detective:
+  - change audit
+  - appeal metrics
+  recovery:
+  - revoke policy
+  - restore prior profile
+evidence:
+- approval record
+- profile digest
+- appeal record
+tests:
+- test_governance_override_has_expiry
+test_status: planned
+residual_risk: high
+assurance_level: AL4

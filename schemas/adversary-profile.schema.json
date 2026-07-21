@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Adversary profile",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "capabilities",
+    "objectives"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^ADV-[0-9]{2}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

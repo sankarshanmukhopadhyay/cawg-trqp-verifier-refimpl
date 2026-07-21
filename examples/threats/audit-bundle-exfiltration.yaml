@@ -1,0 +1,28 @@
+id: THR-EVID-005
+title: Audit bundle exfiltration
+adversary_ids:
+- ADV-07
+- ADV-08
+surface_ids:
+- SURF-EVIDENCE
+- SURF-HTTP
+impact: high
+likelihood: medium
+controls:
+  preventive:
+  - privileged export scope
+  - minimal receipt default
+  detective:
+  - export audit event
+  recovery:
+  - revoke access
+  - incident response
+evidence:
+- privacy profile
+- access decision
+- export event
+tests:
+- test_replay_bundle_requires_scope
+test_status: implemented
+residual_risk: low
+assurance_level: AL2

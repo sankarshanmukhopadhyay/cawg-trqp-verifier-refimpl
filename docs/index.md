@@ -91,3 +91,8 @@ for the full authority and decision-rights model.
 ## Privacy and personal information
 
 Deployers, privacy teams, and assurance reviewers should begin with the [Privacy and Personal Information](privacy/index.md) section. It covers data flow, role allocation, context minimization, evidence profiles, retention, correction, cross-border federation, and privacy threats.
+
+
+## Threats and adversarial assurance
+
+Security reviewers, operators, and governance authorities should use the [Threats and Risks](threats-and-risks/index.md) section for the system threat model, trust boundaries, attack scenarios, abuse cases, recovery procedures, and machine-readable residual-risk decisions.
