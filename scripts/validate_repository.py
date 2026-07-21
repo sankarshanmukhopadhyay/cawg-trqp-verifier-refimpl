@@ -29,18 +29,26 @@ if manifest_path.is_file():
 
 # GitHub Pages/Just the Docs integrity checks. Every rendered documentation
 # page must opt into the theme layout, and every declared parent must resolve
-# to a navigation node that advertises children.
-doc_pages = sorted((root / "docs").rglob("*.md"))
+# to a navigation node that advertises children. Root-level governance and
+# release pages are included because Jekyll renders them alongside docs/.
+rendered_root_pages = [
+    "AI_USAGE.md", "CHANGELOG.md", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md",
+    "GOVERNANCE.md", "QUICKSTART.md", "ROADMAP.md", "SECURITY.md",
+]
+rendered_root_pages.extend(
+    str(path.relative_to(root)) for path in sorted(root.glob("RELEASE_NOTES_*.md"))
+)
+site_pages = sorted((root / "docs").rglob("*.md")) + [root / rel for rel in rendered_root_pages]
 nav_nodes = {}
 page_front_matter = {}
 front_matter_pattern = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 
-for page in doc_pages:
+for page in site_pages:
     rel = page.relative_to(root)
     text = page.read_text(encoding="utf-8", errors="replace")
     match = front_matter_pattern.match(text)
     if not match:
-        errors.append(f"GitHub Pages document missing front matter: {rel}")
+        errors.append(f"GitHub Pages document missing or misplaced front matter: {rel}")
         continue
 
     fields = {}
@@ -53,6 +61,8 @@ for page in doc_pages:
 
     if fields.get("layout") != "default":
         errors.append(f"GitHub Pages document must use layout default: {rel}")
+    if not fields.get("title"):
+        errors.append(f"GitHub Pages document missing title: {rel}")
 
     title = fields.get("title")
     if title and fields.get("has_children", "").lower() == "true":
@@ -62,6 +72,30 @@ for rel, fields in page_front_matter.items():
     parent = fields.get("parent")
     if parent and parent not in nav_nodes:
         errors.append(f"GitHub Pages document has unresolved navigation parent '{parent}': {rel}")
+
+# Mermaid diagrams depend on the custom head include and must remain available
+# whenever fenced Mermaid blocks are present.
+mermaid_pages = []
+for page in site_pages:
+    if "```mermaid" in page.read_text(encoding="utf-8", errors="replace"):
+        mermaid_pages.append(page.relative_to(root))
+head_custom = root / "_includes" / "head_custom.html"
+if mermaid_pages:
+    if not head_custom.is_file():
+        errors.append("Mermaid diagrams exist but _includes/head_custom.html is missing")
+    else:
+        loader = head_custom.read_text(encoding="utf-8", errors="replace")
+        for marker in ("mermaid", "language-mermaid", "mermaid.initialize"):
+            if marker not in loader:
+                errors.append(f"Mermaid loader missing required marker '{marker}'")
+
+# Pages must rebuild when documentation rendering dependencies change.
+pages_workflow = root / ".github" / "workflows" / "pages.yml"
+if pages_workflow.is_file():
+    workflow_text = pages_workflow.read_text(encoding="utf-8", errors="replace")
+    for watched_path in ('"docs/**"', '"assets/**"', '"_includes/**"', '"*.md"', '"_config.yml"', '"Gemfile"'):
+        if watched_path not in workflow_text:
+            errors.append(f"Pages workflow does not watch rendering dependency: {watched_path}")
 
 readme=(root/'README.md').read_text(encoding='utf-8')
 for marker in ['Portfolio tier','Validation','Evidence output','Governance authority']:

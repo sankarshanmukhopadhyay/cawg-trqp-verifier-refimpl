@@ -36,7 +36,7 @@ accountable, testable, and interoperable verifier looks like.
 
 | If you are&hellip; | Start with |
 |---|---|
-| New to this space, or reviewing it for context (governance, editorial, program management) | [Presentation](presentation.md), [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) |
+| New to this space, or reviewing it for context (governance, editorial, program management) | [Presentation](presentation.md), [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then a scenario such as the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) or [Newsroom Citizen-Video Verification](workflows/newsroom-citizen-video-verification.md) |
 | A CAWG or C2PA participant deciding what must change for TRQP integration | [CAWG-to-TRQP Integration Enablement](cawg-trqp-integration-enablement.md), then [CAWG Input Contract](cawg-input-contract.md) and [API Call Catalogue](api-call-catalogue.md) |
 | A developer integrating a verifier into your own system | [Quickstart](../QUICKSTART.md), then [CAWG Input Contract](cawg-input-contract.md), [API Call Catalogue](api-call-catalogue.md), and [Integration Guide](INTEGRATION_GUIDE.md) |
 | Standing up or operating a deployment | [Architecture](architecture.md), then [Deployment Guide](deployment-guide.md) |
@@ -79,6 +79,8 @@ for the full authority and decision-rights model.
 {: .note }
 
 
-- [Scalability and performance](scalability-and-performance.md)
-- [Cache, freshness, and revocation](cache-freshness-and-revocation.md)
-- [High-volume deployment profile](high-volume-deployment-profile.md)
+## Scale and operational posture
+
+- [Scalability and Performance](scalability-and-performance.md)
+- [Cache, Freshness, and Revocation](cache-freshness-and-revocation.md)
+- [High-Volume Deployment Profile](high-volume-deployment-profile.md)

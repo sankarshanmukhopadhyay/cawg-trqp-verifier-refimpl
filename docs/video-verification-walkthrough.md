@@ -108,6 +108,24 @@ With TRQP:
 
 # End-to-end workflow
 
+```mermaid
+flowchart LR
+    A[Video and CAWG/C2PA manifest] --> B[Validate integrity and provenance]
+    B --> C[Extract actor, issuer, action, resource and context]
+    C --> D[Select verifier profile]
+    D --> E[Query recognition and authorization through TRQP]
+    E --> F[Evaluate freshness, revocation and process evidence]
+    F --> G{Decision}
+    G -->|Trusted| H[Accept into official workflow]
+    G -->|Indeterminate| I[Escalate for review]
+    G -->|Untrusted| J[Reject or quarantine]
+    H --> K[Decision receipt and audit bundle]
+    I --> K
+    J --> K
+```
+
+The diagram separates content validation from governance evaluation. A valid signature can move the request into the trust-decision stage, but it does not by itself establish that the actor was authorized or that the submission may be used for the stated purpose.
+
 ## Step 1: Request is created
 
 The video is represented as a structured request including:
