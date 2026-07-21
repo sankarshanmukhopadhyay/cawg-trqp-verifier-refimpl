@@ -8,12 +8,11 @@ permalink: /
 # CAWG-TRQP Reference Implementation
 
 Start with the **[guided learning paths](guided-learning.md)** for role-specific reading sequences and completion tests. The **[documentation architecture](documentation-architecture.md)** explains how implementation contracts, operational controls, risk material and adoption guidance fit together.
-{: .fs-9 }
+{: .fs-6 .fw-300 }
 
 An executable reference verifier that connects TRQP authority queries to
 content-authenticity decisions, structured decision receipts, and
 replayable audit evidence.
-{: .fs-6 .fw-300 }
 
 [Quickstart](../QUICKSTART.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
