@@ -1,0 +1,11 @@
+{
+  "authorized": true,
+  "expires": "2027-07-31T23:59:59Z",
+  "policy_epoch": "2026-08-01",
+  "evidence": ["urn:policy:music:distribution:00001"],
+  "policy_requirements": {
+    "territory": "US",
+    "platform": "pilot-streaming-service",
+    "delegation_allowed": false
+  }
+}

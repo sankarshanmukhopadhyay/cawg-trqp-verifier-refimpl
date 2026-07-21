@@ -1,0 +1,5 @@
+{
+  "authority_id": "did:web:music-trust.example",
+  "recognized_authority_id": "did:web:label.example",
+  "context": {"profile": "recorded-music-distribution-v1", "territory": "US"}
+}

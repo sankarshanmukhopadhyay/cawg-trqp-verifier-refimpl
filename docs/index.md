@@ -36,13 +36,18 @@ accountable, testable, and interoperable verifier looks like.
 
 | If you are&hellip; | Start with |
 |---|---|
-| New to this space, or reviewing it for context (governance, editorial, program management) | [Presentation](presentation.md), [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then a scenario such as the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) or [Newsroom Citizen-Video Verification](workflows/newsroom-citizen-video-verification.md) |
-| A CAWG or C2PA participant deciding what must change for TRQP integration | [CAWG-to-TRQP Integration Enablement](cawg-trqp-integration-enablement.md), then [CAWG Input Contract](cawg-input-contract.md) and [API Call Catalogue](api-call-catalogue.md) |
+| New to this space, or reviewing it for context (governance, editorial, program management) | [Presentation](presentation.md), [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) |
+| A CAWG or C2PA participant deciding what must change for TRQP integration | [CAWG-to-TRQP Integration Enablement](cawg-trqp-integration-enablement.md), then [CAWG Implementation Playbook](industry-adoption/cawg-implementation-playbook.md), [CAWG Input Contract](cawg-input-contract.md), and [API Call Catalogue](api-call-catalogue.md) |
+| An industry body or sector programme sponsor | [Industry Body Decision Brief](industry-adoption/industry-body-decision-brief.md), then the [Music-Industry Pilot Blueprint](industry-adoption/music-industry-pilot-blueprint.md) |
 | A developer integrating a verifier into your own system | [Quickstart](../QUICKSTART.md), then [CAWG Input Contract](cawg-input-contract.md), [API Call Catalogue](api-call-catalogue.md), and [Integration Guide](INTEGRATION_GUIDE.md) |
 | Standing up or operating a deployment | [Architecture](architecture.md), then [Deployment Guide](deployment-guide.md) |
 | Reviewing assurance, evidence, or audit posture | [How TRQP Enables Assurance](how-trqp-enables-assurance.md), then [Decision Receipt Specification](decision-receipt-specification.md) and [Audit Bundle Profile](audit-bundle-profile.md) |
 | Building or running a conformance/interoperability program | [Assurance Suite Ingestion](assurance-suite-ingestion.md), [Interoperability Vectors](interoperability-vectors.md), [Compatibility Matrix](compatibility-matrix.md) |
 | Deciding whether to contribute, or reporting a security issue | [Governance](../GOVERNANCE.md), [Contributing](../CONTRIBUTING.md), [Security Policy](../SECURITY.md) |
+
+## Industry adoption
+
+For decision-makers and implementers exploring sector deployment, the [Industry Adoption](industry-adoption/index.md) package provides a decision brief, recorded-music application profile, CAWG implementation playbook, bounded pilot blueprint, executable walkthrough, canonical payloads, and machine-readable readiness gates.
 
 ## What it enables today
 
@@ -79,8 +84,6 @@ for the full authority and decision-rights model.
 {: .note }
 
 
-## Scale and operational posture
-
-- [Scalability and Performance](scalability-and-performance.md)
-- [Cache, Freshness, and Revocation](cache-freshness-and-revocation.md)
-- [High-Volume Deployment Profile](high-volume-deployment-profile.md)
+- [Scalability and performance](scalability-and-performance.md)
+- [Cache, freshness, and revocation](cache-freshness-and-revocation.md)
+- [High-volume deployment profile](high-volume-deployment-profile.md)

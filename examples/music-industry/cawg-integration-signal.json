@@ -1,0 +1,25 @@
+{
+  "type": "CawgTrqpIntegrationSignal",
+  "version": "0.1",
+  "asset": {"id": "isrc:US-ABC-26-00001", "media_type": "audio/flac"},
+  "validation": {
+    "status": "verified",
+    "validator": "c2pa-validator.example",
+    "validated_at": "2026-08-01T10:30:00Z",
+    "evidence_ref": "urn:evidence:c2pa:music-00001"
+  },
+  "actor": {"id": "did:web:distributor.example", "identifier_type": "did"},
+  "issuer": {"id": "did:web:label.example", "identifier_type": "did"},
+  "action": {"type": "distribute", "resource": "isrc:US-ABC-26-00001"},
+  "context": {
+    "profile": "recorded-music-distribution-v1",
+    "territory": "US",
+    "platform": "pilot-streaming-service",
+    "effective_at": "2026-08-01T10:30:00Z"
+  },
+  "source_bindings": [
+    {"field": "actor.id", "assertion_ref": "cawg.assertion.distributor"},
+    {"field": "issuer.id", "assertion_ref": "cawg.assertion.label"},
+    {"field": "action.resource", "assertion_ref": "c2pa.assertion.metadata"}
+  ]
+}

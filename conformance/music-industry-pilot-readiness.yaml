@@ -1,0 +1,65 @@
+profile: recorded-music-distribution-pilot
+version: "0.1"
+authority_status: non-normative-reference-profile
+readiness_gates:
+  - id: MUSIC-01
+    requirement: Pilot governance authority, scope, and decision rights are approved.
+    owner: industry-body
+    evidence:
+      - governance-charter
+      - responsibility-matrix
+  - id: MUSIC-02
+    requirement: CAWG actor and issuer extraction rules are deterministic and evidence-bound.
+    owner: cawg-implementation-team
+    evidence:
+      - docs/industry-adoption/cawg-implementation-playbook.md
+      - examples/music-industry/cawg-integration-signal.json
+  - id: MUSIC-03
+    requirement: Label and distributor identifiers are typed and resolvable.
+    owner: integration-profile-custodian
+    evidence:
+      - identifier-profile
+      - positive-and-negative-vectors
+  - id: MUSIC-04
+    requirement: Distribution authority is scoped by recording or catalogue, territory, platform, and time.
+    owner: policy-authority
+    evidence:
+      - schemas/music-industry-authorization-record.schema.json
+      - examples/music-industry/authorization-record.json
+  - id: MUSIC-05
+    requirement: Recognition, authorization, expiry, revocation, scope mismatch, and unavailable-service outcomes are tested.
+    owner: conformance-operator
+    evidence:
+      - examples/music-industry/
+      - conformance-report
+  - id: MUSIC-06
+    requirement: TRQP requests are privacy-minimized and exclude raw manifests and unnecessary commercial data.
+    owner: privacy-reviewer
+    evidence:
+      - data-minimization-assessment
+      - request-fixtures
+  - id: MUSIC-07
+    requirement: Cache, freshness, and revocation behavior are declared and exercised.
+    owner: deployment-operator
+    evidence:
+      - cache-policy
+      - revocation-test-report
+  - id: MUSIC-08
+    requirement: Decision receipts and audit bundles replay independently.
+    owner: assurance-operator
+    evidence:
+      - decision-receipt
+      - audit-bundle
+      - replay-report
+  - id: MUSIC-09
+    requirement: Unknown and indeterminate outcomes are not represented as infringement determinations.
+    owner: governance-authority
+    evidence:
+      - reason-code-policy
+      - operator-guidance
+  - id: MUSIC-10
+    requirement: Appeal and correction procedures can restore an erroneously denied actor.
+    owner: appeal-authority
+    evidence:
+      - appeal-policy
+      - simulated-appeal-record

@@ -1,0 +1,22 @@
+{
+  "type": "CawgTrqpIntegrationSignal",
+  "version": "0.1",
+  "asset": {"id": "isrc:US-ABC-26-00002", "media_type": "audio/flac"},
+  "validation": {
+    "status": "verified",
+    "validator": "c2pa-validator.example",
+    "validated_at": "2026-08-01T11:00:00Z",
+    "evidence_ref": "urn:evidence:c2pa:music-00002"
+  },
+  "actor": {"id": "did:web:label.example", "identifier_type": "did"},
+  "issuer": {"id": "did:web:music-trust.example", "identifier_type": "did"},
+  "action": {"type": "classify_ai_use", "resource": "isrc:US-ABC-26-00002"},
+  "context": {
+    "profile": "recorded-music-ai-disclosure-v0",
+    "ai_usage_classification": "ai_assisted",
+    "classification_basis": "human_led_performance_with_generative_production_tools"
+  },
+  "source_bindings": [
+    {"field": "context.ai_usage_classification", "assertion_ref": "cawg.assertion.ai-usage"}
+  ]
+}

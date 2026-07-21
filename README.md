@@ -128,6 +128,9 @@ Profiles are schema-backed by `schemas/verification-profile.schema.json`.
 | `conformance/assurance-suite-manifest.json` | External assurance-suite ingestion manifest |
 | `examples/reproducibility_bundle_standard.json` | Canonical replay bundle |
 | `examples/photography_contest/` | End-to-end contest verification walkthrough |
+| `docs/industry-adoption/` | Decision-to-deployment package for sector governance organizations |
+| `examples/music-industry/` | Canonical CAWG, recognition, authorization, scope, revocation, and AI-declaration examples |
+| `conformance/music-industry-pilot-readiness.yaml` | Machine-readable music-industry pilot readiness gates |
 | `release-assets/checksums-v0.17.0.json` | Release asset checksum manifest |
 | `assets/presentations/cawg-trqp-explainer-v2.pdf` | Non-normative explainer deck for standards and adoption review |
 | `assets/presentations/manifest.json` | Presentation version, authority, checksum, and update triggers |
@@ -152,6 +155,19 @@ authoritative and readable directly in the repository.
 - `docs/presentation.md` — presentation, slide-by-slide documentation map, embedded viewer, and maintenance policy
 - `QUICKSTART.md` — first result in under ten minutes
 
+### Industry bodies and programme sponsors
+
+- `docs/industry-adoption/industry-body-decision-brief.md` — institutional proposition, governance roles, limitations, and decision requested
+- `docs/industry-adoption/music-industry-pilot-blueprint.md` — bounded authorized-distribution pilot with phases, evidence, success, and stop criteria
+- `docs/industry-adoption/music-industry-application-profile.md` — candidate sector actions, resources, contexts, outcomes, and authority allocation
+
+### CAWG implementers
+
+- `docs/industry-adoption/cawg-implementation-playbook.md` — exact CAWG extraction, mapping, handoff, call wiring, failure behavior, and test evidence
+- `docs/workflows/authorized-music-distribution.md` — complete CAWG-to-TRQP execution walkthrough
+- `examples/music-industry/` — schema-valid canonical payloads
+- `conformance/music-industry-pilot-readiness.yaml` — machine-verifiable definition of pilot readiness
+
 ### Implementers
 
 - `docs/cawg-trqp-integration-enablement.md` — concrete CAWG work programme, specification ownership, readiness gates, and definition of done
@@ -166,6 +182,7 @@ authoritative and readable directly in the repository.
 - `docs/deterministic-input-trust.md`
 - `docs/workflows/photography-contest-verification.md`
 - `docs/video-verification-walkthrough.md`
+- `docs/workflows/authorized-music-distribution.md`
 
 ### Integrators
 

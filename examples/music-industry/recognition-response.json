@@ -1,0 +1,6 @@
+{
+  "recognized": true,
+  "expires": "2027-07-31T23:59:59Z",
+  "policy_epoch": "2026-08-01",
+  "evidence": ["urn:policy:music:recognized-labels:v1"]
+}

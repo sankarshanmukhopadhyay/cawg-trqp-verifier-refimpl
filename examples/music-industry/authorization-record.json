@@ -1,0 +1,17 @@
+{
+  "profile": "recorded-music-distribution-v1",
+  "authority_id": "did:web:music-trust.example",
+  "issuer_id": "did:web:label.example",
+  "actor_id": "did:web:distributor.example",
+  "action": "distribute",
+  "resource": "isrc:US-ABC-26-00001",
+  "scope": {
+    "territories": ["US"],
+    "platforms": ["pilot-streaming-service"],
+    "delegation_allowed": false
+  },
+  "valid_from": "2026-08-01T00:00:00Z",
+  "valid_until": "2027-07-31T23:59:59Z",
+  "status": "active",
+  "evidence_ref": "urn:policy:music:distribution:00001"
+}

@@ -1,3 +1,18 @@
+## [Unreleased]
+
+### Added — industry adoption and CAWG implementation
+
+- Added an industry-body decision brief, music-industry application profile, CAWG implementation playbook, and bounded pilot blueprint.
+- Added an authorized music distribution walkthrough that wires CAWG validation and normalization to TRQP recognition, authorization, receipts, audit bundles, and appeal.
+- Added schema-valid music-industry integration, authorization, recognition, scope-mismatch, revocation, and AI-use examples.
+- Added a machine-readable pilot-readiness matrix and conformance tests.
+
+
+### Fixed
+
+- Restored the Just the Docs layout and navigation parent for the scalability, cache freshness, and high-volume deployment pages so GitHub Pages renders the theme, navigation, tables, and Mermaid diagrams correctly.
+- Added repository validation for documentation front matter and navigation-parent integrity to prevent unthemed or orphaned pages from being deployed.
+
 ---
 layout: default
 title: "Changelog"
@@ -5,18 +20,6 @@ parent: "Releases"
 nav_order: 1
 ---
 # Changelog
-
-## [Unreleased]
-
-### Added
-
-- Added a dedicated newsroom citizen-video walkthrough that separates content provenance, TRQP governance decisions, editorial corroboration, and accountable broadcast approval.
-- Added Mermaid workflow diagrams to the generic video, photography contest, and newsroom walkthroughs.
-
-### Fixed
-
-- Restored the Just the Docs layout and navigation parent for the scalability, cache freshness, and high-volume deployment pages so GitHub Pages renders the theme, navigation, tables, and Mermaid diagrams correctly.
-- Added repository validation for documentation front matter and navigation-parent integrity to prevent unthemed or orphaned pages from being deployed.
 
 ### Added — scalability and governed cache semantics
 

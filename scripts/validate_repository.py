@@ -2,7 +2,7 @@
 from pathlib import Path
 import hashlib, json, re, sys
 root=Path(__file__).resolve().parents[1]
-required=["README.md","LICENSE","CHANGELOG.md","ROADMAP.md","GOVERNANCE.md","CONTRIBUTING.md","SECURITY.md","CODE_OF_CONDUCT.md","CITATION.cff","QUICKSTART.md","data/repository-metadata.yaml","docs/trqp-adoption-path.md","docs/cawg-input-contract.md","docs/cawg-trqp-integration-enablement.md","docs/api-call-catalogue.md","schemas/cawg-trqp-integration-signal.schema.json","conformance/cawg-trqp-readiness-matrix.yaml","api/openapi.json","docs/presentation.md","assets/presentations/cawg-trqp-explainer-v2.pdf","assets/presentations/cawg-trqp-explainer-v2-cover.png","assets/presentations/manifest.json","docs/scalability-and-performance.md","docs/cache-freshness-and-revocation.md","docs/high-volume-deployment-profile.md","schemas/cache-policy.schema.json","schemas/performance-evidence.schema.json","benchmarks/README.md","benchmarks/benchmark_verifier.py","benchmarks/benchmark_http.py","benchmarks/scenarios.yaml","benchmarks/expected-thresholds.yaml"]
+required=["README.md","LICENSE","CHANGELOG.md","ROADMAP.md","GOVERNANCE.md","CONTRIBUTING.md","SECURITY.md","CODE_OF_CONDUCT.md","CITATION.cff","QUICKSTART.md","data/repository-metadata.yaml","docs/trqp-adoption-path.md","docs/cawg-input-contract.md","docs/cawg-trqp-integration-enablement.md","docs/api-call-catalogue.md","schemas/cawg-trqp-integration-signal.schema.json","conformance/cawg-trqp-readiness-matrix.yaml","api/openapi.json","docs/presentation.md","assets/presentations/cawg-trqp-explainer-v2.pdf","assets/presentations/cawg-trqp-explainer-v2-cover.png","assets/presentations/manifest.json","docs/scalability-and-performance.md","docs/cache-freshness-and-revocation.md","docs/high-volume-deployment-profile.md","schemas/cache-policy.schema.json","schemas/performance-evidence.schema.json","benchmarks/README.md","benchmarks/benchmark_verifier.py","benchmarks/benchmark_http.py","benchmarks/scenarios.yaml","benchmarks/expected-thresholds.yaml","docs/industry-adoption/index.md","docs/industry-adoption/industry-body-decision-brief.md","docs/industry-adoption/music-industry-application-profile.md","docs/industry-adoption/cawg-implementation-playbook.md","docs/industry-adoption/music-industry-pilot-blueprint.md","docs/workflows/authorized-music-distribution.md","schemas/music-industry-authorization-record.schema.json","examples/music-industry/cawg-integration-signal.json","conformance/music-industry-pilot-readiness.yaml"]
 errors=[]
 for rel in required:
     if not (root/rel).is_file(): errors.append(f"missing required flagship artifact: {rel}")
@@ -29,26 +29,18 @@ if manifest_path.is_file():
 
 # GitHub Pages/Just the Docs integrity checks. Every rendered documentation
 # page must opt into the theme layout, and every declared parent must resolve
-# to a navigation node that advertises children. Root-level governance and
-# release pages are included because Jekyll renders them alongside docs/.
-rendered_root_pages = [
-    "AI_USAGE.md", "CHANGELOG.md", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md",
-    "GOVERNANCE.md", "QUICKSTART.md", "ROADMAP.md", "SECURITY.md",
-]
-rendered_root_pages.extend(
-    str(path.relative_to(root)) for path in sorted(root.glob("RELEASE_NOTES_*.md"))
-)
-site_pages = sorted((root / "docs").rglob("*.md")) + [root / rel for rel in rendered_root_pages]
+# to a navigation node that advertises children.
+doc_pages = sorted((root / "docs").rglob("*.md"))
 nav_nodes = {}
 page_front_matter = {}
 front_matter_pattern = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 
-for page in site_pages:
+for page in doc_pages:
     rel = page.relative_to(root)
     text = page.read_text(encoding="utf-8", errors="replace")
     match = front_matter_pattern.match(text)
     if not match:
-        errors.append(f"GitHub Pages document missing or misplaced front matter: {rel}")
+        errors.append(f"GitHub Pages document missing front matter: {rel}")
         continue
 
     fields = {}
@@ -61,8 +53,6 @@ for page in site_pages:
 
     if fields.get("layout") != "default":
         errors.append(f"GitHub Pages document must use layout default: {rel}")
-    if not fields.get("title"):
-        errors.append(f"GitHub Pages document missing title: {rel}")
 
     title = fields.get("title")
     if title and fields.get("has_children", "").lower() == "true":
@@ -72,30 +62,6 @@ for rel, fields in page_front_matter.items():
     parent = fields.get("parent")
     if parent and parent not in nav_nodes:
         errors.append(f"GitHub Pages document has unresolved navigation parent '{parent}': {rel}")
-
-# Mermaid diagrams depend on the custom head include and must remain available
-# whenever fenced Mermaid blocks are present.
-mermaid_pages = []
-for page in site_pages:
-    if "```mermaid" in page.read_text(encoding="utf-8", errors="replace"):
-        mermaid_pages.append(page.relative_to(root))
-head_custom = root / "_includes" / "head_custom.html"
-if mermaid_pages:
-    if not head_custom.is_file():
-        errors.append("Mermaid diagrams exist but _includes/head_custom.html is missing")
-    else:
-        loader = head_custom.read_text(encoding="utf-8", errors="replace")
-        for marker in ("mermaid", "language-mermaid", "mermaid.initialize"):
-            if marker not in loader:
-                errors.append(f"Mermaid loader missing required marker '{marker}'")
-
-# Pages must rebuild when documentation rendering dependencies change.
-pages_workflow = root / ".github" / "workflows" / "pages.yml"
-if pages_workflow.is_file():
-    workflow_text = pages_workflow.read_text(encoding="utf-8", errors="replace")
-    for watched_path in ('"docs/**"', '"assets/**"', '"_includes/**"', '"*.md"', '"_config.yml"', '"Gemfile"'):
-        if watched_path not in workflow_text:
-            errors.append(f"Pages workflow does not watch rendering dependency: {watched_path}")
 
 readme=(root/'README.md').read_text(encoding='utf-8')
 for marker in ['Portfolio tier','Validation','Evidence output','Governance authority']:

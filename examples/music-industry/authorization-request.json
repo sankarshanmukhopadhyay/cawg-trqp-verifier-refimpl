@@ -1,0 +1,13 @@
+{
+  "entity_id": "did:web:distributor.example",
+  "authority_id": "did:web:music-trust.example",
+  "action": "distribute",
+  "resource": "isrc:US-ABC-26-00001",
+  "context": {
+    "profile": "recorded-music-distribution-v1",
+    "issuer_id": "did:web:label.example",
+    "territory": "US",
+    "platform": "pilot-streaming-service",
+    "effective_at": "2026-08-01T10:30:00Z"
+  }
+}
