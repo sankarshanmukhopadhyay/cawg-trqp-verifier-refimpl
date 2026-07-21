@@ -26,6 +26,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Validate guided learning paths
+        run: python scripts/validate_learning_paths.py
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:

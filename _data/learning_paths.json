@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "architecture": "decision-to-evidence",
+  "paths": [
+    {
+      "id": "executive-adoption",
+      "audience": "Industry bodies, programme sponsors and governance owners",
+      "goal": "Evaluate adoption and pilot viability",
+      "steps": [
+        {
+          "file": "docs/guided-learning.md",
+          "outcome": "Select a route and success criteria"
+        },
+        {
+          "file": "docs/NON_TECHNICAL_OVERVIEW.md",
+          "outcome": "Understand the business and governance proposition"
+        },
+        {
+          "file": "docs/industry-adoption/industry-body-decision-brief.md",
+          "outcome": "Identify institutional decisions and accountabilities"
+        },
+        {
+          "file": "docs/industry-adoption/music-industry-pilot-blueprint.md",
+          "outcome": "Define a bounded pilot and evidence plan"
+        }
+      ]
+    },
+    {
+      "id": "integration-engineer",
+      "audience": "Platform and integration engineers",
+      "goal": "Integrate the verifier into a CAWG workflow",
+      "steps": [
+        {
+          "file": "QUICKSTART.md",
+          "outcome": "Run the reference implementation"
+        },
+        {
+          "file": "docs/architecture.md",
+          "outcome": "Understand components and trust boundaries"
+        },
+        {
+          "file": "docs/cawg-input-contract.md",
+          "outcome": "Implement the input contract"
+        },
+        {
+          "file": "docs/decision-receipt-specification.md",
+          "outcome": "Consume and retain decision evidence"
+        },
+        {
+          "file": "docs/INTEGRATION_GUIDE.md",
+          "outcome": "Complete end-to-end integration"
+        }
+      ]
+    },
+    {
+      "id": "operator-assurance",
+      "audience": "Operators, security teams and assurance reviewers",
+      "goal": "Deploy and operate with replayable assurance",
+      "steps": [
+        {
+          "file": "docs/deployment-guide.md",
+          "outcome": "Select and configure deployment controls"
+        },
+        {
+          "file": "docs/operational-hardening.md",
+          "outcome": "Harden production operation"
+        },
+        {
+          "file": "docs/threats-and-risks/index.md",
+          "outcome": "Assess threats and residual risk"
+        },
+        {
+          "file": "docs/audit-bundle-profile.md",
+          "outcome": "Generate replayable evidence"
+        },
+        {
+          "file": "docs/reproducibility-guide.md",
+          "outcome": "Independently reproduce decisions"
+        }
+      ]
+    }
+  ]
+}

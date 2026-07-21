@@ -19,6 +19,7 @@ jobs:
       - run: pip install -r requirements-lock.txt
       - run: pip install -e .
       - run: python scripts/validate_examples.py
+      - run: python scripts/validate_learning_paths.py
       - run: python scripts/validate_feed_descriptors.py
       - run: python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
       - run: python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .

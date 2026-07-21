@@ -1,5 +1,7 @@
 # CAWG-TRQP Reference Implementation
 
+**New to the repository?** Use the [guided learning paths](docs/guided-learning.md) to follow an executive-adoption, integration-engineering, or operator-assurance route. The [documentation architecture](docs/documentation-architecture.md) explains the decision-to-evidence model.
+
 > **Portfolio status:** Tier 1 flagship · Active · Beta
 
 | Attribute | Value |
