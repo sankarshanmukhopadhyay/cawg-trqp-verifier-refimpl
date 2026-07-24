@@ -20,5 +20,5 @@ iniconfig==2.3.0
 packaging==25.0
 pluggy==1.6.0
 Pygments==2.20.0
-coverage==7.11.0
+coverage==7.15.2
 typing_extensions==4.15.0
