@@ -15,7 +15,7 @@ jsonschema-specifications==2025.9.1
 referencing==0.37.0
 rpds-py==0.30.0
 pytest==9.1.1
-pytest-cov==7.0.0
+pytest-cov==7.1.0
 iniconfig==2.3.0
 packaging==25.0
 pluggy==1.6.0
