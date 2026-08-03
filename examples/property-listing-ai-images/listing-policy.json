@@ -1,0 +1,23 @@
+{
+  "policy_id": "property-marketplace-ai-image-policy-2026-01",
+  "authority": "did:web:property-marketplace.example",
+  "effective_from": "2026-06-01T00:00:00Z",
+  "rules": {
+    "recognized_actor_roles": ["licensed_realtor", "property_owner", "authorized_listing_agent"],
+    "required_authorizations": ["active_realtor_registration", "active_seller_mandate"],
+    "allowed_declared_transformations": ["generative_staging", "object_removal_non_structural", "tone_and_exposure_adjustment"],
+    "prohibited_transformations": ["structural_enlargement", "view_fabrication", "damage_removal", "amenity_fabrication"],
+    "disclosure_required_for": ["generative_staging", "object_removal_non_structural"],
+    "failure_behavior": {
+      "missing_provenance": "manual_review",
+      "undeclared_ai_edit": "reject",
+      "missing_or_revoked_authority": "reject",
+      "prohibited_transformation": "reject"
+    }
+  },
+  "redress": {
+    "appeal_channel": "https://property-marketplace.example/listing-evidence-review",
+    "evidence_retention_days": 365,
+    "correction_supported": true
+  }
+}

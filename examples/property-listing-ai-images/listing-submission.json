@@ -1,0 +1,50 @@
+{
+  "submission_id": "property-listing:in-wb-kol-2026-0042",
+  "asset": {
+    "id": "image:listing-0042:living-room:01",
+    "media_type": "image/jpeg",
+    "content_hash": "sha256:example-property-image-hash"
+  },
+  "actor": {
+    "id": "did:web:realtor.example:agents:ananya-sen",
+    "identifier_type": "did",
+    "role": "licensed_realtor"
+  },
+  "issuer": {
+    "id": "did:web:property-marketplace.example",
+    "identifier_type": "did"
+  },
+  "action": {
+    "type": "publish_property_listing_image",
+    "resource": "property:in-wb-kol-2026-0042"
+  },
+  "context": {
+    "jurisdiction": "IN-WB",
+    "marketplace": "property-marketplace.example",
+    "seller_mandate_id": "mandate:listing-0042:2026",
+    "listing_id": "listing-0042",
+    "captured_at": "2026-07-28T09:15:00Z",
+    "submitted_at": "2026-08-03T04:15:00Z"
+  },
+  "provenance": {
+    "manifest_valid": true,
+    "capture_source": "camera_capture",
+    "transformations": [
+      {
+        "type": "generative_staging",
+        "scope": "furniture_and_decor_only",
+        "declared": true,
+        "structural_elements_changed": false
+      },
+      {
+        "type": "tone_and_exposure_adjustment",
+        "declared": true
+      }
+    ],
+    "source_bindings": [
+      {"field": "actor.id", "assertion_ref": "c2pa.assertion.actor.v1"},
+      {"field": "action.resource", "assertion_ref": "marketplace.listing-binding.v1"},
+      {"field": "provenance.transformations", "assertion_ref": "c2pa.actions.v2"}
+    ]
+  }
+}

@@ -18,3 +18,4 @@ implementers.
 - [Photography Contest Verification](../workflows/photography-contest-verification.md)
 - [Video Verification Walkthrough](../video-verification-walkthrough.md)
 - [Authorized Music Distribution](../workflows/authorized-music-distribution.md)
+- [AI-Assisted Property Listing Images](../workflows/property-listing-ai-image-verification.md)

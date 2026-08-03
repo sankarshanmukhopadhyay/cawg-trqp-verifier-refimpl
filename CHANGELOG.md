@@ -42,6 +42,13 @@ nav_order: 1
 
 ## Unreleased
 
+### Changed
+- Integrated Dependabot updates for `attrs` 26.1.0, `coverage` 7.15.2, `pycparser` 3.0, `typing_extensions` 4.16.0, `pytest-cov` 7.1.0, and `actions/setup-python` v7.
+- Added PyYAML to declared development and validation dependencies, fixing CI collection failures in YAML-backed governance tests.
+
+### Added
+- Added a machine-readable AI-assisted property-listing image example, governance walkthrough, decision receipt, disclosure policy, and assurance tests.
+
 ### Security and assurance
 
 - Added a complete adversarial threat and risk documentation package with diagram-rich GitHub Pages content, machine-readable registers, scenarios, and conformance tests.

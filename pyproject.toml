@@ -16,7 +16,8 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
-    "pytest-cov>=4.0",
+    "pytest-cov>=7.1",
+    "PyYAML>=6.0.3",
 ]
 
 [tool.setuptools]

@@ -79,7 +79,7 @@ for the full authority and decision-rights model.
 | Attribute | Value |
 |---|---|
 | Current release | v0.17.0 |
-| Test suite | 79/79 passing |
+| Test suite | 82/82 passing |
 | Validation gate | `make validate` — see [Contributing](../CONTRIBUTING.md) |
 | Documentation | This site — see the section navigation on the left |
 {: .note }

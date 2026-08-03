@@ -1,0 +1,42 @@
+{
+  "receipt_version": "1.0",
+  "receipt_id": "receipt:property-listing:0042:image-01",
+  "timestamp": "2026-08-03T04:16:00Z",
+  "profile": "property-listing-ai-image-2026-01",
+  "authority_evaluation": {
+    "realtor_recognition": "recognized",
+    "seller_mandate": "active",
+    "marketplace_authority": "recognized",
+    "revocation_status": "active"
+  },
+  "provenance_evaluation": {
+    "manifest": "valid",
+    "actor_binding": "verified",
+    "property_binding": "verified",
+    "ai_transformations_declared": true,
+    "structural_change_detected": false
+  },
+  "decision": {
+    "result": "conditionally_trusted",
+    "marketplace_action": "publish_with_prominent_ai_edit_disclosure",
+    "required_disclosure": "This image includes AI-generated virtual staging. Structural features were not altered.",
+    "reasons": [
+      "realtor_authorized_for_listing",
+      "seller_mandate_active",
+      "provenance_manifest_valid",
+      "generative_staging_declared",
+      "transformation_allowed_with_disclosure"
+    ]
+  },
+  "limitations": [
+    "Provenance does not establish the current physical condition of the property.",
+    "Buyers should rely on inspection, survey, and legally required property disclosures.",
+    "The marketplace remains responsible for enforcement and correction decisions."
+  ],
+  "evidence": {
+    "submission": "examples/property-listing-ai-images/listing-submission.json",
+    "policy": "examples/property-listing-ai-images/listing-policy.json",
+    "retention_days": 365,
+    "appeal_supported": true
+  }
+}
