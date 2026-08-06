@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Seller submits product images and listing context] --> B[Marketplace validates provenance and product binding]
+    B --> C[Verifier checks seller and brand authorization]
+    C --> D{Listing action authorized?}
+    D -- Yes --> E[Publish or continue moderation]
+    D -- No --> F[Reject or suspend the listing]
+    D -- Conflicting authority --> G[Quarantine for marketplace review]
+    E --> H[Issue decision receipt]
+    F --> H
+    G --> H
+```
+
+The flow establishes who supplied the media and whether the listing action is authorized; it does not prove the physical product is genuine.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

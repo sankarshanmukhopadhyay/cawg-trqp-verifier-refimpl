@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Freelance journalist submits image and provenance] --> B[Newsroom validates asset and declared edits]
+    B --> C[Verifier resolves accreditation and assignment scope]
+    C --> D{Authority current and action in scope?}
+    D -- Yes --> E[Allow entry to editorial verification]
+    D -- No --> F[Deny publication authorization]
+    D -- Unclear or conflicting --> G[Route to editor review]
+    E --> H[Issue receipt and preserve correction lineage]
+    F --> H
+    G --> H
+```
+
+The flow separates provenance and scoped publication authority from the newsroom's independent duty to verify the underlying claim.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

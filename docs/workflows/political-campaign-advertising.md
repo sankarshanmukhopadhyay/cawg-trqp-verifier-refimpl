@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Campaign or agency submits advertisement] --> B[Platform validates provenance and synthetic-media declarations]
+    B --> C[Verifier checks campaign agency jurisdiction and time scope]
+    C --> D{Publication authority active?}
+    D -- Yes --> E[Apply platform advertising policy]
+    D -- No --> F[Reject publication]
+    D -- Conflicting jurisdiction --> G[Escalate to policy review]
+    E --> H[Publish label hold or reject with receipt]
+    F --> H
+    G --> H
+```
+
+The flow verifies communication authority and required disclosures; it does not assess whether political claims are true.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

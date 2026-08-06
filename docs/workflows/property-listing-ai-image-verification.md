@@ -14,6 +14,23 @@ CAWG/C2PA can provide provenance and transformation assertions. TRQP can determi
 
 This workflow does not treat content credentials as proof that a property matches the image. Physical accuracy still requires inspections, surveys, seller disclosures, and applicable legal remedies. CAWG-TRQP instead establishes a verifiable chain for who submitted the image, what was declared, which authority applied, and why the platform accepted, labelled, held, or rejected it.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Realtor submits listing image and mandate] --> B[Marketplace validates provenance and AI-edit declarations]
+    B --> C[Verifier checks realtor status seller mandate and policy]
+    C --> D{Publication conditions satisfied?}
+    D -- Yes --> E[Publish with required disclosure]
+    D -- No --> F[Reject the listing image]
+    D -- Missing or conflicting --> G[Hold for review]
+    E --> H[Issue receipt and correction route]
+    F --> H
+    G --> H
+```
+
+The flow governs authorization and disclosure while leaving physical property accuracy to inspections, surveys, and legal duties.
+
 ## Actors and authority
 
 | Actor | Authority or responsibility |

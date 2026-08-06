@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Contractor submits milestone imagery] --> B[Project service validates provenance and work-package binding]
+    B --> C[Verifier checks inspector and certification delegation]
+    C --> D{Milestone evidence authorized for payment review?}
+    D -- Yes --> E[Forward to lender or client decision]
+    D -- No --> F[Reject certification evidence]
+    D -- Revoked or conflicting --> G[Hold payment and escalate]
+    E --> H[Issue receipt with project and time scope]
+    F --> H
+    G --> H
+```
+
+Capture authority, certification authority, and payment authority remain distinct and independently testable.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

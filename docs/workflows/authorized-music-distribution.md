@@ -10,6 +10,23 @@ This walkthrough shows how a platform can combine CAWG/C2PA provenance evidence 
 
 The workflow is illustrative and non-normative. It does not determine copyright ownership or replace contracts.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Distributor submits recording and provenance] --> B[Platform validates the content credentials]
+    B --> C[Verifier checks label recognition and distributor mandate]
+    C --> D{Distribution action in scope?}
+    D -- Yes --> E[Continue platform ingestion]
+    D -- No --> F[Reject or hold the delivery]
+    D -- Conflicting or stale --> G[Quarantine and re-query]
+    E --> H[Issue receipt and replay evidence]
+    F --> H
+    G --> H
+```
+
+The overview distinguishes scoped distribution authority from copyright ownership and contractual rights.
+
 ## Actors
 
 | Actor | Responsibility |

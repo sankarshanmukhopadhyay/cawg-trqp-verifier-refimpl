@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Researcher submits instrument imagery] --> B[Repository validates provenance and processing history]
+    B --> C[Verifier checks laboratory operator instrument and study scope]
+    C --> D{Dataset or publication use authorized?}
+    D -- Yes --> E[Admit with declared transformations]
+    D -- No --> F[Reject or request corrected metadata]
+    D -- Conflict or retraction --> G[Quarantine and review]
+    E --> H[Issue receipt and preserve version lineage]
+    F --> H
+    G --> H
+```
+
+The decision establishes governed origin and permitted use; it does not independently validate the scientific conclusion.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

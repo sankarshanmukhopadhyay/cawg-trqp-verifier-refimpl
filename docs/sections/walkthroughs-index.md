@@ -34,4 +34,4 @@ Worked scenarios showing request, governed authority evaluation, decision receip
 
 ## Common assurance contract
 
-Every v0.18.1 walkthrough includes an explicit decision boundary, authority and delegation model, revocation behavior, stale/conflicting-state handling, immutable correction lineage, evidence outputs, and a machine-readable scenario manifest under `examples/`.
+Every walkthrough now includes an at-a-glance Mermaid governance flow. The v0.18.1 scenarios also include an explicit decision boundary, authority and delegation model, revocation behavior, stale/conflicting-state handling, immutable correction lineage, evidence outputs, and a machine-readable scenario manifest under `examples/`.

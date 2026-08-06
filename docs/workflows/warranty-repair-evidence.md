@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Customer or repairer submits defect media] --> B[Manufacturer validates provenance and product binding]
+    B --> C[Verifier checks claimant repairer and warranty scope]
+    C --> D{Evidence admissible to warranty workflow?}
+    D -- Yes --> E[Continue diagnosis or repair routing]
+    D -- No --> F[Request corrected or additional evidence]
+    D -- Contested --> G[Route to human review or appeal]
+    E --> H[Issue receipt and preserve decision lineage]
+    F --> H
+    G --> H
+```
+
+Admission of evidence does not establish that the defect is covered or determine the final remedy.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

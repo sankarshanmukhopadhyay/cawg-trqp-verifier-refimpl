@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Clinic or patient submits medical image] --> B[Care service validates provenance and patient binding]
+    B --> C[Verifier checks facility operator device and purpose scope]
+    C --> D{High-assurance conditions satisfied?}
+    D -- Yes --> E[Admit to remote consultation workflow]
+    D -- No --> F[Fail closed and reject admission]
+    D -- Emergency exception --> G[Route to accountable clinical review]
+    E --> H[Issue minimized receipt and audit evidence]
+    F --> H
+    G --> H
+```
+
+The verifier governs workflow admission. Clinical interpretation remains the responsibility of qualified professionals.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

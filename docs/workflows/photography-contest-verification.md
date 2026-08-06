@@ -31,6 +31,23 @@ The important part is not merely that the system says **accepted** or **rejected
 
 This changes the contest posture from “trust the platform” to “verify the decision.”
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Participant submits photograph] --> B[Contest service validates provenance and metadata]
+    B --> C[Verifier checks participant subject deadline and revocation]
+    C --> D{Entry eligible under current rules?}
+    D -- Yes --> E[Admit to judging pool]
+    D -- No --> F[Reject with reason codes]
+    D -- Ambiguous --> G[Route to moderator review]
+    E --> H[Issue receipt and retain appeal bundle]
+    F --> H
+    G --> H
+```
+
+The flow makes eligibility decisions testable without replacing artistic judging or appeal authority.
+
 ## Why a photography contest needs verifiable governance
 
 A public photography contest has a deceptively complex control surface. The visible workflow is easy to understand: submit, review, judge, award. The hidden workflow is harder: identity, eligibility, authorship, provenance, location, timing, consent, licensing, rule updates, disqualification, appeals, and audit.

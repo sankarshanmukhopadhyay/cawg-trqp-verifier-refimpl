@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Added consistent at-a-glance Mermaid governance flows to all fourteen walkthroughs.
+- Added a CI validation gate that enforces walkthrough diagram coverage and basic Mermaid fence integrity.
+
 ### Added — industry adoption and CAWG implementation
 
 - Added an industry-body decision brief, music-industry application profile, CAWG implementation playbook, and bounded pilot blueprint.

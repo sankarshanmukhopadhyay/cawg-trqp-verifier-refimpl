@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Policyholder or delegate submits damage media] --> B[Insurer validates provenance and claim binding]
+    B --> C[Verifier checks submitter authority and incident scope]
+    C --> D{Evidence usable for this claim stage?}
+    D -- Yes --> E[Allow triage or inspection routing]
+    D -- No --> F[Deny or request corrected evidence]
+    D -- Stale or conflicting --> G[Escalate to adjuster review]
+    E --> H[Issue receipt and retain appeal evidence]
+    F --> H
+    G --> H
+```
+
+The decision authorizes use at a defined claim stage; it does not determine liability or require payment.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

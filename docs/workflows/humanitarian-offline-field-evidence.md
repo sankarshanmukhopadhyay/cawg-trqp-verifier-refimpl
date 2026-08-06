@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Field worker captures evidence offline] --> B[Edge verifier loads signed trust snapshot]
+    B --> C[Check worker device purpose and snapshot freshness]
+    C --> D{Offline reliance permitted?}
+    D -- Yes --> E[Record bounded provisional decision]
+    D -- No --> F[Hold until live verification]
+    D -- Emergency exception --> G[Proceed with accountable override]
+    E --> H[Revalidate after reconnection]
+    G --> H
+    H --> I[Preserve original and superseding receipts]
+```
+
+Offline operation is bounded degraded assurance, not an assertion that stale trust state is equivalent to live verification.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

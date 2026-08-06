@@ -17,6 +17,23 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Officer or inspector captures governed media] --> B[Evidence system validates device and chain of custody]
+    B --> C[Verifier checks capture transfer and disclosure authority]
+    C --> D{Requested action authorized?}
+    D -- Preserve --> E[Retain under evidence policy]
+    D -- Disclose --> F[Apply redaction and access scope]
+    D -- Not authorized --> G[Deny and preserve denial evidence]
+    E --> H[Issue action-specific receipt]
+    F --> H
+    G --> H
+```
+
+Separate decisions govern preservation, redaction, internal access, public disclosure, and deletion.
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

@@ -29,6 +29,23 @@ This is not a question about whether the video "looks real". It is a question ab
 
 ---
 
+## At-a-glance governance flow
+
+```mermaid
+flowchart LR
+    A[Inspection vendor submits bridge video] --> B[Department validates provenance and process evidence]
+    B --> C[Verifier queries recognition authorization and revocation]
+    C --> D{Official workflow conditions satisfied?}
+    D -- Yes --> E[Accept into inspection workflow]
+    D -- No --> F[Reject with reason codes]
+    D -- Stale or unavailable --> G[Hold or apply declared degraded mode]
+    E --> H[Issue receipt and audit bundle]
+    F --> H
+    G --> H
+```
+
+The verifier determines whether the video may enter the official workflow, not whether the bridge is structurally safe.
+
 # What the system evaluates
 
 The verifier evaluates multiple layers of trust simultaneously:
