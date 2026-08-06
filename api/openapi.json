@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "CAWG-TRQP Reference Implementation API",
-    "version": "0.17.0",
+    "version": "0.18.1",
     "description": "Implemented HTTP contract for CAWG/C2PA signal verification and TRQP policy calls. This is an implementation contract, not a normative CAWG, C2PA, or TRQP specification."
   },
   "servers": [

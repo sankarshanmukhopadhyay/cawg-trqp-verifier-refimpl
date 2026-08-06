@@ -4,7 +4,7 @@ portfolio_tier: flagship
 lifecycle: active
 role: reference-verifier-implementation
 stability: beta
-current_version: "0.17.0"
+current_version: "0.18.1"
 primary_output: Decision receipt and replayable audit bundle
 authority:
   owns:

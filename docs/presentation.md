@@ -24,7 +24,7 @@ recognition, decision receipts, and replayable audit evidence.
 |---|---|
 | Presentation | CAWG-TRQP Verifier Reference Implementation: From content provenance to verifiable trust decisions |
 | Presentation version | v2 |
-| Implementation version represented | v0.17.0 |
+| Implementation version represented | v0.18.1 |
 | Format | PDF, 15 slides |
 | Status | Explanatory, non-normative |
 | Canonical asset | `assets/presentations/cawg-trqp-explainer-v2.pdf` |

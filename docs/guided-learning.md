@@ -2,7 +2,6 @@
 layout: default
 title: Guided Learning Paths
 nav_order: 1
-parent: Documentation
 permalink: /docs/guided-learning/
 has_toc: true
 ---

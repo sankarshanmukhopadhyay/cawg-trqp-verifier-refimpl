@@ -21,6 +21,18 @@ nav_order: 1
 ---
 # Changelog
 
+## [0.18.1] - 2026-08-06
+
+### Added
+- Ten cross-sector real-life walkthroughs and machine-readable assurance scenarios.
+- Repository-local `PROJECT-STATUS.yaml` and walkthrough validation gate.
+
+### Changed
+- Refreshed README for current capability, governance, validation, and adoption state.
+
+### Fixed
+- Corrected unresolved GitHub Pages navigation parents and added repository validation to CI.
+
 ### Added — scalability and governed cache semantics
 
 - Added scale architecture, cache/freshness and high-volume deployment guidance.

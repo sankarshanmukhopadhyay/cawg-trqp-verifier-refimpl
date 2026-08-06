@@ -2,7 +2,6 @@
 layout: default
 title: Documentation Architecture
 nav_order: 2
-parent: Documentation
 permalink: /docs/documentation-architecture/
 has_toc: true
 ---

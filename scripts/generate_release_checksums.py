@@ -6,8 +6,8 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RELEASE = "v0.17.0"
-OUTPUT = ROOT / "release-assets" / "checksums-v0.17.0.json"
+RELEASE = "v0.18.1"
+OUTPUT = ROOT / "release-assets" / "checksums-v0.18.1.json"
 TARGETS = [
     "conformance/compatibility-matrix.json",
     "conformance/risk-to-test-map.yaml",

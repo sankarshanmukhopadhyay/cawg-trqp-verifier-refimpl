@@ -1,0 +1,40 @@
+schema_version: "1.0"
+project:
+  name: cawg-trqp-verifier-refimpl
+  maturity: pilot-ready
+  lifecycle: active
+  operational_status: active-validation
+  specification_status: not-applicable
+  intended_use:
+    - reference implementation
+    - interoperability evaluation
+    - pilot integration
+    - assurance evidence generation
+  not_asserted:
+    - production certification
+    - independent assurance
+    - factual truth determination
+    - ownership adjudication
+authority:
+  normative_scope:
+    - repository implementation behavior
+    - repository-local schemas, profiles, examples, and conformance fixtures
+  does_not_own:
+    - CAWG or C2PA specifications
+    - TRQP specification governance
+    - relying-party legal or editorial decisions
+  delegation: Maintainers identified by repository governance approve releases, status changes, and repository-local normative artifacts.
+  revocation_or_supersession: Releases and status claims are superseded through versioned commits, changelog entries, release notes, and preserved evidence; compromised releases may be withdrawn through GitHub release and security processes.
+evidence:
+  validation_commands:
+    - make validate
+    - python scripts/validate_walkthrough_examples.py
+  evidence_outputs:
+    - decision receipts
+    - replayable audit bundles
+    - conformance manifests
+    - release checksum manifest
+  known_limitations:
+    - Reference implementation, not an independent certification service.
+    - Provenance and authorization evidence do not establish factual truth.
+    - Deployment-specific legal, privacy, and operational controls remain the adopter's responsibility.
