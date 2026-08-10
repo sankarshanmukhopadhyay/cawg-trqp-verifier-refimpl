@@ -7,7 +7,7 @@ Jinja2==3.1.6
 MarkupSafe==3.0.3
 Werkzeug==3.1.8
 cryptography==50.0.0
-cffi==2.1.0
+cffi==2.1.1
 pycparser==3.0
 jsonschema==4.26.0
 attrs==26.1.0
