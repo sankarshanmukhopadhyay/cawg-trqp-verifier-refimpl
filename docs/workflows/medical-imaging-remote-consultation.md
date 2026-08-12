@@ -92,3 +92,28 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## Operational assurance contract
+
+This walkthrough is testable as a bounded governance decision rather than as a claim that the underlying content is true.
+
+| Control point | Required behavior | Evidence |
+|---|---|---|
+| Decision | Evaluate **Clinical-image intake** only | Stable outcome and reason code |
+| Authority | Resolve healthcare organization or delegated clinician authority, delegation, scope, and current status | Authority and delegation references |
+| Freshness | Apply the required revocation and trust-state freshness rules | Timestamped trust-state evidence |
+| Policy | Pin the clinical intake policy epoch used for evaluation | Policy identifier/version or digest |
+| Failure | Fail visibly on stale, unavailable, ambiguous, or conflicting authority state | `indeterminate`/`review` receipt rather than implicit trust |
+| Correction | Preserve the original decision and issue a superseding receipt when material inputs change | Immutable receipt lineage |
+| Handoff | Pass the result into **clinical review** without transferring accountability to the verifier | Relying-party disposition/audit reference |
+
+### Conformance assertions
+
+An implementation claiming this walkthrough should be able to demonstrate that:
+
+1. recognition alone never grants the requested action when scope or delegation is absent;
+2. a revoked authority or delegation cannot produce a positive decision for the affected decision time;
+3. stale or conflicting trust state is surfaced explicitly and never silently coerced to `allow`;
+4. identical pinned inputs replay to the same governed outcome and reason code; and
+5. a correction produces a new decision linked to, rather than overwriting, the historical receipt.
+

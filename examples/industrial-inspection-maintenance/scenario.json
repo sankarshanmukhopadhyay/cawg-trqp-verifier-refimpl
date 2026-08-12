@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "walkthrough_id": "industrial-inspection-maintenance",
+  "title": "Industrial Inspection and Maintenance Evidence",
+  "authority_domain": "industrial-assurance",
+  "action": "accept_inspection_evidence",
+  "decision_boundary": "May this inspection media be accepted for the identified asset, maintenance task, location, and inspection window under the current delegated authority?",
+  "cases": [
+    {
+      "id": "authorized",
+      "condition": "recognized actor, valid delegation, and in-scope action/resource/context",
+      "expected_outcome": "allow",
+      "reason_code": "AUTHORIZED"
+    },
+    {
+      "id": "scope-mismatch",
+      "condition": "recognized actor but action, resource, purpose, or context is outside delegation",
+      "expected_outcome": "deny",
+      "reason_code": "SCOPE_MISMATCH"
+    },
+    {
+      "id": "revoked",
+      "condition": "authority or delegation is revoked at the evaluated decision time",
+      "expected_outcome": "deny",
+      "reason_code": "AUTHORITY_REVOKED"
+    },
+    {
+      "id": "stale",
+      "condition": "required authority or revocation evidence is stale or unavailable",
+      "expected_outcome": "indeterminate",
+      "reason_code": "TRUST_STATE_STALE"
+    },
+    {
+      "id": "conflict",
+      "condition": "authoritative sources return incompatible results",
+      "expected_outcome": "review",
+      "reason_code": "AUTHORITY_CONFLICT"
+    },
+    {
+      "id": "corrected",
+      "condition": "material metadata or authority evidence is corrected after the original decision",
+      "expected_outcome": "new_decision",
+      "reason_code": "SUPERSEDING_RECEIPT_REQUIRED"
+    }
+  ],
+  "evidence_outputs": [
+    "decision_receipt",
+    "authority_evidence",
+    "policy_epoch",
+    "revocation_status",
+    "replay_inputs",
+    "redress_reference"
+  ],
+  "limitations": [
+    "The verifier can establish governed evidence acceptance; it cannot determine equipment safety, regulatory compliance, defect severity, or engineering fitness for service.",
+    "Does not transfer relying-party accountability"
+  ]
+}

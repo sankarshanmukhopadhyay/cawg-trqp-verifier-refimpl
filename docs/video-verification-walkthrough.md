@@ -320,3 +320,17 @@ It turns trust from a static assumption into a **testable, observable, and enfor
 - See `docs/trqp-alignment.md` for protocol mapping
 - See `docs/reproducibility-guide.md` for replay workflows
 - See `fixtures/` for concrete examples
+
+## Operational assurance contract
+
+| Control point | Required behavior | Evidence |
+|---|---|---|
+| Decision | Bound the result to the requested video action and profile | Decision receipt and stable reason codes |
+| Authority | Resolve actor recognition, delegation, action scope, and issuer trust | TRQP/authority evidence references |
+| Freshness | Apply profile-specific revocation and cache-freshness rules | Timestamped trust-state evidence |
+| Policy | Pin verifier profile, policy epoch, and transport conditions | Versioned profile/policy references |
+| Failure | Surface incomplete, stale, or conflicting state as `indeterminate`/`review` | Explicit non-positive receipt |
+| Correction | Preserve prior receipts and create superseding evidence | Receipt lineage and replay inputs |
+
+The verifier therefore proves a reproducible governance evaluation over supplied evidence. It does not prove that the depicted event occurred as claimed.
+

@@ -103,3 +103,28 @@ A conforming implementation should test at least:
 - stale or unavailable authority sources;
 - disclosure rendering and accessibility;
 - evidence retention, correction, and appeal replay.
+
+## Operational assurance contract
+
+This walkthrough is testable as a bounded governance decision rather than as a claim that the underlying content is true.
+
+| Control point | Required behavior | Evidence |
+|---|---|---|
+| Decision | Evaluate **Listing-image acceptance** only | Stable outcome and reason code |
+| Authority | Resolve brokerage or delegated agent authority, delegation, scope, and current status | Authority and delegation references |
+| Freshness | Apply the required revocation and trust-state freshness rules | Timestamped trust-state evidence |
+| Policy | Pin the listing disclosure policy epoch used for evaluation | Policy identifier/version or digest |
+| Failure | Fail visibly on stale, unavailable, ambiguous, or conflicting authority state | `indeterminate`/`review` receipt rather than implicit trust |
+| Correction | Preserve the original decision and issue a superseding receipt when material inputs change | Immutable receipt lineage |
+| Handoff | Pass the result into **property listing workflow** without transferring accountability to the verifier | Relying-party disposition/audit reference |
+
+### Conformance assertions
+
+An implementation claiming this walkthrough should be able to demonstrate that:
+
+1. recognition alone never grants the requested action when scope or delegation is absent;
+2. a revoked authority or delegation cannot produce a positive decision for the affected decision time;
+3. stale or conflicting trust state is surfaced explicitly and never silently coerced to `allow`;
+4. identical pinned inputs replay to the same governed outcome and reason code; and
+5. a correction produces a new decision linked to, rather than overwriting, the historical receipt.
+

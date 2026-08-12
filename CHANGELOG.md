@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+### Walkthrough portfolio
+- Refined every indexed walkthrough with a common operational assurance contract covering bounded decisions, authority/delegation, revocation freshness, visible failure, correction lineage, and replay expectations.
+- Added disaster-response damage assessment, legal/administrative evidence submission, industrial inspection and maintenance, and cultural-heritage/archive ingest walkthroughs with machine-readable scenario manifests.
+- Added an assurance-pattern coverage matrix to make the walkthrough portfolio easier to navigate by governance problem rather than sector alone.
+- Replaced hard-coded walkthrough/scenario counts in validation with discovery-based checks and index discoverability requirements, and added Mermaid walkthrough validation to `make validate`.
+
 ### Added
 - Added consistent at-a-glance Mermaid governance flows to all fourteen walkthroughs.
 - Added a CI validation gate that enforces walkthrough diagram coverage and basic Mermaid fence integrity.

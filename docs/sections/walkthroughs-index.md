@@ -8,18 +8,29 @@ description: "End-to-end scenarios showing the verifier applied to concrete gove
 
 # Walkthroughs
 
-Worked scenarios showing request, governed authority evaluation, decision receipt, correction, and replay. Each walkthrough states what the verifier can establish and what remains the responsibility of the relying organization.
+These scenarios show how content-authenticity evidence and governed authority can be combined without collapsing provenance, authorization, and downstream truth or professional judgment into one decision. Each walkthrough exposes the decision boundary, authority/delegation model, revocation and freshness behavior, failure states, correction lineage, evidence outputs, and replay expectations.
 
-## Available walkthroughs
+## Start by assurance pattern
 
-### Established examples
+| Assurance pattern | Representative walkthroughs | What it pressure-tests |
+|---|---|---|
+| Publication and public communication | [Breaking-News Photography](../workflows/breaking-news-photography.md), [Video Verification](../video-verification-walkthrough.md), [Political Campaign Advertising](../workflows/political-campaign-advertising.md) | editorial/campaign authority, rapid revocation, conflicting state |
+| Rights and commercial authorization | [Authorized Music Distribution](../workflows/authorized-music-distribution.md), [AI-Assisted Property Listing Images](../workflows/property-listing-ai-image-verification.md), [Marketplace Product Images](../workflows/marketplace-product-images.md) | delegated rights, disclosure scope, platform disposition |
+| Regulated or evidentiary intake | [Insurance Claim Evidence](../workflows/insurance-claim-evidence.md), [Medical Imaging](../workflows/medical-imaging-remote-consultation.md), [Legal and Administrative Evidence](../workflows/legal-evidence-submission.md) | separation of intake from substantive adjudication |
+| Field and operational evidence | [Body-Camera Evidence](../workflows/body-camera-evidence.md), [Construction Milestones](../workflows/construction-milestone-certification.md), [Disaster Response](../workflows/disaster-response-damage-assessment.md), [Industrial Inspection](../workflows/industrial-inspection-maintenance.md) | device/actor delegation, offline or delayed state, safety boundaries |
+| Long-lived and correction-sensitive evidence | [Scientific Research Imagery](../workflows/scientific-research-imagery.md), [Cultural Heritage and Archive Ingest](../workflows/cultural-heritage-archive-ingest.md), [Photography Contest](../workflows/photography-contest-verification.md) | reproducibility, immutable correction, preserved historical state |
+| Constrained/humanitarian environments | [Humanitarian Offline Field Evidence](../workflows/humanitarian-offline-field-evidence.md), [Warranty and Repair Evidence](../workflows/warranty-repair-evidence.md) | intermittent connectivity, delegated service roles, contested evidence |
+
+## Complete walkthrough portfolio
+
+### Foundational and implementation-led examples
 
 - [Photography Contest Verification](../workflows/photography-contest-verification.md)
 - [Video Verification Walkthrough](../video-verification-walkthrough.md)
 - [Authorized Music Distribution](../workflows/authorized-music-distribution.md)
 - [AI-Assisted Property Listing Images](../workflows/property-listing-ai-image-verification.md)
 
-### v0.18.1 real-life assurance portfolio
+### Cross-sector assurance scenarios
 
 - [Breaking-News Photography](../workflows/breaking-news-photography.md)
 - [Insurance Claim Evidence](../workflows/insurance-claim-evidence.md)
@@ -32,6 +43,15 @@ Worked scenarios showing request, governed authority evaluation, decision receip
 - [Warranty and Repair Evidence](../workflows/warranty-repair-evidence.md)
 - [Scientific Research Imagery](../workflows/scientific-research-imagery.md)
 
+### New assurance-boundary scenarios
+
+- [Disaster Response Damage Assessment](../workflows/disaster-response-damage-assessment.md)
+- [Legal and Administrative Evidence Submission](../workflows/legal-evidence-submission.md)
+- [Industrial Inspection and Maintenance Evidence](../workflows/industrial-inspection-maintenance.md)
+- [Cultural Heritage and Archive Ingest](../workflows/cultural-heritage-archive-ingest.md)
+
 ## Common assurance contract
 
-Every walkthrough now includes an at-a-glance Mermaid governance flow. The v0.18.1 scenarios also include an explicit decision boundary, authority and delegation model, revocation behavior, stale/conflicting-state handling, immutable correction lineage, evidence outputs, and a machine-readable scenario manifest under `examples/`.
+Across the portfolio, a positive verifier result means only that the requested action satisfies the configured provenance, authority, scope, policy, and trust-state requirements. It does **not** establish factual truth or transfer the relying organization's legal, editorial, clinical, engineering, evidentiary, or policy responsibility to the verifier.
+
+The machine-readable scenario manifests under `examples/*/scenario.json` exercise six common lifecycle states: authorized, scope mismatch, revoked, stale, conflict, and corrected. CI discovers these manifests dynamically and verifies that they resolve to published walkthrough documents.
