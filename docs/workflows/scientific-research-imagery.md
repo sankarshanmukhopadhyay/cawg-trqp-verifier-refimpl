@@ -101,6 +101,7 @@ Scientific images can persist for years and may be reused across papers, dataset
 CAWG-TRQP provides a way to bind contribution authority and process evidence to the research context while preserving superseding decisions. It complements, rather than replaces, scientific review and reproducibility practices.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ CAWG-TRQP provides a way to bind contribution authority and process evidence to 
 | Acquisition/processing policy | Policy/process evidence | Pins the declared requirements for generating or transforming imagery |
 | Role or approval withdrawal | Revocation state | Stops obsolete authority from authorizing new contributions |
 | Data correction/retraction | Superseding receipt | Preserves earlier decisions while recording corrected evidence |
+
 ## Governance concerns
 
 - **Instrument Provenance:** represented as explicit policy, context, evidence, or review requirements.

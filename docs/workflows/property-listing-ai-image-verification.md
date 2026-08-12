@@ -98,6 +98,7 @@ AI-assisted listing imagery makes provenance alone insufficient. A content crede
 CAWG-TRQP provides the missing governance layer around those questions. It binds property, seller mandate, transformation class, publication channel, and policy epoch so an allowed edit and a deceptive alteration do not receive the same operational treatment merely because both have valid provenance.
 
 ## Roles in the workflow
+
 | Actor | Authority or responsibility |
 |---|---|
 | Seller | Grants and may revoke the listing mandate |
@@ -120,6 +121,7 @@ CAWG-TRQP provides the missing governance layer around those questions. It binds
 | Transformation class | Policy/process scope | Distinguishes permitted staging from prohibited material alteration |
 | Mandate withdrawal | Revocation state | Stops future listing-image publication after authority changes |
 | Disclosure/marketplace review | Conditional/review disposition | Allows policy-sensitive outcomes without claiming physical accuracy |
+
 ## End-to-end flow
 
 ```mermaid

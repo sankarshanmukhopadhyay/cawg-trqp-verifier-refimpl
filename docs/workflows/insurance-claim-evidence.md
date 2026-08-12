@@ -101,6 +101,7 @@ Claims workflows often mix self-submitted media, repair-shop evidence, adjuster 
 CAWG-TRQP provides a bounded trust decision before substantive claims assessment. It can enforce claim binding, delegated submission authority, revocation, and freshness while keeping uncertainty visible. This helps the insurer move quickly without pretending that provenance or submitter authority resolves the claim itself.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ CAWG-TRQP provides a bounded trust decision before substantive claims assessment
 | Incident/date window | Time and purpose scope | Prevents otherwise valid evidence being reused outside the authorized event |
 | Withdrawn representation | Revocation state | Stops a former representative authorizing a new submission |
 | Adjuster escalation | `review` / `indeterminate` outcome | Routes uncertain evidence without silently accepting it |
+
 ## Governance concerns
 
 - **Delegated Submission:** represented as explicit policy, context, evidence, or review requirements.

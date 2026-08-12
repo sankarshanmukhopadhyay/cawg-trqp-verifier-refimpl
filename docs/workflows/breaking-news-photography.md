@@ -101,6 +101,7 @@ Breaking news compresses the time available for verification while increasing th
 The verifier provides a governed checkpoint between provenance validation and editorial judgment. It makes assignment authority, publication scope, revocation, freshness, and conflicting authority state visible to the newsroom. This is especially useful when material arrives through multiple desks, agencies, freelancers, or automated intake systems and the person making the downstream editorial decision was not present when the authority was granted.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ The verifier provides a governed checkpoint between provenance validation and ed
 | Credential/assignment withdrawal | Revocation state | Prevents a withdrawn mandate from authorizing a new publication action |
 | Editorial correction | Superseding decision receipt | Preserves the original decision while recording corrected inputs |
 | Editor escalation | `review` / `indeterminate` outcome | Keeps uncertainty visible instead of converting it into permission |
+
 ## Governance concerns
 
 - **Source Protection:** represented as explicit policy, context, evidence, or review requirements.

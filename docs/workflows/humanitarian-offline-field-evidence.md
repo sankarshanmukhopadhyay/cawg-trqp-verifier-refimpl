@@ -101,6 +101,7 @@ Humanitarian operations expose a hard governance problem: the need to act quickl
 This walkthrough makes that policy visible. Snapshot provenance, age, authorization scope, later synchronization, and correction can all become part of the evidence. That lets teams distinguish “trusted under a bounded offline policy” from “confirmed against current online state.”
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ This walkthrough makes that policy visible. Snapshot provenance, age, authorizat
 | Signed offline snapshot | Pinned trust-state evidence | Supports bounded verification without live registry access |
 | Snapshot age/freshness | Freshness policy | Determines when degraded operation must stop or escalate |
 | Later reconciliation | Correction/supersession | Re-evaluates decisions when current authority state becomes available |
+
 ## Governance concerns
 
 - **Offline Snapshot Freshness:** represented as explicit policy, context, evidence, or review requirements.

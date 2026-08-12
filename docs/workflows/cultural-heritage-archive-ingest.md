@@ -100,6 +100,7 @@ Archive material is long-lived and may outlast the systems and institutions that
 CAWG-TRQP can make those roles and boundaries explicit at ingest time. The resulting receipt and replay bundle preserve which authority and policy justified the original admission even if the catalog record is later corrected or the custodial context changes.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Digitization operator | Captures or transforms the collection item | Provenance and transformation declaration |
@@ -119,6 +120,7 @@ CAWG-TRQP can make those roles and boundaries explicit at ingest time. The resul
 | Ingest/transformation policy | Action and process scope | Separates capture, metadata editing, and archival admission rights |
 | Custodial authority change | Revocation/supersession | Prevents obsolete mandates governing new actions |
 | Catalog correction | Superseding receipt | Preserves the historical ingest decision while recording updated evidence |
+
 ## Governance concerns
 
 - **Collection-specific authority:** MUST be represented explicitly in policy, context, evidence, or review routing.

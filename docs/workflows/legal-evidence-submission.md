@@ -100,6 +100,7 @@ Legal systems already distinguish filing authority from the substantive conseque
 CAWG-TRQP makes the filing authority check machine-verifiable while preserving the tribunal’s independence. It also creates a precise audit trail for disputes about who filed what, under which authority, and which policy version governed the intake decision.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitting party | Provides media and declared context | Provenance plus case/submission reference |
@@ -119,6 +120,7 @@ CAWG-TRQP makes the filing authority check machine-verifiable while preserving t
 | Filing/evidence action | Action scope | Separates permission to submit from admissibility or merits |
 | Withdrawal/substitution of authority | Revocation state | Prevents former representatives making new authorized filings |
 | Clerk/tribunal review | Review disposition | Routes uncertain authority without pre-judging the evidence |
+
 ## Governance concerns
 
 - **Case-specific scope:** MUST be represented explicitly in policy, context, evidence, or review routing.

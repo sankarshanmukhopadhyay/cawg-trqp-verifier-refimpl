@@ -100,6 +100,7 @@ Disaster response combines urgency, rapidly changing assignments, intermittent c
 The walkthrough shows how the verifier can encode incident, location, program, time, and delegation scope while preserving `review` or `indeterminate` when the necessary trust state is unavailable. This supports rapid action without hiding the uncertainty created by the environment.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Field collector | Captures and submits incident imagery | CAWG/C2PA-derived provenance and assignment context |
@@ -119,6 +120,7 @@ The walkthrough shows how the verifier can encode incident, location, program, t
 | Zone/location | Jurisdiction scope | Prevents an assignment being reused outside its operational area |
 | Assignment withdrawal | Revocation state | Stops a superseded team mandate from authorizing new evidence |
 | Emergency operations review | Review disposition | Allows urgent escalation without silently treating uncertainty as trust |
+
 ## Governance concerns
 
 - **Incident and geographic scope:** MUST be represented explicitly in policy, context, evidence, or review routing.

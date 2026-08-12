@@ -101,6 +101,7 @@ Construction programs often involve contractors, subcontractors, independent eng
 CAWG-TRQP helps encode those distinctions. It can ensure that a recognized actor is also in scope for the requested milestone action, that revoked or expired authority is enforced, and that the evidence can be replayed later if certification or payment is disputed.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ CAWG-TRQP helps encode those distinctions. It can ensure that a recognized actor
 | Milestone action | Action scope | Separates evidence submission from engineering approval or payment release |
 | Appointment withdrawal | Revocation state | Prevents former delegates authorizing new actions |
 | Owner/engineer escalation | Review disposition | Routes incomplete authority evidence without implying technical compliance |
+
 ## Governance concerns
 
 - **Project And Work Package Scope:** represented as explicit policy, context, evidence, or review requirements.

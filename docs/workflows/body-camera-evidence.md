@@ -101,6 +101,7 @@ Body-camera evidence is unusually sensitive because it combines public authority
 The verifier provides a narrow admission control that can bind device/operator authority, evidence action, jurisdiction, time, and revocation state. It also creates evidence for later review without claiming to settle the substantive interpretation of the recording.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ The verifier provides a narrow admission control that can bind device/operator a
 | Retention/access policy | Policy epoch | Pins the governance rules applied at decision time |
 | Device/officer status change | Revocation state | Prevents withdrawn authority from silently continuing |
 | Evidence supervisor review | Review disposition | Separates trust uncertainty from investigative conclusions |
+
 ## Governance concerns
 
 - **Chain Of Custody:** represented as explicit policy, context, evidence, or review requirements.

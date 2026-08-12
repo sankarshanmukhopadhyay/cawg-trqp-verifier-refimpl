@@ -101,6 +101,7 @@ Political advertising combines rapidly changing authority, jurisdiction-specific
 CAWG-TRQP can bind the requested publication action to the campaign, candidate, jurisdiction, channel, election period, and current mandate. It also exposes stale or conflicting authority state rather than forcing a binary answer, which is important when escalation and transparency are preferable to silent publication.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ CAWG-TRQP can bind the requested publication action to the campaign, candidate, 
 | Jurisdiction/election window | Context scope | Restricts authority to the applicable campaign context |
 | Mandate withdrawal | Revocation state | Stops future publication decisions after authority changes |
 | Platform election-integrity review | Review disposition | Routes conflict without turning the verifier into a truth arbiter |
+
 ## Governance concerns
 
 - **Jurisdictional Scope:** represented as explicit policy, context, evidence, or review requirements.

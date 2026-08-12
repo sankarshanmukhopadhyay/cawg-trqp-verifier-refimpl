@@ -96,6 +96,7 @@ A verifier agent can appear trustworthy while silently expanding its role: selec
 The walkthrough therefore treats the tool chain as evidence. Material calls, dependency identities, policy/trust-state epochs, failure behavior, and final findings can be reconstructed. This allows an independent reviewer to distinguish evidence gathering from the authority to impose a consequence.
 
 ## Roles in the workflow
+
 | Actor | Authority or responsibility |
 |---|---|
 | Principal | Delegates verification/orchestration task and defines allowed tools/data/actions |
@@ -115,6 +116,7 @@ The walkthrough therefore treats the tool chain as evidence. Material calls, dep
 | Material call evidence | Replay surface | Records inputs/outputs that affected the result |
 | Dependency freshness/conflict | Trust-state evidence | Prevents stale or incompatible inputs being silently normalized |
 | Separate decision mandate | Authority boundary | Prevents verifier authority becoming downstream decision authority |
+
 ## Tool-chain evidence
 
 A replayable orchestration record should identify:

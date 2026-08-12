@@ -59,6 +59,24 @@ for p in linked:
     if '**' not in body:
         errors.append(f'{rel}: missing emphasized bounded decision or reader-facing key point')
 
+    # GitHub Pages uses Jekyll/Kramdown, which is less forgiving than GitHub's
+    # Markdown renderer about tables running directly into headings or prose.
+    # Require blank lines around each pipe-table block to keep rendering stable.
+    lines=body.splitlines()
+    in_fence=False
+    for i, line in enumerate(lines):
+        if line.strip().startswith('```'):
+            in_fence=not in_fence
+            continue
+        if in_fence or not line.startswith('|'):
+            continue
+        starts_table = i == 0 or not lines[i-1].startswith('|')
+        ends_table = i == len(lines)-1 or not lines[i+1].startswith('|')
+        if starts_table and i > 0 and lines[i-1].strip():
+            errors.append(f'{rel}:{i+1}: pipe table must have a blank line before it for Jekyll/Kramdown')
+        if ends_table and i + 1 < len(lines) and lines[i+1].strip():
+            errors.append(f'{rel}:{i+1}: pipe table must have a blank line after it for Jekyll/Kramdown')
+
 if errors:
     print('walkthrough quality: FAIL')
     for e in errors: print(f'- {e}')

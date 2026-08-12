@@ -94,6 +94,7 @@ Music distribution involves labels, artists, publishers, aggregators, collective
 CAWG-TRQP provides a scoped query and evidence model. It lets the platform distinguish recognition from authorization, enforce expiry and revocation, and quarantine conflicting authority state without treating that conflict as a definitive copyright judgment.
 
 ## Roles in the workflow
+
 | Actor | Responsibility |
 |---|---|
 | Label | Issues scoped distributor authority |
@@ -117,6 +118,7 @@ CAWG-TRQP provides a scoped query and evidence model. It lets the platform disti
 | Territory/platform/release window | Context scope | Restricts an otherwise valid mandate |
 | Rights mandate withdrawal | Revocation state | Stops future deliveries once authority is withdrawn |
 | Platform hold/quarantine | Review disposition | Handles conflicting or incomplete authority without declaring infringement |
+
 ## Step 1: Publish scoped authority
 
 The label publishes an authorization record bounded by:

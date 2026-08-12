@@ -101,6 +101,7 @@ Warranty ecosystems often rely on third-party service centers and technicians wh
 A governed verification step lets the manufacturer enforce those boundaries before evidence influences the claim. It also provides a better redress surface: the customer or service partner can challenge a specific authority, scope, or evidence problem instead of receiving an opaque rejection.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ A governed verification step lets the manufacturer enforce those boundaries befo
 | Warranty/service action | Action scope | Separates evidence admission from entitlement or reimbursement |
 | Partner suspension | Revocation state | Stops withdrawn service authority from being reused |
 | Warranty escalation | Review disposition | Keeps ambiguous evidence visible for human resolution |
+
 ## Governance concerns
 
 - **Serial Number Binding:** represented as explicit policy, context, evidence, or review requirements.

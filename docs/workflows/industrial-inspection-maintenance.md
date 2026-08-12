@@ -100,6 +100,7 @@ Industrial systems commonly depend on layered contractor and technician authorit
 CAWG-TRQP lets the asset owner bind authorization to equipment, task, site, purpose, and time while retaining the provenance and replay surface. This creates a clearer handoff from evidence collection to engineering judgment and makes unauthorized or stale-state submissions visible before they influence a safety-critical workflow.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Inspector or technician | Captures media during inspection/maintenance | Provenance and work-order context |
@@ -119,6 +120,7 @@ CAWG-TRQP lets the asset owner bind authorization to equipment, task, site, purp
 | Maintenance task/class | Action scope | Limits authority to the approved inspection or maintenance operation |
 | Contractor suspension | Revocation state | Stops withdrawn service authority from being reused |
 | Engineering review | Review disposition | Keeps trust uncertainty separate from safety assessment |
+
 ## Governance concerns
 
 - **Asset and work-order scope:** MUST be represented explicitly in policy, context, evidence, or review routing.

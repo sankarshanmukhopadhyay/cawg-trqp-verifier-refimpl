@@ -97,6 +97,7 @@ Agentic systems can execute many actions under one technical identity, which mak
 The walkthrough makes those limits first-class. Mandate, transformation scope, tool/sub-agent chain, revocation, and evidence lineage can all be evaluated and replayed before a relying party decides what to do with the output.
 
 ## Roles in the workflow
+
 | Actor | Authority or responsibility |
 |---|---|
 | Principal | Authorizes creation/transformation and may revoke or narrow the mandate |
@@ -116,6 +117,7 @@ The walkthrough makes those limits first-class. Mandate, transformation scope, t
 | Transformation classes | Action/policy scope | Separates permitted edits from prohibited production behavior |
 | Tool/sub-agent permissions | Delegation depth/tool scope | Prevents hidden authority expansion through orchestration |
 | Mandate revocation | Current authority state | Stops future production authorization after withdrawal |
+
 ## Agent-specific controls
 
 - Bind the agent identity to the principal and mandate.

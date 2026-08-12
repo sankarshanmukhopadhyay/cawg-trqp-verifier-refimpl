@@ -101,6 +101,7 @@ Remote consultation crosses organizational and technical boundaries: imaging cen
 A CAWG-TRQP checkpoint makes those admission conditions explicit without attempting to automate clinical judgment. It is particularly valuable where a specialist needs to know not merely that a file is intact but that the organization or delegate sending it was permitted to do so for this consultation and at this time.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ A CAWG-TRQP checkpoint makes those admission conditions explicit without attempt
 | Clinical transport/use policy | Purpose and policy scope | Limits the verifier result to the declared consultation use |
 | Credential or institutional withdrawal | Revocation state | Prevents obsolete authority being reused |
 | Clinical escalation | Review disposition | Keeps incomplete trust evidence separate from diagnostic judgment |
+
 ## Governance concerns
 
 - **Sensitive Data Minimization:** represented as explicit policy, context, evidence, or review requirements.

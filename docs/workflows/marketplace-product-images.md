@@ -101,6 +101,7 @@ Marketplaces operate at volumes where manual review cannot be the primary trust 
 A governed verifier lets the platform ask a precise question: is this actor currently authorized to use this asset for this listing action under this policy? That reduces the gap between provenance evidence and operational platform controls while preserving escalation for ambiguous or conflicting state.
 
 ## Roles in the workflow
+
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -120,6 +121,7 @@ A governed verifier lets the platform ask a precise question: is this actor curr
 | Image-use policy | Policy epoch | Pins disclosure, transformation, and publication requirements |
 | Seller suspension or mandate withdrawal | Revocation state | Stops future positive decisions after authority changes |
 | Marketplace moderation | Review disposition | Handles conflict without treating it as verified or fraudulent by default |
+
 ## Governance concerns
 
 - **Reseller Authorization:** represented as explicit policy, context, evidence, or review requirements.

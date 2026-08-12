@@ -97,6 +97,7 @@ Submission agents create a subtle authority-expansion risk. An agent that is per
 This walkthrough makes recipient, resource, evidence class, purpose, validity period, correction rights, and sub-delegation explicit. The intake service can therefore reject an out-of-scope action without concluding anything about the underlying evidence.
 
 ## Roles in the workflow
+
 | Actor | Authority or responsibility |
 |---|---|
 | Principal | Grants the right to submit defined evidence and may revoke that right |
@@ -117,6 +118,7 @@ This walkthrough makes recipient, resource, evidence class, purpose, validity pe
 | Permitted submission operations | Action scope | Separates transmit, modify, withdraw, and correct authority |
 | Sub-delegation rights | Delegation depth | Controls whether another agent/tool may act in the chain |
 | Revocation/expiry | Current authority state | Stops new submissions after the mandate ends |
+
 ## Agent-specific controls
 
 The mandate should bind the agent to the principal, recipient, case/resource, evidence class, purpose, permitted operations, validity interval, and whether correction or withdrawal is allowed. If the agent is permitted to discover or select evidence autonomously, that authority should be explicit rather than inferred from submission authority.
