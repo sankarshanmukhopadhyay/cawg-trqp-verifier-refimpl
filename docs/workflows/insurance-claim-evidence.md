@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A policyholder, repairer, or delegated representative submits damage images for an insurance claim. The insurer needs to know whether the evidence is bound to the correct claim and incident, whether the submitter is authorized for this stage of the process, and whether the authority and evidence are current enough to use for triage.
+
+A positive result means **the material may be used for the defined claim-processing step**. It does not establish coverage, causation, fraud, liability, repair cost, or entitlement to payment. Those remain separate claims decisions. The verifier makes the intake authorization and evidence lineage reproducible so that a later adjuster, reviewer, or claimant can understand why the material entered the workflow.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Claims workflows often mix self-submitted media, repair-shop evidence, adjuster inspections, and automated triage. The same image can be authentic but attached to the wrong claim, submitted by someone without authority, reused across incidents, or evaluated after a delegation has been revoked. When those checks are handled only through application permissions or manual review, the evidence supporting the decision is difficult to reconstruct.
+
+CAWG-TRQP provides a bounded trust decision before substantive claims assessment. It can enforce claim binding, delegated submission authority, revocation, and freshness while keeping uncertainty visible. This helps the insurer move quickly without pretending that provenance or submitter authority resolves the claim itself.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Claim or policy number | Resource scope | Binds the evidence to the intended claim or insured asset |
+| Policyholder/repairer authority | Recognition and delegation | Shows who may submit evidence and for which step |
+| Incident/date window | Time and purpose scope | Prevents otherwise valid evidence being reused outside the authorized event |
+| Withdrawn representation | Revocation state | Stops a former representative authorizing a new submission |
+| Adjuster escalation | `review` / `indeterminate` outcome | Routes uncertain evidence without silently accepting it |
 ## Governance concerns
 
 - **Delegated Submission:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/insurance-claim-evidence/`](../../examples/in
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- claimants get clearer reasons when evidence cannot be used;
+- claims teams can separate evidence intake from coverage and payment adjudication;
+- delegated repairers and representatives can be authorized narrowly instead of receiving broad account access;
+- appeals and fraud reviews can replay the exact trust-state inputs used at triage.
+
+## Governance interpretation
+
+The verifier governs admission of evidence to a defined claims step; it does not decide the economic or legal consequence of the claim. The insurer remains accountable for coverage interpretation, fraud controls, valuation, fairness, and redress.
+
+This division keeps authority proportional. A machine-verifiable authorization decision can accelerate intake while the higher-stakes adjudication remains subject to the insurer’s separately governed processes.
 
 ## Agentic AI Variant
 

@@ -12,6 +12,12 @@ This archetype covers an AI agent that creates, transforms, stages, enhances, su
 
 The verifier answers: **may this agent-produced artefact be accepted as produced under a valid, in-scope mandate and declared transformation policy at the evaluated decision time?** It does not establish that the depicted or asserted subject matter is factually true.
 
+## Plain-language summary
+
+A principal delegates a bounded content-production task to an AI agent. The agent may create, transform, summarize, stage, or enhance material, but the relying party needs evidence that the specific transformation was authorized for the specific source, purpose, output channel, and time.
+
+A positive result means **the artefact may be treated as produced under the evaluated mandate and transformation policy**. It does not establish that the resulting content is true, appropriate, lawful, or ready for publication. The archetype exists to keep agent identity, delegated authority, tool use, and downstream acceptance as separate governance questions.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -84,8 +90,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this agentic archetype needs verifiable governance
 
+Agentic systems can execute many actions under one technical identity, which makes ordinary authentication a poor proxy for authority. A producer agent may be permitted to crop or summarize but not synthesize; it may be allowed to transform one source asset but not another; or it may call a sub-agent that the principal never authorized.
+
+The walkthrough makes those limits first-class. Mandate, transformation scope, tool/sub-agent chain, revocation, and evidence lineage can all be evaluated and replayed before a relying party decides what to do with the output.
+
+## Roles in the workflow
 | Actor | Authority or responsibility |
 |---|---|
 | Principal | Authorizes creation/transformation and may revoke or narrow the mandate |
@@ -94,6 +105,17 @@ stateDiagram-v2
 | TRQP verifier | Resolves agent/principal recognition, delegation, scope, policy, and revocation |
 | Relying party | Decides whether to accept, label, publish, or reject the artefact |
 
+
+
+## Agent governance concepts mapped to verifier controls
+
+| Agent governance concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Principal mandate | Delegation evidence | Defines who authorized the agent and for what production task |
+| Source/output binding | Resource scope | Constrains which assets may be transformed and where outputs may go |
+| Transformation classes | Action/policy scope | Separates permitted edits from prohibited production behavior |
+| Tool/sub-agent permissions | Delegation depth/tool scope | Prevents hidden authority expansion through orchestration |
+| Mandate revocation | Current authority state | Stops future production authorization after withdrawal |
 ## Agent-specific controls
 
 - Bind the agent identity to the principal and mandate.
@@ -127,6 +149,42 @@ sequenceDiagram
 ## Assurance tests
 
 A conforming implementation should test authorized production, missing mandate, prohibited transformation, resource mismatch, expired/revoked mandate, stale/conflicting authority state, and correction of a material provenance or authority input.
+
+## What evidence is produced
+
+| Evidence artifact | Primary user | What it establishes |
+|---|---|---|
+| Normalized verification request | Implementer / reviewer | Which actor, resource, action, context, and evidence entered the decision |
+| Decision receipt | Relying party / affected party | Outcome, reason codes, policy epoch, and the bounded basis for the decision |
+| Authority and revocation references | Assurance reviewer | Which governed trust sources were relied upon and their evaluated state |
+| Replay inputs or audit bundle | Auditor / maintainer | Whether the original decision can be reconstructed from pinned evidence |
+| Superseding receipt or correction lineage | Reviewer / affected party | How a material correction changed a later decision without rewriting history |
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do agentic mandate, scope, revocation, and role-boundary requirements remain aligned? | `python scripts/validate_agentic_assurance.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- principals can delegate narrowly instead of treating an agent as globally trusted;
+- content systems can inspect why a transformation was authorized;
+- tool and sub-agent use becomes part of the assurance evidence;
+- corrections and mandate changes create superseding, replayable decisions.
+
+## Governance interpretation
+
+The agent is an executor of delegated authority, not the source of that authority. The principal defines the mandate; governed sources establish current delegation and policy state; the verifier evaluates the requested production action; and the relying party remains responsible for acceptance or publication.
+
+This keeps agent autonomy compatible with revocation, scope, and accountability rather than allowing capability to be mistaken for permission.
 
 ## Operational assurance contract
 

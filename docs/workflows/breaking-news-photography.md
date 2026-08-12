@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A freelance journalist sends an image to a newsroom during a fast-moving event. Before the image can enter the editorial workflow, the newsroom needs more than a valid provenance record: it needs to know whether the journalist is recognized for this assignment, whether the requested publication action is within scope, whether that authority is still current, and whether any material correction has changed the decision surface.
+
+A positive verifier result therefore means **the image may proceed into editorial verification under the recorded authority and policy state**. It does not mean the depicted event is true. Editors still have to establish context, corroborate claims, assess newsworthiness, and take responsibility for publication. The value of CAWG-TRQP is that the authorization decision becomes explicit, reproducible, and challengeable rather than being buried in newsroom memory or ad hoc account permissions.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Breaking news compresses the time available for verification while increasing the cost of a mistaken trust decision. Accreditation can expire, a photographer may be recognized but outside the assigned event, a source may need protection, and an image can carry authentic provenance while still being contextually misleading. Those are different questions and should not be collapsed into a single “verified” badge.
+
+The verifier provides a governed checkpoint between provenance validation and editorial judgment. It makes assignment authority, publication scope, revocation, freshness, and conflicting authority state visible to the newsroom. This is especially useful when material arrives through multiple desks, agencies, freelancers, or automated intake systems and the person making the downstream editorial decision was not present when the authority was granted.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Press accreditation or assignment | Recognition/delegation evidence | Shows why the journalist may act for this event or newsroom |
+| Publication permission | Scoped authorization | Binds `publish` to the asset, assignment, channel, time and purpose |
+| Credential/assignment withdrawal | Revocation state | Prevents a withdrawn mandate from authorizing a new publication action |
+| Editorial correction | Superseding decision receipt | Preserves the original decision while recording corrected inputs |
+| Editor escalation | `review` / `indeterminate` outcome | Keeps uncertainty visible instead of converting it into permission |
 ## Governance concerns
 
 - **Source Protection:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/breaking-news-photography/`](../../examples/b
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- freelancers receive explainable authorization outcomes instead of opaque account-level rejection;
+- editors can distinguish provenance findings from publication authority and factual verification;
+- newsrooms can enforce withdrawn or narrowed assignments consistently across desks and systems;
+- assurance reviewers can replay which authority, policy epoch, and evidence produced the original result.
+
+## Governance interpretation
+
+The newsroom remains the decision authority for publication. The verifier does not become an editor and the registry does not become an arbiter of truth. Authority is deliberately layered: an accreditation or assignment source says who may act, the verifier evaluates that authority against the requested publication action, and the newsroom decides what the result means for editorial workflow.
+
+That separation is the governance benefit. It preserves institutional accountability while making the authority check executable and auditable.
 
 ## Agentic AI Variant
 

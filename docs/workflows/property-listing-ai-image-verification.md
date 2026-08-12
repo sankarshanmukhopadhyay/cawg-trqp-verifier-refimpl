@@ -14,6 +14,12 @@ CAWG/C2PA can provide provenance and transformation assertions. TRQP can determi
 
 This workflow does not treat content credentials as proof that a property matches the image. Physical accuracy still requires inspections, surveys, seller disclosures, and applicable legal remedies. CAWG-TRQP instead establishes a verifiable chain for who submitted the image, what was declared, which authority applied, and why the platform accepted, labelled, held, or rejected it.
 
+## Plain-language summary
+
+A realtor or brokerage submits a listing image that may include virtual staging, object removal, lighting adjustment, or generative edits. The marketplace needs to know whether the actor has a current seller/brokerage mandate for the property, whether the transformation was declared, and whether the edit class is allowed under the listing policy.
+
+A positive or conditionally trusted result means **the image may be published under the required disclosure and authority conditions**. It does not prove that the physical property matches the image, that the listing is legally accurate, or that inspection can be waived. The verifier makes authorization and transformation-policy enforcement visible while preserving those separate consumer-protection duties.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -85,8 +91,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+AI-assisted listing imagery makes provenance alone insufficient. A content credential can accurately report that an image was transformed while the marketplace still needs to decide whether the transformation is permissible, whether disclosure is required, and whether the actor was authorized to publish it for this property.
+
+CAWG-TRQP provides the missing governance layer around those questions. It binds property, seller mandate, transformation class, publication channel, and policy epoch so an allowed edit and a deceptive alteration do not receive the same operational treatment merely because both have valid provenance.
+
+## Roles in the workflow
 | Actor | Authority or responsibility |
 |---|---|
 | Seller | Grants and may revoke the listing mandate |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Buyer or affected party | Receives disclosure and can raise a challenge |
 | Reviewer or regulator | Replays the decision from retained evidence |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Property/listing identifier | Resource scope | Binds the image and mandate to the intended property |
+| Seller/brokerage mandate | Recognition/delegation | Shows who may create or publish listing media |
+| Transformation class | Policy/process scope | Distinguishes permitted staging from prohibited material alteration |
+| Mandate withdrawal | Revocation state | Stops future listing-image publication after authority changes |
+| Disclosure/marketplace review | Conditional/review disposition | Allows policy-sensitive outcomes without claiming physical accuracy |
 ## End-to-end flow
 
 ```mermaid
@@ -157,6 +179,41 @@ A conforming implementation should test at least:
 - stale or unavailable authority sources;
 - disclosure rendering and accessibility;
 - evidence retention, correction, and appeal replay.
+
+## What evidence is produced
+
+| Evidence artifact | Primary user | What it establishes |
+|---|---|---|
+| Normalized verification request | Implementer / reviewer | Which actor, resource, action, context, and evidence entered the decision |
+| Decision receipt | Relying party / affected party | Outcome, reason codes, policy epoch, and the bounded basis for the decision |
+| Authority and revocation references | Assurance reviewer | Which governed trust sources were relied upon and their evaluated state |
+| Replay inputs or audit bundle | Auditor / maintainer | Whether the original decision can be reconstructed from pinned evidence |
+| Superseding receipt or correction lineage | Reviewer / affected party | How a material correction changed a later decision without rewriting history |
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- realtors get clear guidance on which AI edits require disclosure or fail policy;
+- marketplaces can enforce transformation policy consistently at scale;
+- buyers can receive stronger provenance/disclosure evidence without being told the image proves physical reality;
+- complaints and regulatory review can replay the authority, transformation, and policy state used at publication.
+
+## Governance interpretation
+
+The marketplace owns the listing and disclosure policy; sellers and brokerages supply the relevant authority; inspectors and legal regimes govern physical accuracy and transactional duties. The verifier connects the first two without displacing the latter.
+
+That boundary is particularly important for generative media: transparent provenance plus scoped authority can improve accountability, but neither should be represented as a substitute for inspection or truthful-description obligations.
 
 ## Agentic AI Variant
 

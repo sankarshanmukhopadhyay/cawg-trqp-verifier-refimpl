@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A researcher or laboratory submits imagery for a dataset, publication, repository, or collaborative analysis. The receiving institution needs to know whether the material is bound to the correct study, whether the actor is authorized to contribute it, whether provenance/process evidence satisfies the declared research policy, and whether corrections can be traced.
+
+A positive result means **the asset may enter the identified research workflow under the recorded authority and evidence conditions**. It does not prove the scientific hypothesis, analytical validity, absence of misconduct, or reproducibility of the entire study. The verifier strengthens the governance around who contributed what, under which policy, and with which replayable evidence.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Scientific images can persist for years and may be reused across papers, datasets, repositories, and collaborations. This makes provenance, correction lineage, and authority particularly important. A contributor may have been authorized for one study or dataset but not another, and a later correction should not erase the historical record used in an earlier analysis.
+
+CAWG-TRQP provides a way to bind contribution authority and process evidence to the research context while preserving superseding decisions. It complements, rather than replaces, scientific review and reproducibility practices.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Study/dataset identifier | Resource scope | Binds the contribution to the intended research context |
+| Researcher/lab role | Recognition/delegation | Shows who may contribute or approve the asset |
+| Acquisition/processing policy | Policy/process evidence | Pins the declared requirements for generating or transforming imagery |
+| Role or approval withdrawal | Revocation state | Stops obsolete authority from authorizing new contributions |
+| Data correction/retraction | Superseding receipt | Preserves earlier decisions while recording corrected evidence |
 ## Governance concerns
 
 - **Instrument Provenance:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/scientific-research-imagery/`](../../examples
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- repositories can explain why an asset was admitted using stable evidence rather than institutional memory;
+- collaborators can distinguish contributor authority from scientific validity;
+- long-lived datasets retain correction and authority lineage;
+- research-integrity or reproducibility reviews can replay the admission decision.
+
+## Governance interpretation
+
+Scientific governance requires a careful boundary between trusted process evidence and scientific truth. The verifier can show that an actor, asset, and workflow satisfied an institutional admission policy; peer review, methodological critique, statistical analysis, and research-integrity processes determine the scientific consequence.
+
+This keeps the trust layer useful without granting it epistemic authority it does not possess.
 
 ## Agentic AI Variant
 

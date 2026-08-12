@@ -21,6 +21,7 @@ jobs:
       - run: python scripts/validate_examples.py
       - run: python scripts/validate_walkthrough_examples.py
       - run: python scripts/validate_walkthrough_diagrams.py
+      - run: python scripts/validate_walkthrough_quality.py
       - run: python scripts/validate_repository.py
       - run: python scripts/validate_learning_paths.py
       - run: python scripts/validate_feed_descriptors.py

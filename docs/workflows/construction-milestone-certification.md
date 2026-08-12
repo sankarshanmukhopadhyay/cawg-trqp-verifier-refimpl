@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A contractor, site inspector, or delegated professional submits imagery to support a construction milestone. The project owner needs to know whether the evidence is tied to the correct project and milestone, whether the submitting/certifying actor has the required authority, and whether that authority and evidence are current enough for milestone review.
+
+A positive result means **the media may be used in the milestone-payment or certification workflow**. It does not prove structural compliance, workmanship quality, quantities, or payment entitlement. Those remain engineering, contractual, and financial determinations. The verifier makes the authority and evidence path into the review process explicit and auditable.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Construction programs often involve contractors, subcontractors, independent engineers, owners, lenders, and remote reviewers. The person who captures evidence may not be the person authorized to certify it, and authority may be limited to a particular site, work package, milestone, or time window.
+
+CAWG-TRQP helps encode those distinctions. It can ensure that a recognized actor is also in scope for the requested milestone action, that revoked or expired authority is enforced, and that the evidence can be replayed later if certification or payment is disputed.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Project/work package | Resource scope | Binds authority to the identified construction context |
+| Inspector/certifier appointment | Recognition/delegation | Shows who may submit or certify evidence |
+| Milestone action | Action scope | Separates evidence submission from engineering approval or payment release |
+| Appointment withdrawal | Revocation state | Prevents former delegates authorizing new actions |
+| Owner/engineer escalation | Review disposition | Routes incomplete authority evidence without implying technical compliance |
 ## Governance concerns
 
 - **Project And Work Package Scope:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/construction-milestone-certification/`](../..
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- project teams can distinguish capture authority from certification and payment authority;
+- remote reviewers receive replayable evidence instead of only screenshots or email approvals;
+- delegations can be restricted by site, milestone, action, and validity period;
+- disputes can reconstruct the exact policy and authority state used when evidence was admitted.
+
+## Governance interpretation
+
+The verifier governs whether evidence may enter a milestone decision process. Engineers, contract administrators, project owners, and financiers retain their distinct authorities over technical acceptance, certification, and payment.
+
+Making these boundaries explicit prevents a provenance or authorization result from being mistaken for an engineering sign-off. It also gives each accountable actor a cleaner evidence surface for its own decision.
 
 ## Agentic AI Variant
 

@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A public agency receives body-camera media for controlled evidence handling. The agency needs to know whether the recording and its provenance are intact, whether the device/operator or submitting custodian was authorized for the relevant duty and evidence action, and whether that authority was valid at the evaluated time.
+
+A positive result means **the media may enter the defined evidence process**. It does not establish that every event depicted occurred as interpreted, that the recording is legally admissible, or that an officer’s conduct was lawful. Those questions belong to evidentiary, investigative, disciplinary, or judicial processes. The verifier makes the chain into the evidence workflow more transparent and replayable.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Body-camera evidence is unusually sensitive because it combines public authority, personal information, operational policy, and downstream legal consequence. Evidence can be authentic yet mishandled, submitted through an unauthorized route, or evaluated after device or officer authority has changed. A single “valid file” indicator cannot express these governance distinctions.
+
+The verifier provides a narrow admission control that can bind device/operator authority, evidence action, jurisdiction, time, and revocation state. It also creates evidence for later review without claiming to settle the substantive interpretation of the recording.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Officer/device assignment | Recognition/delegation | Links capture or submission authority to the relevant duty context |
+| Evidence/case identifier | Resource scope | Binds admission to the intended controlled evidence process |
+| Retention/access policy | Policy epoch | Pins the governance rules applied at decision time |
+| Device/officer status change | Revocation state | Prevents withdrawn authority from silently continuing |
+| Evidence supervisor review | Review disposition | Separates trust uncertainty from investigative conclusions |
 ## Governance concerns
 
 - **Chain Of Custody:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/body-camera-evidence/`](../../examples/body-c
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- evidence custodians can explain why media entered or failed intake;
+- public agencies can enforce current device/operator authority consistently;
+- oversight bodies can replay the trust decision without relying on mutable operational logs;
+- the system preserves a clear boundary between evidence-process assurance and legal or disciplinary judgment.
+
+## Governance interpretation
+
+Public authority makes the governance boundary particularly important. The verifier may enforce evidence-intake rules, but it must not become the source of investigative findings or legal conclusions.
+
+The accountable agency defines the policy, authorities issue or revoke operational mandates, and downstream investigators, courts, or oversight bodies apply their own decision frameworks. The receipt records the verifier’s bounded role in that chain.
 
 ## Agentic AI Variant
 

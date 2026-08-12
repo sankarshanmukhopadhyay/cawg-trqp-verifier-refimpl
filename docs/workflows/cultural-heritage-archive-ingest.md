@@ -15,6 +15,12 @@ This walkthrough shows how CAWG-derived content-authenticity signals can be comb
 
 The result does not adjudicate ownership, cultural authority, copyright, historical truth, or authenticity of the physical object; those remain governed by the institution and relevant communities.
 
+## Plain-language summary
+
+A museum, archive, digitization partner, researcher, or community contributor submits a digitized cultural-heritage asset for ingest. The archive needs to know whether the contributor is authorized for the identified collection or custodial context, whether the digitization/provenance evidence is adequate, and whether corrections can be made without erasing history.
+
+A positive result means **the asset may be ingested as an authenticated contribution under the recorded custodial and digitization authority**. It does not settle ownership, cultural authority, intellectual-property rights, restitution claims, or the historical interpretation of the object. Those require separate governance and, often, consultation.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -87,8 +93,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Archive material is long-lived and may outlast the systems and institutions that first ingested it. That makes provenance, authority lineage, correction, and non-destructive history especially important. A digitization vendor may be authorized to capture but not to change descriptive metadata; a contributor may be recognized but outside the relevant collection mandate.
+
+CAWG-TRQP can make those roles and boundaries explicit at ingest time. The resulting receipt and replay bundle preserve which authority and policy justified the original admission even if the catalog record is later corrected or the custodial context changes.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Digitization operator | Captures or transforms the collection item | Provenance and transformation declaration |
@@ -97,6 +108,17 @@ stateDiagram-v2
 | Rights or community stakeholder | May challenge metadata, authority, or permitted use | Correction/redress reference |
 | Preservation auditor | Replays ingest and supersession history | Pinned evidence and lineage |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Collection/object identifier | Resource scope | Binds contribution authority to the intended heritage asset or collection |
+| Custodian/digitization mandate | Recognition/delegation | Shows who may digitize, describe, or submit the material |
+| Ingest/transformation policy | Action and process scope | Separates capture, metadata editing, and archival admission rights |
+| Custodial authority change | Revocation/supersession | Prevents obsolete mandates governing new actions |
+| Catalog correction | Superseding receipt | Preserves the historical ingest decision while recording updated evidence |
 ## Governance concerns
 
 - **Collection-specific authority:** MUST be represented explicitly in policy, context, evidence, or review routing.
@@ -133,7 +155,7 @@ The companion directory [`examples/cultural-heritage-archive-ingest/`](../../exa
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason code;
 - authority, delegation, and revocation evidence references;
@@ -141,6 +163,31 @@ python scripts/validate_walkthrough_examples.py
 - minimized decision receipt;
 - replay inputs and correction lineage; and
 - review/redress reference where the result is contested or non-deterministic.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- archives can explain ingest decisions to curators, contributors, and auditors without exposing internal system details;
+- digitization partners can receive narrowly scoped authority rather than broad repository access;
+- corrections preserve historical evidence instead of rewriting the decision trail;
+- future provenance or restitution research can distinguish technical ingest authority from broader ownership or cultural claims.
+
+## Governance interpretation
+
+Cultural-heritage governance cannot be reduced to technical authorization. The verifier can show why a digitized contribution was accepted under a custodial and process policy, but questions of title, cultural authority, ethics, restitution, and interpretation remain with the institutions and communities empowered to decide them.
+
+The strength of the model is that it records one layer of authority without pretending that layer exhausts the governance of the object.
 
 ## Agentic AI Variant
 

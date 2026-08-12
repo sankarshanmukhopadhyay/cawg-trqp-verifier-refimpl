@@ -20,6 +20,8 @@ Every walkthrough now exposes the same three complementary views so readers can 
 
 Used together, these diagrams separate **who acted**, **what happened**, and **what state the governed decision entered**.
 
+The portfolio also follows the repository [Documentation Quality Standard](../documentation-quality-standard.md). Each walkthrough is expected to provide plain-language orientation, the reason the governance control is needed, domain-to-verifier concept mapping, explicit evidence and test surfaces, adoption value, and a governance interpretation that preserves downstream institutional responsibility. CI checks this structure with `python scripts/validate_walkthrough_quality.py`.
+
 ## Start by assurance pattern
 
 | Assurance pattern | Representative walkthroughs | What it pressure-tests |

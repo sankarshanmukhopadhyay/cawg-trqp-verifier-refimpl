@@ -15,6 +15,12 @@ This walkthrough shows how CAWG-derived content-authenticity signals can be comb
 
 Acceptance into an evidence workflow is not a ruling on admissibility, authenticity in the legal sense, probative value, ownership, or the merits of a proceeding.
 
+## Plain-language summary
+
+A lawyer, agency officer, party, or authorized representative submits media into a legal or administrative proceeding. The intake service needs to know whether the submitter may act for the identified matter, whether the evidence is bound to the correct case and filing action, and whether that authority was current when submitted.
+
+A positive result means **the media may be accepted into the identified intake process as an authenticated submission from an authorized actor**. It does not decide admissibility, evidentiary weight, authenticity in the legal sense, privilege, relevance, or the merits of the proceeding. Those remain with the competent tribunal or administrative authority.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -87,8 +93,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Legal systems already distinguish filing authority from the substantive consequence of a filing. Digital evidence should preserve the same separation. A file can have intact provenance but arrive from an unauthorized representative, be submitted to the wrong case, or rely on a mandate that was revoked before the filing time.
+
+CAWG-TRQP makes the filing authority check machine-verifiable while preserving the tribunal’s independence. It also creates a precise audit trail for disputes about who filed what, under which authority, and which policy version governed the intake decision.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitting party | Provides media and declared context | Provenance plus case/submission reference |
@@ -97,6 +108,17 @@ stateDiagram-v2
 | Opposing/affected party | May challenge provenance, authority, or handling | Challenge and correction reference |
 | Auditor | Replays intake state without rewriting history | Pinned inputs and receipt lineage |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Case/proceeding identifier | Resource scope | Binds the submission to the correct matter |
+| Counsel/representative authority | Recognition/delegation | Shows who may file for the party or agency |
+| Filing/evidence action | Action scope | Separates permission to submit from admissibility or merits |
+| Withdrawal/substitution of authority | Revocation state | Prevents former representatives making new authorized filings |
+| Clerk/tribunal review | Review disposition | Routes uncertain authority without pre-judging the evidence |
 ## Governance concerns
 
 - **Case-specific scope:** MUST be represented explicitly in policy, context, evidence, or review routing.
@@ -133,7 +155,7 @@ The companion directory [`examples/legal-evidence-submission/`](../../examples/l
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason code;
 - authority, delegation, and revocation evidence references;
@@ -141,6 +163,31 @@ python scripts/validate_walkthrough_examples.py
 - minimized decision receipt;
 - replay inputs and correction lineage; and
 - review/redress reference where the result is contested or non-deterministic.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- filers receive explainable intake failures tied to scope or authority;
+- courts/agencies can automate routine filing checks without delegating adjudication to the verifier;
+- representation changes can be enforced at the authorization layer;
+- later procedural review can replay the trust and policy state used when the filing entered the system.
+
+## Governance interpretation
+
+The verifier is an intake assurance component, not a judicial decision-maker. It can answer whether the configured submission conditions were met; only the competent legal or administrative authority determines admissibility, weight, entitlement, liability, or remedy.
+
+This is a useful example of executable governance because it preserves familiar institutional separation while giving the authority check a reproducible technical form.
 
 ## Agentic AI Variant
 

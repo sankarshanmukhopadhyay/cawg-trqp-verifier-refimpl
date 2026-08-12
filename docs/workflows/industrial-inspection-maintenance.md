@@ -15,6 +15,12 @@ This walkthrough shows how CAWG-derived content-authenticity signals can be comb
 
 The verifier can establish governed evidence acceptance; it cannot determine equipment safety, regulatory compliance, defect severity, or engineering fitness for service.
 
+## Plain-language summary
+
+An inspector, technician, or sensor operator submits media from an industrial inspection or maintenance task. The asset owner needs to know whether the evidence is tied to the correct equipment and task, whether the actor is authorized for that inspection class and location, and whether the authority was current during the inspection window.
+
+A positive result means **the inspection media may be accepted into the identified maintenance or assurance workflow**. It does not establish equipment safety, engineering compliance, maintenance adequacy, or fitness for operation. Those remain with qualified engineering and operational authorities. The verifier strengthens the chain by which evidence reaches them.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -87,8 +93,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Industrial systems commonly depend on layered contractor and technician authority. A person may be competent but not assigned to this asset, an inspection company may be authorized for one task class but not another, and a revoked service mandate must not continue through cached access.
+
+CAWG-TRQP lets the asset owner bind authorization to equipment, task, site, purpose, and time while retaining the provenance and replay surface. This creates a clearer handoff from evidence collection to engineering judgment and makes unauthorized or stale-state submissions visible before they influence a safety-critical workflow.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Inspector or technician | Captures media during inspection/maintenance | Provenance and work-order context |
@@ -97,6 +108,17 @@ stateDiagram-v2
 | Safety/compliance reviewer | Reviews exceptions or contested evidence | Review and escalation reference |
 | Auditor | Replays the historical decision | Pinned policy, authority, and asset context |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Asset/equipment identifier | Resource scope | Binds the evidence to the correct industrial asset |
+| Inspector/contractor mandate | Recognition/delegation | Shows who may perform or submit the inspection |
+| Maintenance task/class | Action scope | Limits authority to the approved inspection or maintenance operation |
+| Contractor suspension | Revocation state | Stops withdrawn service authority from being reused |
+| Engineering review | Review disposition | Keeps trust uncertainty separate from safety assessment |
 ## Governance concerns
 
 - **Asset and work-order scope:** MUST be represented explicitly in policy, context, evidence, or review routing.
@@ -133,7 +155,7 @@ The companion directory [`examples/industrial-inspection-maintenance/`](../../ex
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason code;
 - authority, delegation, and revocation evidence references;
@@ -141,6 +163,31 @@ python scripts/validate_walkthrough_examples.py
 - minimized decision receipt;
 - replay inputs and correction lineage; and
 - review/redress reference where the result is contested or non-deterministic.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- asset owners can standardize evidence intake across contractors and sites;
+- inspectors receive clear scope-based outcomes instead of broad credential checks;
+- maintenance evidence can be replayed during incident or compliance review;
+- engineering decision-makers receive better governed inputs without transferring their professional responsibility.
+
+## Governance interpretation
+
+Industrial safety depends on qualified human and organizational authority. The verifier may establish that evidence came through an authorized inspection path, but it cannot certify the equipment as safe or the maintenance as adequate.
+
+The accountable operator retains operational authority; engineers and inspectors retain professional responsibility; the verifier supplies a machine-verifiable governance layer around the evidence handoff.
 
 ## Agentic AI Variant
 

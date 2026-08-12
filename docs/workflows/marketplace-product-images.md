@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A seller or brand representative submits product images to a marketplace. The platform needs to know whether the submitting actor is authorized for the identified listing or brand context, whether the provenance and declared transformations satisfy platform policy, and whether the authorization remains current.
+
+A positive result means **the image may enter the product-listing workflow under the configured marketplace rules**. It does not prove that the physical product is genuine, safe, in stock, or accurately described. Those require separate product, seller, and consumer-protection controls. The verifier makes the image-use decision explainable and replayable rather than treating provenance as a universal authenticity verdict.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Marketplaces operate at volumes where manual review cannot be the primary trust mechanism. Images may be supplied by manufacturers, resellers, agencies, affiliates, or automated catalog tools, and authority can change faster than cached platform permissions. A recognized seller may still be out of scope for a brand, listing, territory, or transformation.
+
+A governed verifier lets the platform ask a precise question: is this actor currently authorized to use this asset for this listing action under this policy? That reduces the gap between provenance evidence and operational platform controls while preserving escalation for ambiguous or conflicting state.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Seller/brand relationship | Recognition and delegation | Shows why the submitter may act for the listing or brand |
+| SKU/listing identifier | Resource scope | Prevents authority for one item being reused for another |
+| Image-use policy | Policy epoch | Pins disclosure, transformation, and publication requirements |
+| Seller suspension or mandate withdrawal | Revocation state | Stops future positive decisions after authority changes |
+| Marketplace moderation | Review disposition | Handles conflict without treating it as verified or fraudulent by default |
 ## Governance concerns
 
 - **Reseller Authorization:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/marketplace-product-images/`](../../examples/
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- sellers receive precise reasons for scope or authority failures;
+- platform teams can automate routine image admission without removing human moderation;
+- brand authorization can be scoped to products, territories, channels, and time windows;
+- consumer disputes and internal audits can reconstruct the basis for the listing-image decision.
+
+## Governance interpretation
+
+The marketplace controls the publication policy and remains responsible for consumer-protection, product-authenticity, safety, and enforcement decisions. The verifier supplies a bounded authorization result and evidence trail.
+
+That distinction avoids a common governance error: treating a trustworthy provenance chain as proof of the commercial claim. The system instead makes one decision surface executable while leaving adjacent responsibilities with their proper authorities.
 
 ## Agentic AI Variant
 

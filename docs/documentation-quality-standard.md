@@ -50,6 +50,32 @@ A Mermaid diagram should be added when it materially reduces ambiguity in:
 
 Diagrams supplement rather than replace the surrounding text. Node labels must use repository terminology, and every diagram must remain understandable when rendered in a neutral colour scheme.
 
+## Walkthrough quality standard
+
+Walkthroughs are adoption and assurance documents, not abbreviated test descriptions. Each indexed walkthrough should give a non-specialist reader enough context to understand the operational problem before exposing implementation detail, while still giving an implementer concrete evidence and validation surfaces.
+
+Every walkthrough should provide the following reader journey, using scenario-appropriate headings where a more natural title improves readability:
+
+| Layer | Required outcome | Minimum evidence |
+|---|---|---|
+| Purpose and plain-language orientation | Explain the scenario without assuming knowledge of TRQP, CAWG/C2PA, or the repository | Plain-language summary |
+| Decision boundary | State exactly what a positive verifier result means and what it does **not** prove | Explicit bounded-decision statement |
+| Governance flow | Show the main path and branching disposition | Mermaid flowchart |
+| Cross-functional interaction | Show who exchanges evidence, invokes verification, or owns the downstream decision | Mermaid sequence/swimlane-style diagram |
+| Governed state | Show authorization, scope failure, revocation, stale/conflicting state, and correction | Mermaid state diagram |
+| Why governance is needed | Explain the real-world failure mode the verifier addresses | Scenario-specific narrative |
+| Roles and authority | Identify actors, delegated authority, relying party, and substantive decision owner | Role/authority table |
+| Concept mapping | Translate domain language into verifier concepts | Workflow-to-verifier mapping table |
+| Operational path | Explain the end-to-end sequence and failure posture | Numbered flow, sequence, or decision matrix |
+| Evidence and replay | Identify receipts, authority evidence, replay inputs, and correction lineage | Evidence section and runnable package where available |
+| Testability | State which commands or fixtures demonstrate conformance | `What can be tested` table |
+| Adoption value | Explain why the pattern is useful to operators and non-specialist stakeholders | Adoption section |
+| Governance interpretation | Re-state where authority, accountability, and downstream judgment remain | Explicit interpretation section |
+| Agentic AI | Where agents may participate, bind role, principal, mandate, scope, tool/sub-agent use, revocation, and redress | Agentic overlay or archetype-specific controls |
+| Operational assurance | Close with testable control points and conformance assertions | Operational assurance contract |
+
+A walkthrough does not satisfy this standard merely by containing the required headings. Scenario-specific language must identify the relevant authority, resource, action, consequence boundary, and failure modes. Generic prose that could be moved unchanged to another walkthrough should be minimized.
+
 ## Documentation definition of done
 
 A documentation change is complete when:

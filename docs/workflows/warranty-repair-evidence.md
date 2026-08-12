@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A consumer, repair center, technician, or service partner submits images or video for a warranty or repair process. The manufacturer or service network needs to know whether the evidence is linked to the correct product and service event, whether the submitter is authorized for the relevant action, and whether service-partner authority is current.
+
+A positive result means **the evidence may be used for the defined warranty-assessment step**. It does not prove defect causation, warranty entitlement, repair quality, or reimbursement amount. Those remain separate commercial and technical decisions. The verifier helps create a consistent admission and evidence trail across distributed service networks.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Warranty ecosystems often rely on third-party service centers and technicians whose authority changes over time and may be limited by product line, geography, repair class, or contract. Authentic repair photos can still be attached to the wrong product, submitted by a suspended partner, or used outside the service mandate.
+
+A governed verification step lets the manufacturer enforce those boundaries before evidence influences the claim. It also provides a better redress surface: the customer or service partner can challenge a specific authority, scope, or evidence problem instead of receiving an opaque rejection.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Product/serial number | Resource scope | Binds evidence to the intended product |
+| Service-partner authorization | Recognition/delegation | Shows who may inspect, repair, or submit evidence |
+| Warranty/service action | Action scope | Separates evidence admission from entitlement or reimbursement |
+| Partner suspension | Revocation state | Stops withdrawn service authority from being reused |
+| Warranty escalation | Review disposition | Keeps ambiguous evidence visible for human resolution |
 ## Governance concerns
 
 - **Serial Number Binding:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/warranty-repair-evidence/`](../../examples/wa
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- consumers and service partners get explainable evidence-admission outcomes;
+- manufacturers can apply one authority model across heterogeneous repair networks;
+- partner authority can be limited by product, action, geography, and time;
+- disputes can replay the evidence and authority state that produced the original warranty workflow decision.
+
+## Governance interpretation
+
+The manufacturer or warranty administrator remains responsible for entitlement and commercial remedy. The verifier governs only whether the evidence satisfies the configured admission conditions for the requested action.
+
+This prevents a trusted service identity from becoming a blanket warranty approval and keeps technical diagnosis, contractual interpretation, and reimbursement under their separately delegated authorities.
 
 ## Agentic AI Variant
 

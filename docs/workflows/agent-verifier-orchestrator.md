@@ -12,6 +12,12 @@ This archetype covers an agent that invokes content validators, TRQP endpoints, 
 
 The verifier/orchestrator may produce machine-readable findings and a governed verification disposition. It may recommend or execute a downstream institutional action only if a **separate decision mandate** grants that authority.
 
+## Plain-language summary
+
+A principal delegates an AI agent to call provenance validators, TRQP verifiers, registries, policy services, and possibly other agents to assemble verification findings. The assurance problem is whether the orchestration itself stayed within the allowed tool, data, action, and delegation scope.
+
+A positive result means **the agent may return bounded, replayable verification findings under the evaluated mandate**. It does not automatically authorize the downstream action those findings inform. Publication, payment, enforcement, admission, or another institutional consequence requires a separate decision mandate.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -83,8 +89,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this agentic archetype needs verifiable governance
 
+A verifier agent can appear trustworthy while silently expanding its role: selecting an unapproved data source, invoking a prohibited sub-agent, changing policy inputs, or directly executing a downstream action. Those risks are not resolved by validating the agent’s identity.
+
+The walkthrough therefore treats the tool chain as evidence. Material calls, dependency identities, policy/trust-state epochs, failure behavior, and final findings can be reconstructed. This allows an independent reviewer to distinguish evidence gathering from the authority to impose a consequence.
+
+## Roles in the workflow
 | Actor | Authority or responsibility |
 |---|---|
 | Principal | Delegates verification/orchestration task and defines allowed tools/data/actions |
@@ -93,6 +104,17 @@ stateDiagram-v2
 | TRQP verifier | Produces authority decisions from governed trust sources |
 | Decision authority | Separately decides publication, payment, enforcement, admission, or other consequence |
 
+
+
+## Agent governance concepts mapped to verifier controls
+
+| Agent governance concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Verification mandate | Delegation evidence | Defines the bounded orchestration task |
+| Approved tool list | Tool/action scope | Restricts which validators, registries, and agents may be invoked |
+| Material call evidence | Replay surface | Records inputs/outputs that affected the result |
+| Dependency freshness/conflict | Trust-state evidence | Prevents stale or incompatible inputs being silently normalized |
+| Separate decision mandate | Authority boundary | Prevents verifier authority becoming downstream decision authority |
 ## Tool-chain evidence
 
 A replayable orchestration record should identify:
@@ -131,6 +153,42 @@ sequenceDiagram
 ## Assurance tests
 
 Test unauthorized tool invocation, prohibited downstream-agent delegation, stale dependency evidence, conflicting authority sources, tool failure, replay from pinned outputs, and an attempted transition from verifier role to a downstream action without a separate decision mandate.
+
+## What evidence is produced
+
+| Evidence artifact | Primary user | What it establishes |
+|---|---|---|
+| Normalized verification request | Implementer / reviewer | Which actor, resource, action, context, and evidence entered the decision |
+| Decision receipt | Relying party / affected party | Outcome, reason codes, policy epoch, and the bounded basis for the decision |
+| Authority and revocation references | Assurance reviewer | Which governed trust sources were relied upon and their evaluated state |
+| Replay inputs or audit bundle | Auditor / maintainer | Whether the original decision can be reconstructed from pinned evidence |
+| Superseding receipt or correction lineage | Reviewer / affected party | How a material correction changed a later decision without rewriting history |
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do agentic mandate, scope, revocation, and role-boundary requirements remain aligned? | `python scripts/validate_agentic_assurance.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- organizations can use agentic orchestration without making the agent an unbounded decision-maker;
+- auditors can reconstruct which tools and authority sources shaped the findings;
+- dependency failure and conflict remain visible instead of being coerced into a positive result;
+- downstream systems can require an explicit second authority before executing consequential actions.
+
+## Governance interpretation
+
+The architecture deliberately separates **authority to verify** from **authority to decide**. The principal may delegate evidence gathering and policy evaluation to an agent, but the institution that owns the downstream consequence retains its own decision right unless it explicitly delegates that right.
+
+This makes orchestration governable: tools are scoped, authority can be revoked, evidence is replayable, and role expansion becomes testable rather than implicit.
 
 ## Operational assurance contract
 

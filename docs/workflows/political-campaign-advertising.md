@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A campaign, candidate organization, or authorized agency submits media for political advertising. The platform needs to know whether the submitting actor is recognized, whether it has authority to act for the campaign in the relevant jurisdiction and time window, and whether provenance and policy requirements for the ad have been satisfied.
+
+A positive result means **the media may enter the campaign-advertising workflow under the configured authority and disclosure rules**. It does not establish that the political claims are true, lawful in every jurisdiction, or acceptable under all platform policies. Those remain separate content, legal, and policy decisions. The verifier makes one important part of the decision—the authority to submit or publish—explicit and replayable.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Political advertising combines rapidly changing authority, jurisdiction-specific rules, disclosure duties, and high public-interest stakes. Agencies may act for multiple campaigns, campaign officers may change, and a platform may need to withdraw publication authority quickly. Treating account authentication as sufficient authority is therefore a weak control.
+
+CAWG-TRQP can bind the requested publication action to the campaign, candidate, jurisdiction, channel, election period, and current mandate. It also exposes stale or conflicting authority state rather than forcing a binary answer, which is important when escalation and transparency are preferable to silent publication.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Campaign/committee identity | Authority domain | Identifies the governed political entity |
+| Agency or officer mandate | Recognition/delegation | Shows who may submit or authorize media |
+| Jurisdiction/election window | Context scope | Restricts authority to the applicable campaign context |
+| Mandate withdrawal | Revocation state | Stops future publication decisions after authority changes |
+| Platform election-integrity review | Review disposition | Routes conflict without turning the verifier into a truth arbiter |
 ## Governance concerns
 
 - **Jurisdictional Scope:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/political-campaign-advertising/`](../../examp
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- campaigns and agencies receive precise scope-based outcomes instead of generic account failures;
+- platform election-integrity teams can separate sponsor authority from claim evaluation;
+- revocation and personnel changes propagate into future authorization decisions;
+- public-interest review can reconstruct which authority and policy state applied to a specific ad decision.
+
+## Governance interpretation
+
+The verifier should never be treated as a political truth engine. Its role is narrower: evaluate whether the identified actor had the configured authority to perform the requested campaign-media action under the policy state in force.
+
+Platforms, election authorities, courts, and other institutions retain their respective legal and policy responsibilities. This separation supports auditability without centralizing political judgment in the trust registry or verifier.
 
 ## Agentic AI Variant
 

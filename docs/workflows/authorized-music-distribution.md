@@ -10,6 +10,12 @@ This walkthrough shows how a platform can combine CAWG/C2PA provenance evidence 
 
 The workflow is illustrative and non-normative. It does not determine copyright ownership or replace contracts.
 
+## Plain-language summary
+
+A distributor sends a recording and its provenance evidence to a platform. The platform needs to know whether the label or other authority recognizes the distributor, whether the distributor is authorized to deliver this recording in the requested territory and channel, and whether that authority remains current.
+
+A positive result means **the delivery may continue through platform ingestion under the configured distribution authority**. It does not determine copyright ownership, royalty entitlement, contractual interpretation, or whether the recording infringes another work. Those remain separate rights and platform decisions. The verifier turns a narrow but operationally important authorization question into a reproducible decision.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -81,8 +87,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors
+## Why this workflow needs verifiable governance
 
+Music distribution involves labels, artists, publishers, aggregators, collectives, distributors, and platforms whose mandates can overlap and change. A distributor may be recognized generally but lack rights for a specific recording, territory, platform, or release window. Static partner lists cannot express that granularity reliably.
+
+CAWG-TRQP provides a scoped query and evidence model. It lets the platform distinguish recognition from authorization, enforce expiry and revocation, and quarantine conflicting authority state without treating that conflict as a definitive copyright judgment.
+
+## Roles in the workflow
 | Actor | Responsibility |
 |---|---|
 | Label | Issues scoped distributor authority |
@@ -95,6 +106,17 @@ stateDiagram-v2
 | Registry | Supplies current policy, recognition, and revocation state |
 | Auditor | Replays the evidence |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Recording/catalogue | Resource scope | Binds distribution authority to the identified content |
+| Label/distributor mandate | Recognition/delegation | Shows why the distributor may act for the rights holder |
+| Territory/platform/release window | Context scope | Restricts an otherwise valid mandate |
+| Rights mandate withdrawal | Revocation state | Stops future deliveries once authority is withdrawn |
+| Platform hold/quarantine | Review disposition | Handles conflicting or incomplete authority without declaring infringement |
 ## Step 1: Publish scoped authority
 
 The label publishes an authorization record bounded by:
@@ -216,6 +238,41 @@ Correction should update the authoritative source and produce a new independentl
 - [ ] Appeal and correction can restore a valid actor.
 
 See the [CAWG Implementation Playbook](../industry-adoption/cawg-implementation-playbook.md), [Application Profile](../industry-adoption/music-industry-application-profile.md), and [Pilot Blueprint](../industry-adoption/music-industry-pilot-blueprint.md).
+
+## What evidence is produced
+
+| Evidence artifact | Primary user | What it establishes |
+|---|---|---|
+| Normalized verification request | Implementer / reviewer | Which actor, resource, action, context, and evidence entered the decision |
+| Decision receipt | Relying party / affected party | Outcome, reason codes, policy epoch, and the bounded basis for the decision |
+| Authority and revocation references | Assurance reviewer | Which governed trust sources were relied upon and their evaluated state |
+| Replay inputs or audit bundle | Auditor / maintainer | Whether the original decision can be reconstructed from pinned evidence |
+| Superseding receipt or correction lineage | Reviewer / affected party | How a material correction changed a later decision without rewriting history |
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- distributors receive precise scope-based rejection or hold reasons;
+- platforms can automate authorized delivery checks while keeping rights disputes separate;
+- mandates can be narrowed by recording, territory, channel, time, and delegation depth;
+- appeals can replay the exact authority and policy state used at ingestion.
+
+## Governance interpretation
+
+The platform remains the operational decision-maker and rights holders remain the source of relevant delegated distribution authority. The verifier evaluates that authority against the requested action; it does not decide copyright ownership or contractual disputes.
+
+This separation lets the system be strict about authorization while remaining appropriately modest about the legal and commercial questions outside its scope.
 
 ## Agentic AI Variant
 

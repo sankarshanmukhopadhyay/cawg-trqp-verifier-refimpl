@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A humanitarian field worker captures or submits evidence in a location with intermittent or no connectivity. The receiving organization needs to know whether the worker or device was authorized for the assessment, whether the evidence is bound to the correct operation and location, and whether the offline trust state is fresh enough under the declared degraded-mode policy.
+
+A positive result means **the evidence may be used for the defined needs-assessment workflow**. It does not prove beneficiary eligibility, establish the underlying humanitarian fact, or authorize aid distribution by itself. The verifier creates a transparent way to use signed snapshots and later reconciliation without pretending that offline uncertainty has disappeared.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Humanitarian operations expose a hard governance problem: the need to act quickly when live registries and revocation services may be unreachable. Simply failing open can admit withdrawn or mis-scoped authority; simply failing closed can prevent legitimate field work. The governing organization therefore needs an explicit, testable degraded-mode policy.
+
+This walkthrough makes that policy visible. Snapshot provenance, age, authorization scope, later synchronization, and correction can all become part of the evidence. That lets teams distinguish “trusted under a bounded offline policy” from “confirmed against current online state.”
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Field deployment/operation | Resource and jurisdiction scope | Binds evidence to the intended mission and location |
+| Worker/device mandate | Recognition/delegation | Shows who may collect or submit evidence |
+| Signed offline snapshot | Pinned trust-state evidence | Supports bounded verification without live registry access |
+| Snapshot age/freshness | Freshness policy | Determines when degraded operation must stop or escalate |
+| Later reconciliation | Correction/supersession | Re-evaluates decisions when current authority state becomes available |
 ## Governance concerns
 
 - **Offline Snapshot Freshness:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/humanitarian-offline-field-evidence/`](../../
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- field teams get a usable trust model even when connectivity is unreliable;
+- program managers can define degraded operation explicitly instead of relying on informal exceptions;
+- auditors can distinguish live, cached, and snapshot-based authority evidence;
+- later revocation or correction can supersede a field decision without erasing what was known at the time.
+
+## Governance interpretation
+
+Offline operation is a governance choice, not merely a networking condition. The humanitarian organization must decide how old authority evidence may be, which actions may proceed in degraded mode, and which require escalation or later confirmation.
+
+The verifier makes those choices executable and records the basis for them. Humanitarian judgment, beneficiary protection, and aid-allocation authority remain outside the verifier’s bounded decision.
 
 ## Agentic AI Variant
 

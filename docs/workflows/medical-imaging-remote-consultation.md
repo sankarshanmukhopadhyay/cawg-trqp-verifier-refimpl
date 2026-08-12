@@ -17,6 +17,12 @@ The decision is deliberately narrow:
 
 A successful result does not establish factual truth, legal liability, professional judgment, product authenticity, clinical validity, or entitlement beyond that scoped action.
 
+## Plain-language summary
+
+A care provider or imaging center sends medical images for a remote consultation. The receiving service needs to know whether the image set is bound to the correct consultation context, whether the submitting actor is authorized, whether provenance and process evidence are adequate, and whether the relevant authority state is current.
+
+A positive verifier result means **the images may enter the remote-consultation workflow under the recorded authority and policy state**. It does not establish diagnosis, clinical quality, patient identity beyond the configured evidence, or treatment appropriateness. Those remain clinical and institutional responsibilities. The verifier helps ensure that the evidence admitted to the consultation arrived through an accountable, replayable trust path.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -88,8 +94,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Remote consultation crosses organizational and technical boundaries: imaging centers, clinicians, telehealth platforms, and specialist services may not share the same account system or operational history. Valid medical media can still be misrouted, attached to the wrong case, submitted by an unauthorized actor, or accepted on stale institutional authority.
+
+A CAWG-TRQP checkpoint makes those admission conditions explicit without attempting to automate clinical judgment. It is particularly valuable where a specialist needs to know not merely that a file is intact but that the organization or delegate sending it was permitted to do so for this consultation and at this time.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Submitter | Supplies the asset and declared context | CAWG/C2PA-derived integration signal |
@@ -98,6 +109,17 @@ stateDiagram-v2
 | Affected party | May challenge metadata, authority, or use | Correction, appeal, or redress reference |
 | Assurance reviewer | Replays and audits the decision | Pinned inputs and audit bundle |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Consultation/case identifier | Resource scope | Binds the imaging evidence to the intended clinical workflow |
+| Imaging-center or clinician authority | Recognition/delegation | Shows who may submit or transmit the images |
+| Clinical transport/use policy | Purpose and policy scope | Limits the verifier result to the declared consultation use |
+| Credential or institutional withdrawal | Revocation state | Prevents obsolete authority being reused |
+| Clinical escalation | Review disposition | Keeps incomplete trust evidence separate from diagnostic judgment |
 ## Governance concerns
 
 - **Sensitive Data Minimization:** represented as explicit policy, context, evidence, or review requirements.
@@ -134,7 +156,7 @@ The companion directory [`examples/medical-imaging-remote-consultation/`](../../
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason codes;
 - authority, delegation, and revocation evidence references;
@@ -146,6 +168,31 @@ python scripts/validate_walkthrough_examples.py
 ## What this walkthrough does not prove
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- clinicians can see why an image set was admitted without interpreting trust-registry mechanics;
+- care organizations can automate cross-boundary intake while preserving clinical accountability;
+- authority can be narrowed by case, organization, purpose, and time;
+- audit and patient-safety review can reconstruct the evidence and policy used at admission.
+
+## Governance interpretation
+
+Clinical authority and verifier authority must remain distinct. The verifier decides whether the evidence satisfies a governed intake boundary; qualified clinicians and care organizations decide what the images mean and what care follows.
+
+This separation protects against automation overreach. It allows trust infrastructure to strengthen the provenance and authorization surface without converting an assurance result into a diagnosis or clinical recommendation.
 
 ## Agentic AI Variant
 

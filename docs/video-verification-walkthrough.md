@@ -29,6 +29,12 @@ This is not a question about whether the video "looks real". It is a question ab
 
 ---
 
+## Plain-language summary
+
+A city infrastructure department receives a bridge-inspection video from a contracted vendor. The department needs to know whether the media and provenance are intact, whether the vendor was authorized for the inspection and submission action, whether issuer and revocation state are current, and whether the configured assurance profile permits the available transport/freshness conditions.
+
+A positive result means **the video may enter the official inspection workflow under the recorded trust conditions**. It does not establish that the bridge is safe or that the engineering conclusions are correct. The verifier makes the conditions of acceptance observable and replayable so engineering judgment starts from better-governed evidence.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -99,6 +105,33 @@ stateDiagram-v2
     Review --> [*]
 ```
 
+
+## Why this workflow needs verifiable governance
+
+Infrastructure evidence crosses contractors, departmental systems, trust registries, gateways, and sometimes offline or cached authority sources. A video can be structurally intact while the submitting vendor is out of scope, a relevant credential has been revoked, or the available trust state is too stale for the assurance profile the department selected.
+
+CAWG-TRQP makes those acceptance conditions explicit. The verifier composes provenance, actor authority, issuer recognition, revocation, transport, and profile requirements into a bounded decision while preserving `review` or `indeterminate` when the available evidence cannot justify acceptance. That gives engineering teams better-governed inputs without asking the verifier to decide whether the bridge is safe.
+
+## Roles in the workflow
+
+| Role | Responsibility | What the verifier helps establish |
+|---|---|---|
+| Inspection vendor | Captures and submits the video under a contracted task | The vendor is recognized and in scope for the identified inspection action |
+| Infrastructure department | Owns the official workflow and downstream engineering decision | The acceptance policy and assurance profile applied to the evidence |
+| CAWG/C2PA validator | Evaluates provenance, integrity, and declared processing | Which content-authenticity findings entered the trust decision |
+| TRQP verifier | Evaluates recognition, authorization, revocation, and policy state | A bounded, reason-coded governed outcome |
+| Trust registry / gateway | Supplies or mediates current authority and policy evidence | Which authority state was relied upon and how it was obtained |
+| Engineer / assurance reviewer | Uses or audits accepted evidence | The original decision can be understood and replayed without inheriting verifier authority |
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Bridge and inspection task | Resource scope | Binds the video to the intended infrastructure workflow |
+| Vendor or inspector appointment | Recognition and delegation | Shows who may perform or submit the inspection evidence |
+| Standard / high-assurance / edge profile | Assurance policy | Declares freshness, transport, and evidence requirements |
+| Registry and revocation source | Current trust state | Prevents withdrawn authority from silently appearing valid |
+| Decision receipt and audit bundle | Decision evidence | Allows later reviewers to reconstruct the governed acceptance result |
 
 # What the system evaluates
 
@@ -274,7 +307,7 @@ The result is structured and machine-readable.
 
 ---
 
-## Step 8: Evidence is captured
+## What evidence is produced
 
 The system can produce an audit or replay bundle that includes:
 
@@ -375,6 +408,31 @@ It turns trust from a static assumption into a **testable, observable, and enfor
 - See `docs/trqp-alignment.md` for protocol mapping
 - See `docs/reproducibility-guide.md` for replay workflows
 - See `fixtures/` for concrete examples
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- department staff can understand the decision without learning protocol internals;
+- contractors receive explicit trust-condition failures rather than opaque intake errors;
+- high-assurance and edge/offline modes become declared policy choices;
+- engineering and audit teams can reproduce what the verifier knew at the time of acceptance.
+
+## Governance interpretation
+
+The trust registry answers authority questions, TRQP transports structured queries, and the verifier applies the configured profile. None of those components becomes the engineering authority for bridge safety.
+
+The department retains the substantive decision. The assurance infrastructure instead makes the chain of authority, evidence, freshness, and policy that preceded that decision testable.
 
 ## Agentic AI Variant
 

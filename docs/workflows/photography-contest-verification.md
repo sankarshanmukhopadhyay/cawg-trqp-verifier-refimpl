@@ -291,6 +291,7 @@ Expected outcome:
 
 | Test question | Artifact or command |
 |---|---|
+| Does each indexed walkthrough satisfy the reader-facing quality baseline? | `python scripts/validate_walkthrough_quality.py` |
 | Are the shipped JSON examples structurally valid? | `python scripts/validate_examples.py` |
 | Does the photography contest example replay correctly? | `python scripts/validate_photography_contest_example.py` |
 | Can the audit bundle reproduce the original result? | `python scripts/replay_audit_bundle.py examples/photography_contest/replay_bundle.json` |

@@ -15,6 +15,12 @@ This walkthrough shows how CAWG-derived content-authenticity signals can be comb
 
 The result can authenticate provenance and scoped collection authority; it does not establish the severity of damage, entitlement to aid, causation, or the truth of every contextual claim.
 
+## Plain-language summary
+
+A field assessor submits images or video during a disaster response. Emergency coordinators need to know whether the assessor was authorized for the incident and location, whether the evidence is tied to the correct response program, and whether authority state is current enough for operational use.
+
+A positive result means **the material may be accepted as authenticated field evidence for the identified incident and workflow**. It does not prove the final damage estimate, funding eligibility, safety of a structure, or entitlement to relief. The verifier makes the field-evidence admission decision explicit so urgent operations do not have to rely only on informal rosters or unverifiable media channels.
+
 ## At-a-glance governance flow
 
 ```mermaid
@@ -87,8 +93,13 @@ stateDiagram-v2
     Review --> [*]
 ```
 
-## Actors and authority
+## Why this workflow needs verifiable governance
 
+Disaster response combines urgency, rapidly changing assignments, intermittent connectivity, multiple agencies, and high volumes of citizen and professional media. A recognized assessor may be assigned to a different zone, an agency mandate may change during the response, and stale trust data may be operationally significant.
+
+The walkthrough shows how the verifier can encode incident, location, program, time, and delegation scope while preserving `review` or `indeterminate` when the necessary trust state is unavailable. This supports rapid action without hiding the uncertainty created by the environment.
+
+## Roles in the workflow
 | Role | Responsibility | Evidence expected |
 |---|---|---|
 | Field collector | Captures and submits incident imagery | CAWG/C2PA-derived provenance and assignment context |
@@ -97,6 +108,17 @@ stateDiagram-v2
 | Affected community member | May contest attribution, location, or use | Correction/redress reference |
 | Assurance reviewer | Replays the historical decision | Pinned trust state and audit evidence |
 
+
+
+## System components mapped to workflow concepts
+
+| Workflow concept | Verifier concept | Practical meaning |
+|---|---|---|
+| Incident/response program | Resource and purpose scope | Binds evidence to the declared emergency context |
+| Assessor/team assignment | Recognition/delegation | Shows who may collect or submit evidence |
+| Zone/location | Jurisdiction scope | Prevents an assignment being reused outside its operational area |
+| Assignment withdrawal | Revocation state | Stops a superseded team mandate from authorizing new evidence |
+| Emergency operations review | Review disposition | Allows urgent escalation without silently treating uncertainty as trust |
 ## Governance concerns
 
 - **Incident and geographic scope:** MUST be represented explicitly in policy, context, evidence, or review routing.
@@ -133,7 +155,7 @@ The companion directory [`examples/disaster-response-damage-assessment/`](../../
 python scripts/validate_walkthrough_examples.py
 ```
 
-## Evidence produced
+## What evidence is produced
 
 - scoped decision and stable reason code;
 - authority, delegation, and revocation evidence references;
@@ -141,6 +163,31 @@ python scripts/validate_walkthrough_examples.py
 - minimized decision receipt;
 - replay inputs and correction lineage; and
 - review/redress reference where the result is contested or non-deterministic.
+
+## What can be tested
+
+| Test question | Artifact or command |
+|---|---|
+| Do the walkthrough diagrams and required reader-facing sections pass quality validation? | `python scripts/validate_walkthrough_quality.py` |
+| Do Mermaid flow, interaction, and state diagrams pass structural validation? | `python scripts/validate_walkthrough_diagrams.py` |
+| Do machine-readable walkthrough manifests contain the common lifecycle cases? | `python scripts/validate_walkthrough_examples.py` |
+| Do shipped example artefacts remain structurally valid? | `python scripts/validate_examples.py` |
+| Does the complete repository validation surface pass? | `make validate` |
+
+## Why this improves adoption
+
+This walkthrough is easier to adopt when the governance value is expressed in familiar operational terms:
+
+- operations centers can triage evidence from multiple teams using a consistent trust boundary;
+- field personnel receive scope-specific outcomes rather than broad identity checks;
+- inter-agency authority changes can be reflected in future decisions;
+- after-action reviews can replay what authority and policy state was available during the response.
+
+## Governance interpretation
+
+Emergency conditions do not remove the need for governance; they make explicit delegation and failure policy more important. The verifier supports one bounded decision about field-evidence admission while emergency managers, engineers, relief authorities, and funders retain their own operational and substantive authorities.
+
+The evidence record also helps distinguish what was knowable at decision time from information learned later, which is essential for fair after-action review.
 
 ## Agentic AI Variant
 
