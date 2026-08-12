@@ -93,6 +93,27 @@ python scripts/validate_walkthrough_examples.py
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
 
+## Agentic AI Variant
+
+Introducing an agent into **Warranty and Repair Evidence** changes the assurance problem from actor recognition alone to delegated-action assurance. Apply the common [Agentic AI Assurance model](../agentic-ai/index.md) and treat agent identity as necessary but insufficient evidence.
+
+| Agentic control | Walkthrough requirement |
+|---|---|
+| Agent role | Model the agent explicitly as **repair documentation agent, service-center submitter, verifier, or warranty orchestrator**; authority in one role MUST NOT imply authority in another. |
+| Principal | Bind the agent to **consumer, manufacturer, authorized service center, technician, or warranty administrator** and retain the principal reference in the decision evidence. |
+| Delegated authority | Verify a mandate for the exact requested operation; authentication or recognition of the agent alone is not authorization. |
+| Scope | Enforce **product/serial number, repair order, evidence type, service authorization, claim purpose, and time window** as applicable to the transaction. |
+| Tool/sub-agent chain | Where the agent invokes tools or downstream agents, retain evidence of material calls and reject unauthorized sub-delegation. |
+| Revocation | Evaluate principal and delegation state at the decision time; revoked or expired authority cannot authorize a new action. |
+| Failure | Preserve explicit `deny`, `review`, and `indeterminate` outcomes rather than coercing uncertainty into permission. |
+| Audit and redress | Retain agent, principal, mandate, policy epoch, provenance/authority evidence, and a correction or challenge route sufficient for replay. |
+
+Authenticated repair evidence and service authority do not by themselves establish warranty coverage, defect causation, reimbursement amount, or consumer-law consequence.
+
+### Agentic conformance probes
+
+In addition to the walkthrough's existing tests, exercise an authenticated agent with no mandate, a valid mandate with an out-of-scope action, revoked/expired delegation, prohibited sub-delegation or tool use, stale/conflicting authority state, and a corrected input that requires a superseding receipt.
+
 ## Operational assurance contract
 
 This walkthrough is testable as a bounded governance decision rather than as a claim that the underlying content is true.

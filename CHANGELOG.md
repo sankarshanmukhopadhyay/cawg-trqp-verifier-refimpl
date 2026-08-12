@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### Agentic AI assurance
+- Added a cross-cutting Agentic AI Assurance model covering producer, submitter, verifier, orchestrator, proxy, and downstream decision roles.
+- Added explicit principal, mandate, scope, delegation-depth, temporal-validity, revocation, replay, corrigibility, and redress requirements for agent actions.
+- Added an Agentic AI Variant to all 18 sector walkthroughs, preserving the boundary between verification findings and substantive institutional judgment.
+- Added three executable cross-sector archetypes: agent as content producer, delegated submitter, and verifier/orchestrator.
+- Added `validate_agentic_assurance.py` to prevent documentation/scenario drift and wired it into `make validate`.
+
 ### Walkthrough portfolio
 - Refined every indexed walkthrough with a common operational assurance contract covering bounded decisions, authority/delegation, revocation freshness, visible failure, correction lineage, and replay expectations.
 - Added disaster-response damage assessment, legal/administrative evidence submission, industrial inspection and maintenance, and cultural-heritage/archive ingest walkthroughs with machine-readable scenario manifests.

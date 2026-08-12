@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "walkthrough_id": "agent-delegated-submitter",
+  "title": "Agent as Delegated Submitter",
+  "authority_domain": "agentic-submission",
+  "action": "submit_evidence",
+  "decision_boundary": "May this agent submit this identified evidence to this recipient for this purpose on behalf of this principal at the evaluated decision time?",
+  "cases": [
+    {
+      "id": "authorized",
+      "condition": "recognized agent, valid principal mandate, and in-scope action/resource/purpose",
+      "expected_outcome": "allow",
+      "reason_code": "AUTHORIZED"
+    },
+    {
+      "id": "scope-mismatch",
+      "condition": "recognized agent but action, resource, purpose, recipient, transformation, or tool is outside mandate",
+      "expected_outcome": "deny",
+      "reason_code": "SCOPE_MISMATCH"
+    },
+    {
+      "id": "revoked",
+      "condition": "principal authority or agent delegation is revoked at the evaluated decision time",
+      "expected_outcome": "deny",
+      "reason_code": "AUTHORITY_REVOKED"
+    },
+    {
+      "id": "stale",
+      "condition": "required authority, delegation, policy, or revocation evidence is stale or unavailable",
+      "expected_outcome": "indeterminate",
+      "reason_code": "TRUST_STATE_STALE"
+    },
+    {
+      "id": "conflict",
+      "condition": "authoritative sources or material verifier dependencies return incompatible results",
+      "expected_outcome": "review",
+      "reason_code": "AUTHORITY_CONFLICT"
+    },
+    {
+      "id": "corrected",
+      "condition": "material provenance, mandate, scope, or authority evidence is corrected after the original decision",
+      "expected_outcome": "new_decision",
+      "reason_code": "SUPERSEDING_RECEIPT_REQUIRED"
+    }
+  ],
+  "evidence_outputs": [
+    "decision_receipt",
+    "agent_identity",
+    "principal_reference",
+    "delegation_evidence",
+    "scope_evidence",
+    "policy_epoch",
+    "revocation_status",
+    "replay_inputs",
+    "redress_reference"
+  ],
+  "limitations": [
+    "The result establishes scoped submission authority; it does not establish admissibility, entitlement, liability, eligibility, or factual truth.",
+    "Submission authority does not confer authority to alter evidence or adjudicate its consequence.",
+    "Does not transfer relying-party accountability"
+  ]
+}

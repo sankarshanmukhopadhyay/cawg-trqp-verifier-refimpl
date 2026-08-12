@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "walkthrough_id": "agent-content-producer",
+  "title": "Agent as Content Producer",
+  "authority_domain": "agentic-content-production",
+  "action": "produce_content",
+  "decision_boundary": "May this agent-produced artefact be accepted as produced under a valid, in-scope mandate and declared transformation policy at the evaluated decision time?",
+  "cases": [
+    {
+      "id": "authorized",
+      "condition": "recognized agent, valid principal mandate, and in-scope action/resource/purpose",
+      "expected_outcome": "allow",
+      "reason_code": "AUTHORIZED"
+    },
+    {
+      "id": "scope-mismatch",
+      "condition": "recognized agent but action, resource, purpose, recipient, transformation, or tool is outside mandate",
+      "expected_outcome": "deny",
+      "reason_code": "SCOPE_MISMATCH"
+    },
+    {
+      "id": "revoked",
+      "condition": "principal authority or agent delegation is revoked at the evaluated decision time",
+      "expected_outcome": "deny",
+      "reason_code": "AUTHORITY_REVOKED"
+    },
+    {
+      "id": "stale",
+      "condition": "required authority, delegation, policy, or revocation evidence is stale or unavailable",
+      "expected_outcome": "indeterminate",
+      "reason_code": "TRUST_STATE_STALE"
+    },
+    {
+      "id": "conflict",
+      "condition": "authoritative sources or material verifier dependencies return incompatible results",
+      "expected_outcome": "review",
+      "reason_code": "AUTHORITY_CONFLICT"
+    },
+    {
+      "id": "corrected",
+      "condition": "material provenance, mandate, scope, or authority evidence is corrected after the original decision",
+      "expected_outcome": "new_decision",
+      "reason_code": "SUPERSEDING_RECEIPT_REQUIRED"
+    }
+  ],
+  "evidence_outputs": [
+    "decision_receipt",
+    "agent_identity",
+    "principal_reference",
+    "delegation_evidence",
+    "scope_evidence",
+    "policy_epoch",
+    "revocation_status",
+    "replay_inputs",
+    "redress_reference"
+  ],
+  "limitations": [
+    "The result establishes scoped production authority and provenance state; it does not establish factual truth of the content.",
+    "A production mandate does not confer submission, publication, verification, or decision authority.",
+    "Does not transfer relying-party accountability"
+  ]
+}

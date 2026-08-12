@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "walkthrough_id": "agent-verifier-orchestrator",
+  "title": "Agent as Verifier and Orchestrator",
+  "authority_domain": "agentic-verification",
+  "action": "orchestrate_verification",
+  "decision_boundary": "May this agent invoke the approved verification tools and authority sources under its mandate and return bounded, replayable findings for the evaluated decision time?",
+  "cases": [
+    {
+      "id": "authorized",
+      "condition": "recognized agent, valid principal mandate, and in-scope action/resource/purpose",
+      "expected_outcome": "allow",
+      "reason_code": "AUTHORIZED"
+    },
+    {
+      "id": "scope-mismatch",
+      "condition": "recognized agent but action, resource, purpose, recipient, transformation, or tool is outside mandate",
+      "expected_outcome": "deny",
+      "reason_code": "SCOPE_MISMATCH"
+    },
+    {
+      "id": "revoked",
+      "condition": "principal authority or agent delegation is revoked at the evaluated decision time",
+      "expected_outcome": "deny",
+      "reason_code": "AUTHORITY_REVOKED"
+    },
+    {
+      "id": "stale",
+      "condition": "required authority, delegation, policy, or revocation evidence is stale or unavailable",
+      "expected_outcome": "indeterminate",
+      "reason_code": "TRUST_STATE_STALE"
+    },
+    {
+      "id": "conflict",
+      "condition": "authoritative sources or material verifier dependencies return incompatible results",
+      "expected_outcome": "review",
+      "reason_code": "AUTHORITY_CONFLICT"
+    },
+    {
+      "id": "corrected",
+      "condition": "material provenance, mandate, scope, or authority evidence is corrected after the original decision",
+      "expected_outcome": "new_decision",
+      "reason_code": "SUPERSEDING_RECEIPT_REQUIRED"
+    }
+  ],
+  "evidence_outputs": [
+    "decision_receipt",
+    "agent_identity",
+    "principal_reference",
+    "delegation_evidence",
+    "scope_evidence",
+    "policy_epoch",
+    "revocation_status",
+    "replay_inputs",
+    "redress_reference"
+  ],
+  "limitations": [
+    "Verification authority does not confer publication, payment, enforcement, admission, or adjudication authority.",
+    "The result is bounded to the configured evidence, tool chain, mandate, and policy state.",
+    "Does not transfer relying-party accountability"
+  ]
+}

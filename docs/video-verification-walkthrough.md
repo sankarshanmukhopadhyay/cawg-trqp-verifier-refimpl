@@ -321,6 +321,27 @@ It turns trust from a static assumption into a **testable, observable, and enfor
 - See `docs/reproducibility-guide.md` for replay workflows
 - See `fixtures/` for concrete examples
 
+## Agentic AI Variant
+
+Introducing an agent into **Video Verification Walkthrough** changes the assurance problem from actor recognition alone to delegated-action assurance. Apply the common [Agentic AI Assurance model](agentic-ai/index.md) and treat agent identity as necessary but insufficient evidence.
+
+| Agentic control | Walkthrough requirement |
+|---|---|
+| Agent role | Model the agent explicitly as **producer/processing agent, submitter, verifier, or publication orchestrator**; authority in one role MUST NOT imply authority in another. |
+| Principal | Bind the agent to **creator, rights holder, newsroom/platform, or authorized organization** and retain the principal reference in the decision evidence. |
+| Delegated authority | Verify a mandate for the exact requested operation; authentication or recognition of the agent alone is not authorization. |
+| Scope | Enforce **video/source asset, allowed transformations, publication purpose/channel, audience/jurisdiction, and time window** as applicable to the transaction. |
+| Tool/sub-agent chain | Where the agent invokes tools or downstream agents, retain evidence of material calls and reject unauthorized sub-delegation. |
+| Revocation | Evaluate principal and delegation state at the decision time; revoked or expired authority cannot authorize a new action. |
+| Failure | Preserve explicit `deny`, `review`, and `indeterminate` outcomes rather than coercing uncertainty into permission. |
+| Audit and redress | Retain agent, principal, mandate, policy epoch, provenance/authority evidence, and a correction or challenge route sufficient for replay. |
+
+Agentic verification may establish provenance, declared processing, and scoped authority, but contextual truth, editorial meaning, legality, and downstream consequence remain separate decisions.
+
+### Agentic conformance probes
+
+In addition to the walkthrough's existing tests, exercise an authenticated agent with no mandate, a valid mandate with an out-of-scope action, revoked/expired delegation, prohibited sub-delegation or tool use, stale/conflicting authority state, and a corrected input that requires a superseding receipt.
+
 ## Operational assurance contract
 
 | Control point | Required behavior | Evidence |

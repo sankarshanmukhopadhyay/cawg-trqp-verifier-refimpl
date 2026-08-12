@@ -88,6 +88,27 @@ python scripts/validate_walkthrough_examples.py
 - replay inputs and correction lineage; and
 - review/redress reference where the result is contested or non-deterministic.
 
+## Agentic AI Variant
+
+Introducing an agent into **Legal and Administrative Evidence Submission** changes the assurance problem from actor recognition alone to delegated-action assurance. Apply the common [Agentic AI Assurance model](../agentic-ai/index.md) and treat agent identity as necessary but insufficient evidence.
+
+| Agentic control | Walkthrough requirement |
+|---|---|
+| Agent role | Model the agent explicitly as **submitter, evidence-packaging agent, verifier, or case-workflow orchestrator**; authority in one role MUST NOT imply authority in another. |
+| Principal | Bind the agent to **party, counsel, agency, tribunal, or other competent authority** and retain the principal reference in the decision evidence. |
+| Delegated authority | Verify a mandate for the exact requested operation; authentication or recognition of the agent alone is not authorization. |
+| Scope | Enforce **case/proceeding, recipient, evidence class, filing operation, purpose, deadline, and correction rights** as applicable to the transaction. |
+| Tool/sub-agent chain | Where the agent invokes tools or downstream agents, retain evidence of material calls and reject unauthorized sub-delegation. |
+| Revocation | Evaluate principal and delegation state at the decision time; revoked or expired authority cannot authorize a new action. |
+| Failure | Preserve explicit `deny`, `review`, and `indeterminate` outcomes rather than coercing uncertainty into permission. |
+| Audit and redress | Retain agent, principal, mandate, policy epoch, provenance/authority evidence, and a correction or challenge route sufficient for replay. |
+
+A valid document submitted by an authenticated agent is not an authorized filing unless the principal-agent mandate covers the specific proceeding and submission operation; verification does not decide admissibility or probative value.
+
+### Agentic conformance probes
+
+In addition to the walkthrough's existing tests, exercise an authenticated agent with no mandate, a valid mandate with an out-of-scope action, revoked/expired delegation, prohibited sub-delegation or tool use, stale/conflicting authority state, and a corrected input that requires a superseding receipt.
+
 ## Operational assurance contract
 
 An implementation claiming this walkthrough should demonstrate that:

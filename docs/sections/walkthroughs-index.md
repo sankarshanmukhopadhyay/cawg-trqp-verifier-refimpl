@@ -8,7 +8,7 @@ description: "End-to-end scenarios showing the verifier applied to concrete gove
 
 # Walkthroughs
 
-These scenarios show how content-authenticity evidence and governed authority can be combined without collapsing provenance, authorization, and downstream truth or professional judgment into one decision. Each walkthrough exposes the decision boundary, authority/delegation model, revocation and freshness behavior, failure states, correction lineage, evidence outputs, and replay expectations.
+These scenarios show how content-authenticity evidence and governed authority can be combined without collapsing provenance, authorization, and downstream truth or professional judgment into one decision. The portfolio now also applies a common [Agentic AI Assurance](../agentic-ai/index.md) overlay so an AI agent can be pressure-tested as producer, submitter, verifier, orchestrator, proxy, or decision actor without treating agent identity as authority. Each walkthrough exposes the decision boundary, authority/delegation model, revocation and freshness behavior, failure states, correction lineage, evidence outputs, and replay expectations.
 
 ## Start by assurance pattern
 
@@ -22,6 +22,15 @@ These scenarios show how content-authenticity evidence and governed authority ca
 | Constrained/humanitarian environments | [Humanitarian Offline Field Evidence](../workflows/humanitarian-offline-field-evidence.md), [Warranty and Repair Evidence](../workflows/warranty-repair-evidence.md) | intermittent connectivity, delegated service roles, contested evidence |
 
 ## Complete walkthrough portfolio
+
+### Agentic assurance archetypes
+
+- [Agent as Content Producer](../workflows/agent-content-producer.md)
+- [Agent as Delegated Submitter](../workflows/agent-delegated-submitter.md)
+- [Agent as Verifier and Orchestrator](../workflows/agent-verifier-orchestrator.md)
+
+These cross-sector archetypes define reusable mandate, scope, revocation, tool-chain, replay, and decision-boundary controls. Every sector walkthrough below includes an **Agentic AI Variant** that instantiates the same model in context.
+
 
 ### Foundational and implementation-led examples
 
@@ -54,4 +63,4 @@ These scenarios show how content-authenticity evidence and governed authority ca
 
 Across the portfolio, a positive verifier result means only that the requested action satisfies the configured provenance, authority, scope, policy, and trust-state requirements. It does **not** establish factual truth or transfer the relying organization's legal, editorial, clinical, engineering, evidentiary, or policy responsibility to the verifier.
 
-The machine-readable scenario manifests under `examples/*/scenario.json` exercise six common lifecycle states: authorized, scope mismatch, revoked, stale, conflict, and corrected. CI discovers these manifests dynamically and verifies that they resolve to published walkthrough documents.
+The machine-readable scenario manifests under `examples/*/scenario.json` exercise six common lifecycle states, including the agentic archetypes: authorized, scope mismatch, revoked, stale, conflict, and corrected. CI discovers these manifests dynamically and verifies that they resolve to published walkthrough documents.

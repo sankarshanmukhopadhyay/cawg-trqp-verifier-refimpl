@@ -163,6 +163,27 @@ Correction should update the authoritative source and produce a new independentl
 
 See the [CAWG Implementation Playbook](../industry-adoption/cawg-implementation-playbook.md), [Application Profile](../industry-adoption/music-industry-application-profile.md), and [Pilot Blueprint](../industry-adoption/music-industry-pilot-blueprint.md).
 
+## Agentic AI Variant
+
+Introducing an agent into **Authorized Music Distribution Walkthrough** changes the assurance problem from actor recognition alone to delegated-action assurance. Apply the common [Agentic AI Assurance model](../agentic-ai/index.md) and treat agent identity as necessary but insufficient evidence.
+
+| Agentic control | Walkthrough requirement |
+|---|---|
+| Agent role | Model the agent explicitly as **production/mastering agent, rights-holder submitter, verifier, distributor orchestrator, or licensing assistant**; authority in one role MUST NOT imply authority in another. |
+| Principal | Bind the agent to **artist, label, publisher, distributor, collective, or rights holder** and retain the principal reference in the decision evidence. |
+| Delegated authority | Verify a mandate for the exact requested operation; authentication or recognition of the agent alone is not authorization. |
+| Scope | Enforce **recording/work, territory, distribution channel, rights class, release window, transformation/derivative permission, and delegation depth** as applicable to the transaction. |
+| Tool/sub-agent chain | Where the agent invokes tools or downstream agents, retain evidence of material calls and reject unauthorized sub-delegation. |
+| Revocation | Evaluate principal and delegation state at the decision time; revoked or expired authority cannot authorize a new action. |
+| Failure | Preserve explicit `deny`, `review`, and `indeterminate` outcomes rather than coercing uncertainty into permission. |
+| Audit and redress | Retain agent, principal, mandate, policy epoch, provenance/authority evidence, and a correction or challenge route sufficient for replay. |
+
+An agent authorized to deliver a recording is not automatically authorized to license rights, modify ownership metadata, create derivatives, or decide royalty entitlement.
+
+### Agentic conformance probes
+
+In addition to the walkthrough's existing tests, exercise an authenticated agent with no mandate, a valid mandate with an out-of-scope action, revoked/expired delegation, prohibited sub-delegation or tool use, stale/conflicting authority state, and a corrected input that requires a superseding receipt.
+
 ## Operational assurance contract
 
 This walkthrough is testable as a bounded governance decision rather than as a claim that the underlying content is true.

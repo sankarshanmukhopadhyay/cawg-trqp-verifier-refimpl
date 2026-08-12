@@ -93,6 +93,27 @@ python scripts/validate_walkthrough_examples.py
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
 
+## Agentic AI Variant
+
+Introducing an agent into **Scientific Research Imagery** changes the assurance problem from actor recognition alone to delegated-action assurance. Apply the common [Agentic AI Assurance model](../agentic-ai/index.md) and treat agent identity as necessary but insufficient evidence.
+
+| Agentic control | Walkthrough requirement |
+|---|---|
+| Agent role | Model the agent explicitly as **instrument/capture agent, processing agent, submitter, verifier, or reproducibility orchestrator**; authority in one role MUST NOT imply authority in another. |
+| Principal | Bind the agent to **research institution, investigator, laboratory, repository, journal, or data steward** and retain the principal reference in the decision evidence. |
+| Delegated authority | Verify a mandate for the exact requested operation; authentication or recognition of the agent alone is not authorization. |
+| Scope | Enforce **study/dataset, instrument/run, permitted transformations, analysis purpose, repository/journal submission, and validity interval** as applicable to the transaction. |
+| Tool/sub-agent chain | Where the agent invokes tools or downstream agents, retain evidence of material calls and reject unauthorized sub-delegation. |
+| Revocation | Evaluate principal and delegation state at the decision time; revoked or expired authority cannot authorize a new action. |
+| Failure | Preserve explicit `deny`, `review`, and `indeterminate` outcomes rather than coercing uncertainty into permission. |
+| Audit and redress | Retain agent, principal, mandate, policy epoch, provenance/authority evidence, and a correction or challenge route sufficient for replay. |
+
+Agentic provenance may establish how imagery was produced and under whose research authority, but it cannot establish scientific validity, statistical significance, or correctness of conclusions.
+
+### Agentic conformance probes
+
+In addition to the walkthrough's existing tests, exercise an authenticated agent with no mandate, a valid mandate with an out-of-scope action, revoked/expired delegation, prohibited sub-delegation or tool use, stale/conflicting authority state, and a corrected input that requires a superseding receipt.
+
 ## Operational assurance contract
 
 This walkthrough is testable as a bounded governance decision rather than as a claim that the underlying content is true.

@@ -43,6 +43,7 @@ accountable, testable, and interoperable verifier looks like.
 | A developer integrating a verifier into your own system | [Quickstart](../QUICKSTART.md), then [CAWG Input Contract](cawg-input-contract.md), [API Call Catalogue](api-call-catalogue.md), and [Integration Guide](INTEGRATION_GUIDE.md) |
 | Standing up or operating a deployment | [Architecture](architecture.md), then [Deployment Guide](deployment-guide.md) |
 | Reviewing assurance, evidence, or audit posture | [How TRQP Enables Assurance](how-trqp-enables-assurance.md), then [Decision Receipt Specification](decision-receipt-specification.md) and [Audit Bundle Profile](audit-bundle-profile.md) |
+| Building or governing agentic AI workflows | [Agentic AI Assurance](agentic-ai/index.md), then the [Agent as Content Producer](workflows/agent-content-producer.md), [Delegated Submitter](workflows/agent-delegated-submitter.md), and [Verifier/Orchestrator](workflows/agent-verifier-orchestrator.md) archetypes |
 | Building or running a conformance/interoperability program | [Assurance Suite Ingestion](assurance-suite-ingestion.md), [Interoperability Vectors](interoperability-vectors.md), [Compatibility Matrix](compatibility-matrix.md) |
 | Deciding whether to contribute, or reporting a security issue | [Governance](../GOVERNANCE.md), [Contributing](../CONTRIBUTING.md), [Security Policy](../SECURITY.md) |
 
@@ -57,6 +58,7 @@ For decision-makers and implementers exploring sector deployment, the [Industry 
 - **Replayable decisions** — every decision can be re-derived from pinned inputs by an independent party, producing a `matches: true/false` result rather than requiring blind trust in the original run. See [Reproducibility Guide](reproducibility-guide.md).
 - **Structured, queryable evidence** — decision receipts and audit bundles are JSON Schema-backed artifacts, not free-text logs. See [Decision Receipt Specification](decision-receipt-specification.md) and [Audit Bundle Profile](audit-bundle-profile.md).
 - **A deployable HTTP service** — a hardened Flask service exposes authorization, recognition, verification, and audit-bundle export over HTTP, with Docker packaging. See [HTTP Transport Patterns](http-transport-patterns.md) and [Deployment Guide](deployment-guide.md).
+- **Agentic delegated-action assurance** — a cross-cutting model distinguishes agent identity from principal mandate, action scope, revocation state, tool/sub-agent delegation, and downstream decision authority. See [Agentic AI Assurance](agentic-ai/index.md).
 - **External conformance ingestion** — a machine-readable manifest lets other TRQP/CAWG verifier implementations and conformance suites consume this repository's fixtures directly. See [Assurance Suite Ingestion](assurance-suite-ingestion.md).
 
 ## What it holds the potential for

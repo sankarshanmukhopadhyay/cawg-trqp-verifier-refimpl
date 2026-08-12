@@ -140,3 +140,8 @@ Roadmap: [`ROADMAP.md`](ROADMAP.md)
 ## License
 
 MIT. See [`LICENSE`](LICENSE).
+
+## Agentic AI assurance
+
+The walkthrough portfolio includes a cross-cutting [Agentic AI Assurance](docs/agentic-ai/index.md) model that treats agents as delegated actors rather than trusted identities. It covers producer, submitter, verifier, orchestrator, proxy, and decision roles; binds actions to principals, mandates, scope, temporal validity, revocation, and replay evidence; and includes three executable archetypes under `examples/agent-*`.
+

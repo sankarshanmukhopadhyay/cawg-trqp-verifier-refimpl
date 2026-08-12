@@ -93,6 +93,27 @@ python scripts/validate_walkthrough_examples.py
 
 This walkthrough does not convert provenance into truth and does not transfer institutional accountability to the verifier. The relying organization remains responsible for the lawful, proportionate, and procedurally fair use of the result.
 
+## Agentic AI Variant
+
+Introducing an agent into **Medical Imaging for Remote Consultation** changes the assurance problem from actor recognition alone to delegated-action assurance. Apply the common [Agentic AI Assurance model](../agentic-ai/index.md) and treat agent identity as necessary but insufficient evidence.
+
+| Agentic control | Walkthrough requirement |
+|---|---|
+| Agent role | Model the agent explicitly as **capture/processing agent, clinical submitter proxy, verifier, or care-workflow orchestrator**; authority in one role MUST NOT imply authority in another. |
+| Principal | Bind the agent to **patient, imaging provider, clinician, healthcare institution, or authorized service** and retain the principal reference in the decision evidence. |
+| Delegated authority | Verify a mandate for the exact requested operation; authentication or recognition of the agent alone is not authorization. |
+| Scope | Enforce **patient/case binding, study, permitted processing, consultation purpose, recipient, time window, and clinical decision role** as applicable to the transaction. |
+| Tool/sub-agent chain | Where the agent invokes tools or downstream agents, retain evidence of material calls and reject unauthorized sub-delegation. |
+| Revocation | Evaluate principal and delegation state at the decision time; revoked or expired authority cannot authorize a new action. |
+| Failure | Preserve explicit `deny`, `review`, and `indeterminate` outcomes rather than coercing uncertainty into permission. |
+| Audit and redress | Retain agent, principal, mandate, policy epoch, provenance/authority evidence, and a correction or challenge route sufficient for replay. |
+
+Verification may establish provenance and delegated handling authority but must not silently become diagnosis, treatment, triage, or clinical decision authority.
+
+### Agentic conformance probes
+
+In addition to the walkthrough's existing tests, exercise an authenticated agent with no mandate, a valid mandate with an out-of-scope action, revoked/expired delegation, prohibited sub-delegation or tool use, stale/conflicting authority state, and a corrected input that requires a superseding receipt.
+
 ## Operational assurance contract
 
 This walkthrough is testable as a bounded governance decision rather than as a claim that the underlying content is true.
