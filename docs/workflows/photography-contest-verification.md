@@ -48,6 +48,60 @@ flowchart LR
 
 The flow makes eligibility decisions testable without replacing artistic judging or appeal authority.
 
+
+## Cross-functional interaction view
+
+This swimlane-style interaction view shows how evidence moves between the submitting actor, the relying workflow, provenance validation, governed authority resolution, and the bounded operational decision.
+
+```mermaid
+sequenceDiagram
+    participant S as Contest Entrant
+    participant W as Contest Intake Workflow
+    participant C as CAWG/C2PA Validator
+    participant V as TRQP Verifier
+    participant A as Authority Sources
+
+    S->>W: Submit asset/evidence + declared context
+    W->>C: Validate provenance and normalize input
+    C-->>W: Provenance findings
+    W->>V: Verify requested action, scope, and policy
+    V->>A: Resolve recognition, delegation, revocation, and freshness
+    A-->>V: Current trust state
+    V-->>W: allow / deny / review + evidence
+    W-->>S: Receipt, correction route, or next-step request
+```
+
+## Governed decision state model
+
+This state model keeps the governance lifecycle explicit so authorization, scope failure, revocation, stale trust state, conflict, and superseding correction are visible rather than collapsed into a single pass/fail result.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending
+
+    Pending --> Authorized: provenance valid + authority current + scope satisfied
+    Pending --> ScopeMismatch: actor recognized / requested action outside scope
+    Pending --> Revoked: authority or delegation revoked
+    Pending --> Stale: trust state unavailable or not fresh enough
+    Pending --> Conflict: material authorities disagree
+
+    Authorized --> Allowed: positive governed outcome
+    ScopeMismatch --> Denied: deny or hold
+    Revoked --> Denied: deny
+    Stale --> Review: review / indeterminate
+    Conflict --> Review: escalate
+
+    Allowed --> Corrected: material evidence corrected
+    Denied --> Corrected: material evidence corrected
+    Review --> Corrected: authoritative correction supplied
+
+    Corrected --> Pending: re-evaluate with updated inputs
+
+    Allowed --> [*]
+    Denied --> [*]
+    Review --> [*]
+```
+
 ## Why a photography contest needs verifiable governance
 
 A public photography contest has a deceptively complex control surface. The visible workflow is easy to understand: submit, review, judge, award. The hidden workflow is harder: identity, eligibility, authorship, provenance, location, timing, consent, licensing, rule updates, disqualification, appeals, and audit.

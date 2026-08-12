@@ -33,6 +33,60 @@ flowchart LR
 
 The key architectural separation is between **content provenance**, **authority to perform the action**, and the **downstream substantive decision**.
 
+
+## Cross-functional interaction view
+
+This swimlane-style interaction view shows how evidence moves between the submitting actor, the relying workflow, provenance validation, governed authority resolution, and the bounded operational decision.
+
+```mermaid
+sequenceDiagram
+    participant S as Field Assessor
+    participant W as Emergency Coordination Workflow
+    participant C as CAWG/C2PA Validator
+    participant V as TRQP Verifier
+    participant A as Authority Sources
+
+    S->>W: Submit asset/evidence + declared context
+    W->>C: Validate provenance and normalize input
+    C-->>W: Provenance findings
+    W->>V: Verify requested action, scope, and policy
+    V->>A: Resolve recognition, delegation, revocation, and freshness
+    A-->>V: Current trust state
+    V-->>W: allow / deny / review + evidence
+    W-->>S: Receipt, correction route, or next-step request
+```
+
+## Governed decision state model
+
+This state model keeps the governance lifecycle explicit so authorization, scope failure, revocation, stale trust state, conflict, and superseding correction are visible rather than collapsed into a single pass/fail result.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending
+
+    Pending --> Authorized: provenance valid + authority current + scope satisfied
+    Pending --> ScopeMismatch: actor recognized / requested action outside scope
+    Pending --> Revoked: authority or delegation revoked
+    Pending --> Stale: trust state unavailable or not fresh enough
+    Pending --> Conflict: material authorities disagree
+
+    Authorized --> Allowed: positive governed outcome
+    ScopeMismatch --> Denied: deny or hold
+    Revoked --> Denied: deny
+    Stale --> Review: review / indeterminate
+    Conflict --> Review: escalate
+
+    Allowed --> Corrected: material evidence corrected
+    Denied --> Corrected: material evidence corrected
+    Review --> Corrected: authoritative correction supplied
+
+    Corrected --> Pending: re-evaluate with updated inputs
+
+    Allowed --> [*]
+    Denied --> [*]
+    Review --> [*]
+```
+
 ## Actors and authority
 
 | Role | Responsibility | Evidence expected |

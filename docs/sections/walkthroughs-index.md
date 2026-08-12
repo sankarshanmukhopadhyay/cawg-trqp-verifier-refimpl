@@ -10,6 +10,16 @@ description: "End-to-end scenarios showing the verifier applied to concrete gove
 
 These scenarios show how content-authenticity evidence and governed authority can be combined without collapsing provenance, authorization, and downstream truth or professional judgment into one decision. The portfolio now also applies a common [Agentic AI Assurance](../agentic-ai/index.md) overlay so an AI agent can be pressure-tested as producer, submitter, verifier, orchestrator, proxy, or decision actor without treating agent identity as authority. Each walkthrough exposes the decision boundary, authority/delegation model, revocation and freshness behavior, failure states, correction lineage, evidence outputs, and replay expectations.
 
+## Common diagram set
+
+Every walkthrough now exposes the same three complementary views so readers can understand the governance decision from multiple angles:
+
+- **At-a-glance governance flow** shows the bounded assurance path from submission to governed disposition.
+- **Cross-functional interaction view** provides a swimlane-style sequence of actor interactions, evidence handoffs, and verification steps.
+- **Governed decision state model** shows how the decision moves through authorization, scope mismatch, revocation, stale trust state, conflict, correction, and replay.
+
+Used together, these diagrams separate **who acted**, **what happened**, and **what state the governed decision entered**.
+
 ## Start by assurance pattern
 
 | Assurance pattern | Representative walkthroughs | What it pressure-tests |

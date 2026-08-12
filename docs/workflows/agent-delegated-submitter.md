@@ -28,6 +28,62 @@ flowchart LR
     G --> H
 ```
 
+
+## Cross-functional interaction view
+
+This swimlane-style interaction view makes the submission mandate explicit by showing how principal authority, agent delivery, intake controls, and governed verification fit together.
+
+```mermaid
+sequenceDiagram
+    participant P as Principal
+    participant A as Submitter Agent
+    participant I as Intake System
+    participant V as TRQP Verifier
+    participant T as Authority Sources
+    participant Q as Adjudicating Authority
+
+    P->>A: Delegate bounded submission task
+    A->>I: Submit evidence + mandate reference
+    I->>V: Verify principal-agent authority and scope
+    V->>T: Resolve delegation, revocation, and policy
+    T-->>V: Current trust state
+    V-->>I: allow / deny / review + evidence
+    I-->>A: Submission receipt or failure notice
+    I->>Q: Forward accepted evidence only
+    Q->>Q: Independently adjudicate consequence
+```
+
+## Governed decision state model
+
+This state model separates a valid submission authorization from missing mandate, scope failure, revocation, stale trust state, conflict, and superseding correction.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending
+
+    Pending --> Authorized: submitter mandate valid + recipient/purpose in scope
+    Pending --> ScopeMismatch: agent recognized / submission outside scope
+    Pending --> Revoked: mandate or principal authority revoked
+    Pending --> Stale: trust state unavailable or not fresh enough
+    Pending --> Conflict: authority sources disagree
+
+    Authorized --> Allowed: accept into intake
+    ScopeMismatch --> Denied: reject submission
+    Revoked --> Denied: reject submission
+    Stale --> Review: review / indeterminate
+    Conflict --> Review: escalate
+
+    Allowed --> Corrected: corrected evidence submitted
+    Denied --> Corrected: corrected evidence submitted
+    Review --> Corrected: authoritative correction supplied
+
+    Corrected --> Pending: re-evaluate with updated inputs
+
+    Allowed --> [*]
+    Denied --> [*]
+    Review --> [*]
+```
+
 ## Actors and authority
 
 | Actor | Authority or responsibility |

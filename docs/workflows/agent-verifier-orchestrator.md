@@ -27,6 +27,62 @@ flowchart LR
     F --> D[Separate decision authority]
 ```
 
+
+## Cross-functional interaction view
+
+This swimlane-style interaction view makes tool-chain governance explicit by showing how a delegated verifier agent gathers findings while leaving downstream consequence to a separate authority.
+
+```mermaid
+sequenceDiagram
+    participant P as Principal
+    participant A as Orchestrator Agent
+    participant C as Content Validator
+    participant V as TRQP Verifier
+    participant T as Authority Sources
+    participant D as Decision Authority
+
+    P->>A: Delegate bounded verification task
+    A->>C: Validate provenance and content evidence
+    C-->>A: Provenance findings
+    A->>V: Query recognition, authorization, and policy
+    V->>T: Resolve governed trust state
+    T-->>V: Current trust state
+    V-->>A: Authority decision + evidence
+    A-->>D: Structured findings + replay receipt
+    D->>D: Apply separate decision mandate and policy
+```
+
+## Governed decision state model
+
+This state model keeps verification-orchestration authority bounded by distinguishing valid findings production from unapproved tool use, stale dependencies, conflicting trust state, and correction.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending
+
+    Pending --> Authorized: mandate valid + approved toolchain in scope
+    Pending --> ScopeMismatch: requested action exceeds verification mandate
+    Pending --> Revoked: mandate or dependency authority revoked
+    Pending --> Stale: required trust or policy state too stale
+    Pending --> Conflict: dependencies return incompatible authority state
+
+    Authorized --> Allowed: produce bounded findings
+    ScopeMismatch --> Denied: deny or hold
+    Revoked --> Denied: deny or hold
+    Stale --> Review: review / indeterminate
+    Conflict --> Review: escalate
+
+    Allowed --> Corrected: material evidence or policy corrected
+    Denied --> Corrected: material evidence or policy corrected
+    Review --> Corrected: authoritative correction supplied
+
+    Corrected --> Pending: re-evaluate with updated inputs
+
+    Allowed --> [*]
+    Denied --> [*]
+    Review --> [*]
+```
+
 ## Actors and authority
 
 | Actor | Authority or responsibility |

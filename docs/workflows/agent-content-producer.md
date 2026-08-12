@@ -28,6 +28,62 @@ flowchart LR
     G --> H
 ```
 
+
+## Cross-functional interaction view
+
+This swimlane-style interaction view makes the delegated production path explicit by showing how principal authority, agent action, provenance validation, and relying-party acceptance fit together.
+
+```mermaid
+sequenceDiagram
+    participant P as Principal
+    participant A as Producer Agent
+    participant R as Relying Party
+    participant C as CAWG/C2PA Validator
+    participant V as TRQP Verifier
+    participant T as Authority Sources
+
+    P->>A: Issue bounded production mandate
+    A->>R: Submit produced artefact + provenance + mandate reference
+    R->>C: Validate provenance and declared transformations
+    C-->>R: Provenance findings
+    R->>V: Verify agent/principal authority and scope
+    V->>T: Resolve mandate, revocation, and policy
+    T-->>V: Current trust state
+    V-->>R: allow / deny / review + evidence
+    R-->>P: Receipt, publication decision, or correction request
+```
+
+## Governed decision state model
+
+This state model keeps delegated production governance legible by separating successful authorization from scope failure, revocation, stale trust state, conflict, and superseding correction.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending
+
+    Pending --> Authorized: provenance valid + mandate current + scope satisfied
+    Pending --> ScopeMismatch: agent recognized / action outside mandate
+    Pending --> Revoked: mandate or principal authority revoked
+    Pending --> Stale: trust state unavailable or not fresh enough
+    Pending --> Conflict: policy or authority sources disagree
+
+    Authorized --> Allowed: accept produced artefact
+    ScopeMismatch --> Denied: deny or hold
+    Revoked --> Denied: deny
+    Stale --> Review: review / indeterminate
+    Conflict --> Review: escalate
+
+    Allowed --> Corrected: material input corrected
+    Denied --> Corrected: material input corrected
+    Review --> Corrected: authoritative correction supplied
+
+    Corrected --> Pending: re-evaluate with updated inputs
+
+    Allowed --> [*]
+    Denied --> [*]
+    Review --> [*]
+```
+
 ## Actors and authority
 
 | Actor | Authority or responsibility |
