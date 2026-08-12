@@ -23,7 +23,12 @@ for path in linked:
     if "Operational assurance contract" not in text: errors.append(f"{rel}: missing operational assurance contract")
     for block in re.findall(r"```mermaid\s*\n(.*?)```",text,flags=re.S):
         first=next((line.strip() for line in block.splitlines() if line.strip()),"")
-        if not (first.startswith("flowchart ") or first=="sequenceDiagram" or first.startswith("graph ")):
+        if not (
+            first.startswith("flowchart ")
+            or first == "sequenceDiagram"
+            or first in {"stateDiagram", "stateDiagram-v2"}
+            or first.startswith("graph ")
+        ):
             errors.append(f"{rel}: unsupported Mermaid diagram opening {first!r}")
 if errors:
     print("walkthrough diagrams: FAIL")
