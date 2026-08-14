@@ -38,6 +38,7 @@ It does **not** treat provenance as truth, ownership, entitlement, clinical vali
 
 - [Guided learning paths](docs/guided-learning.md)
 - [Non-technical overview](docs/NON_TECHNICAL_OVERVIEW.md)
+- [Explainer presentation](docs/presentation.md) (17-slide orientation deck)
 - [Quickstart](QUICKSTART.md)
 - [Walkthrough catalogue](docs/sections/walkthroughs-index.md)
 - [Documentation site](https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/)

@@ -1,5 +1,13 @@
 ## [Unreleased]
 
+### Documentation and adoption artifacts
+- Replaced the explainer presentation with `assets/presentations/cawg-trqp-explainer-v3.pdf` (17 slides), refreshing every slide's content to match current repository capability instead of the v0.19.0-era deck, which still displayed v0.17.0 internally.
+- Added dedicated slides for the Agentic AI Assurance model, the 21-scenario walkthrough portfolio (18 sector walkthroughs + 3 cross-sector agentic archetypes), and the threat-model/privacy governance package, none of which were represented in v2.
+- Retained `cawg-trqp-explainer-v2.pdf` as a historical, release-tagged artifact and linked it from the new manifest's `supersedes` block rather than deleting it.
+- Updated `assets/presentations/manifest.json` with v3 checksums and an `implementation_version` of `"unreleased (post-v0.19.0)"` so the artifact stops claiming alignment with a release it no longer matches.
+- Rewrote `docs/presentation.md` with a refreshed slide-by-slide documentation map, a "Why v3" rationale, and an updated maintenance policy requiring version bumps instead of silent overwrites.
+- Replaced the hardcoded `implementation_version != 'v0.19.0'` check in `scripts/validate_repository.py` with a check derived from `pyproject.toml`'s declared version, accepting either the exact released version or `"unreleased (post-v{version})"`, so future presentation/version drift fails validation instead of passing silently.
+
 ### Agentic AI assurance
 - Added a cross-cutting Agentic AI Assurance model covering producer, submitter, verifier, orchestrator, proxy, and downstream decision roles.
 - Added explicit principal, mandate, scope, delegation-depth, temporal-validity, revocation, replay, corrigibility, and redress requirements for agent actions.
