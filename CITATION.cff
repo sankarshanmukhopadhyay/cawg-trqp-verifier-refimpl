@@ -7,6 +7,6 @@ authors:
     given-names: Sankarshan
 repository-code: "https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl"
 url: "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/"
-version: "0.18.1"
+version: "0.19.0"
 date-released: 2026-07-15
 license: MIT

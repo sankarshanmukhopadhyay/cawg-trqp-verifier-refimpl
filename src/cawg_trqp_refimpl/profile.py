@@ -57,6 +57,17 @@ DEFAULT_CONTROLS: dict[str, Any] = {
         "snapshot": "observe",
         "gateway_route": "observe",
     },
+    "assertions": {
+        "required_labels": [],
+        "supported_labels": [],
+        "missing_required": "observe",
+        "unsupported_required": "observe",
+        "unknown_assertion": "preserve",
+    },
+    "conflicts": {
+        "enforcement": "observe",
+        "rules": [],
+    },
     "transport": {
         "mode": "local",
         "integrity": "none",

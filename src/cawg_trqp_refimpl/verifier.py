@@ -14,6 +14,7 @@ from .snapshot import SnapshotStore
 from .gateway import TrustGateway
 from .profile import VerificationProfile, load_profile
 from .transport import FeedTransportMetadata, evaluate_transport_constraints
+from .semantic_assurance import evaluate_assertions, evaluate_conflicts
 
 
 class RevocationDelta:
@@ -53,6 +54,15 @@ class Verifier:
 
     def verify(self, request: VerificationRequest, profile: str | dict[str, Any] | VerificationProfile = "standard") -> VerificationResult:
         resolved_profile = load_profile(profile)
+        assertion_evaluation, assertion_reasons, assertion_blocking, assertion_degraded = evaluate_assertions(
+            request.context, resolved_profile.controls.get("assertions", {})
+        )
+        conflict_evaluation, conflict_reasons, conflict_blocking, conflict_degraded = evaluate_conflicts(
+            request.context, resolved_profile.controls.get("conflicts", {})
+        )
+        semantic_reasons = assertion_reasons + conflict_reasons
+        semantic_blocking = assertion_blocking or conflict_blocking
+        semantic_degraded = assertion_degraded or conflict_degraded
         if not request.integrity_ok:
             return VerificationResult(
                 asset_integrity="failed",
@@ -63,7 +73,27 @@ class Verifier:
                 policy_freshness="n/a",
                 verification_mode="local_only",
                 trust_outcome="rejected",
-                explanations=[f"Asset integrity verification failed under profile {resolved_profile.id}"],
+                assertion_evaluation=assertion_evaluation,
+                conflict_evaluation=conflict_evaluation,
+                propositions=self._propositions("failed", assertion_evaluation, conflict_evaluation, "unknown", "unknown", "unknown"),
+                explanations=[f"Asset integrity verification failed under profile {resolved_profile.id}"] + semantic_reasons,
+            )
+
+        if semantic_blocking:
+            return VerificationResult(
+                asset_integrity="verified",
+                assertion_binding="failed",
+                issuer_recognition="not_evaluated",
+                actor_authorization="not_evaluated",
+                process_integrity="not_evaluated",
+                policy_freshness="not_evaluated",
+                verification_mode="semantic_guardrail",
+                trust_outcome="rejected",
+                assertion_evaluation=assertion_evaluation,
+                conflict_evaluation=conflict_evaluation,
+                propositions=self._propositions("verified", assertion_evaluation, conflict_evaluation, "not_evaluated", "not_evaluated", "not_evaluated"),
+                policy_evidence={"verification_profile": resolved_profile.to_dict()},
+                explanations=semantic_reasons,
             )
 
         if self.revocation_delta is not None:
@@ -96,10 +126,35 @@ class Verifier:
 
         base_profile = resolved_profile.base_profile
         if base_profile == "edge":
-            return self._verify_edge(request, rec_context, resolved_profile)
+            result = self._verify_edge(request, rec_context, resolved_profile)
+        else:
+            force_live = bool(resolved_profile.controls["freshness"]["require_live"])
+            result = self._verify_online(request, auth_key, rec_key, rec_context, force_live=force_live, profile=resolved_profile)
+        return self._apply_semantic_evidence(result, assertion_evaluation, conflict_evaluation, semantic_reasons, semantic_degraded)
 
-        force_live = bool(resolved_profile.controls["freshness"]["require_live"])
-        return self._verify_online(request, auth_key, rec_key, rec_context, force_live=force_live, profile=resolved_profile)
+    @staticmethod
+    def _propositions(asset_integrity: str, assertion_evaluation: dict[str, Any], conflict_evaluation: dict[str, Any], issuer: str, authority: str, process: str) -> dict[str, Any]:
+        return {
+            "asset_integrity": {"status": asset_integrity},
+            "assertion_expectation": {"status": assertion_evaluation.get("status", "not_evaluated")},
+            "assertion_conflict": {"status": conflict_evaluation.get("status", "not_applicable")},
+            "issuer_recognition": {"status": issuer},
+            "actor_authorization": {"status": authority},
+            "process_integrity": {"status": process},
+        }
+
+    def _apply_semantic_evidence(self, result: VerificationResult, assertion_evaluation: dict[str, Any], conflict_evaluation: dict[str, Any], reasons: list[str], degraded: bool) -> VerificationResult:
+        result.assertion_evaluation = assertion_evaluation
+        result.conflict_evaluation = conflict_evaluation
+        result.propositions = self._propositions(
+            result.asset_integrity, assertion_evaluation, conflict_evaluation,
+            result.issuer_recognition, result.actor_authorization, result.process_integrity,
+        )
+        if reasons:
+            result.explanations.extend(reasons)
+        if degraded and result.trust_outcome in {"trusted", "trusted_cached"}:
+            result.trust_outcome = "degraded"
+        return result
 
     def _current_transport_metadata(self) -> FeedTransportMetadata:
         if self.gateway is not None:

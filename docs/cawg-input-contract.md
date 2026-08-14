@@ -48,7 +48,7 @@ flowchart LR
 | `actor_id` | Mandatory for a usable verification request | string | CAWG identity/action assertion (`actor.id`, `actor.entity_id`, or `actor_id`) | Becomes `entity_id` in authorization |
 | `issuer_id` | Optional, but required when issuer recognition is evaluated | string or null | Signature information or CAWG identity assertion | Becomes `recognized_authority_id` in recognition |
 | `credential_type` | Optional | string or null | CAWG identity assertion or fixture | Added to `context.credential_type` |
-| `assertions` | Optional | array of objects | Active-manifest assertions | Evidence retained by parser and adapters |
+| `assertions` | Optional | array of objects | Active-manifest assertions | Preserved into verifier context for expected-evidence and conflict evaluation |
 | `provenance_chain` | Optional | array of strings | Ingredients and parent claims | Evidence/context for downstream profiles |
 | `integrity_status` | Mandatory for conversion | string | Manifest validation result; implementation recognizes `verified` as success | Converted to `integrity_ok` |
 | `action` | Mandatory for a usable request | string | CAWG action assertion or first `c2pa.actions` entry | TRQP authorization `action` |
@@ -124,6 +124,8 @@ The table below is deliberately framed as an issue register for CAWG and TRQP re
 | Context profile | Context is extensible but interoperability depends on shared keys and semantics | JSON object is forwarded deterministically | Establish namespaced context profiles and mandatory keys by use case |
 | Integrity result provenance | Boolean `integrity_ok` compresses parser evidence | Parser produces status; request carries boolean | Define an evidence/reference structure for integrity validation |
 | Process evidence semantics | Proof-of-process assertions vary in format and assurance | `process_evidence` is extensible and profile-appraised | Define minimum evidence fields and appraisal outcomes |
+| Expected-assertion semantics | Optional assertions can be stripped or unsupported without an explicit relying-party expectation | Profiles can require named assertion labels and expose missing/unsupported states | Define interoperable relying-party profile conventions without changing base specification optionality |
+| Assertion conflict semantics | Individually valid assertions may express incompatible claims | Profile-local conflict rules expose or resolve contradictions deterministically | Define precedence only where the relevant governance/specification authority actually owns it |
 | Error/reason taxonomy | Cross-implementation comparison requires stable machine-readable outcomes | Implementation has result explanations and transport errors | Align reason codes across CAWG verifier and TRQP responses |
 
 ## Conformance evidence

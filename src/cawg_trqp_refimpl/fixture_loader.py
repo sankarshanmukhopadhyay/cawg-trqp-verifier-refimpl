@@ -23,6 +23,6 @@ def load_manifest_fixture(path: str | Path, authority_id: str) -> VerificationRe
         issuer_id=signal.issuer_id,
         action=signal.action,
         resource=signal.resource,
-        context=dict(signal.context),
+        context={**dict(signal.context), "_manifest_assertions": list(signal.assertions), "_parser_mode": signal.parser_mode},
         process_evidence=dict(signal.process_evidence) if signal.process_evidence else None,
     )

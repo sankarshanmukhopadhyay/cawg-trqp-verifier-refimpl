@@ -38,6 +38,16 @@ nav_order: 1
 ---
 # Changelog
 
+
+## [0.19.0] - 2026-08-14
+
+### Added
+- Added expected-assertion controls, explicit semantic proposition outcomes, deterministic assertion-conflict handling, and degraded/fail-closed downgrade semantics.
+- Added RAHP Toolkit CAWG/C2PA finding-to-control/test/evidence traceability as non-normative external assurance evidence.
+
+### Fixed
+- Repaired the previously malformed machine-readable `conformance/risk-to-test-map.yaml`.
+
 ## [0.18.1] - 2026-08-06
 
 ### Added

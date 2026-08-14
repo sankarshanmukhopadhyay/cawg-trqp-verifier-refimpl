@@ -48,6 +48,9 @@ class VerificationResult:
     process_appraisal: dict[str, Any] = field(default_factory=dict)
     policy_evidence: dict[str, Any] = field(default_factory=dict)
     gateway_mediation: dict[str, Any] = field(default_factory=dict)
+    assertion_evaluation: dict[str, Any] = field(default_factory=dict)
+    conflict_evaluation: dict[str, Any] = field(default_factory=dict)
+    propositions: dict[str, Any] = field(default_factory=dict)
     explanations: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:

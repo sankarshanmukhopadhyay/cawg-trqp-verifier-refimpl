@@ -45,6 +45,13 @@ This is therefore both a narrative and an operational map. It explains the trust
 
 ---
 
+## External CAWG/C2PA assurance inputs
+
+The v0.19.0 semantic-assurance controls were pressure-tested against findings from the separately maintained **RAHP Toolkit** CAWG/C2PA corpus. RAHP is treated as non-normative reference evidence, not as a runtime dependency or standards authority. The machine-readable mapping is in [`conformance/risk-to-test-map.yaml`](../conformance/risk-to-test-map.yaml), and the governance boundary is documented in [Semantic Assurance and RAHP Traceability](semantic-assurance-and-rahp.md).
+
+The principal external findings used are `CRK-23`/`SEC-CW-004` (assertion stripping and downgrade), `CRK-28`/`SEC-CW-005` (semantic collapse), `CRK-04`/`SEC-CW-006` (conflicting assertions), and `CRK-12` (required-evidence downgrade ambiguity).
+
+
 # Risk Crosswalk Table
 
 | ID | Risk | Failure Mode | Control | TRQP Dependency | Enforcement Point | Evidence Produced | Severity | Likelihood | Conformance Test | Adversarial Vector | Standards Mapping |

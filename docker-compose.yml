@@ -1,7 +1,7 @@
 services:
   verifier:
     build: .
-    image: cawg-trqp-refimpl:0.18.1
+    image: cawg-trqp-refimpl:0.19.0
     ports:
       - "5000:5000"
     command:

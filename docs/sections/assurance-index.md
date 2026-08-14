@@ -16,3 +16,5 @@ matrix, the risk crosswalk, and release/handoff readiness.
 Start with **How TRQP Enables Assurance** for the conceptual model, then
 **Decision Receipt Specification** and **Audit Bundle Profile** for the
 concrete artifacts.
+
+For CAWG/C2PA semantic hardening and external RAHP traceability, see **[Semantic Assurance and RAHP Traceability](../semantic-assurance-and-rahp.md)**.

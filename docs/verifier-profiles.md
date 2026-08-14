@@ -101,3 +101,26 @@ verification_profile = base_profile + assurance_overlay(s)
 ```
 
 Overlays allow stricter freshness and evidence semantics without multiplying base profile names. That keeps the profile system legible while still letting assurance programs express stronger requirements.
+
+
+## Semantic assertion controls
+
+Profiles can distinguish evidence that was expected from evidence that merely happens to be present:
+
+```json
+{
+  "assertions": {
+    "required_labels": ["cawg.identity"],
+    "supported_labels": ["cawg.identity", "c2pa.actions"],
+    "missing_required": "fail",
+    "unsupported_required": "fail",
+    "unknown_assertion": "preserve"
+  }
+}
+```
+
+`required_labels` is a relying-party expectation. It does not change CAWG/C2PA optionality. The verifier records `expected`, `present`, `missing`, `unsupported`, and `unknown` labels in `assertion_evaluation`. A warning-level gap changes an otherwise successful trust outcome to `degraded`; a fail-level gap stops authority evaluation and returns `semantic_guardrail`.
+
+## Conflict controls
+
+Profiles can detect contradictory values across named assertion classes. Conflict precedence is deliberately profile-local and must not be interpreted as a CAWG/C2PA normative rule. Where no governing rule exists, use `strategy: unresolved` and fail or warn explicitly rather than selecting an arbitrary assertion.

@@ -122,8 +122,8 @@ def replay_audit_bundle(
 
     expected_profile = inputs.get("profile")
     actual_profile = result.get("policy_evidence", {}).get("verification_profile")
-    if isinstance(expected_profile, dict) and actual_profile != expected_profile:
-        differences.append("verification_profile: expected bundle replay_inputs.profile to match replayed policy_evidence.verification_profile")
+    if isinstance(expected_profile, dict) and actual_profile != resolved_profile.to_dict():
+        differences.append("verification_profile: expected normalized bundle replay_inputs.profile to match replayed policy_evidence.verification_profile")
 
     expected_transport = inputs.get('transport_metadata')
     actual_transport = result.get('policy_evidence', {}).get('transport')

@@ -231,6 +231,113 @@
             }
           },
           "additionalProperties": false
+        },
+        "assertions": {
+          "type": "object",
+          "required": [
+            "required_labels",
+            "supported_labels",
+            "missing_required",
+            "unsupported_required",
+            "unknown_assertion"
+          ],
+          "properties": {
+            "required_labels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            },
+            "supported_labels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            },
+            "missing_required": {
+              "enum": [
+                "observe",
+                "warn",
+                "fail"
+              ]
+            },
+            "unsupported_required": {
+              "enum": [
+                "observe",
+                "warn",
+                "fail"
+              ]
+            },
+            "unknown_assertion": {
+              "enum": [
+                "preserve",
+                "warn",
+                "fail"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "conflicts": {
+          "type": "object",
+          "required": [
+            "enforcement",
+            "rules"
+          ],
+          "properties": {
+            "enforcement": {
+              "enum": [
+                "observe",
+                "warn",
+                "fail"
+              ]
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "labels",
+                  "claim_path",
+                  "strategy"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "labels": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 2,
+                    "uniqueItems": true
+                  },
+                  "claim_path": {
+                    "type": "string"
+                  },
+                  "strategy": {
+                    "enum": [
+                      "unresolved",
+                      "precedence"
+                    ]
+                  },
+                  "precedence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false

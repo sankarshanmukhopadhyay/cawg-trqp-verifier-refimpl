@@ -19,8 +19,8 @@ if manifest_path.is_file():
             actual=hashlib.sha256(artifact.read_bytes()).hexdigest()
             if actual != manifest[digest_key]:
                 errors.append(f"presentation checksum mismatch: {manifest[path_key]}")
-        if manifest.get('implementation_version') != 'v0.18.1':
-            errors.append('presentation implementation version is not aligned with repository v0.18.1')
+        if manifest.get('implementation_version') != 'v0.19.0':
+            errors.append('presentation implementation version is not aligned with repository v0.19.0')
         if manifest.get('status') != 'non-normative':
             errors.append('presentation authority status must be non-normative')
     except (KeyError, json.JSONDecodeError) as exc:

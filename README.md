@@ -1,7 +1,7 @@
 # CAWG-TRQP Verifier Reference Implementation
 
 > **Portfolio status:** Flagship · Pilot-ready · Active validation  
-> **Current release:** v0.18.1  
+> **Current release:** v0.19.0  
 > **Project status declaration:** [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml)
 
 | Portfolio tier | Flagship |
@@ -26,13 +26,13 @@ It does **not** treat provenance as truth, ownership, entitlement, clinical vali
 | Cross-sector adoption | fourteen end-to-end walkthroughs and machine-readable examples |
 | Portfolio governance | repository-local status, governance, security, roadmap, and release evidence |
 
-## What v0.18.1 adds
+## What v0.19.0 adds
 
-- Ten real-life governance walkthroughs spanning journalism, insurance, marketplaces, healthcare, public evidence, construction, humanitarian response, political advertising, warranties, and research imagery.
-- Machine-readable scenario manifests covering authorization, scope mismatch, revocation, stale trust state, authority conflict, and correction.
-- `PROJECT-STATUS.yaml`, closing the portfolio-governance status-declaration finding.
-- Corrected GitHub Pages navigation-parent declarations that previously failed the flagship repository validation gate.
-- A refreshed README aligned with the current implementation, evidence model, validation commands, and limitations.
+- Semantic assurance controls for required CAWG/C2PA assertion labels, including explicit missing and unsupported states.
+- Deterministic conflict detection with relying-party profile-local precedence rules and explicit unresolved-conflict handling.
+- Proposition-level verification evidence so integrity, assertion expectation, issuer recognition, authorization, process integrity, and conflict state cannot be silently collapsed into one success result.
+- `degraded` handling for warning-level semantic gaps and fail-closed `semantic_guardrail` behavior for required evidence/conflict failures.
+- A machine-readable RAHP-to-conformance traceability bridge documenting where external RAHP CAWG/C2PA findings motivated implementation controls and tests.
 
 ## Start here
 
@@ -69,7 +69,7 @@ Run the complete repository gate:
 make validate
 ```
 
-The gate validates repository governance and documentation integrity, the OpenAPI contract, JSON examples, the v0.18.1 walkthrough manifests, and the Python test suite. Release-specific checks remain available independently:
+The gate validates repository governance and documentation integrity, the OpenAPI contract, JSON examples, the v0.19.0 semantic-assurance controls and walkthrough manifests, and the Python test suite. Release-specific checks remain available independently:
 
 ```bash
 python scripts/validate_feed_descriptors.py
@@ -133,7 +133,7 @@ See [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml), [`SECURITY.md`](SECURITY.md), 
 
 ## Release
 
-Release notes: [`RELEASE_NOTES_v0.18.1.md`](RELEASE_NOTES_v0.18.1.md)  
+Release notes: [`RELEASE_NOTES_v0.19.0.md`](RELEASE_NOTES_v0.19.0.md)  
 Changelog: [`CHANGELOG.md`](CHANGELOG.md)  
 Roadmap: [`ROADMAP.md`](ROADMAP.md)
 
