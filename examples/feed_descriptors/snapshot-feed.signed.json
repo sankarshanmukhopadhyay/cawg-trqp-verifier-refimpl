@@ -17,7 +17,7 @@
     "content_type": "application/json",
     "source": "data/snapshot.json",
     "digest_alg": "sha-256",
-    "digest_sha256": "b508815a70b5698aef9483723bc897e03aa482397f587f2a8e63b05460416840",
+    "digest_sha256": "6286e9a028f5093bd2ebd41db8c07db45bcfd5e0f04a518f07404e5bda03d765",
     "policy_epoch": "2026-Q1"
   },
   "freshness": {
@@ -33,6 +33,6 @@
   "descriptor_signature": {
     "algorithm": "Ed25519",
     "key_id": "media-registry-snapshot-key-1",
-    "value": "c1osgVT2N0CINYZoMwz8rTsSl5UtfrXwvYdrNyNmoXxsf5y4xC38ExH/aao579aCQZq+FeDQY4b5tObdVZLiAQ=="
+    "value": "6ddxpatBmnPDVS5rfeZv5uABWr7XF+9BR5pxIxNYTtTPnNYIKkbs8FcFTrNe2jnelywtJto5djVGKqspxyLtDQ=="
   }
 }
