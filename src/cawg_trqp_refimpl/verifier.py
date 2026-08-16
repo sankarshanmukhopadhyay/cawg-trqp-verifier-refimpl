@@ -48,6 +48,7 @@ class Verifier:
         self.last_transport_metadata: dict[str, Any] = {}
         self.last_revocation_status: dict[str, Any] = {}
         self.last_feed_descriptor_evidence: dict[str, Any] = {}
+        self.last_cache_evidence: dict[str, Any] = {}
 
     def apply_revocation_delta(self, revoked_entities: list[str], policy_epoch: Optional[str] = None) -> None:
         self.revocation_delta = RevocationDelta(revoked_entities, policy_epoch)
@@ -136,8 +137,15 @@ class Verifier:
     def _propositions(asset_integrity: str, assertion_evaluation: dict[str, Any], conflict_evaluation: dict[str, Any], issuer: str, authority: str, process: str) -> dict[str, Any]:
         return {
             "asset_integrity": {"status": asset_integrity},
-            "assertion_expectation": {"status": assertion_evaluation.get("status", "not_evaluated")},
-            "assertion_conflict": {"status": conflict_evaluation.get("status", "not_applicable")},
+            "assertion_expectation": {
+                "status": assertion_evaluation.get("status", "not_evaluated"),
+                "missing_mandatory": list(assertion_evaluation.get("missing", [])),
+                "unsupported_mandatory": list(assertion_evaluation.get("unsupported", [])),
+            },
+            "assertion_conflict": {
+                "status": conflict_evaluation.get("status", "not_applicable"),
+                "findings": list(conflict_evaluation.get("findings", [])),
+            },
             "issuer_recognition": {"status": issuer},
             "actor_authorization": {"status": authority},
             "process_integrity": {"status": process},
@@ -152,8 +160,12 @@ class Verifier:
         )
         if reasons:
             result.explanations.extend(reasons)
+        result.conflict_evaluation.setdefault("policy_profile", result.policy_evidence.get("verification_profile", {}).get("id"))
         if degraded and result.trust_outcome in {"trusted", "trusted_cached"}:
-            result.trust_outcome = "degraded"
+            profile = result.policy_evidence.get("verification_profile", {})
+            disposition = profile.get("controls", {}).get("decision", {}).get("degraded_disposition", "degraded")
+            result.trust_outcome = "rejected" if disposition == "reject" else "degraded"
+            result.explanations.append(f"Degraded semantic evidence disposition: {disposition}")
         return result
 
     def _current_transport_metadata(self) -> FeedTransportMetadata:
@@ -304,6 +316,31 @@ class Verifier:
                 explanations=[f"Snapshot validation failed: {err}" for err in self.snapshot.validation_errors],
             )
 
+        authority_age = self.snapshot.authority_state_age_seconds()
+        max_age = int(profile.controls["freshness"].get("max_age_seconds", 0))
+        disposition = profile.controls["freshness"].get("stale_disposition", "defer")
+        self.last_revocation_status.update({
+            "authority_state_timestamp": self.snapshot.data.get("generated_at"),
+            "authority_state_age_seconds": authority_age,
+            "authority_state_max_age_seconds": max_age,
+            "stale_disposition": disposition,
+        })
+        if authority_age is None or authority_age > max_age:
+            self.last_revocation_status["freshness_ok"] = False
+            self.last_revocation_status["violations"] = [
+                "snapshot authority state age is unknown" if authority_age is None else
+                f"snapshot authority state age {authority_age}s exceeds allowed window {max_age}s"
+            ]
+            if disposition in {"deny", "defer"}:
+                return VerificationResult(
+                    asset_integrity="verified", assertion_binding="verified", issuer_recognition="unknown",
+                    actor_authorization="unknown", process_integrity="unknown", policy_freshness="authority_state_stale",
+                    verification_mode="offline_snapshot", trust_outcome="rejected" if disposition == "deny" else "deferred",
+                    policy_evidence={"verification_profile": profile.to_dict(), "transport": self.last_transport_metadata,
+                                     "revocation_status": self.last_revocation_status, "feed_descriptors": self.last_feed_descriptor_evidence},
+                    explanations=list(self.last_revocation_status["violations"]),
+                )
+
         auth = self.snapshot.find_authorization(
             request.entity_id, request.authority_id, request.action, request.resource, request.context
         )
@@ -345,8 +382,40 @@ class Verifier:
         if not revocation_ok and profile.controls['revocation'].get('enforcement') == 'fail':
             return self._transport_or_revocation_failure_result(profile, 'revocation_stale', '; '.join(revocation_failures))
 
-        auth = None if force_live else self.cache.get(auth_key)
-        rec = None if force_live else self.cache.get(rec_key)
+        auth_meta: dict[str, Any] = {"cache_hit": False}
+        rec_meta: dict[str, Any] = {"cache_hit": False}
+        if force_live:
+            auth = None
+            rec = None
+        else:
+            auth, auth_meta = self.cache.get_with_metadata(auth_key)
+            rec, rec_meta = self.cache.get_with_metadata(rec_key)
+
+        max_authority_age = int(profile.controls["freshness"].get("max_age_seconds", 0))
+        stale_disposition = profile.controls["freshness"].get("stale_disposition", "defer")
+        stale_cache_items = []
+        for name, metadata in (("authorization", auth_meta), ("recognition", rec_meta)):
+            age = metadata.get("age_seconds")
+            if metadata.get("cache_hit") and age is not None and age > max_authority_age:
+                stale_cache_items.append({"kind": name, "age_seconds": age})
+        self.last_cache_evidence = {
+            "authorization": auth_meta,
+            "recognition": rec_meta,
+            "max_authority_age_seconds": max_authority_age,
+            "stale_disposition": stale_disposition,
+            "stale_items": stale_cache_items,
+        }
+        if stale_cache_items and stale_disposition in {"deny", "defer"}:
+            return VerificationResult(
+                asset_integrity="verified", assertion_binding="verified", issuer_recognition="unknown",
+                actor_authorization="unknown", process_integrity="unknown", policy_freshness="authority_state_stale",
+                verification_mode="cached_online", trust_outcome="rejected" if stale_disposition == "deny" else "deferred",
+                policy_evidence={"verification_profile": profile.to_dict(), "transport": self.last_transport_metadata,
+                                 "revocation_status": self.last_revocation_status, "feed_descriptors": self.last_feed_descriptor_evidence,
+                                 "cache": self.last_cache_evidence},
+                explanations=[f"Cached {item['kind']} authority state age {item['age_seconds']}s exceeds allowed window {max_authority_age}s" for item in stale_cache_items],
+            )
+
         explanations = [f"Verification profile: {profile.id}"]
         gateway_mediation: dict[str, Any] = {}
         if revocation_failures:
@@ -475,6 +544,7 @@ class Verifier:
             "transport": self.last_transport_metadata,
             "revocation_status": self.last_revocation_status,
             "feed_descriptors": self.last_feed_descriptor_evidence,
+            "cache": self.last_cache_evidence,
         }
 
         if auth is None:

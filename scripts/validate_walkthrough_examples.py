@@ -16,8 +16,10 @@ for path in sorted((ROOT/"examples").glob("*/scenario.json")):
     ids={c.get("id") for c in data.get("cases",[]) if isinstance(c,dict)}
     if ids != required_cases: errors.append(f"{path.relative_to(ROOT)}: case ids must be {sorted(required_cases)}")
     for c in data.get("cases",[]):
-        for key in ("id","condition","expected_outcome","reason_code"):
+        for key in ("id","condition","expected_outcome","reason_code","rule_source","rule_source_reference"):
             if not c.get(key): errors.append(f"{path.relative_to(ROOT)}: case missing {key}")
+        if c.get("rule_source") not in {"spec-required","profile-required","implementation-choice","illustrative-policy"}:
+            errors.append(f"{path.relative_to(ROOT)}: invalid rule_source {c.get('rule_source')!r}")
     slug=data.get("walkthrough_id","")
     doc=ROOT/"docs"/"workflows"/(slug+".md")
     if not doc.is_file(): errors.append(f"{path.relative_to(ROOT)}: missing walkthrough document {doc.relative_to(ROOT)}")

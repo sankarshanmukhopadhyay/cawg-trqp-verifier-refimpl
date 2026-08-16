@@ -1,1 +1,21 @@
-{"id":"replay_bundle","status":"non-normative","processing_purpose":"support bounded deterministic replay and dispute review","lawful_basis":"deployment-defined","data_categories":["identifiers","context","process-evidence","decision-metadata"],"retention_days":90,"access_scope":"trqp.audit.export","audit_mode":"replay_bundle","cross_border_transfer":false,"human_review_required":true}
+{
+  "id": "replay_bundle",
+  "status": "non-normative",
+  "processing_purpose": "support bounded deterministic replay and dispute review",
+  "lawful_basis": "deployment-defined",
+  "data_categories": [
+    "identifiers",
+    "context",
+    "process-evidence",
+    "decision-metadata"
+  ],
+  "retention_days": 90,
+  "access_scope": "trqp.audit.export",
+  "audit_mode": "replay_bundle",
+  "cross_border_transfer": false,
+  "human_review_required": true,
+  "sensitivity_class": "confidential",
+  "retention_class": "bounded_replay",
+  "redaction_mode": "controlled_raw",
+  "disclosure_audience": "authorized_reviewers"
+}

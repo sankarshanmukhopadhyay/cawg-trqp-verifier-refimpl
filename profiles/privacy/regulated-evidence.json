@@ -1,1 +1,21 @@
-{"id":"regulated_evidence","status":"non-normative","processing_purpose":"retain controlled evidence where a documented legal or regulatory obligation applies","lawful_basis":"deployment-defined","data_categories":["identifiers","context","process-evidence","decision-metadata"],"retention_days":365,"access_scope":"trqp.audit.regulated","audit_mode":"regulated_evidence","cross_border_transfer":false,"human_review_required":true}
+{
+  "id": "regulated_evidence",
+  "status": "non-normative",
+  "processing_purpose": "retain controlled evidence where a documented legal or regulatory obligation applies",
+  "lawful_basis": "deployment-defined",
+  "data_categories": [
+    "identifiers",
+    "context",
+    "process-evidence",
+    "decision-metadata"
+  ],
+  "retention_days": 365,
+  "access_scope": "trqp.audit.regulated",
+  "audit_mode": "regulated_evidence",
+  "cross_border_transfer": false,
+  "human_review_required": true,
+  "sensitivity_class": "highly_restricted",
+  "retention_class": "regulated",
+  "redaction_mode": "legal_or_policy_controlled",
+  "disclosure_audience": "authorized_regulatory_or_legal_reviewers"
+}

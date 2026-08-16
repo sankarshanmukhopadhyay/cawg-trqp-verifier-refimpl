@@ -31,7 +31,8 @@
         "evidence",
         "descriptor_policy",
         "transport",
-        "determinism"
+        "determinism",
+        "decision"
       ],
       "properties": {
         "authority": {
@@ -54,7 +55,8 @@
           "type": "object",
           "required": [
             "max_age_seconds",
-            "require_live"
+            "require_live",
+            "stale_disposition"
           ],
           "properties": {
             "max_age_seconds": {
@@ -63,6 +65,13 @@
             },
             "require_live": {
               "type": "boolean"
+            },
+            "stale_disposition": {
+              "enum": [
+                "deny",
+                "defer",
+                "allow_with_warning"
+              ]
             }
           },
           "additionalProperties": false
@@ -331,10 +340,36 @@
                       "type": "string"
                     },
                     "uniqueItems": true
+                  },
+                  "policy_source": {
+                    "type": "string"
+                  },
+                  "source_classification": {
+                    "enum": [
+                      "spec-required",
+                      "profile-required",
+                      "implementation-choice",
+                      "illustrative-policy"
+                    ]
                   }
                 },
                 "additionalProperties": false
               }
+            }
+          },
+          "additionalProperties": false
+        },
+        "decision": {
+          "type": "object",
+          "required": [
+            "degraded_disposition"
+          ],
+          "properties": {
+            "degraded_disposition": {
+              "enum": [
+                "degraded",
+                "reject"
+              ]
             }
           },
           "additionalProperties": false

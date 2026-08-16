@@ -56,6 +56,9 @@ Walkthroughs are adoption and assurance documents, not abbreviated test descript
 
 Every walkthrough should provide the following reader journey, using scenario-appropriate headings where a more natural title improves readability:
 
+Walkthrough decision rules MUST also declare a machine-readable normative-source classification in the corresponding `examples/<walkthrough>/scenario.json`: `spec-required`, `profile-required`, `implementation-choice`, or `illustrative-policy`. The classification prevents local relying-party policy from being misread as an upstream CAWG, C2PA, or TRQP requirement.
+
+
 | Layer | Required outcome | Minimum evidence |
 |---|---|---|
 | Purpose and plain-language orientation | Explain the scenario without assuming knowledge of TRQP, CAWG/C2PA, or the repository | Plain-language summary |

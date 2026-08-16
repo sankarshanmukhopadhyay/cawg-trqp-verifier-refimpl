@@ -8,7 +8,8 @@
     },
     "freshness": {
       "max_age_seconds": 300,
-      "require_live": true
+      "require_live": true,
+      "stale_disposition": "deny"
     },
     "revocation": {
       "mode": "live",
@@ -40,6 +41,9 @@
     "determinism": {
       "replayable": true,
       "require_pinned_feeds": true
+    },
+    "decision": {
+      "degraded_disposition": "reject"
     }
   },
   "overlays": [],

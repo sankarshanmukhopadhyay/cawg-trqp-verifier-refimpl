@@ -96,19 +96,30 @@ class TTLCache:
             self._evict_if_needed_locked()
 
     def get(self, key: str) -> Any | None:
+        value, _ = self.get_with_metadata(key)
+        return value
+
+    def get_with_metadata(self, key: str) -> tuple[Any | None, dict[str, Any]]:
         with self._lock:
             entry = self._store.get(key)
             if entry is None:
                 self._misses += 1
-                return None
-            if time.time() > entry.expires_at:
+                return None, {"cache_hit": False}
+            now = time.time()
+            if now > entry.expires_at:
                 self._store.pop(key, None)
                 self._expirations += 1
                 self._misses += 1
-                return None
+                return None, {"cache_hit": False, "expired": True}
             self._store.move_to_end(key)
             self._hits += 1
-            return entry.value
+            return entry.value, {
+                "cache_hit": True,
+                "cached_at_epoch": entry.cached_at,
+                "age_seconds": max(0, int(now - entry.cached_at)),
+                "expires_at_epoch": entry.expires_at,
+                "ttl_class": entry.ttl_class,
+            }
 
     def invalidate(self, key: str) -> None:
         with self._lock:

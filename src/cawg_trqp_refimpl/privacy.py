@@ -12,20 +12,30 @@ class PrivacyProfile:
     pseudonymize_identifiers: bool
     retention_days: int
     access_scope: str
+    sensitivity_class: str
+    retention_class: str
+    redaction_mode: str
+    disclosure_audience: str
 
 
 BUILTIN_PRIVACY_PROFILES = {
     "minimal_receipt": PrivacyProfile(
         id="minimal_receipt", include_raw_request=False, include_process_evidence=False,
-        pseudonymize_identifiers=True, retention_days=30, access_scope="trqp.receipt.read"
+        pseudonymize_identifiers=True, retention_days=30, access_scope="trqp.receipt.read",
+        sensitivity_class="restricted", retention_class="short_operational", redaction_mode="pseudonymized",
+        disclosure_audience="relying_party_and_affected_party"
     ),
     "replay_bundle": PrivacyProfile(
         id="replay_bundle", include_raw_request=True, include_process_evidence=True,
-        pseudonymize_identifiers=False, retention_days=90, access_scope="trqp.audit.export"
+        pseudonymize_identifiers=False, retention_days=90, access_scope="trqp.audit.export",
+        sensitivity_class="confidential", retention_class="bounded_replay", redaction_mode="controlled_raw",
+        disclosure_audience="authorized_reviewers"
     ),
     "regulated_evidence": PrivacyProfile(
         id="regulated_evidence", include_raw_request=True, include_process_evidence=True,
-        pseudonymize_identifiers=False, retention_days=365, access_scope="trqp.audit.regulated"
+        pseudonymize_identifiers=False, retention_days=365, access_scope="trqp.audit.regulated",
+        sensitivity_class="highly_restricted", retention_class="regulated", redaction_mode="legal_or_policy_controlled",
+        disclosure_audience="authorized_regulatory_or_legal_reviewers"
     ),
 }
 

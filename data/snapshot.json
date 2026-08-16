@@ -1,6 +1,6 @@
 {
   "snapshot_id": "snapshot-2026-q1",
-  "generated_at": "2026-03-20T00:00:00Z",
+  "generated_at": "2026-08-16T04:00:00Z",
   "expires_at": "2026-12-31T23:59:59Z",
   "signer": "did:web:media-registry.example#snapshot-signer-1",
   "policy_epoch": "2026-Q1",
@@ -40,6 +40,6 @@
   "signature": {
     "algorithm": "Ed25519",
     "key_id": "media-registry-snapshot-key-1",
-    "value": "u08kwpkq9JSIacbFPLNL8EcNFgjK08gy+78P7aiiM43BYBand7v/cQAYXSJO/AAIu/pxKDfmJzh6u0LmtYNDDA=="
+    "value": "TddA0WIe3B9Y2OwGuDeB4CkOFjl+xvFiOj+G3IRkA2AUZUg//OvCOBoiGdAy9Q/M+Tc7bPXbn6s1CLj2vH9nDA=="
   }
 }

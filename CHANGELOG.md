@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### RAHP combined-review closure
+- Enforced profile-defined degraded-result disposition so high-assurance decisions cannot silently accept unresolved mandatory semantic predicates.
+- Added explicit snapshot authority-state age evidence and stale deny/defer handling.
+- Added evidence sensitivity, retention-class, redaction-mode, and disclosure-audience metadata to privacy profiles and audit bundles.
+- Made relying-party precedence policy and source classification visible in semantic conflict evidence.
+- Added machine-validated normative-source classification to every walkthrough scenario rule and a traceability page for `CW-RH-01` through `CW-RH-05`.
+
 ### Documentation and adoption artifacts
 - Replaced the explainer presentation with `assets/presentations/cawg-trqp-explainer-v3.pdf` (17 slides), refreshing every slide's content to match current repository capability instead of the v0.19.0-era deck, which still displayed v0.17.0 internally.
 - Added dedicated slides for the Agentic AI Assurance model, the 21-scenario walkthrough portfolio (18 sector walkthroughs + 3 cross-sector agentic archetypes), and the threat-model/privacy governance package, none of which were represented in v2.

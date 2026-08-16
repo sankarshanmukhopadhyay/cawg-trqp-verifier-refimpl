@@ -69,3 +69,13 @@ def test_full_replay_export_requires_scope():
     assert denied.status_code == 403
     allowed = client.post("/trqp/audit-bundle", json=payload, headers={"X-TRQP-Scopes": "trqp.audit.export"})
     assert allowed.status_code == 200
+
+
+def test_audit_bundle_exposes_machine_readable_evidence_governance_metadata():
+    request = _request()
+    bundle = build_audit_bundle(request, _result(request), privacy_profile="minimal_receipt").to_dict()
+    governance = bundle["replay_inputs"]["privacy"]
+    assert governance["sensitivity_class"] == "restricted"
+    assert governance["retention_class"] == "short_operational"
+    assert governance["redaction_mode"] == "pseudonymized"
+    assert governance["disclosure_audience"] == "relying_party_and_affected_party"

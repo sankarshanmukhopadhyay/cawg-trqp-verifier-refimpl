@@ -54,3 +54,7 @@ A fresh cache entry is not sufficient when a newer revocation delta applies. Rev
 ## Machine-readable policy
 
 `schemas/cache-policy.schema.json` defines portable controls for cache mode, maximum TTL, negative TTL, stale-while-revalidate, policy-epoch requirements, revocation invalidation, risk-triggered live lookup and failure behavior.
+
+## Authority-state age disposition
+
+Consequential profiles bind cached or snapshot authority state to `freshness.max_age_seconds` and an explicit `freshness.stale_disposition`. The reference implementation records the authority-state timestamp, observed age, configured limit, and disposition in `policy_evidence.revocation_status`. `high_assurance` denies stale authority state; bounded offline profiles may defer rather than silently treating stale evidence as current.

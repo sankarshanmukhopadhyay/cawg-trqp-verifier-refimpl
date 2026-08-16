@@ -34,6 +34,7 @@ DEFAULT_CONTROLS: dict[str, Any] = {
     "freshness": {
         "max_age_seconds": 86400,
         "require_live": False,
+        "stale_disposition": "defer",
     },
     "revocation": {
         "mode": "snapshot",
@@ -76,6 +77,9 @@ DEFAULT_CONTROLS: dict[str, Any] = {
     "determinism": {
         "replayable": True,
         "require_pinned_feeds": False,
+    },
+    "decision": {
+        "degraded_disposition": "degraded",
     },
 }
 

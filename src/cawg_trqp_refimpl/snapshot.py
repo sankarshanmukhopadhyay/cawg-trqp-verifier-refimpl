@@ -92,6 +92,18 @@ class SnapshotStore:
         if self.require_fresh and self.current_time > expiry:
             self.validation_errors.append("expired_snapshot")
 
+
+    def authority_state_age_seconds(self) -> int | None:
+        """Return age of the signed authority-state snapshot from generated_at."""
+        generated_at = self.data.get("generated_at")
+        if not generated_at:
+            return None
+        try:
+            generated = self._parse_timestamp(generated_at)
+        except ValueError:
+            return None
+        return max(0, int((self.current_time - generated).total_seconds()))
+
     def find_authorization(self, entity_id: str, authority_id: str, action: str, resource: str, context: dict) -> dict | None:
         if not self.is_usable():
             return None

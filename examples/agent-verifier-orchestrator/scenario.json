@@ -10,37 +10,49 @@
       "id": "authorized",
       "condition": "recognized agent, valid principal mandate, and in-scope action/resource/purpose",
       "expected_outcome": "allow",
-      "reason_code": "AUTHORIZED"
+      "reason_code": "AUTHORIZED",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
     },
     {
       "id": "scope-mismatch",
       "condition": "recognized agent but action, resource, purpose, recipient, transformation, or tool is outside mandate",
       "expected_outcome": "deny",
-      "reason_code": "SCOPE_MISMATCH"
+      "reason_code": "SCOPE_MISMATCH",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
     },
     {
       "id": "revoked",
       "condition": "principal authority or agent delegation is revoked at the evaluated decision time",
       "expected_outcome": "deny",
-      "reason_code": "AUTHORITY_REVOKED"
+      "reason_code": "AUTHORITY_REVOKED",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
     },
     {
       "id": "stale",
       "condition": "required authority, delegation, policy, or revocation evidence is stale or unavailable",
       "expected_outcome": "indeterminate",
-      "reason_code": "TRUST_STATE_STALE"
+      "reason_code": "TRUST_STATE_STALE",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
     },
     {
       "id": "conflict",
       "condition": "authoritative sources or material verifier dependencies return incompatible results",
       "expected_outcome": "review",
-      "reason_code": "AUTHORITY_CONFLICT"
+      "reason_code": "AUTHORITY_CONFLICT",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
     },
     {
       "id": "corrected",
       "condition": "material provenance, mandate, scope, or authority evidence is corrected after the original decision",
       "expected_outcome": "new_decision",
-      "reason_code": "SUPERSEDING_RECEIPT_REQUIRED"
+      "reason_code": "SUPERSEDING_RECEIPT_REQUIRED",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
     }
   ],
   "evidence_outputs": [

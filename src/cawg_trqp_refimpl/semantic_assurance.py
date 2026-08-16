@@ -112,6 +112,10 @@ def evaluate_conflicts(context: dict[str, Any], controls: dict[str, Any]) -> tup
             "observations": observations,
             "status": "resolved" if resolved else "conflicted",
             "selected": selected,
+            "strategy": strategy,
+            "precedence_applied": list(rule.get("precedence", labels)) if strategy == "precedence" else [],
+            "policy_source": rule.get("policy_source", "active verification profile"),
+            "source_classification": rule.get("source_classification", "profile-required"),
         }
         findings.append(finding)
         reasons.append(f"Conflicting assertions detected by {finding['rule_id']} at {claim_path}")

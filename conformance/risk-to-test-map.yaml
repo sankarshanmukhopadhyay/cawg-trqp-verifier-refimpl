@@ -573,3 +573,51 @@ external_assurance_traceability:
         - tests/test_semantic_assurance.py::test_required_assertion_missing_fails_before_authority_lookup
       evidence:
         - assertion_evaluation
+
+combined_review_2026_08_16:
+  authority_status: non-normative-assurance-follow-up
+  reviewed_revision: c60bb00f088b70548917681b978cc83c7a0cab15
+  findings:
+    - id: CW-RH-01
+      control: profile_defined_degraded_disposition
+      tests:
+        - tests/test_semantic_assurance.py::test_high_assurance_rejects_semantic_degradation_and_exposes_mandatory_gap
+      evidence:
+        - propositions.assertion_expectation.missing_mandatory
+        - verification_profile.controls.decision.degraded_disposition
+        - trust_outcome
+    - id: CW-RH-02
+      control: authority_state_age_limit_and_disposition
+      tests:
+        - tests/test_authority_freshness.py::test_stale_snapshot_defers_under_bounded_edge_profile_and_records_age_evidence
+        - tests/test_authority_freshness.py::test_stale_snapshot_can_be_fail_closed_for_consequential_edge_profile
+        - tests/test_authority_freshness.py::test_cached_authority_state_is_bounded_by_profile_age_and_exposes_cache_evidence
+      evidence:
+        - policy_evidence.revocation_status.authority_state_timestamp
+        - policy_evidence.revocation_status.authority_state_age_seconds
+        - policy_evidence.cache
+    - id: CW-RH-03
+      control: machine_readable_evidence_governance
+      tests:
+        - tests/test_privacy_controls.py::test_audit_bundle_exposes_machine_readable_evidence_governance_metadata
+      evidence:
+        - replay_inputs.privacy.sensitivity_class
+        - replay_inputs.privacy.retention_class
+        - replay_inputs.privacy.redaction_mode
+        - replay_inputs.privacy.disclosure_audience
+    - id: CW-RH-04
+      control: precedence_policy_traceability
+      tests:
+        - tests/test_semantic_assurance.py::test_precedence_evidence_identifies_policy_source_classification_and_profile
+      evidence:
+        - conflict_evaluation.findings.precedence_applied
+        - conflict_evaluation.findings.policy_source
+        - conflict_evaluation.findings.source_classification
+        - conflict_evaluation.policy_profile
+    - id: CW-RH-05
+      control: walkthrough_rule_source_classification
+      tests:
+        - scripts/validate_walkthrough_examples.py
+      evidence:
+        - examples/*/scenario.json#cases.rule_source
+        - examples/*/scenario.json#cases.rule_source_reference

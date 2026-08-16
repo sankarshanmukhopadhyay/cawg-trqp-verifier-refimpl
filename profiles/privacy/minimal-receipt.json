@@ -1,1 +1,19 @@
-{"id":"minimal_receipt","status":"non-normative","processing_purpose":"return a reviewable trust decision without retaining raw request identifiers","lawful_basis":"deployment-defined","data_categories":["pseudonymous-identifiers","decision-metadata"],"retention_days":30,"access_scope":"trqp.receipt.read","audit_mode":"minimal_receipt","cross_border_transfer":false,"human_review_required":true}
+{
+  "id": "minimal_receipt",
+  "status": "non-normative",
+  "processing_purpose": "return a reviewable trust decision without retaining raw request identifiers",
+  "lawful_basis": "deployment-defined",
+  "data_categories": [
+    "pseudonymous-identifiers",
+    "decision-metadata"
+  ],
+  "retention_days": 30,
+  "access_scope": "trqp.receipt.read",
+  "audit_mode": "minimal_receipt",
+  "cross_border_transfer": false,
+  "human_review_required": true,
+  "sensitivity_class": "restricted",
+  "retention_class": "short_operational",
+  "redaction_mode": "pseudonymized",
+  "disclosure_audience": "relying_party_and_affected_party"
+}
