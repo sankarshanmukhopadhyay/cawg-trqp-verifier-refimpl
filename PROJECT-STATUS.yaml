@@ -17,6 +17,8 @@ project:
     - ownership adjudication
 authority:
   normative_scope:
+    - trqp-reference-verifier
+  implementation_scope:
     - repository implementation behavior
     - repository-local schemas, profiles, examples, and conformance fixtures
   does_not_own:
