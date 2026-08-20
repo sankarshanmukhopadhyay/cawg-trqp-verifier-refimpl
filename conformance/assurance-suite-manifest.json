@@ -97,6 +97,20 @@
     "id": "cawg-trqp-refimpl",
     "role": "reference_implementation"
   },
-  "release": "v0.16.0",
-  "schema_version": "2026-07-03"
+  "portfolio_integration": {
+    "contract": "portfolio/integration-contract.json",
+    "schema_authority": {
+      "repository": "sankarshanmukhopadhyay/trust-infrastructure-schemas",
+      "version": "0.14.1"
+    },
+    "semantic_authority": {
+      "repository": "sankarshanmukhopadhyay/trust-systems-meta-model",
+      "version": "0.24.0"
+    },
+    "trqp_assurance_hub": "1.10.0",
+    "trqp_conformance_suite": "1.7.0",
+    "trqp_tspp": "0.15.0"
+  },
+  "release": "v0.19.1",
+  "schema_version": "2026-08-20"
 }

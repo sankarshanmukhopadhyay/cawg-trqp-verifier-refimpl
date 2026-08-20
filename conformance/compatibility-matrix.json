@@ -1,198 +1,47 @@
 {
   "schema_version": "2026-06-28",
-  "release": "v0.16.0",
+  "release": "v0.19.1",
   "profiles": {
     "standard": {
-      "positive_vectors": [
-        "standard-v1",
-        "gateway-standard-v1",
-        "multi-authority-v1"
-      ],
-      "negative_vectors": [
-        "gateway_required_negative",
-        "stale_revocation_warn_negative",
-        "descriptor_observation_negative"
-      ],
-      "transport": {
-        "http_tls": "pass",
-        "gateway_tls": "pass",
-        "local_signed": "not_applicable"
-      },
-      "revocation": {
-        "warn_on_stale": "pass",
-        "fail_on_stale": "supported_via_override"
-      },
-      "descriptor_enforcement": {
-        "policy": "observe",
-        "revocation": "observe",
-        "missing_descriptor": "warn_or_evidence_only"
-      },
-      "verification_modes": [
-        "cached_online",
-        "gateway_mediated"
-      ]
+      "positive_vectors": ["standard-v1", "gateway-standard-v1", "multi-authority-v1"],
+      "negative_vectors": ["gateway_required_negative", "stale_revocation_warn_negative", "descriptor_observation_negative"],
+      "transport": {"http_tls": "pass", "gateway_tls": "pass", "local_signed": "not_applicable"},
+      "revocation": {"warn_on_stale": "pass", "fail_on_stale": "supported_via_override"},
+      "descriptor_enforcement": {"policy": "observe", "revocation": "observe", "missing_descriptor": "warn_or_evidence_only"},
+      "verification_modes": ["cached_online", "gateway_mediated"]
     },
     "high_assurance": {
-      "positive_vectors": [
-        "high-assurance-v1",
-        "high_assurance_with_valid_feed_descriptors"
-      ],
-      "negative_vectors": [
-        "stale_revocation_fail_negative",
-        "missing_feed_descriptor_fail_negative",
-        "descriptor_digest_mismatch_fail_negative",
-        "descriptor_signature_invalid_fail_negative"
-      ],
-      "transport": {
-        "http_tls_required": "pass",
-        "gateway_tls": "supported"
-      },
-      "revocation": {
-        "warn_on_stale": "not_applicable",
-        "fail_on_stale": "pass"
-      },
-      "descriptor_enforcement": {
-        "policy": "fail_closed",
-        "revocation": "fail_closed",
-        "missing_descriptor": "fail_closed"
-      },
-      "verification_modes": [
-        "online_full",
-        "transport_guardrail"
-      ]
+      "positive_vectors": ["high-assurance-v1", "high_assurance_with_valid_feed_descriptors"],
+      "negative_vectors": ["stale_revocation_fail_negative", "missing_feed_descriptor_fail_negative", "descriptor_digest_mismatch_fail_negative", "descriptor_signature_invalid_fail_negative"],
+      "transport": {"http_tls_required": "pass", "gateway_tls": "supported"},
+      "revocation": {"warn_on_stale": "not_applicable", "fail_on_stale": "pass"},
+      "descriptor_enforcement": {"policy": "fail_closed", "revocation": "fail_closed", "missing_descriptor": "fail_closed"},
+      "verification_modes": ["online_full", "transport_guardrail"]
     },
     "edge": {
-      "positive_vectors": [
-        "edge_result_example"
-      ],
-      "negative_vectors": [
-        "expired_snapshot_negative",
-        "invalid_snapshot_signature_negative"
-      ],
-      "transport": {
-        "local_signed": "pass"
-      },
-      "revocation": {
-        "snapshot_verified": "pass"
-      },
-      "descriptor_enforcement": {
-        "snapshot": "planned_profile_policy"
-      },
-      "verification_modes": [
-        "snapshot_offline"
-      ]
+      "positive_vectors": ["edge_result_example"],
+      "negative_vectors": ["expired_snapshot_negative", "invalid_snapshot_signature_negative"],
+      "transport": {"local_signed": "pass"},
+      "revocation": {"snapshot_verified": "pass"},
+      "descriptor_enforcement": {"snapshot": "planned_profile_policy"},
+      "verification_modes": ["snapshot_offline"]
     }
   },
   "controls": {
-    "transport_constraints": {
-      "status": "implemented",
-      "evidence": [
-        "tests/test_transport_and_replay_fidelity.py",
-        "tests/test_conformance_vectors.py"
-      ]
-    },
-    "revocation_freshness": {
-      "status": "implemented",
-      "evidence": [
-        "tests/test_transport_and_replay_fidelity.py",
-        "tests/test_conformance_vectors.py"
-      ]
-    },
-    "fixture_exchange": {
-      "status": "implemented",
-      "evidence": [
-        "fixtures/profile-bound/standard-v1/manifest.json",
-        "fixtures/profile-bound/high-assurance-v1/manifest.json",
-        "fixtures/profile-bound/gateway-standard-v1/manifest.json",
-        "fixtures/profile-bound/multi-authority-v1/manifest.json"
-      ]
-    },
-    "http_service_surface": {
-      "status": "hardened",
-      "evidence": [
-        "tests/test_http_service.py",
-        "tests/test_http_service_integration.py",
-        "tests/test_security_hardening.py"
-      ],
-      "security_controls": [
-        "application_json_required",
-        "max_content_length",
-        "safe_api_profile_resolution",
-        "typed_verification_request_validation"
-      ]
-    },
-    "audit_replay_boundary": {
-      "status": "hardened",
-      "evidence": [
-        "tests/test_security_hardening.py",
-        "tests/test_transport_and_replay_fidelity.py"
-      ],
-      "security_controls": [
-        "trusted_replay_root",
-        "pinned_policy_digest_validation",
-        "pinned_revocation_digest_validation",
-        "pinned_descriptor_digest_validation"
-      ]
-    }
+    "transport_constraints": {"status": "implemented", "evidence": ["tests/test_transport_and_replay_fidelity.py", "tests/test_conformance_vectors.py"]},
+    "revocation_freshness": {"status": "implemented", "evidence": ["tests/test_transport_and_replay_fidelity.py", "tests/test_conformance_vectors.py"]},
+    "fixture_exchange": {"status": "implemented", "evidence": ["fixtures/profile-bound/standard-v1/manifest.json", "fixtures/profile-bound/high-assurance-v1/manifest.json", "fixtures/profile-bound/gateway-standard-v1/manifest.json", "fixtures/profile-bound/multi-authority-v1/manifest.json"]},
+    "http_service_surface": {"status": "hardened", "evidence": ["tests/test_http_service.py", "tests/test_http_service_integration.py", "tests/test_security_hardening.py"], "security_controls": ["application_json_required", "max_content_length", "safe_api_profile_resolution", "typed_verification_request_validation"]},
+    "audit_replay_boundary": {"status": "hardened", "evidence": ["tests/test_security_hardening.py", "tests/test_transport_and_replay_fidelity.py"], "security_controls": ["trusted_replay_root", "pinned_policy_digest_validation", "pinned_revocation_digest_validation", "pinned_descriptor_digest_validation"]}
   },
-  "v0_14_0_signed_feed_descriptors": {
+  "v0_14_0_signed_feed_descriptors": {"status": "supported", "schemas": ["schemas/feed-descriptor.schema.json", "schemas/feed-attestation.schema.json"], "examples": ["examples/feed_descriptors/policy-feed.signed.json", "examples/feed_descriptors/revocation-feed.signed.json", "examples/feed_descriptors/snapshot-feed.signed.json", "examples/feed_descriptors/gateway-route-feed.signed.json"], "runtime_evidence": ["policy_evidence.feed_descriptors", "replay_inputs.feed_descriptors"], "negative_vectors": ["descriptor_signature_invalid", "descriptor_digest_mismatch", "authority_not_recognized", "route_unattested"]},
+  "v0_15_0_security_hardening": {"status": "supported", "runtime_evidence": ["policy_evidence.feed_descriptors", "replay_inputs.policy_feed.*_sha256", "verification_result.policy_freshness", "verification_result.explanations"], "negative_vectors": ["descriptor_malformed", "missing_feed_descriptor", "unsafe_api_profile_reference", "bundle_policy_path_outside_trusted_root", "bundle_policy_digest_mismatch"]},
+  "v0_16_0_roadmap_closure": {"status": "supported", "runtime_evidence": ["conformance/assurance-suite-manifest.json", "policy_evidence.feed_descriptors", "release-assets/checksums-v0.16.0.json", "structured_http_audit_events"], "controls": ["descriptor_policy_by_feed_type", "parser_adapter_contract", "external_assurance_suite_ingestion", "release_asset_checksums", "http_audit_event_logging"], "validation": ["scripts/export_conformance_pack.py --check", "scripts/generate_release_checksums.py --check", "scripts/validate_photography_contest_example.py"]},
+  "v0_19_1_trqp_portfolio_alignment": {
     "status": "supported",
-    "schemas": [
-      "schemas/feed-descriptor.schema.json",
-      "schemas/feed-attestation.schema.json"
-    ],
-    "examples": [
-      "examples/feed_descriptors/policy-feed.signed.json",
-      "examples/feed_descriptors/revocation-feed.signed.json",
-      "examples/feed_descriptors/snapshot-feed.signed.json",
-      "examples/feed_descriptors/gateway-route-feed.signed.json"
-    ],
-    "runtime_evidence": [
-      "policy_evidence.feed_descriptors",
-      "replay_inputs.feed_descriptors"
-    ],
-    "negative_vectors": [
-      "descriptor_signature_invalid",
-      "descriptor_digest_mismatch",
-      "authority_not_recognized",
-      "route_unattested"
-    ]
-  },
-  "v0_15_0_security_hardening": {
-    "status": "supported",
-    "runtime_evidence": [
-      "policy_evidence.feed_descriptors",
-      "replay_inputs.policy_feed.*_sha256",
-      "verification_result.policy_freshness",
-      "verification_result.explanations"
-    ],
-    "negative_vectors": [
-      "descriptor_malformed",
-      "missing_feed_descriptor",
-      "unsafe_api_profile_reference",
-      "bundle_policy_path_outside_trusted_root",
-      "bundle_policy_digest_mismatch"
-    ]
-  },
-  "v0_16_0_roadmap_closure": {
-    "status": "supported",
-    "runtime_evidence": [
-      "conformance/assurance-suite-manifest.json",
-      "policy_evidence.feed_descriptors",
-      "release-assets/checksums-v0.16.0.json",
-      "structured_http_audit_events"
-    ],
-    "controls": [
-      "descriptor_policy_by_feed_type",
-      "parser_adapter_contract",
-      "external_assurance_suite_ingestion",
-      "release_asset_checksums",
-      "http_audit_event_logging"
-    ],
-    "validation": [
-      "scripts/export_conformance_pack.py --check",
-      "scripts/generate_release_checksums.py --check",
-      "scripts/validate_photography_contest_example.py"
-    ]
+    "integration_contract": "portfolio/integration-contract.json",
+    "authority_pins": {"trust-systems-meta-model": "0.24.0", "trust-infrastructure-schemas": "0.14.1"},
+    "trqp_component_pins": {"TRQP-TSPP": "0.15.0", "trqp-conformance-suite": "1.7.0", "trqp-assurance-hub": "1.10.0"},
+    "validation": ["scripts/validate_portfolio_contract.py", "scripts/generate_release_checksums.py --check"]
   }
 }

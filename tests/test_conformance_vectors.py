@@ -53,10 +53,18 @@ class TestStandardProfile:
 class TestEdgeProfile:
     def test_edge_snapshot_authorized(self):
         data = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
-        verifier = Verifier(snapshot=SnapshotStore(Path("data/snapshot.json"), Path("data/trust_anchors.json")))
+        snapshot_time = datetime(2026, 8, 16, 12, 0, 0, tzinfo=timezone.utc)
+        verifier = Verifier(
+            snapshot=SnapshotStore(
+                Path("data/snapshot.json"),
+                Path("data/trust_anchors.json"),
+                current_time=snapshot_time,
+            )
+        )
         result = verifier.verify(VerificationRequest(**data), profile="edge").to_dict()
         assert result["trust_outcome"] == "trusted_cached"
         assert result["policy_freshness"] == "snapshot_verified"
+        assert result["policy_evidence"]["revocation_status"]["authority_state_age_seconds"] == 28800
 
 
 class TestHighAssuranceProfile:

@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "release_train": {
+    "id": "trqp-2026-08",
+    "contract_version": "1.0"
+  },
+  "repository": {
+    "name": "cawg-trqp-verifier-refimpl",
+    "version": "0.19.1",
+    "role": "reference-implementation",
+    "authority_scope": "CAWG/C2PA evidence verification using TRQP-governed trust decisions"
+  },
+  "authorities": {
+    "semantic": {
+      "repository": "sankarshanmukhopadhyay/trust-systems-meta-model",
+      "version": "0.24.0"
+    },
+    "schemas": {
+      "repository": "sankarshanmukhopadhyay/trust-infrastructure-schemas",
+      "version": "0.14.1"
+    }
+  },
+  "trqp_components": {
+    "tspp": {
+      "repository": "sankarshanmukhopadhyay/TRQP-TSPP",
+      "version": "0.15.0",
+      "relationship": "implements-against"
+    },
+    "conformance": {
+      "repository": "sankarshanmukhopadhyay/trqp-conformance-suite",
+      "version": "1.7.0",
+      "relationship": "provides-evidence-to"
+    },
+    "assurance": {
+      "repository": "sankarshanmukhopadhyay/trqp-assurance-hub",
+      "version": "1.10.0",
+      "relationship": "evidence-aggregated-by"
+    }
+  },
+  "local_evidence": [
+    "conformance/compatibility-matrix.json",
+    "conformance/assurance-suite-manifest.json",
+    "conformance/risk-to-test-map.yaml",
+    "release-assets/checksums-v0.19.1.json"
+  ],
+  "invalidation_triggers": [
+    "semantic-authority-version-incompatible",
+    "schema-authority-version-incompatible",
+    "normative-source-version-incompatible",
+    "required-evidence-missing",
+    "release-identity-mismatch"
+  ],
+  "invalidation_effect": "integration-status-invalid",
+  "authority_statement": "This repository governs only its implementation, repository-local schemas, profiles, fixtures, and evidence. It does not govern CAWG, C2PA, or TRQP specifications."
+}

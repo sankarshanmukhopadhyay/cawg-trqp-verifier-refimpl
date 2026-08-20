@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cawg-trqp-refimpl"
-version = "0.19.0"
+version = "0.19.1"
 description = "Reference implementation for CAWG + TRQP integration"
 requires-python = ">=3.10"
 dependencies = [

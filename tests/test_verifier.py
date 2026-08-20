@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from pathlib import Path
 
 from cawg_trqp_refimpl.fixture_loader import load_manifest_fixture
@@ -16,11 +17,19 @@ def test_standard_verifier():
 
 def test_edge_verifier():
     req = load_manifest_fixture(Path("examples/fixtures/cawg_manifest_minimal.json"), "did:web:media-registry.example")
-    verifier = Verifier(snapshot=SnapshotStore(Path("data/snapshot.json"), Path("data/trust_anchors.json")))
+    snapshot_time = datetime(2026, 8, 16, 12, 0, 0, tzinfo=timezone.utc)
+    verifier = Verifier(
+        snapshot=SnapshotStore(
+            Path("data/snapshot.json"),
+            Path("data/trust_anchors.json"),
+            current_time=snapshot_time,
+        )
+    )
     result = verifier.verify(req, profile="edge")
     assert result.trust_outcome == "trusted_cached"
     assert result.policy_freshness == "snapshot_verified"
     assert result.process_integrity == "verified_high"
+    assert result.policy_evidence["revocation_status"]["authority_state_age_seconds"] == 28800
 
 
 def test_blocked_entity_rejected():

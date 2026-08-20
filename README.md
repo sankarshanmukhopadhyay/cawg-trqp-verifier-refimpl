@@ -1,7 +1,7 @@
 # CAWG-TRQP Verifier Reference Implementation
 
 > **Portfolio status:** Flagship · Pilot-ready · Active validation  
-> **Current release:** v0.19.0  
+> **Current release:** v0.19.1  
 > **Project status declaration:** [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml)
 
 | Portfolio tier | Flagship |
@@ -24,15 +24,19 @@ It does **not** treat provenance as truth, ownership, entitlement, clinical vali
 | Reproducibility | pinned replay bundles and trusted replay roots |
 | Privacy controls | minimization, retention, redaction, and rights profiles |
 | Cross-sector adoption | fourteen end-to-end walkthroughs and machine-readable examples |
-| Portfolio governance | repository-local status, governance, security, roadmap, and release evidence |
+| Portfolio governance | repository-local status, governance, security, roadmap, release and integration evidence |
 
-## What v0.19.0 adds
+## What v0.19.1 adds
 
-- Semantic assurance controls for required CAWG/C2PA assertion labels, including explicit missing and unsupported states.
-- Deterministic conflict detection with relying-party profile-local precedence rules and explicit unresolved-conflict handling.
-- Proposition-level verification evidence so integrity, assertion expectation, issuer recognition, authorization, process integrity, and conflict state cannot be silently collapsed into one success result.
-- `degraded` handling for warning-level semantic gaps and fail-closed `semantic_guardrail` behavior for required evidence/conflict failures.
-- A machine-readable RAHP-to-conformance traceability bridge documenting where external RAHP CAWG/C2PA findings motivated implementation controls and tests.
+v0.19.1 is an assurance and portfolio-alignment patch. It does not change CAWG/C2PA verification semantics introduced in v0.19.0.
+
+- Aligns machine-readable conformance and assurance manifests with the current release identity.
+- Adds a machine-readable TRQP portfolio integration contract.
+- Pins Trust Systems Meta-Model v0.24.0 as semantic authority and Trust Infrastructure Schemas v0.14.1 as schema/portfolio authority.
+- Pins TRQP-TSPP v0.15.0, TRQP Conformance Suite v1.7.0, and TRQP Assurance Hub v1.10.0 as the synchronized TRQP release train consumed by this implementation.
+- Declares explicit invalidation conditions for semantic/schema incompatibility, normative-source incompatibility, missing evidence, and release-identity mismatch.
+- Adds CI validation for the portfolio integration contract and includes it in release checksum evidence.
+- Retains the v0.19.0 semantic assurance controls for required CAWG/C2PA assertion labels, proposition-level evidence, deterministic conflict handling, degraded-state handling, and RAHP traceability.
 
 ## Start here
 
@@ -70,9 +74,10 @@ Run the complete repository gate:
 make validate
 ```
 
-The gate validates repository governance and documentation integrity, the OpenAPI contract, JSON examples, the v0.19.0 semantic-assurance controls and walkthrough manifests, and the Python test suite. Release-specific checks remain available independently:
+The gate validates repository governance and documentation integrity, the OpenAPI contract, JSON examples, the v0.19.x semantic-assurance controls and walkthrough manifests, the TRQP portfolio integration contract, and the Python test suite. Release-specific checks remain available independently:
 
 ```bash
+python scripts/validate_portfolio_contract.py
 python scripts/validate_feed_descriptors.py
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
@@ -117,6 +122,7 @@ Each new example defines a narrow decision boundary and tests revocation, stale 
 | `examples/` | canonical requests, receipts, audit bundles, and walkthrough scenarios |
 | `fixtures/profile-bound/` | portable conformance fixture packages |
 | `conformance/` | readiness matrices, compatibility declarations, and assurance manifests |
+| `portfolio/` | machine-readable cross-repository integration contract |
 | `docs/` | implementation, governance, adoption, privacy, risk, and operational guidance |
 | `governance/` | machine-readable threat, abuse, processing, and residual-risk registers |
 | `release-assets/` | release checksum evidence |
@@ -126,15 +132,15 @@ Each new example defines a narrow decision boundary and tests revocation, stale 
 - **Authority:** repository maintainers govern repository-local implementation, schemas, profiles, fixtures, and releases.
 - **Delegation:** authority to approve changes is defined in [`GOVERNANCE.md`](GOVERNANCE.md).
 - **Scope:** this project does not govern CAWG, C2PA, or TRQP specifications.
-- **Enforcement:** CI, schema validation, conformance fixtures, revocation handling, and release checks operationalize the stated controls.
+- **Enforcement:** CI, schema validation, conformance fixtures, revocation handling, portfolio-contract validation, and release checks operationalize the stated controls.
 - **Revocation and supersession:** corrected results and releases create new evidence; historical receipts are not rewritten.
-- **Auditability:** receipts, bundles, manifests, and checksums provide machine-verifiable evidence.
+- **Auditability:** receipts, bundles, manifests, integration contracts, and checksums provide machine-verifiable evidence.
 
 See [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml), [`SECURITY.md`](SECURITY.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`AI_USAGE.md`](AI_USAGE.md).
 
 ## Release
 
-Release notes: [`RELEASE_NOTES_v0.19.0.md`](RELEASE_NOTES_v0.19.0.md)  
+Release notes: [`RELEASE_NOTES_v0.19.1.md`](RELEASE_NOTES_v0.19.1.md)  
 Changelog: [`CHANGELOG.md`](CHANGELOG.md)  
 Roadmap: [`ROADMAP.md`](ROADMAP.md)
 
@@ -145,4 +151,3 @@ MIT. See [`LICENSE`](LICENSE).
 ## Agentic AI assurance
 
 The walkthrough portfolio includes a cross-cutting [Agentic AI Assurance](docs/agentic-ai/index.md) model that treats agents as delegated actors rather than trusted identities. It covers producer, submitter, verifier, orchestrator, proxy, and decision roles; binds actions to principals, mandates, scope, temporal validity, revocation, and replay evidence; and includes three executable archetypes under `examples/agent-*`.
-
