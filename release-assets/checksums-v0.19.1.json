@@ -1,0 +1,46 @@
+{
+  "algorithm": "sha256",
+  "assets": [
+    {
+      "bytes": 5066,
+      "path": "conformance/compatibility-matrix.json",
+      "sha256": "3a0392c604d21ddd1ec28d433e372745a0d309a4a469080f0422734639857b00"
+    },
+    {
+      "bytes": 20863,
+      "path": "conformance/risk-to-test-map.yaml",
+      "sha256": "d0082fba98ee8f9d8accbeaf7c73c2f78844df9f578ba433de3f062d4f844b61"
+    },
+    {
+      "bytes": 3885,
+      "path": "conformance/assurance-suite-manifest.json",
+      "sha256": "e3daefed89b35a613ef6ce54881b1ccdbc6bdb812fd85e51595a863032d71c42"
+    },
+    {
+      "bytes": 1801,
+      "path": "portfolio/integration-contract.json",
+      "sha256": "debeadc672a379afb9a91bc1ab85b44a2d05348d89b10543645584de9699b14e"
+    },
+    {
+      "bytes": 15988,
+      "path": "examples/reproducibility_bundle_standard.json",
+      "sha256": "93f629d8c13788eeec54b26e87aaca1cf4242adc9eb86dec400da29a050a9a3b"
+    },
+    {
+      "bytes": 15988,
+      "path": "examples/exported_audit_bundle.json",
+      "sha256": "93f629d8c13788eeec54b26e87aaca1cf4242adc9eb86dec400da29a050a9a3b"
+    },
+    {
+      "bytes": 16199,
+      "path": "examples/exported_audit_bundle.signed.json",
+      "sha256": "1a782d4ce8c2a74faf83a8263bc3669cf474a49852c44609435a76745a138e51"
+    },
+    {
+      "bytes": 19431,
+      "path": "examples/photography_contest/replay_bundle.json",
+      "sha256": "b9bc2b243f7ac87b82bb102e38d38afdec5ed3281acda01084bff2d8db5c4970"
+    }
+  ],
+  "release": "v0.19.1"
+}
