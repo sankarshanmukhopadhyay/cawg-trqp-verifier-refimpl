@@ -2,11 +2,21 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE_ROOT = ROOT / "fixtures" / "profile-bound"
 OUTPUT = ROOT / "conformance" / "assurance-suite-manifest.json"
+PYPROJECT = ROOT / "pyproject.toml"
+
+
+def _release() -> str:
+    text = PYPROJECT.read_text(encoding="utf-8")
+    match = re.search(r'^version\s*=\s*"([^"]+)"', text, flags=re.MULTILINE)
+    if not match:
+        raise SystemExit("unable to resolve release version from pyproject.toml")
+    return f"v{match.group(1)}"
 
 
 def _fixture_entry(path: Path) -> dict:
@@ -32,12 +42,26 @@ def _fixture_entry(path: Path) -> dict:
 def build_manifest() -> dict:
     fixtures = [_fixture_entry(path) for path in sorted(FIXTURE_ROOT.iterdir()) if path.is_dir()]
     return {
-        "schema_version": "2026-07-03",
-        "release": "v0.16.0",
+        "schema_version": "2026-08-20",
+        "release": _release(),
         "implementation_identity": {
             "id": "cawg-trqp-refimpl",
             "role": "reference_implementation",
             "authority_scope": "CAWG manifest verification using TRQP-governed trust decisions",
+        },
+        "portfolio_integration": {
+            "contract": "portfolio/integration-contract.json",
+            "semantic_authority": {
+                "repository": "sankarshanmukhopadhyay/trust-systems-meta-model",
+                "version": "0.24.0",
+            },
+            "schema_authority": {
+                "repository": "sankarshanmukhopadhyay/trust-infrastructure-schemas",
+                "version": "0.14.1",
+            },
+            "trqp_tspp": "0.15.0",
+            "trqp_conformance_suite": "1.7.0",
+            "trqp_assurance_hub": "1.10.0",
         },
         "evidence_artifacts": [
             "verification_result",
