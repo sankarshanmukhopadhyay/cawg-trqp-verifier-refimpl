@@ -19,7 +19,7 @@ pytest-cov==7.1.0
 iniconfig==2.3.0
 packaging==26.3
 pluggy==1.6.0
-Pygments==2.20.0
+Pygments==2.21.0
 coverage==7.15.4
 typing_extensions==4.16.0
 PyYAML==6.0.3
