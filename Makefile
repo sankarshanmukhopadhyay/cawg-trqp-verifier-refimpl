@@ -9,6 +9,7 @@ validate:
 	python scripts/validate_walkthrough_diagrams.py
 	python scripts/validate_walkthrough_quality.py
 	python scripts/validate_agentic_assurance.py
+	python scripts/validate_adoption_journeys.py
 	pytest -q
 
 flagship-check:
