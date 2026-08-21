@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "journey_id": "http-to-audit-bundle",
+  "title": "HTTP to Audit Bundle Adoption Journey",
+  "documentation": "docs/http-to-audit-bundle-adoption-journey.md",
+  "purpose": "Demonstrate a production-style path from deployed HTTP verification through portable audit evidence and deterministic replay.",
+  "steps": [
+    {
+      "id": "health",
+      "endpoint": "GET /health",
+      "evidence": ["capability_declaration"]
+    },
+    {
+      "id": "verify",
+      "endpoint": "POST /trqp/verify",
+      "input": "examples/verification_request.json",
+      "evidence": ["trust_outcome", "actor_authorization", "issuer_recognition", "policy_freshness", "policy_evidence", "explanations"]
+    },
+    {
+      "id": "audit-bundle",
+      "endpoint": "POST /trqp/audit-bundle",
+      "input": "examples/verification_request.json",
+      "evidence": ["audit_bundle"]
+    },
+    {
+      "id": "validate-bundle",
+      "command": "python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json",
+      "evidence": ["bundle_validation_result"]
+    },
+    {
+      "id": "replay",
+      "command": "python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .",
+      "evidence": ["replay_result"]
+    },
+    {
+      "id": "correction",
+      "documentation": "docs/operational-failure-correction-redress.md",
+      "evidence": ["prior_decision_reference", "correction_authority", "superseding_decision_reference"]
+    }
+  ],
+  "required_outcome_classes": ["allow", "deny", "indeterminate", "review"],
+  "acceptance_probes": [
+    "in_scope_authorization",
+    "scope_failure",
+    "revoked_authority",
+    "stale_trust_state",
+    "authority_conflict",
+    "audit_bundle_export",
+    "bundle_validation",
+    "deterministic_replay",
+    "superseding_correction"
+  ]
+}
