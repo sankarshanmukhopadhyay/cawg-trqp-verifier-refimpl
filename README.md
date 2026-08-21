@@ -23,7 +23,7 @@ It does **not** treat provenance as truth, ownership, entitlement, clinical vali
 | Auditability | stable reason codes, decision receipts, signed audit bundles |
 | Reproducibility | pinned replay bundles and trusted replay roots |
 | Privacy controls | minimization, retention, redaction, and rights profiles |
-| Cross-sector adoption | fourteen end-to-end walkthroughs and machine-readable examples |
+| Cross-sector adoption | nineteen indexed sector walkthroughs, machine-readable scenarios, and three agentic assurance archetypes |
 | Portfolio governance | repository-local status, governance, security, roadmap, release and integration evidence |
 
 ## What v0.19.1 adds
@@ -38,12 +38,15 @@ v0.19.1 is an assurance and portfolio-alignment patch. It does not change CAWG/C
 - Adds CI validation for the portfolio integration contract and includes it in release checksum evidence.
 - Retains the v0.19.0 semantic assurance controls for required CAWG/C2PA assertion labels, proposition-level evidence, deterministic conflict handling, degraded-state handling, and RAHP traceability.
 
+Documentation on `main` may advance between releases where the change does not modify verifier semantics or the declared release contract. The walkthrough catalogue and operator guides are therefore treated as continuously maintainable adoption and assurance material.
+
 ## Start here
 
 - [Guided learning paths](docs/guided-learning.md)
 - [Non-technical overview](docs/NON_TECHNICAL_OVERVIEW.md)
 - [Explainer presentation](docs/presentation.md) (17-slide orientation deck)
 - [Quickstart](QUICKSTART.md)
+- [Operator decision and replay walkthrough](docs/operator-decision-replay-walkthrough.md)
 - [Walkthrough catalogue](docs/sections/walkthroughs-index.md)
 - [Documentation site](https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/)
 
@@ -65,6 +68,8 @@ python scripts/start_http_service.py \
   --revocation-path data/revocations.json \
   --host 127.0.0.1 --port 5000
 ```
+
+After the first verification, use the [operator walkthrough](docs/operator-decision-replay-walkthrough.md) to interpret the decision boundary, reason codes, evidence outputs, replay bundle, and correction lineage.
 
 ## Validation and assurance evidence
 
@@ -97,20 +102,11 @@ Profiles are schema-backed by [`schemas/verification-profile.schema.json`](schem
 
 ## Walkthrough portfolio
 
-The repository now includes fourteen end-to-end examples. Established examples cover photography contests, operational video, authorized music distribution, and AI-assisted property listings. The v0.18.1 portfolio adds:
+The repository now includes **nineteen indexed sector walkthroughs plus three agentic assurance archetypes**. The catalogue spans publication and public communication, rights and commercial authorization, regulated/evidentiary intake, field and operational evidence, long-lived correction-sensitive evidence, and constrained or humanitarian environments.
 
-- breaking-news photography;
-- insurance claim evidence;
-- marketplace product images;
-- medical imaging for remote consultation;
-- body-camera and municipal evidence;
-- construction milestone certification;
-- humanitarian offline field evidence;
-- political campaign advertising;
-- warranty and repair evidence; and
-- scientific research imagery.
+Recent assurance-boundary scenarios include disaster-response damage assessment, legal/administrative evidence submission, industrial inspection and maintenance evidence, cultural-heritage archive ingest, and official public-safety communications. The public-safety walkthrough is deliberately high-assurance: it separates authenticated media from the delegated authority to speak officially for an institution and pressure-tests incident scope, channel scope, revocation, stale trust state, conflict, correction, and agentic publishing.
 
-Each new example defines a narrow decision boundary and tests revocation, stale state, authority conflict, correction, and immutable evidence lineage.
+Each indexed sector example defines a narrow decision boundary and makes revocation, stale state, authority conflict, correction, evidence outputs, and replay expectations explicit. See the [walkthrough catalogue](docs/sections/walkthroughs-index.md) for the current machine-linked portfolio rather than relying on release-era counts.
 
 ## Repository map
 
