@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "walkthrough_id": "public-safety-official-communications",
+  "title": "Official Public-Safety Communications",
+  "authority_domain": "public-safety-communications",
+  "action": "publish_official_communication",
+  "decision_boundary": "May this authenticated media asset be published or redistributed as an official public-safety communication by this actor, for this incident, channel, audience, and decision time?",
+  "cases": [
+    {
+      "id": "authorized",
+      "condition": "provenance accepted, competent authority recognized, publisher delegation current, and incident/channel scope satisfied",
+      "expected_outcome": "allow",
+      "reason_code": "AUTHORIZED",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
+    },
+    {
+      "id": "scope-mismatch",
+      "condition": "actor is recognized but the requested publication action, incident, channel, audience, or context is outside the delegation",
+      "expected_outcome": "deny",
+      "reason_code": "SCOPE_MISMATCH",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
+    },
+    {
+      "id": "revoked",
+      "condition": "publisher authority or incident-specific delegation is revoked or expired at the evaluated decision time",
+      "expected_outcome": "deny",
+      "reason_code": "AUTHORITY_REVOKED",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
+    },
+    {
+      "id": "stale",
+      "condition": "required authority, delegation, or revocation evidence is stale or unavailable under the selected assurance profile",
+      "expected_outcome": "indeterminate",
+      "reason_code": "TRUST_STATE_STALE",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
+    },
+    {
+      "id": "conflict",
+      "condition": "material competent authority sources disagree about current publication authority",
+      "expected_outcome": "review",
+      "reason_code": "AUTHORITY_CONFLICT",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
+    },
+    {
+      "id": "corrected",
+      "condition": "material content metadata, incident scope, or authority evidence is corrected after the original publication decision",
+      "expected_outcome": "new_decision",
+      "reason_code": "SUPERSEDING_RECEIPT_REQUIRED",
+      "rule_source": "illustrative-policy",
+      "rule_source_reference": "Repository walkthrough policy; not an upstream CAWG/C2PA/TRQP requirement"
+    }
+  ],
+  "evidence_outputs": [
+    "decision_receipt",
+    "provenance_findings",
+    "authority_evidence",
+    "delegation_evidence",
+    "incident_scope",
+    "channel_scope",
+    "policy_epoch",
+    "revocation_status",
+    "replay_inputs",
+    "redress_reference"
+  ],
+  "limitations": [
+    "A positive result does not establish factual correctness, operational safety, legal sufficiency, or fulfillment of public-authority duties.",
+    "Authenticated media does not by itself establish authority to speak officially for a public institution.",
+    "Does not transfer relying-party or competent-authority accountability"
+  ]
+}
