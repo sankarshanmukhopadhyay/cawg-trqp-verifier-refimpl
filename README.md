@@ -24,6 +24,7 @@ It does **not** treat provenance as truth, ownership, entitlement, clinical vali
 | Reproducibility | pinned replay bundles and trusted replay roots |
 | Privacy controls | minimization, retention, redaction, and rights profiles |
 | Cross-sector adoption | nineteen indexed sector walkthroughs, machine-readable scenarios, and three agentic assurance archetypes |
+| Executable adoption | HTTP-to-audit-bundle and operational failure/redress journeys with CI-validated journey contracts |
 | Portfolio governance | repository-local status, governance, security, roadmap, release and integration evidence |
 
 ## What v0.19.1 adds
@@ -38,7 +39,7 @@ v0.19.1 is an assurance and portfolio-alignment patch. It does not change CAWG/C
 - Adds CI validation for the portfolio integration contract and includes it in release checksum evidence.
 - Retains the v0.19.0 semantic assurance controls for required CAWG/C2PA assertion labels, proposition-level evidence, deterministic conflict handling, degraded-state handling, and RAHP traceability.
 
-Documentation on `main` may advance between releases where the change does not modify verifier semantics or the declared release contract. The walkthrough catalogue and operator guides are therefore treated as continuously maintainable adoption and assurance material.
+Documentation on `main` may advance between releases where the change does not modify verifier semantics or the declared release contract. The walkthrough catalogue, operator guides, and executable adoption journeys are therefore treated as continuously maintainable adoption and assurance material.
 
 ## Start here
 
@@ -47,6 +48,8 @@ Documentation on `main` may advance between releases where the change does not m
 - [Explainer presentation](docs/presentation.md) (17-slide orientation deck)
 - [Quickstart](QUICKSTART.md)
 - [Operator decision and replay walkthrough](docs/operator-decision-replay-walkthrough.md)
+- [HTTP to audit bundle adoption journey](docs/http-to-audit-bundle-adoption-journey.md)
+- [Operational failure, correction, and redress](docs/operational-failure-correction-redress.md)
 - [Walkthrough catalogue](docs/sections/walkthroughs-index.md)
 - [Documentation site](https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/)
 
@@ -69,7 +72,7 @@ python scripts/start_http_service.py \
   --host 127.0.0.1 --port 5000
 ```
 
-After the first verification, use the [operator walkthrough](docs/operator-decision-replay-walkthrough.md) to interpret the decision boundary, reason codes, evidence outputs, replay bundle, and correction lineage.
+After the first verification, use the [operator walkthrough](docs/operator-decision-replay-walkthrough.md) to interpret the decision boundary, reason codes, evidence outputs, replay bundle, and correction lineage. For a production-style service integration, continue through the [HTTP-to-audit-bundle journey](docs/http-to-audit-bundle-adoption-journey.md) and then the [failure/correction/redress journey](docs/operational-failure-correction-redress.md).
 
 ## Validation and assurance evidence
 
@@ -79,10 +82,11 @@ Run the complete repository gate:
 make validate
 ```
 
-The gate validates repository governance and documentation integrity, the OpenAPI contract, JSON examples, the v0.19.x semantic-assurance controls and walkthrough manifests, the TRQP portfolio integration contract, and the Python test suite. Release-specific checks remain available independently:
+The gate validates repository governance and documentation integrity, the OpenAPI contract, JSON examples, walkthrough manifests, executable adoption journey contracts, the TRQP portfolio integration contract, and the Python test suite. Release-specific checks remain available independently:
 
 ```bash
 python scripts/validate_portfolio_contract.py
+python scripts/validate_adoption_journeys.py
 python scripts/validate_feed_descriptors.py
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
@@ -115,7 +119,7 @@ Each indexed sector example defines a narrow decision boundary and makes revocat
 | `src/cawg_trqp_refimpl/` | verifier, HTTP service, parser, profiles, cache, and replay logic |
 | `schemas/` | machine-readable requests, results, receipts, descriptors, profiles, and sector records |
 | `profiles/` | standard, high-assurance, edge, and privacy overlays |
-| `examples/` | canonical requests, receipts, audit bundles, and walkthrough scenarios |
+| `examples/` | canonical requests, receipts, audit bundles, walkthrough scenarios, and executable adoption journey contracts |
 | `fixtures/profile-bound/` | portable conformance fixture packages |
 | `conformance/` | readiness matrices, compatibility declarations, and assurance manifests |
 | `portfolio/` | machine-readable cross-repository integration contract |
@@ -128,9 +132,9 @@ Each indexed sector example defines a narrow decision boundary and makes revocat
 - **Authority:** repository maintainers govern repository-local implementation, schemas, profiles, fixtures, and releases.
 - **Delegation:** authority to approve changes is defined in [`GOVERNANCE.md`](GOVERNANCE.md).
 - **Scope:** this project does not govern CAWG, C2PA, or TRQP specifications.
-- **Enforcement:** CI, schema validation, conformance fixtures, revocation handling, portfolio-contract validation, and release checks operationalize the stated controls.
+- **Enforcement:** CI, schema validation, conformance fixtures, revocation handling, portfolio-contract validation, adoption-journey validation, and release checks operationalize the stated controls.
 - **Revocation and supersession:** corrected results and releases create new evidence; historical receipts are not rewritten.
-- **Auditability:** receipts, bundles, manifests, integration contracts, and checksums provide machine-verifiable evidence.
+- **Auditability:** receipts, bundles, manifests, integration contracts, journey contracts, and checksums provide machine-verifiable evidence.
 
 See [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml), [`SECURITY.md`](SECURITY.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), and [`AI_USAGE.md`](AI_USAGE.md).
 

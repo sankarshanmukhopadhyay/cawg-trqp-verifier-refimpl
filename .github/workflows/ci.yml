@@ -22,6 +22,7 @@ jobs:
       - run: python scripts/validate_walkthrough_examples.py
       - run: python scripts/validate_walkthrough_diagrams.py
       - run: python scripts/validate_walkthrough_quality.py
+      - run: python scripts/validate_adoption_journeys.py
       - run: python scripts/validate_repository.py
       - run: python scripts/validate_portfolio_contract.py
       - run: python scripts/validate_learning_paths.py
