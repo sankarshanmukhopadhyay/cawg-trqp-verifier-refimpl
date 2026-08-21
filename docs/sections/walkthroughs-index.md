@@ -10,6 +10,8 @@ description: "End-to-end scenarios showing the verifier applied to concrete gove
 
 These scenarios show how content-authenticity evidence and governed authority can be combined without collapsing provenance, authorization, and downstream truth or professional judgment into one decision. The portfolio now also applies a common [Agentic AI Assurance](../agentic-ai/index.md) overlay so an AI agent can be pressure-tested as producer, submitter, verifier, orchestrator, proxy, or decision actor without treating agent identity as authority. Each walkthrough exposes the decision boundary, authority/delegation model, revocation and freshness behavior, failure states, correction lineage, evidence outputs, and replay expectations.
 
+For an implementation-first path through the evidence surface, use the [Operator Decision and Replay Walkthrough](../operator-decision-replay-walkthrough.md) before selecting a sector scenario. It connects a canonical verification request to reason-code interpretation, audit evidence, deterministic replay, and correction lineage.
+
 ## Common diagram set
 
 Every walkthrough now exposes the same three complementary views so readers can understand the governance decision from multiple angles:
@@ -26,7 +28,7 @@ The portfolio also follows the repository [Documentation Quality Standard](../do
 
 | Assurance pattern | Representative walkthroughs | What it pressure-tests |
 |---|---|---|
-| Publication and public communication | [Breaking-News Photography](../workflows/breaking-news-photography.md), [Video Verification](../video-verification-walkthrough.md), [Political Campaign Advertising](../workflows/political-campaign-advertising.md) | editorial/campaign authority, rapid revocation, conflicting state |
+| Publication and public communication | [Breaking-News Photography](../workflows/breaking-news-photography.md), [Political Campaign Advertising](../workflows/political-campaign-advertising.md), [Official Public-Safety Communications](../workflows/public-safety-official-communications.md) | editorial/institutional speaking authority, rapid revocation, incident/channel scope, conflicting state |
 | Rights and commercial authorization | [Authorized Music Distribution](../workflows/authorized-music-distribution.md), [AI-Assisted Property Listing Images](../workflows/property-listing-ai-image-verification.md), [Marketplace Product Images](../workflows/marketplace-product-images.md) | delegated rights, disclosure scope, platform disposition |
 | Regulated or evidentiary intake | [Insurance Claim Evidence](../workflows/insurance-claim-evidence.md), [Medical Imaging](../workflows/medical-imaging-remote-consultation.md), [Legal and Administrative Evidence](../workflows/legal-evidence-submission.md) | separation of intake from substantive adjudication |
 | Field and operational evidence | [Body-Camera Evidence](../workflows/body-camera-evidence.md), [Construction Milestones](../workflows/construction-milestone-certification.md), [Disaster Response](../workflows/disaster-response-damage-assessment.md), [Industrial Inspection](../workflows/industrial-inspection-maintenance.md) | device/actor delegation, offline or delayed state, safety boundaries |
@@ -35,6 +37,8 @@ The portfolio also follows the repository [Documentation Quality Standard](../do
 
 ## Complete walkthrough portfolio
 
+The catalogue currently contains **nineteen indexed sector walkthroughs plus three cross-cutting agentic assurance archetypes**. The machine-readable sector scenario packages use the common lifecycle vocabulary of authorized, scope mismatch, revoked, stale, conflict, and corrected.
+
 ### Agentic assurance archetypes
 
 - [Agent as Content Producer](../workflows/agent-content-producer.md)
@@ -42,7 +46,6 @@ The portfolio also follows the repository [Documentation Quality Standard](../do
 - [Agent as Verifier and Orchestrator](../workflows/agent-verifier-orchestrator.md)
 
 These cross-sector archetypes define reusable mandate, scope, revocation, tool-chain, replay, and decision-boundary controls. Every sector walkthrough below includes an **Agentic AI Variant** that instantiates the same model in context.
-
 
 ### Foundational and implementation-led examples
 
@@ -64,15 +67,16 @@ These cross-sector archetypes define reusable mandate, scope, revocation, tool-c
 - [Warranty and Repair Evidence](../workflows/warranty-repair-evidence.md)
 - [Scientific Research Imagery](../workflows/scientific-research-imagery.md)
 
-### New assurance-boundary scenarios
+### Assurance-boundary scenarios
 
 - [Disaster Response Damage Assessment](../workflows/disaster-response-damage-assessment.md)
 - [Legal and Administrative Evidence Submission](../workflows/legal-evidence-submission.md)
 - [Industrial Inspection and Maintenance Evidence](../workflows/industrial-inspection-maintenance.md)
 - [Cultural Heritage and Archive Ingest](../workflows/cultural-heritage-archive-ingest.md)
+- [Official Public-Safety Communications](../workflows/public-safety-official-communications.md)
 
 ## Common assurance contract
 
-Across the portfolio, a positive verifier result means only that the requested action satisfies the configured provenance, authority, scope, policy, and trust-state requirements. It does **not** establish factual truth or transfer the relying organization's legal, editorial, clinical, engineering, evidentiary, or policy responsibility to the verifier.
+Across the portfolio, a positive verifier result means only that the requested action satisfies the configured provenance, authority, scope, policy, and trust-state requirements. It does **not** establish factual truth or transfer the relying organization's legal, editorial, clinical, engineering, evidentiary, operational, or policy responsibility to the verifier.
 
 The machine-readable scenario manifests under `examples/*/scenario.json` exercise six common lifecycle states, including the agentic archetypes: authorized, scope mismatch, revoked, stale, conflict, and corrected. CI discovers these manifests dynamically and verifies that they resolve to published walkthrough documents.
