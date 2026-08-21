@@ -2,7 +2,7 @@
 layout: default
 title: "Operator Decision and Replay Walkthrough"
 description: "Run a verification, inspect the governed decision surface, and replay the evidence deterministically."
-parent: "Guides"
+parent: "Assurance & Evidence"
 nav_order: 8
 ---
 # Operator Decision and Replay Walkthrough
