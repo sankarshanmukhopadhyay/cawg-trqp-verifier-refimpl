@@ -3,7 +3,7 @@ layout: default
 title: Assurance Evidence
 ---
 
-# Assurance evidence contract
+# Assurance Evidence
 
 Repository-native GitHub Actions runs are the authoritative evidence source for portfolio assurance.
 
