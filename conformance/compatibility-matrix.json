@@ -1,6 +1,6 @@
 {
-  "schema_version": "2026-06-28",
-  "release": "v0.19.1",
+  "schema_version": "2026-09-01",
+  "release": "v0.19.2",
   "profiles": {
     "standard": {
       "positive_vectors": ["standard-v1", "gateway-standard-v1", "multi-authority-v1"],
@@ -31,17 +31,24 @@
     "transport_constraints": {"status": "implemented", "evidence": ["tests/test_transport_and_replay_fidelity.py", "tests/test_conformance_vectors.py"]},
     "revocation_freshness": {"status": "implemented", "evidence": ["tests/test_transport_and_replay_fidelity.py", "tests/test_conformance_vectors.py"]},
     "fixture_exchange": {"status": "implemented", "evidence": ["fixtures/profile-bound/standard-v1/manifest.json", "fixtures/profile-bound/high-assurance-v1/manifest.json", "fixtures/profile-bound/gateway-standard-v1/manifest.json", "fixtures/profile-bound/multi-authority-v1/manifest.json"]},
-    "http_service_surface": {"status": "hardened", "evidence": ["tests/test_http_service.py", "tests/test_http_service_integration.py", "tests/test_security_hardening.py"], "security_controls": ["application_json_required", "max_content_length", "safe_api_profile_resolution", "typed_verification_request_validation"]},
-    "audit_replay_boundary": {"status": "hardened", "evidence": ["tests/test_security_hardening.py", "tests/test_transport_and_replay_fidelity.py"], "security_controls": ["trusted_replay_root", "pinned_policy_digest_validation", "pinned_revocation_digest_validation", "pinned_descriptor_digest_validation"]}
+    "http_service_surface": {"status": "hardened", "evidence": ["tests/test_http_service.py", "tests/test_http_service_integration.py", "tests/test_security_hardening.py", "tests/test_verification_request_validation.py"], "security_controls": ["application_json_required", "max_content_length", "safe_api_profile_resolution", "typed_verification_request_validation"]},
+    "audit_replay_boundary": {"status": "hardened", "evidence": ["tests/test_security_hardening.py", "tests/test_transport_and_replay_fidelity.py", "tests/test_decision_evidence_isolation.py"], "security_controls": ["trusted_replay_root", "pinned_policy_digest_validation", "pinned_revocation_digest_validation", "pinned_descriptor_digest_validation", "decision_evidence_isolation"]},
+    "adversarial_falsification": {"status": "implemented", "evidence": ["conformance/adversarial-vectors.json", "scripts/validate_adversarial_vectors.py", "tests/test_adversarial_vectors.py"], "security_controls": ["delegated_authority_misuse", "gateway_route_substitution", "revoked_issuer_recognition", "partial_provenance_stripping", "replay_root_confusion"]}
   },
   "v0_14_0_signed_feed_descriptors": {"status": "supported", "schemas": ["schemas/feed-descriptor.schema.json", "schemas/feed-attestation.schema.json"], "examples": ["examples/feed_descriptors/policy-feed.signed.json", "examples/feed_descriptors/revocation-feed.signed.json", "examples/feed_descriptors/snapshot-feed.signed.json", "examples/feed_descriptors/gateway-route-feed.signed.json"], "runtime_evidence": ["policy_evidence.feed_descriptors", "replay_inputs.feed_descriptors"], "negative_vectors": ["descriptor_signature_invalid", "descriptor_digest_mismatch", "authority_not_recognized", "route_unattested"]},
   "v0_15_0_security_hardening": {"status": "supported", "runtime_evidence": ["policy_evidence.feed_descriptors", "replay_inputs.policy_feed.*_sha256", "verification_result.policy_freshness", "verification_result.explanations"], "negative_vectors": ["descriptor_malformed", "missing_feed_descriptor", "unsafe_api_profile_reference", "bundle_policy_path_outside_trusted_root", "bundle_policy_digest_mismatch"]},
-  "v0_16_0_roadmap_closure": {"status": "supported", "runtime_evidence": ["conformance/assurance-suite-manifest.json", "policy_evidence.feed_descriptors", "release-assets/checksums-v0.16.0.json", "structured_http_audit_events"], "controls": ["descriptor_policy_by_feed_type", "parser_adapter_contract", "external_assurance_suite_ingestion", "release_asset_checksums", "http_audit_event_logging"], "validation": ["scripts/export_conformance_pack.py --check", "scripts/generate_release_checksums.py --check", "scripts/validate_photography_contest_example.py"]},
+  "v0_16_0_roadmap_closure": {"status": "supported", "runtime_evidence": ["conformance/assurance-suite-manifest.json", "policy_evidence.feed_descriptors", "release-assets/checksums-v0.16.0.json", "structured_http_audit_events"], "controls": ["descriptor_policy_by_feed_type", "parser_adapter_contract", "external_assurance_suite_ingestion", "release_asset_checksums", "http_audit_event_logging"], "validation": ["scripts/export_conformance_pack.py --check", "scripts/validate_photography_contest_example.py"]},
   "v0_19_1_trqp_portfolio_alignment": {
     "status": "supported",
     "integration_contract": "portfolio/integration-contract.json",
     "authority_pins": {"trust-systems-meta-model": "0.24.0", "trust-infrastructure-schemas": "0.14.1"},
     "trqp_component_pins": {"TRQP-TSPP": "0.15.0", "trqp-conformance-suite": "1.7.0", "trqp-assurance-hub": "1.10.0"},
-    "validation": ["scripts/validate_portfolio_contract.py", "scripts/generate_release_checksums.py --check"]
+    "validation": ["scripts/validate_portfolio_contract.py"]
+  },
+  "v0_19_2_assurance_hardening": {
+    "status": "supported",
+    "controls": ["decision_evidence_isolation", "typed_process_evidence_validation", "authoritative_repository_gate", "adversarial_falsification_contract"],
+    "validation": ["make validate", "scripts/validate_adversarial_vectors.py"],
+    "release_evidence": "generated by the release workflow and attached to the GitHub release"
   }
 }
