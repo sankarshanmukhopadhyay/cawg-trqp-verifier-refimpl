@@ -1,7 +1,8 @@
 .PHONY: validate flagship-check
 
 # Authoritative repository completion gate. CI MUST invoke this target rather
-# than maintain an independent validator list.
+# than maintain an independent validator list. Release-only checksum material
+# is generated and verified by the release workflow after this gate passes.
 validate:
 	python scripts/validate_repository.py
 	python scripts/validate_portfolio_contract.py
@@ -19,7 +20,6 @@ validate:
 	python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
 	python scripts/validate_photography_contest_example.py
 	python scripts/export_conformance_pack.py --check
-	python scripts/generate_release_checksums.py --check
 	pytest -q
 
 flagship-check:
