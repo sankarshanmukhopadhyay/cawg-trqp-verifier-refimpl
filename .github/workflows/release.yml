@@ -1,0 +1,94 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - pyproject.toml
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Resolve release identity
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(python - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('pyproject.toml').read_text()
+          print(re.search(r'^version\s*=\s*"([^"]+)"', text, re.M).group(1))
+          PY
+          )
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Stop if release already exists
+        id: existing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install release tooling
+        if: steps.existing.outputs.exists == 'false'
+        run: |
+          python -m pip install --upgrade pip build
+          pip install -r requirements-lock.txt
+          pip install -e .
+
+      - name: Run authoritative repository gate
+        if: steps.existing.outputs.exists == 'false'
+        run: make validate
+
+      - name: Generate and verify release evidence
+        if: steps.existing.outputs.exists == 'false'
+        run: |
+          python scripts/generate_release_checksums.py
+          python scripts/generate_release_checksums.py --check
+          python -m build
+
+      - name: Publish GitHub release
+        if: steps.existing.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "CAWG-TRQP Verifier v$VERSION — Decision Isolation and Assurance Hardening" \
+            --notes-file - \
+            dist/* "release-assets/checksums-$TAG.json" <<'EOF'
+          ## Decision isolation and assurance hardening
+
+          This patch release closes the v0.19.x hardening tranche.
+
+          ### Fixed
+          - Isolates transient transport, revocation, descriptor and cache evidence by verification execution context so long-lived verifier instances cannot contaminate another decision receipt.
+          - Rejects malformed process evidence at the typed request boundary, including non-numeric, non-finite and out-of-range confidence values.
+
+          ### Assurance
+          - Makes `make validate` the authoritative repository completion gate used by CI.
+          - Adds machine-readable adversarial falsification vectors for delegated-authority misuse, gateway-route substitution, revoked issuer recognition, partial provenance stripping and replay-root confusion.
+          - Generates and verifies release checksum evidence during the release workflow and attaches it to this release.
+
+          ### Authority boundary
+          No CAWG/C2PA or TRQP normative authority is asserted by this release. Repository authority remains limited to reference implementation behavior, local profiles/fixtures, conformance evidence and generated assurance artifacts.
+          EOF

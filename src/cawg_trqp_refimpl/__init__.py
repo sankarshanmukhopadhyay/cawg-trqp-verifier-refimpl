@@ -1,6 +1,6 @@
 """CAWG-TRQP verifier reference implementation package."""
 
-__version__ = "0.19.1"
+__version__ = "0.19.2"
 
 # Install execution-context evidence descriptors before consumers construct a
 # Verifier. This preserves the public Verifier API while ensuring long-lived
