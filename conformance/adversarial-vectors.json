@@ -1,0 +1,57 @@
+{
+  "schema_version": "2026-09-01",
+  "implementation_identity": "cawg-trqp-refimpl",
+  "authority_scope": "repository-local verifier behavior and conformance evidence; not CAWG/C2PA/TRQP normative authority",
+  "vectors": [
+    {
+      "id": "ADV-DELEGATION-001",
+      "class": "delegated_authority_misuse",
+      "proposition": "An otherwise valid actor cannot exercise authority outside the delegated action/resource scope.",
+      "mutation": "substitute requested action or resource outside delegated scope while retaining actor identity and provenance",
+      "expected_trust_outcome": "rejected",
+      "expected_reason_code": "delegation_scope_mismatch",
+      "assurance_level": "AL3",
+      "risk_mapping": ["authority_scope_expansion", "delegation_misuse"]
+    },
+    {
+      "id": "ADV-GATEWAY-001",
+      "class": "gateway_route_substitution",
+      "proposition": "A valid content/provenance signal cannot survive substitution onto an unattested governed gateway route.",
+      "mutation": "replace the governed gateway route while preserving otherwise valid evidence",
+      "expected_trust_outcome": "rejected",
+      "expected_reason_code": "route_unattested",
+      "assurance_level": "AL3",
+      "risk_mapping": ["route_substitution", "false_independence"]
+    },
+    {
+      "id": "ADV-REVOCATION-001",
+      "class": "revoked_issuer_recognition",
+      "proposition": "Recognition evidence cannot authorize an issuer whose current authority state is revoked.",
+      "mutation": "present previously recognized issuer evidence after revocation",
+      "expected_trust_outcome": "rejected",
+      "expected_reason_code": "revoked",
+      "assurance_level": "AL3",
+      "risk_mapping": ["revocation_bypass", "stale_authority"]
+    },
+    {
+      "id": "ADV-PROVENANCE-001",
+      "class": "partial_provenance_stripping",
+      "proposition": "Removing a mandatory provenance assertion cannot preserve a trusted result.",
+      "mutation": "remove one mandatory provenance assertion while retaining signature-valid remaining assertions",
+      "expected_trust_outcome": "rejected",
+      "expected_reason_code": "missing_mandatory_assertion",
+      "assurance_level": "AL3",
+      "risk_mapping": ["provenance_stripping", "semantic_downgrade"]
+    },
+    {
+      "id": "ADV-REPLAY-001",
+      "class": "replay_root_confusion",
+      "proposition": "Replay evidence rooted in a different trusted-root context cannot be accepted as evidence for the current decision.",
+      "mutation": "replay a valid bundle under a non-matching trusted root",
+      "expected_trust_outcome": "rejected",
+      "expected_reason_code": "trusted_root_mismatch",
+      "assurance_level": "AL4",
+      "risk_mapping": ["replay_confusion", "evidence_context_substitution"]
+    }
+  ]
+}
