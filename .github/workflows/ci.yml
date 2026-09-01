@@ -18,18 +18,6 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: pip install -r requirements-lock.txt
       - run: pip install -e .
-      - run: python scripts/validate_examples.py
-      - run: python scripts/validate_walkthrough_examples.py
-      - run: python scripts/validate_walkthrough_diagrams.py
-      - run: python scripts/validate_walkthrough_quality.py
-      - run: python scripts/validate_adoption_journeys.py
-      - run: python scripts/validate_repository.py
-      - run: python scripts/validate_portfolio_contract.py
-      - run: python scripts/validate_learning_paths.py
-      - run: python scripts/validate_feed_descriptors.py
-      - run: python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
-      - run: python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
-      - run: python scripts/validate_photography_contest_example.py
-      - run: python scripts/export_conformance_pack.py --check
-      - run: python scripts/generate_release_checksums.py --check
-      - run: pytest -q
+      # Keep one authoritative completion contract: local and CI validation
+      # both execute the repository-native Make target.
+      - run: make validate
