@@ -7,77 +7,60 @@ nav_order: 5
 ---
 # Roadmap
 
-## Completed Through v0.16.0
+## Completed foundation through v0.16.0
 
-v0.16.0 closes the practical roadmap items that were open after the v0.15.0 hardening release.
+v0.16.0 closed the practical roadmap items that were open after the v0.15.0 hardening release.
 
-### External Assurance-Suite Ingestion
+### External assurance-suite ingestion
 
-- Added `conformance/assurance-suite-manifest.json`.
-- Added `scripts/export_conformance_pack.py`.
+- Added `conformance/assurance-suite-manifest.json` and `scripts/export_conformance_pack.py`.
 - Mapped fixture packages to implementation identity, assurance level, vector class, replay contract, and evidence surfaces.
-- Added validation support with `python scripts/export_conformance_pack.py --check`.
+- Added machine validation with `python scripts/export_conformance_pack.py --check`.
 
-### Binary CAWG/C2PA Parser Adapter Boundary
+### Binary CAWG/C2PA parser adapter boundary
 
 - Added `src/cawg_trqp_refimpl/manifest_adapters.py`.
-- Preserved the JSON fixture and C2PA-style JSON envelope path through `JsonManifestAdapter`.
-- Added a reserved `C2PABinaryManifestAdapter` boundary with deterministic unsupported-backend behavior.
+- Preserved JSON fixture and C2PA-style JSON envelope processing through `JsonManifestAdapter`.
+- Reserved `C2PABinaryManifestAdapter` with deterministic unsupported-backend behavior.
 - Documented the stable signal contract in `docs/parser-adapter-contract.md`.
 
-### Descriptor Policy Configuration
+### Descriptor policy and operational hardening
 
-- Added `controls.descriptor_policy` to verification profiles.
-- Added `observe`, `warn`, and `fail` semantics for policy, revocation, snapshot, and gateway-route descriptors.
-- Updated built-in profiles and schema validation.
-- Documented policy behavior in `docs/descriptor-policy.md`.
+- Added `controls.descriptor_policy` with `observe`, `warn`, and `fail` semantics.
+- Added structured HTTP audit events and operational deployment guidance.
+- Added release checksum tooling and refreshed signed/replayable evidence artifacts.
 
-### Operational Hardening
+## v0.17.0–v0.19.1 progression
 
-- Added structured HTTP audit events for verification and audit-bundle routes.
-- Added deployment guidance in `docs/operational-hardening.md`.
-- Added release checksum tooling and `release-assets/checksums-v0.16.0.json`.
-- Refreshed release validation commands and readiness checks.
+Subsequent releases moved the repository from a broad executable verifier surface toward a more explicit adoption and assurance contract. The current repository includes executable adoption journeys, operator/public-safety assurance walkthroughs, machine-readable portfolio assurance evidence, scale/cache assurance guidance, and an explicit repository governance/status model.
 
-### Evidence and Artifact Refresh
+The repository remains **pilot-ready**, not an independent certification service. CAWG/C2PA and TRQP normative authority remains upstream; this repository owns only its reference implementation behavior, repository-local profiles/fixtures, and generated assurance evidence.
 
-- Refreshed signed snapshot evidence.
-- Regenerated profile-bound fixtures and expected results.
-- Regenerated reproducibility and audit-bundle examples.
-- Regenerated photography contest replay evidence.
-- Restored a passing validation posture across scripts and tests.
+## Current hardening tranche
 
-## Current Release Posture
+The next advancement wave is intentionally falsification- and correctness-driven rather than another walkthrough expansion.
 
-The repository is an executable CAWG-TRQP assurance surface. It supports:
+1. [#38 — isolate verifier evidence by decision](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/38): remove cross-decision evidence contamination risk from long-lived verifier instances.
+2. [#39 — validate process evidence before verification](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/39): make malformed external evidence fail deterministically at the typed request boundary.
+3. [#40 — make the repository completion gate authoritative](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/40): ensure local and CI assurance execute one machine-verifiable validation contract.
+4. [#41 — expand adversarial verification vectors](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/41): add delegated-authority misuse, gateway substitution, revoked issuer, provenance stripping, and replay-root confusion vectors.
 
-- schema-backed verification profiles
-- signed feed descriptors
-- deterministic replay bundles
-- canonical fixture exchange
-- HTTP service hardening
-- structured audit events
-- external assurance-suite ingestion
-- release asset checksums
+A patch release is appropriate once the correctness fixes, validation convergence, adversarial evidence, and roadmap/status evidence are complete and the authoritative repository gate passes.
 
-## Future Work
+## Deferred capability work
 
-### 1. Real Binary CAWG/C2PA Backend
+### Real binary CAWG/C2PA backend
 
-Integrate a redistribution-safe binary C2PA parser behind `ManifestParserAdapter` when deterministic fixture validation and dependency licensing are settled.
+Integrate a redistribution-safe binary C2PA parser behind `ManifestParserAdapter` only when deterministic fixture validation, dependency behavior, and licensing are settled. The adapter boundary is intentionally retained until those conditions can be evidenced.
 
-### 2. Expanded Negative Vector Library
+### Production service packaging
 
-Add more adversarial fixtures for delegated authority misuse, gateway route substitution, revoked issuer recognition, partial provenance stripping, and replay-root confusion.
+Container/reverse-proxy examples, rate-limit policy, structured log routing, health/readiness probes, distributed cache adapters, single-flight refresh, and environment-specific load evidence remain deployment work. The repository should not convert benchmark contracts into fixed production throughput claims.
 
-### 3. Production Service Packaging
+### Cross-repository alignment
 
-Add a containerized deployment profile with reverse-proxy examples, rate-limit policy, structured log routing, and health/readiness probes.
+Continue mapping assurance-suite, descriptor-policy, and adversarial-vector contracts into related TRQP conformance, assurance hub, TSPP, and trust infrastructure schema repositories where those repositories own the relevant contract surface.
 
-### 4. Cross-Repository Alignment
+## Completion rule
 
-Map the assurance-suite manifest and descriptor policy controls into related TRQP conformance, assurance hub, TSPP, and trust infrastructure schema repositories.
-
-## Scale and cache assurance
-
-The reference implementation now provides persistent HTTP cache semantics, replaceable cache interfaces, scale architecture guidance and reproducible benchmark contracts. Production-grade distributed cache adapters, single-flight refresh and environment-specific load evidence remain deployment work rather than fixed throughput claims.
+`make validate` is the repository-native completion gate. A roadmap item is not considered complete merely because documentation or code exists: its claimed behavior must have executable validation and reviewable evidence appropriate to the claim.
