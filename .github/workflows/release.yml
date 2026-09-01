@@ -9,6 +9,7 @@ on:
       - portfolio/integration-contract.json
       - conformance/assurance-suite-manifest.json
       - scripts/**
+      - tests/**
       - .github/workflows/release.yml
 
 permissions:
