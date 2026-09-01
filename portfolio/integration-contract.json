@@ -6,7 +6,7 @@
   },
   "repository": {
     "name": "cawg-trqp-verifier-refimpl",
-    "version": "0.19.1",
+    "version": "0.19.2",
     "role": "reference-implementation",
     "authority_scope": "CAWG/C2PA evidence verification using TRQP-governed trust decisions"
   },

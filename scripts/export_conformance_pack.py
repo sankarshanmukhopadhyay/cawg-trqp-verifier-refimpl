@@ -42,7 +42,7 @@ def _fixture_entry(path: Path) -> dict:
 def build_manifest() -> dict:
     fixtures = [_fixture_entry(path) for path in sorted(FIXTURE_ROOT.iterdir()) if path.is_dir()]
     return {
-        "schema_version": "2026-08-20",
+        "schema_version": "2026-09-01",
         "release": _release(),
         "implementation_identity": {
             "id": "cawg-trqp-refimpl",

@@ -234,12 +234,12 @@ An AI agent may prepare, translate, summarize, queue, redistribute, or publish p
 |---|---|
 | Agent role | Distinguish producer, translator, recommender, publisher, redistributor, and verifier roles. |
 | Principal | Bind the agent to the competent authority or an explicitly delegated operational unit. |
-| Mandate | Require authority for the exact requested publication operation. |
+| Delegated authority | Require authority for the exact requested publication operation. |
 | Incident scope | Bind temporary authority to the incident, geography, audience, and operational period where applicable. |
 | Tool/sub-agent use | Record material downstream publishing tools and prohibit unauthorized sub-delegation. |
 | Revocation | Terminate new actions immediately when the mandate, principal authority, or tool authorization is revoked. |
 | Human review | Preserve policy-required approval points for high-consequence or conflicting communications. |
-| Audit/redress | Retain principal, mandate, policy epoch, provenance/authority evidence, agent/tool lineage, and correction references. |
+| Audit and redress | Retain principal, mandate, policy epoch, provenance/authority evidence, agent/tool lineage, and correction references. |
 
 An authenticated agent with access to an official publishing API is not thereby authorized to issue an emergency communication. Tool access and actor identity are evidence inputs; the scoped mandate remains the governing authority.
 
