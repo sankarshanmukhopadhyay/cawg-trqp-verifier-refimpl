@@ -14,6 +14,7 @@ validate:
 	python scripts/validate_adoption_journeys.py
 	python scripts/validate_learning_paths.py
 	python scripts/validate_feed_descriptors.py
+	python scripts/validate_adversarial_vectors.py
 	python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
 	python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
 	python scripts/validate_photography_contest_example.py
