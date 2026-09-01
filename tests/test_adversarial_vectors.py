@@ -1,10 +1,16 @@
+import importlib.util
 import json
 from pathlib import Path
 
-from scripts.validate_adversarial_vectors import REQUIRED_CLASSES, validate
-
 
 ROOT = Path(__file__).resolve().parents[1]
+VALIDATOR = ROOT / "scripts" / "validate_adversarial_vectors.py"
+spec = importlib.util.spec_from_file_location("validate_adversarial_vectors", VALIDATOR)
+assert spec is not None and spec.loader is not None
+validator = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(validator)
+REQUIRED_CLASSES = validator.REQUIRED_CLASSES
+validate = validator.validate
 
 
 def test_adversarial_vector_contract_is_valid():
