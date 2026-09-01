@@ -6,6 +6,10 @@ on:
     branches: [main]
     paths:
       - pyproject.toml
+      - portfolio/integration-contract.json
+      - conformance/assurance-suite-manifest.json
+      - scripts/export_conformance_pack.py
+      - .github/workflows/release.yml
 
 permissions:
   contents: write
