@@ -8,7 +8,7 @@ on:
       - pyproject.toml
       - portfolio/integration-contract.json
       - conformance/assurance-suite-manifest.json
-      - scripts/export_conformance_pack.py
+      - scripts/**
       - .github/workflows/release.yml
 
 permissions:
