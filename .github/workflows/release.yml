@@ -7,7 +7,7 @@ on:
     paths:
       - pyproject.toml
       - portfolio/integration-contract.json
-      - conformance/assurance-suite-manifest.json
+      - conformance/**
       - scripts/**
       - tests/**
       - .github/workflows/release.yml
