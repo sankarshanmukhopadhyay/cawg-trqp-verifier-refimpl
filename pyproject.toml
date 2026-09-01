@@ -1,3 +1,4 @@
+# Release identity changes to this file trigger the evidence-gated Release workflow.
 [build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
