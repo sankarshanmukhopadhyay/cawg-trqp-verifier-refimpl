@@ -1,3 +1,9 @@
+---
+layout: default
+title: Public Repository Baseline
+nav_exclude: true
+---
+
 # Public repository baseline
 
 This record captures the controls reviewed under issue #37. It is repository assurance evidence, not external certification.
