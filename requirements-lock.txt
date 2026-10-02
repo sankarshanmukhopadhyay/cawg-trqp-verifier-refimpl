@@ -5,7 +5,7 @@ click==8.5.0
 itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.3
-Werkzeug==3.1.8
+Werkzeug==3.1.9
 cryptography==50.0.1
 cffi==2.1.1
 pycparser==3.0
@@ -20,6 +20,6 @@ iniconfig==2.3.0
 packaging==26.3
 pluggy==1.6.0
 Pygments==2.21.0
-coverage==7.16.0
+coverage==7.16.2
 typing_extensions==4.16.0
 PyYAML==6.0.3
