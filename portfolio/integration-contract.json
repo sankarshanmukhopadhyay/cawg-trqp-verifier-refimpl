@@ -41,7 +41,7 @@
     "conformance/compatibility-matrix.json",
     "conformance/assurance-suite-manifest.json",
     "conformance/risk-to-test-map.yaml",
-    "release-assets/checksums-v0.19.1.json"
+    "release-assets/checksums-v0.19.2.json"
   ],
   "invalidation_triggers": [
     "semantic-authority-version-incompatible",
