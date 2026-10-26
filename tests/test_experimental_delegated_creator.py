@@ -29,7 +29,6 @@ def case():
     (lambda c: c.update(action="transform"), "requested_action_out_of_scope", "denied"),
     (lambda c: c["chain"][0].update(not_after="2026-10-22T00:00:00Z"), "not_valid_at_signing", "denied"),
     (lambda c: c["chain"][0].update(revoked_at="2026-10-23T09:00:00Z"), "revoked_at_signing", "denied"),
-    (lambda c: c["chain"][0].update(revoked_at="2026-10-23T10:00:00.500000Z"), "revoked_at_evaluation", "denied"),
     (lambda c: c["links"][0]["content"].update(consent=False), "linked_evidence_integrity", "indeterminate"),
     (lambda c: c.update(actor="intruder"), "actor_not_delegate", "denied"),
     (lambda c: c["chain"][0].update(evidence_uri="https://example.test/unknown"), "delegation_evidence_unavailable", "indeterminate"),
@@ -118,3 +117,33 @@ def test_whole_chain_credential_classification():
     assert evaluate(c)["coverage"] == "delegator-covered"
     c["chain"][1]["credential_verified"] = True
     assert evaluate(c)["coverage"] == "credential-backed"
+
+def test_later_revocation_preserves_signing_time_authority():
+    c = case()
+    c["evaluated_at"] = "2026-11-03T00:00:00Z"
+    c["chain"][0]["revoked_at"] = "2026-10-24T00:00:00Z"
+    result = evaluate(c)
+    assert result["historical_authority"] == "authorized"
+    assert result["current_authority"] == "denied"
+    assert result["authority"] == "authorized"
+    assert result["evidence_provenance"]["signing_time"] == "caller_supplied_untrusted"
+
+def test_expired_at_evaluation_preserves_signing_time_authority():
+    c = case()
+    c["evaluated_at"] = "2026-11-03T00:00:00Z"
+    result = evaluate(c)
+    assert result["historical_authority"] == "authorized"
+    assert result["current_authority"] == "denied"
+
+def test_new_signature_after_revocation_fails():
+    c = case()
+    c["signed_at"] = "2026-10-25T00:00:00Z"
+    c["chain"][0]["revoked_at"] = "2026-10-24T00:00:00Z"
+    assert evaluate(c)["reason"] == "revoked_at_signing"
+
+def test_credential_flag_does_not_imply_independent_verification():
+    c = case()
+    c["chain"][0]["credential_verified"] = True
+    r = evaluate(c)
+    assert r["coverage"] == "credential-backed"
+    assert r["evidence_provenance"]["credential"] == "caller_supplied_simulation"
