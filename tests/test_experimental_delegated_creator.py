@@ -99,3 +99,22 @@ def test_indeterminate_generator_policy_does_not_authorize():
 def test_replay_is_deterministic():
     c=case()
     assert evaluate(c)==evaluate(copy.deepcopy(c))
+
+def test_child_cannot_precede_parent_validity():
+    c = case()
+    c["actor"] = "agent"
+    child = copy.deepcopy(c["chain"][0])
+    child.update(delegator="studio", delegate="agent", not_before="2026-09-30T00:00:00Z")
+    c["chain"].append(child)
+    assert evaluate(c)["reason"] == "scope_or_duration_escalation"
+
+def test_whole_chain_credential_classification():
+    c = case()
+    c["actor"] = "agent"
+    c["chain"][0]["credential_verified"] = True
+    child = copy.deepcopy(c["chain"][0])
+    child.update(delegator="studio", delegate="agent", credential_verified=False)
+    c["chain"].append(child)
+    assert evaluate(c)["coverage"] == "delegator-covered"
+    c["chain"][1]["credential_verified"] = True
+    assert evaluate(c)["coverage"] == "credential-backed"
