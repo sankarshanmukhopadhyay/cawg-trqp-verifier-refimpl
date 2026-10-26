@@ -30,22 +30,19 @@ v0.16.0 closed the practical roadmap items that were open after the v0.15.0 hard
 - Added structured HTTP audit events and operational deployment guidance.
 - Added release checksum tooling and refreshed signed/replayable evidence artifacts.
 
-## v0.17.0–v0.19.1 progression
+## v0.17.0–v0.19.2 progression
 
 Subsequent releases moved the repository from a broad executable verifier surface toward a more explicit adoption and assurance contract. The current repository includes executable adoption journeys, operator/public-safety assurance walkthroughs, machine-readable portfolio assurance evidence, scale/cache assurance guidance, and an explicit repository governance/status model.
 
 The repository remains **pilot-ready**, not an independent certification service. CAWG/C2PA and TRQP normative authority remains upstream; this repository owns only its reference implementation behavior, repository-local profiles/fixtures, and generated assurance evidence.
 
-## Current hardening tranche
+## Completed v0.19.2 hardening tranche
 
-The next advancement wave is intentionally falsification- and correctness-driven rather than another walkthrough expansion.
+The [v0.19.2 release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2) closes [#38](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/38), [#39](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/39), [#40](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/40) and [#41](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/41). All four are completed, not current work.
 
-1. [#38 — isolate verifier evidence by decision](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/38): remove cross-decision evidence contamination risk from long-lived verifier instances.
-2. [#39 — validate process evidence before verification](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/39): make malformed external evidence fail deterministically at the typed request boundary.
-3. [#40 — make the repository completion gate authoritative](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/40): ensure local and CI assurance execute one machine-verifiable validation contract.
-4. [#41 — expand adversarial verification vectors](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/41): add delegated-authority misuse, gateway substitution, revoked issuer, provenance stripping, and replay-root confusion vectors.
+## Post-v0.19.2 experimental evidence gate
 
-A patch release is appropriate once the correctness fixes, validation convergence, adversarial evidence, and roadmap/status evidence are complete and the authoritative repository gate passes.
+[Issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75) tracks Delegated Creator feasibility and optional external C2PA validation. Independent C2PA/TRQP interoperability, identity/trust anchoring, signing-time assurance and actual delegated C2PA coverage remain **not demonstrated**. The next useful work is independently reproducible real-asset and trust-endpoint evidence, not further synthetic scenario expansion.
 
 ## Deferred capability work
 
