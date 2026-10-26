@@ -23,6 +23,10 @@ Use the guides as a progressive implementation journey rather than isolated refe
 
 The executable adoption journey is also represented in `examples/adoption-journeys/http-to-audit-bundle.json`. CI runs `python scripts/validate_adoption_journeys.py` so the published journey must continue to resolve to live OpenAPI endpoints, repository files, commands, and evidence surfaces.
 
+## Experimental development path
+
+The [external C2PA validation boundary](../external-c2pa-validation-boundary.md) and [Delegated Creator profile](../agentic-ai/experimental-delegated-creator-profile.md) are **post-v0.19.2 experimental work**. Their synthetic/local and mock-driven tests do not establish real-world interoperability, trusted identity or authority. They are not required for the stable adoption path above.
+
 ## Adoption completion criteria
 
 An adopter should be able to demonstrate more than a successful API call. The minimum evidence chain is:

@@ -41,6 +41,29 @@ flowchart TD
 7. Produce a verification result with policy evidence.
 8. Optionally export an audit bundle or compare the result against a canonical fixture.
 
+## Decision disposition and evidence lifecycle
+
+This diagram is a conceptual assurance model, **not** a claim that the code persists a literal workflow state machine. The verifier issues bounded results; corrections generate new linked evidence rather than silently mutating historical receipts.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Received
+    Received --> Invalid: invalid request
+    Received --> EvidenceResolved: input accepted
+    EvidenceResolved --> Denied: governed condition fails
+    EvidenceResolved --> Indeterminate: required evidence missing or stale
+    EvidenceResolved --> Review: conflicting authority evidence
+    EvidenceResolved --> Allowed: required conditions established
+    Denied --> EvidenceRecorded
+    Indeterminate --> EvidenceRecorded
+    Review --> EvidenceRecorded
+    Allowed --> EvidenceRecorded
+    EvidenceRecorded --> Replayable: pinned inputs preserved
+    Replayable --> Superseded: correction generates new receipt
+```
+
+The [external C2PA validator adapter](external-c2pa-validation-boundary.md) on current `main` is experimental. Tool-validated manifest integrity does not establish delegated authority, signer trust or independently verified interoperability.
+
 ## Core control surfaces
 
 ### Verification profile

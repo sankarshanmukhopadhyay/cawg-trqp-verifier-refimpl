@@ -6,6 +6,22 @@ nav_order: 2
 ---
 # Non-Technical Overview
 
+## At a glance
+
+The verifier evaluates a **particular actor, action and resource** under recorded policy and trust evidence. It does not determine whether content is factually true or whether an institution should publish it.
+
+```mermaid
+flowchart LR
+    A[Asset and provenance evidence] --> B[Validate and normalize]
+    B --> C[Check recognition and authority]
+    C --> D[Evaluate policy and revocation]
+    D --> E{Governed disposition}
+    E --> F[Decision receipt]
+    F --> G[Audit evidence and replay]
+```
+
+An **allow** is bounded to the evaluated actor, action and resource; **deny** records a failed condition; **review** preserves a condition for institutional judgment; **indeterminate** means required evidence was not established. Neither review nor indeterminate grants authority.
+
 ## What this repository does
 
 This repository demonstrates how a trust decision can be made in a way that is not only automated, but also explainable, testable, and portable.
@@ -43,6 +59,10 @@ This makes the repository more useful for:
 - interoperability programs running cross-implementation checks
 - assurance and audit functions reviewing whether the system fails safely and reproducibly
 - implementers who need a compact starting point for TRQP-aligned verification work
+
+## Released versus experimental capability
+
+The latest released version is [v0.19.2](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2). Current `main` also contains [experimental external C2PA validation](external-c2pa-validation-boundary.md) and Delegated Creator work. Neither is independently proven interoperable with a real C2PA/TRQP trust environment.
 
 ## Bottom line
 

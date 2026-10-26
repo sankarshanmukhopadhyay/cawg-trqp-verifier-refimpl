@@ -40,8 +40,7 @@
   "local_evidence": [
     "conformance/compatibility-matrix.json",
     "conformance/assurance-suite-manifest.json",
-    "conformance/risk-to-test-map.yaml",
-    "release-assets/checksums-v0.19.1.json"
+    "conformance/risk-to-test-map.yaml"
   ],
   "invalidation_triggers": [
     "semantic-authority-version-incompatible",
@@ -51,5 +50,10 @@
     "release-identity-mismatch"
   ],
   "invalidation_effect": "integration-status-invalid",
-  "authority_statement": "This repository governs only its implementation, repository-local schemas, profiles, fixtures, and evidence. It does not govern CAWG, C2PA, or TRQP specifications."
+  "authority_statement": "This repository governs only its implementation, repository-local schemas, profiles, fixtures, and evidence. It does not govern CAWG, C2PA, or TRQP specifications.",
+  "published_release_evidence": {
+    "tag": "v0.19.2",
+    "checksum_asset": "https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/download/v0.19.2/checksums-v0.19.2.json",
+    "location": "GitHub release asset; not a file on main"
+  }
 }

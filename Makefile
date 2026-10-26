@@ -4,6 +4,7 @@
 # than maintain an independent validator list. Release-only checksum material
 # is generated and verified by the release workflow after this gate passes.
 validate:
+	python scripts/validate_publication.py
 	python scripts/validate_repository.py
 	python scripts/validate_portfolio_contract.py
 	python scripts/validate_api_contract.py

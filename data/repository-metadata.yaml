@@ -4,7 +4,7 @@ portfolio_tier: flagship
 lifecycle: active
 role: reference-verifier-implementation
 stability: beta
-current_version: "0.19.0"
+current_version: "0.19.2"
 primary_output: Decision receipt and replayable audit bundle
 authority:
   owns:
@@ -18,5 +18,5 @@ authority:
 validation_command: make validate
 documentation_url: https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/
 release_policy: substantive
-last_portfolio_review: 2026-07-15
-next_portfolio_review: 2026-10-15
+last_portfolio_review: 2026-10-26
+next_portfolio_review: 2027-01-26
