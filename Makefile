@@ -21,7 +21,7 @@ validate:
 	python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
 	python scripts/validate_photography_contest_example.py
 	python scripts/export_conformance_pack.py --check
-	pytest -q tests/test_experimental_delegated_creator.py tests/test_taskforce_five_worlds.py tests/test_experimental_assertion_order.py tests/test_taskforce_assurance_boundary.py tests/test_taskforce_demo_cli.py tests/test_experimental_delegation_signature.py
+	pytest -q tests/test_experimental_delegated_creator.py tests/test_taskforce_five_worlds.py tests/test_experimental_assertion_order.py tests/test_taskforce_assurance_boundary.py tests/test_taskforce_demo_cli.py tests/test_experimental_delegation_signature.py tests/test_taskforce_report_schema.py
 	pytest -q
 
 flagship-check:
