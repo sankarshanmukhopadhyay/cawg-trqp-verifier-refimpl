@@ -46,6 +46,7 @@ An agent can appear in one or more roles without gaining authority from another 
 - [Agent Role Model](agent-role-model.md)
 - [Delegation and Authority](delegation-and-authority.md)
 - [Delegated Creator TRQP Traceability](delegated-creator-trqp-traceability.md) (informative taskforce gap analysis)
+- [Experimental Delegated Creator Profile](experimental-delegated-creator-profile.md) (versioned local feasibility experiment)
 - [Verification and Decision Boundaries](agentic-verification-boundaries.md)
 - [Agentic Walkthrough Pattern](agentic-walkthrough-pattern.md)
 
