@@ -3,7 +3,8 @@
   "basis": {
     "source": "CAWG Delegated Creator Taskforce kick-off recap, meeting 2026-10-23, circulated 2026-10-25",
     "source_scope": "Summary email only; referenced minutes, slides, Padlet and issue discussions are not treated as reviewed sources.",
-    "authority": "informative repository-local mapping; not CAWG/TRQP normative conformance"
+    "authority": "informative repository-local mapping; not CAWG/TRQP normative conformance",
+    "feasibility_note": "Experimental independent implementation may proceed without CAWG adoption; status still measures satisfaction of the taskforce's upstream-defined semantic contract."
   },
   "status_definitions": {
     "represented": "Directly supported by inspected repository evidence, not an upstream normative adoption claim.",
@@ -21,7 +22,15 @@
         "docs/agentic-ai/index.md"
       ],
       "gap": "Walkthrough portfolio and agent archetypes exist; the five taskforce creative worlds and taskforce-approved stories are not established.",
-      "next": "await-taskforce"
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established",
+      "experimental_evidence": [
+        "conformance/experimental-delegated-creator-profile.json",
+        "docs/agentic-ai/experimental-delegated-creator-profile.md",
+        "src/cawg_trqp_refimpl/experimental_delegated_creator.py",
+        "tests/test_experimental_delegated_creator.py"
+      ]
     },
     {
       "id": "DC-02",
@@ -32,7 +41,15 @@
         "schemas/authorization-request.schema.json"
       ],
       "gap": "Temporal validity and authority evidence are described, but a CAWG manifest binding and linked consent/rights contract are not established by these artifacts.",
-      "next": "upstream-semantics"
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established",
+      "experimental_evidence": [
+        "conformance/experimental-delegated-creator-profile.json",
+        "docs/agentic-ai/experimental-delegated-creator-profile.md",
+        "src/cawg_trqp_refimpl/experimental_delegated_creator.py",
+        "tests/test_experimental_delegated_creator.py"
+      ]
     },
     {
       "id": "DC-03",
@@ -41,8 +58,16 @@
       "evidence": [
         "docs/agentic-ai/delegation-and-authority.md"
       ],
-      "gap": "Existing non-positive verifier outcomes are not equivalent to the proposed taskforce three-tier coverage semantics.",
-      "next": "upstream-semantics"
+      "gap": "Existing non-positive verifier outcomes are not equivalent to the proposed taskforce three-tier coverage semantics. A provisional, expressly non-normative experimental analogue is now implemented separately.",
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established",
+      "experimental_evidence": [
+        "conformance/experimental-delegated-creator-profile.json",
+        "docs/agentic-ai/experimental-delegated-creator-profile.md",
+        "src/cawg_trqp_refimpl/experimental_delegated_creator.py",
+        "tests/test_experimental_delegated_creator.py"
+      ]
     },
     {
       "id": "DC-04",
@@ -52,7 +77,15 @@
         "docs/agentic-ai/delegation-and-authority.md"
       ],
       "gap": "Delegation tuple includes depth, temporal validity, and principal; no taskforce-established limit, chain representation, or root-consent evidence requirement is demonstrated.",
-      "next": "upstream-semantics"
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established",
+      "experimental_evidence": [
+        "conformance/experimental-delegated-creator-profile.json",
+        "docs/agentic-ai/experimental-delegated-creator-profile.md",
+        "src/cawg_trqp_refimpl/experimental_delegated_creator.py",
+        "tests/test_experimental_delegated_creator.py"
+      ]
     },
     {
       "id": "DC-05",
@@ -61,8 +94,16 @@
       "evidence": [
         "docs/agentic-ai/index.md"
       ],
-      "gap": "Agent roles are discussed, but generator-as-third-signer and enforceable rejection obligations are not established by this repository evidence.",
-      "next": "upstream-semantics"
+      "gap": "Agent roles are discussed, but generator-as-third-signer and enforceable rejection obligations are not established by this repository evidence. A provisional, expressly non-normative experimental analogue is now implemented separately.",
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established",
+      "experimental_evidence": [
+        "conformance/experimental-delegated-creator-profile.json",
+        "docs/agentic-ai/experimental-delegated-creator-profile.md",
+        "src/cawg_trqp_refimpl/experimental_delegated_creator.py",
+        "tests/test_experimental_delegated_creator.py"
+      ]
     },
     {
       "id": "DC-06",
@@ -76,7 +117,15 @@
         "GOVERNANCE.md"
       ],
       "gap": "Implementation profiles constrain operational verification; they do not constitute a CAWG-authorized domain semantic TRQP profile.",
-      "next": "upstream-semantics"
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established",
+      "experimental_evidence": [
+        "conformance/experimental-delegated-creator-profile.json",
+        "docs/agentic-ai/experimental-delegated-creator-profile.md",
+        "src/cawg_trqp_refimpl/experimental_delegated_creator.py",
+        "tests/test_experimental_delegated_creator.py"
+      ]
     },
     {
       "id": "DC-07",
@@ -86,7 +135,8 @@
         "docs/sections/walkthroughs-index.md"
       ],
       "gap": "Survey administration and adoption evidence are taskforce activities, not reference-verifier behavior.",
-      "next": "await-taskforce"
+      "next": "await-taskforce",
+      "experimental_feasibility": "external"
     }
   ]
 }
