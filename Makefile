@@ -12,6 +12,7 @@ validate:
 	python scripts/validate_walkthrough_diagrams.py
 	python scripts/validate_walkthrough_quality.py
 	python scripts/validate_agentic_assurance.py
+	python scripts/validate_delegated_creator_traceability.py
 	python scripts/validate_adoption_journeys.py
 	python scripts/validate_learning_paths.py
 	python scripts/validate_feed_descriptors.py
