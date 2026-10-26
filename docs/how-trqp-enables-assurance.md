@@ -321,7 +321,7 @@ This model produces assurance because it is:
 
 This repository fits into the broader TRQP ecosystem:
 
-- TRQP Hub: defines control objectives and assurance expectations
+- TRQP Assurance Hub: aggregates evidence under its separately governed assurance contract
 - Conformance Suite: validates protocol and behavior
 - TSPP: defines trust service provider posture
 
