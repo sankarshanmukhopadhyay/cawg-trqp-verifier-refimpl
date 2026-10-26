@@ -9,6 +9,10 @@ nav_order: 9
 
 Even when the repository is not being formally released, it still needs a disciplined handoff surface.
 
+## Published release versus current branch
+
+The latest published release is [v0.19.2](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2), whose wheel, source archive and checksum evidence are attached to GitHub Releases. Current `main` may contain later experimental work; resolve reproducible release evidence at the release tag rather than treating `main` as an immutable release.
+
 ## Core handoff artifacts
 
 - canonical fixture packages under `fixtures/profile-bound/`
