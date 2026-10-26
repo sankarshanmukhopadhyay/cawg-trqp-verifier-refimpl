@@ -56,3 +56,18 @@ CI includes `tests/test_taskforce_assurance_boundary.py`, including deliberate f
 ### DCO privacy
 
 Contributors using private email must set their Git author/committer to the **GitHub-confirmed** account noreply address and use a matching `Signed-off-by` trailer. The address is available in GitHub Settings → Emails. The repository's automated GitHub contribution route must be checked for matching author and trailer; a successful DCO workflow is the acceptance evidence. Do not rewrite previously published commits merely to obscure signoffs.
+
+## Experimental real cryptographic statement binding
+
+The [Ed25519 statement verifier](../../src/cawg_trqp_refimpl/experimental_delegation_signature.py) validates a real signature over canonical JSON and a domain-separated experimental delegation statement, using a caller-supplied set of pinned public keys. [Tests](../../tests/test_experimental_delegation_signature.py) verify signature bytes and reject changed scope, actor, validity period, a wrong key, an unknown key and malformed signatures.
+
+**A valid signature proves only possession of the corresponding private key and integrity of the covered statement.** It does **not** establish that the key belongs to the delegator, that CAWG accepts the issuer, that a trusted signing time exists, that revocation is current or historical, or that the statement is bound to a C2PA manifest. The fixture private key is public test material and not a deployable trust anchor. This experimental signature module is independent of the authority simulation and does not upgrade `assured_authority`.
+
+Example:
+
+```python
+from cawg_trqp_refimpl.experimental_delegation_signature import verify_statement
+result = verify_statement(envelope, {"fixture:publisher": pinned_ed25519_raw_public_key})
+```
+
+The experimental format must not be described as a CAWG delegated-creator assertion or interoperable credential. Real CAWG/C2PA conformance still requires the adopted covered-assertion layout, trusted identities, timestamp evidence and interoperability testing.
