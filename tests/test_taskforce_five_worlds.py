@@ -1,29 +1,12 @@
 """Portable five-world taskforce story corpus; normalized synthetic inputs only."""
 import copy
-import hashlib
 import json
 from pathlib import Path
 import pytest
 from cawg_trqp_refimpl.experimental_delegated_creator import evaluate
+from cawg_trqp_refimpl.taskforce_scenarios import make_case
 
 DATA = json.loads((Path(__file__).resolve().parents[1] / "conformance" / "delegated-creator-five-world-scenarios.json").read_text())
-def make_case(row):
-    content = {"delegation_reference": row["name"], "agreement": "private off-manifest"}
-    uri = "https://example.test/evidence/" + row["name"]
-    digest = hashlib.sha256(json.dumps(content, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
-    chain = []
-    for root, delegate in row["links"]:
-        chain.append(dict(delegator=root, delegate=delegate, actions=[row["action"]],
-                          resources=[row["resource"]], purposes=[row["purpose"]],
-                          not_before=row["start"], not_after=row["end"],
-                          redelegation=True, revoked_at=None, evidence_uri=uri,
-                          credential_verified=False))
-    return dict(id=row["name"], root_principal=row["root"], actor=row["actor"],
-                action=row["action"], resource=row["resource"], purpose=row["purpose"],
-                signed_at=row["sign"], evaluated_at=row["now"], chain=chain,
-                links=[dict(uri=uri, sha256=digest, content=content)],
-                generator=dict(id="taskforce-generator", reject_on_unverified=True))
-
 @pytest.mark.parametrize("row", DATA["scenarios"], ids=lambda row: row["name"])
 def test_story_positive_and_negative(row):
     c = make_case(row)
