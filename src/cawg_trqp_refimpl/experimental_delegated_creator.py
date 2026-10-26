@@ -91,9 +91,9 @@ def evaluate(case: dict[str, Any]) -> dict[str, Any]:
         return finish("chain_depth_exceeded")
     previous = case["root_principal"]
     prev_actions = prev_resources = prev_purposes = None
-    prev_end = None
+    prev_start = prev_end = None
     visited = {previous}
-    credential_backed = False
+    credential_backed = True
     normalized = []
     for i, edge in enumerate(chain):
         required = {"delegator", "delegate", "actions", "resources", "purposes", "not_before", "not_after",
@@ -120,7 +120,7 @@ def evaluate(case: dict[str, Any]) -> dict[str, Any]:
             return finish("chain_cycle")
         if i and not chain[i - 1]["redelegation"]:
             return finish("redelegation_forbidden")
-        if i and (not actions <= prev_actions or not resources <= prev_resources or not purposes <= prev_purposes or end > prev_end):
+        if i and (not actions <= prev_actions or not resources <= prev_resources or not purposes <= prev_purposes or start < prev_start or end > prev_end):
             return finish("scope_or_duration_escalation")
         if (end - start).total_seconds() > MAX_DURATION_SECONDS:
             return finish("delegation_duration_exceeded")
@@ -135,10 +135,10 @@ def evaluate(case: dict[str, Any]) -> dict[str, Any]:
             return finish("revoked_at_evaluation")
         if not edge["evidence_uri"] or not any(link["uri"] == edge["evidence_uri"] for link in links):
             return finish("delegation_evidence_unavailable", "indeterminate")
-        credential_backed = credential_backed or edge["credential_verified"]
+        credential_backed = credential_backed and edge["credential_verified"]
         normalized.append({"delegator": edge["delegator"], "delegate": edge["delegate"]})
         visited.add(edge["delegate"])
-        previous, prev_actions, prev_resources, prev_purposes, prev_end = edge["delegate"], actions, resources, purposes, end
+        previous, prev_actions, prev_resources, prev_purposes, prev_start, prev_end = edge["delegate"], actions, resources, purposes, start, end
     result["coverage"] = "credential-backed" if credential_backed else "delegator-covered"
     result["evidence_sha256"] = hashlib.sha256(json.dumps(normalized, sort_keys=True).encode()).hexdigest()
     if previous != case["actor"]:
