@@ -1,7 +1,7 @@
 # CAWG-TRQP Verifier Reference Implementation
 
 > **Portfolio status:** Flagship · Pilot-ready · Active validation  
-> **Current release:** v0.19.1  
+> **Latest published release:** v0.19.2 · **`main`:** post-v0.19.2 experimental development  
 > **Project status declaration:** [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml)
 
 | Portfolio tier | Flagship |
@@ -27,19 +27,11 @@ It does **not** treat provenance as truth, ownership, entitlement, clinical vali
 | Executable adoption | HTTP-to-audit-bundle and operational failure/redress journeys with CI-validated journey contracts |
 | Portfolio governance | repository-local status, governance, security, roadmap, release and integration evidence |
 
-## What v0.19.1 adds
+## Published release and current development
 
-v0.19.1 is an assurance and portfolio-alignment patch. It does not change CAWG/C2PA verification semantics introduced in v0.19.0.
+The [v0.19.2 release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2), published 1 September 2026, adds decision evidence isolation, typed process input validation, adversarial vectors and a unified `make validate` gate.
 
-- Aligns machine-readable conformance and assurance manifests with the current release identity.
-- Adds a machine-readable TRQP portfolio integration contract.
-- Pins Trust Systems Meta-Model v0.24.0 as semantic authority and Trust Infrastructure Schemas v0.14.1 as schema/portfolio authority.
-- Pins TRQP-TSPP v0.15.0, TRQP Conformance Suite v1.7.0, and TRQP Assurance Hub v1.10.0 as the synchronized TRQP release train consumed by this implementation.
-- Declares explicit invalidation conditions for semantic/schema incompatibility, normative-source incompatibility, missing evidence, and release-identity mismatch.
-- Adds CI validation for the portfolio integration contract and includes it in release checksum evidence.
-- Retains the v0.19.0 semantic assurance controls for required CAWG/C2PA assertion labels, proposition-level evidence, deterministic conflict handling, degraded-state handling, and RAHP traceability.
-
-Documentation on `main` may advance between releases where the change does not modify verifier semantics or the declared release contract. The walkthrough catalogue, operator guides, and executable adoption journeys are therefore treated as continuously maintainable adoption and assurance material.
+Current `main` contains **unreleased experimental** Delegated Creator and external C2PA validation feasibility work. Local and mock-driven tests do **not** establish independent CAWG/C2PA/TRQP interoperability, trusted signer identity, delegated authority or trusted signing time. See the [external validation boundary](docs/external-c2pa-validation-boundary.md) and [open evidence gate #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75). Presence on `main` is not a release or certification claim.
 
 ## Start here
 
@@ -140,7 +132,7 @@ See [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml), [`SECURITY.md`](SECURITY.md), 
 
 ## Release
 
-Release notes: [`RELEASE_NOTES_v0.19.1.md`](RELEASE_NOTES_v0.19.1.md)  
+Latest release notes: [`RELEASE_NOTES_v0.19.2.md`](RELEASE_NOTES_v0.19.2.md)  
 Changelog: [`CHANGELOG.md`](CHANGELOG.md)  
 Roadmap: [`ROADMAP.md`](ROADMAP.md)
 
