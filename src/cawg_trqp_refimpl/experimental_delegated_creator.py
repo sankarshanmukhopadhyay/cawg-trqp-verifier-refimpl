@@ -76,6 +76,8 @@ def evaluate(case: dict[str, Any]) -> dict[str, Any]:
     result = {"case_id": case["id"], "profile": PROFILE_ID, "coverage": "unverified",
               "evidence_provenance": {"credential": "caller_supplied_simulation", "delegator_signature": "not_verified", "signing_time": "caller_supplied_untrusted", "linked_content": "local_digest_only"},
               "historical_authority": "indeterminate", "current_authority": "indeterminate",
+              "assured_authority": "indeterminate", "assured_coverage": "unverified",
+              "assurance_reason": "independent_evidence_verification_unavailable",
               "authority": "indeterminate", "generator": "rejected", "reason": "no_delegation",
               "evaluated_at": case["evaluated_at"], "evidence_sha256": None}
     def finish(reason: str, authority: str = "denied") -> dict[str, Any]:
