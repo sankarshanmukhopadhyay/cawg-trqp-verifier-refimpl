@@ -21,6 +21,10 @@ make validate
 
 The five portable scenario descriptions represent agency handover, AI voice tool, VFX subdelegation, freelance reporter, and photography assistant. Each has an expected historical authorization decision, current status, and adversarial mutation. The test runner maps these into synthetic normalized inputs, verifies expected decisions, and demonstrates deterministic replay.
 
+### Portable JSON decision report
+
+Run `python scripts/run_taskforce_five_world_demo.py --output /tmp/taskforce-report.json` to obtain the five-world decision report with per-scenario expected versus actual outcomes and explicit `independent_crypto_verification=false` and `independent_interoperability=false` flags. The report is deterministic and its CLI contract is regression-tested; it is not a cryptographically certified output. The `assured_authority` and `assured_coverage` fields are the applicable assurance-boundary outputs, never the simulated authorization labels.
+
 ## Assurance boundaries and semantics
 
 - **Historical authority is not current authority.** Later expiry or revocation does not retroactively alter a valid signing-time delegation; new signatures after revocation fail. Revocation metadata and signing times in these fixtures are **caller supplied**, not signed or independently verified.
