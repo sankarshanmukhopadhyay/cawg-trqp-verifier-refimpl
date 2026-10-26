@@ -51,6 +51,10 @@ accountable, testable, and interoperable verifier looks like.
 
 For decision-makers and implementers exploring sector deployment, the [Industry Adoption](industry-adoption/index.md) package provides a decision brief, recorded-music application profile, CAWG implementation playbook, bounded pilot blueprint, executable walkthrough, canonical payloads, and machine-readable readiness gates.
 
+## Publication boundary
+
+**Published baseline:** [v0.19.2](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2). **Current `main`:** post-release experimental [Delegated Creator](agentic-ai/experimental-delegated-creator-profile.md) and [external C2PA validation](external-c2pa-validation-boundary.md), not an independent CAWG/C2PA/TRQP conformance or trusted-signing-time claim. Evaluate release artifacts from their tag rather than assuming `main` is the release.
+
 ## What it enables today
 
 - **Profile-driven policy enforcement** — three schema-backed profiles (`standard`, `high_assurance`, `edge`) cover online, fail-closed, and offline-snapshot verification postures. See [Verifier Profiles](verifier-profiles.md).
