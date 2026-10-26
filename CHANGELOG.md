@@ -1,4 +1,20 @@
+---
+layout: default
+title: "Changelog"
+parent: "Releases"
+nav_order: 1
+---
+# Changelog
+
 ## [Unreleased]
+
+### Publication reconciliation (26 October 2026)
+
+- Corrected latest-release identity and metadata drift against v0.19.2.
+- Clarified post-release Delegated Creator and external C2PA validation work as experimental.
+- Improved consumer-level flow and state explanations and deterministic publication checks.
+
+### Other development on main
 
 ### RAHP combined-review closure
 - Enforced profile-defined degraded-result disposition so high-assurance decisions cannot silently accept unresolved mandatory semantic predicates.
@@ -45,14 +61,55 @@
 - Restored the Just the Docs layout and navigation parent for the scalability, cache freshness, and high-volume deployment pages so GitHub Pages renders the theme, navigation, tables, and Mermaid diagrams correctly.
 - Added repository validation for documentation front matter and navigation-parent integrity to prevent unthemed or orphaned pages from being deployed.
 
----
-layout: default
-title: "Changelog"
-parent: "Releases"
-nav_order: 1
----
-# Changelog
+### Changed
+- Integrated Dependabot updates for `attrs` 26.1.0, `coverage` 7.15.2, `pycparser` 3.0, `typing_extensions` 4.16.0, `pytest-cov` 7.1.0, and `actions/setup-python` v7.
+- Added PyYAML to declared development and validation dependencies, fixing CI collection failures in YAML-backed governance tests.
 
+### Added
+- Added a machine-readable AI-assisted property-listing image example, governance walkthrough, decision receipt, disclosure policy, and assurance tests.
+
+### Security and assurance
+
+- Added a complete adversarial threat and risk documentation package with diagram-rich GitHub Pages content, machine-readable registers, scenarios, and conformance tests.
+
+### Added
+
+- Added a CAWG-to-TRQP integration enablement guide that defines the CAWG work programme, responsibility allocation, minimum portable signal, specification ownership, privacy posture, call sequence, conformance criteria, and definition of done.
+- Added a versioned CAWG-TRQP integration-signal JSON Schema, positive and negative canonical fixtures, a machine-readable readiness matrix, and conformance tests.
+
+### Added
+
+- Explicit CAWG/C2PA-to-TRQP input contract documenting accepted input forms, mandatory and optional attributes, field derivation, validation, and candidate specification gaps.
+- Complete API call catalogue for all six implemented HTTP operations, including request/response structures, transport errors, governance purpose, and review ownership.
+- Machine-readable OpenAPI 3.1 contract, canonical API examples, recognition/gateway/error schemas, and an API contract validation gate.
+- CI tests that prevent the documented operation inventory and canonical payloads from drifting from the implementation.
+
+- GitHub Pages documentation site rebuilt on the Just the Docs theme, covering every existing document under an audience-organized navigation (Start Here, Architecture & Deployment, Implementation Guides, Assurance & Evidence, Interoperability, Walkthroughs, Governance & Policy, Releases).
+- `docs/PRESENTATION_BRIEF.md`, a speaker-ready ten-minute walkthrough for external presentations.
+- `.github/ISSUE_TEMPLATE/` (bug report, adoption/interoperability report) and `.github/pull_request_template.md`.
+- `.github/dependabot.yml` for Python and GitHub Actions dependency updates.
+- `.github/workflows/pages.yml` to build and deploy the documentation site on every push to `main`.
+- `.github/workflows/pypi-publish.yml` implementing the PyPI publication step previously described in the v0.17.0 release notes but not present as a workflow file.
+
+### Fixed
+
+- `CITATION.cff` declared `license: Apache-2.0` while `LICENSE` is MIT; corrected to `license: MIT`.
+- Added the missing `v0.17.0` changelog entry (release notes existed at `RELEASE_NOTES_v0.17.0.md` but were never reflected here).
+- Removed a duplicated, out-of-order `## Unreleased` block that preceded the `# Changelog` heading.
+- Refreshed `GITHUB_RELEASE_TEMPLATE.md`, which still referenced the v0.15.0 release.
+
+## [0.19.2] - 2026-09-01
+
+- Isolated per-decision transport, descriptor, cache and revocation evidence.
+- Rejected malformed and non-finite process evidence at the typed boundary.
+- Unified repository CI completion under `make validate`; added adversarial vectors and published checksum evidence.
+- [Release and assets](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2).
+
+## [0.19.1] - 2026-08-20
+
+- Added the TRQP portfolio integration contract and pinned upstream semantic/schema/assurance baselines.
+- Aligned conformance evidence to repository release identity without changing verifier semantics.
+- [Release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.1).
 
 ## [0.19.0] - 2026-08-14
 
@@ -93,45 +150,6 @@ nav_order: 1
 - Added minimal receipt, replay bundle, and regulated evidence profiles.
 - Made the HTTP audit endpoint default to a redacted minimal receipt and require an explicit scope for raw replay exports.
 - Added privacy-control conformance tests and repository validation gates.
-
-## Unreleased
-
-### Changed
-- Integrated Dependabot updates for `attrs` 26.1.0, `coverage` 7.15.2, `pycparser` 3.0, `typing_extensions` 4.16.0, `pytest-cov` 7.1.0, and `actions/setup-python` v7.
-- Added PyYAML to declared development and validation dependencies, fixing CI collection failures in YAML-backed governance tests.
-
-### Added
-- Added a machine-readable AI-assisted property-listing image example, governance walkthrough, decision receipt, disclosure policy, and assurance tests.
-
-### Security and assurance
-
-- Added a complete adversarial threat and risk documentation package with diagram-rich GitHub Pages content, machine-readable registers, scenarios, and conformance tests.
-
-### Added
-
-- Added a CAWG-to-TRQP integration enablement guide that defines the CAWG work programme, responsibility allocation, minimum portable signal, specification ownership, privacy posture, call sequence, conformance criteria, and definition of done.
-- Added a versioned CAWG-TRQP integration-signal JSON Schema, positive and negative canonical fixtures, a machine-readable readiness matrix, and conformance tests.
-
-### Added
-
-- Explicit CAWG/C2PA-to-TRQP input contract documenting accepted input forms, mandatory and optional attributes, field derivation, validation, and candidate specification gaps.
-- Complete API call catalogue for all six implemented HTTP operations, including request/response structures, transport errors, governance purpose, and review ownership.
-- Machine-readable OpenAPI 3.1 contract, canonical API examples, recognition/gateway/error schemas, and an API contract validation gate.
-- CI tests that prevent the documented operation inventory and canonical payloads from drifting from the implementation.
-
-- GitHub Pages documentation site rebuilt on the Just the Docs theme, covering every existing document under an audience-organized navigation (Start Here, Architecture & Deployment, Implementation Guides, Assurance & Evidence, Interoperability, Walkthroughs, Governance & Policy, Releases).
-- `docs/PRESENTATION_BRIEF.md`, a speaker-ready ten-minute walkthrough for external presentations.
-- `.github/ISSUE_TEMPLATE/` (bug report, adoption/interoperability report) and `.github/pull_request_template.md`.
-- `.github/dependabot.yml` for Python and GitHub Actions dependency updates.
-- `.github/workflows/pages.yml` to build and deploy the documentation site on every push to `main`.
-- `.github/workflows/pypi-publish.yml` implementing the PyPI publication step previously described in the v0.17.0 release notes but not present as a workflow file.
-
-### Fixed
-
-- `CITATION.cff` declared `license: Apache-2.0` while `LICENSE` is MIT; corrected to `license: MIT`.
-- Added the missing `v0.17.0` changelog entry (release notes existed at `RELEASE_NOTES_v0.17.0.md` but were never reflected here).
-- Removed a duplicated, out-of-order `## Unreleased` block that preceded the `# Changelog` heading.
-- Refreshed `GITHUB_RELEASE_TEMPLATE.md`, which still referenced the v0.15.0 release.
 
 ## v0.17.0
 
