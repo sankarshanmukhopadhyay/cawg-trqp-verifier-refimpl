@@ -37,3 +37,18 @@ The [machine-readable matrix](../../conformance/delegated-creator-taskforce-eigh
 ## External consumption gate
 
 A third party can reproduce **local synthetic decision semantics**, not independent cryptographic verification, credential recognition or CAWG/C2PA conformance. Real interoperability requires another implementation and authoritative upstream formats and trust anchors. No such evaluation has been conducted. No new release or normative version is implied.
+
+## Verification assurance contract (hardening)
+
+The experimental kernel provides **two separate planes**:
+
+- `authority`, `historical_authority`, `current_authority` and `coverage` represent the **simulation result** over caller-normalized data. These are **not verified assertions**, even when the simulated result reads `authorized` or `credential-backed`.
+- `assured_authority=indeterminate`, `assured_coverage=unverified` and `assurance_reason=independent_evidence_verification_unavailable` are the **effective assurance outcomes** for consumers. No caller-set Boolean, opaque signature claim or unauthenticated timestamp can elevate these outcomes.
+
+The experimental evaluator **does not accept** a caller-supplied `verified=true` as a trusted proof. Until an actual cryptographic signature, covered-hash, issuer authorization, trust anchor, and signing-time verifier is implemented and integrated, the assured results must remain indeterminate/unverified. This is intentional fail-safe behaviour; it does not claim that missing evidence proves a negative fact.
+
+CI includes `tests/test_taskforce_assurance_boundary.py`, including deliberate fake credential success, boundary times and tampered linked evidence. External interoperability, real credential acceptance and trusted time remain **unsupported** and are not silently waived.
+
+### DCO privacy
+
+Contributors using private email must set their Git author/committer to the **GitHub-confirmed** account noreply address and use a matching `Signed-off-by` trailer. The address is available in GitHub Settings → Emails. The repository's automated GitHub contribution route must be checked for matching author and trailer; a successful DCO workflow is the acceptance evidence. Do not rewrite previously published commits merely to obscure signoffs.
