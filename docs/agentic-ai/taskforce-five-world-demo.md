@@ -13,7 +13,7 @@ nav_order: 7
 ```bash
 python -m pip install -r requirements-lock.txt
 python -m pip install -e .
-pytest -q tests/test_experimental_delegated_creator.py tests/test_taskforce_five_worlds.py
+pytest -q tests/test_experimental_delegated_creator.py tests/test_taskforce_five_worlds.py tests/test_experimental_assertion_order.py
 make validate
 ```
 
@@ -32,7 +32,7 @@ The five portable scenario descriptions represent agency handover, AI voice tool
 
 ## Eight-test interpretation
 
-The [machine-readable matrix](../../conformance/delegated-creator-taskforce-eight-tests.json) intentionally includes `demonstrated`, `simulated`, `partial` and `unsupported` dispositions. The Taskforce's signature ordering (delegation, delegator signature, delegate signature, manifest seal) is **not** cryptographically validated here; claiming it as passing would be misleading.
+The [machine-readable matrix](../../conformance/delegated-creator-taskforce-eight-tests.json) intentionally includes `demonstrated`, `simulated`, `partial` and `unsupported` dispositions. The Taskforce's signature ordering (delegation, delegator signature, delegate signature, manifest seal) has a local [acyclic, ordered reference-structure check](../../src/cawg_trqp_refimpl/experimental_assertion_order.py) with [negative vectors](../../tests/test_experimental_assertion_order.py). It does **not** validate cryptographic signatures or covered hashes, so claiming the complete signing-order requirement as passing would be misleading.
 
 ## External consumption gate
 
