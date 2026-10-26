@@ -23,7 +23,7 @@
       "transform",
       "publish"
     ],
-    "times": "RFC3339/ISO8601 offset-aware input; signed_at and evaluated_at each checked against every link; [not_before,not_after) intervals",
+    "times": "Signing time and evaluation time are separate. Historical status is checked only at signed_at; present authority is checked at evaluated_at. Both are caller supplied untrusted timestamps (no TSA verification).",
     "scopes": "actions,resources,purposes attenuate on every link",
     "evidence_links": "HTTPS URI and SHA256 over locally supplied canonicalized JSON fixture content; NO remote dereferencing",
     "coverage_classes": [
@@ -31,7 +31,7 @@
       "delegator-covered",
       "credential-backed"
     ],
-    "coverage_boundary": "credential_verified is fixture-provided simulated issuer attestation; cryptographic credential verification not implemented",
+    "coverage_boundary": "credential_verified is fixture-provided simulated issuer attestation; cryptographic credential verification not implemented; no cryptographic signature coverage validation; labels are simulated.",
     "generator": "local generator rejection or acceptance recorded separately from authority; no actual generator signing or manifest emission"
   },
   "known_exclusions": [
