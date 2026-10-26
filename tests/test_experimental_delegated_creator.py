@@ -29,7 +29,7 @@ def case():
     (lambda c: c.update(action="transform"), "requested_action_out_of_scope", "denied"),
     (lambda c: c["chain"][0].update(not_after="2026-10-22T00:00:00Z"), "not_valid_at_signing", "denied"),
     (lambda c: c["chain"][0].update(revoked_at="2026-10-23T09:00:00Z"), "revoked_at_signing", "denied"),
-    (lambda c: c["chain"][0].update(revoked_at="2026-10-23T10:00:00.5Z"), "revoked_at_evaluation", "denied"),
+    (lambda c: c["chain"][0].update(revoked_at="2026-10-23T10:00:00.500000Z"), "revoked_at_evaluation", "denied"),
     (lambda c: c["links"][0]["content"].update(consent=False), "linked_evidence_integrity", "indeterminate"),
     (lambda c: c.update(actor="intruder"), "actor_not_delegate", "denied"),
     (lambda c: c["chain"][0].update(evidence_uri="https://example.test/unknown"), "delegation_evidence_unavailable", "indeterminate"),
