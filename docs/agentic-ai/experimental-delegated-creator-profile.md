@@ -24,9 +24,9 @@ These are **illustrative scenarios**, not the taskforce's approved five-world us
 
 ## Opinionated constraints
 
-- **DC-02:** delegation evidence lives outside the content payload in an HTTPS reference and content SHA256; the experiment verifies supplied fixture bytes, *not* a remote agreement or manifest binding. Both signing-time and evaluation-time status are separately evaluated.
+- **DC-02:** delegation evidence lives outside the content payload in an HTTPS reference and content SHA256; the experiment verifies supplied fixture bytes, *not* a remote agreement or manifest binding. Historical signing-time authority and current authorization are separately reported; signing time is caller-supplied and untrusted.
 - **DC-03:** coverage `unverified`, `delegator-covered`, `credential-backed` is an **evidence class**, not an authorization outcome. Credential-backed remains hypothetical until a trusted issuer verifier is integrated. Missing evidence stays indeterminate.
-- **DC-04:** chain rooted at an explicitly named principal; at most three links, at most 30 days per link; no cycles; each child action/resource/purpose set and expiry must be a subset of its parent's scope/end. Revocation at signing time or evaluation time produces distinct reason codes. These numeric limits are **experimental defaults**, not CAWG decisions.
+- **DC-04:** chain rooted at an explicitly named principal; at most three links, at most 30 days per link; no cycles; each child action/resource/purpose set and expiry must be a subset of its parent's scope/end. Revocation at signing time denies historical authority; later revocation changes current authority without rewriting the historical result. These numeric limits are **experimental defaults**, not CAWG decisions.
 - **DC-05:** a local generator has a decision to reject indeterminate evidence, with recorded reason and authority result. `accepted` means generator processing was allowed by this fixture policy, **not** that a third cryptographic signature was applied, or that the actor is authorized.
 - **DC-06:** the profile version and assumptions are machine-readable and the decision kernel is exercised by adversarial tests. No upstream conformance is claimed.
 
@@ -55,3 +55,7 @@ This is **not** a full C2PA implementation. It deliberately cannot establish tha
 ## Upstream decisions that would change this experiment
 
 CAWG must still decide the definitions of coverage, signing-time manifest binding and evidence references, chain semantics and limits, whether the claim generator is a distinct cryptographic signer, and the normative subset of TRQP. Revisions should be versioned and backed by compatibility/conformance fixtures. The upstream survey DC-07 is external and is not implemented here.
+
+## Taskforce-aligned demonstration
+
+See the [five-world portable scenario corpus and eight proposed design tests](taskforce-five-world-demo.md). Results expose `historical_authority`, `current_authority` and `evidence_provenance` separately. Experimental classifications are not independently verified signatures or credentials.

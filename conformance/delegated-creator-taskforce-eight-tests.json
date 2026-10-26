@@ -1,0 +1,80 @@
+{
+  "schema_version": "0.1",
+  "status": "experimental assessment, NOT CAWG conformance",
+  "basis": "Taskforce slides 18–20 and minutes pp.3–4, 23 October 2026",
+  "tests": [
+    {
+      "id": "TF-01",
+      "requirement": "Unvouched declaration shown as unverified",
+      "disposition": "simulated",
+      "evidence": [
+        "tests/test_experimental_delegated_creator.py"
+      ],
+      "limitation": "Normalized empty chain; no signed C2PA assertion parsed"
+    },
+    {
+      "id": "TF-02",
+      "requirement": "Delegator cryptographic signature binds authority",
+      "disposition": "unsupported",
+      "evidence": [
+        "docs/agentic-ai/experimental-delegated-creator-profile.md"
+      ],
+      "limitation": "No cryptographic signature or covered-hash verification"
+    },
+    {
+      "id": "TF-03",
+      "requirement": "Low-friction route without certificates",
+      "disposition": "simulated",
+      "evidence": [
+        "tests/test_taskforce_five_worlds.py"
+      ],
+      "limitation": "Local JSON fixture route, no real trust establishment"
+    },
+    {
+      "id": "TF-04",
+      "requirement": "Top tier does not require delegator to sign each asset",
+      "disposition": "unsupported",
+      "evidence": [
+        "conformance/experimental-delegated-creator-profile.json"
+      ],
+      "limitation": "No reusable trusted credential validation"
+    },
+    {
+      "id": "TF-05",
+      "requirement": "Contracts stay private; at most hash disclosed",
+      "disposition": "partial",
+      "evidence": [
+        "tests/test_taskforce_five_worlds.py"
+      ],
+      "limitation": "Result omits agreements; test input still carries locally supplied agreement content"
+    },
+    {
+      "id": "TF-06",
+      "requirement": "No automatic network fetching without safeguards",
+      "disposition": "demonstrated",
+      "evidence": [
+        "src/cawg_trqp_refimpl/experimental_delegated_creator.py"
+      ],
+      "limitation": "Experimental evaluator has no network fetch path"
+    },
+    {
+      "id": "TF-07",
+      "requirement": "Works with C2PA validators and trust lists",
+      "disposition": "unsupported",
+      "evidence": [
+        "docs/agentic-ai/experimental-delegated-creator-profile.md"
+      ],
+      "limitation": "No independently tested real C2PA/TRQP interop"
+    },
+    {
+      "id": "TF-08",
+      "requirement": "Temporal evaluation against trusted signing time",
+      "disposition": "partial",
+      "evidence": [
+        "tests/test_experimental_delegated_creator.py",
+        "tests/test_taskforce_five_worlds.py"
+      ],
+      "limitation": "Historical/time-of-check separation tested; signing time caller supplied and untrusted"
+    }
+  ]
+}

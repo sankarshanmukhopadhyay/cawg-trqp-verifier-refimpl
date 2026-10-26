@@ -1,0 +1,128 @@
+{
+  "schema_version": "0.1",
+  "authority": "experimental repository-local; synthetic normalization",
+  "source": "CAWG Delegated Creator Taskforce kick-off 2026-10-23 slides pp.12-16",
+  "scenarios": [
+    {
+      "name": "agency-handover",
+      "world": "brand-advertising",
+      "root": "brand",
+      "actor": "agency-a",
+      "action": "publish",
+      "resource": "campaign",
+      "purpose": "marketing",
+      "sign": "2026-10-22T12:00:00Z",
+      "now": "2026-11-02T12:00:00Z",
+      "start": "2026-10-01T00:00:00Z",
+      "end": "2026-10-24T00:00:00Z",
+      "links": [
+        [
+          "brand",
+          "agency-a"
+        ]
+      ],
+      "expect": "authorized",
+      "current": "denied",
+      "negative": "2026-10-25T12:00:00Z",
+      "negative_reason": "not_valid_at_signing"
+    },
+    {
+      "name": "ai-voice-tool",
+      "world": "music-audio",
+      "root": "artist",
+      "actor": "voice-agent",
+      "action": "transform",
+      "resource": "album-demos",
+      "purpose": "demo",
+      "sign": "2026-10-23T12:00:00Z",
+      "now": "2026-10-23T12:01:00Z",
+      "start": "2026-10-01T00:00:00Z",
+      "end": "2026-10-30T00:00:00Z",
+      "links": [
+        [
+          "artist",
+          "voice-agent"
+        ]
+      ],
+      "expect": "authorized",
+      "current": "authorized",
+      "negative_resource": "other-album",
+      "negative_reason": "requested_action_out_of_scope"
+    },
+    {
+      "name": "studio-chain",
+      "world": "film-games-immersive",
+      "root": "lead-studio",
+      "actor": "vendor",
+      "action": "transform",
+      "resource": "shot-1",
+      "purpose": "vfx",
+      "sign": "2026-10-23T12:00:00Z",
+      "now": "2026-10-23T12:01:00Z",
+      "start": "2026-10-01T00:00:00Z",
+      "end": "2026-10-30T00:00:00Z",
+      "links": [
+        [
+          "lead-studio",
+          "vfx-house"
+        ],
+        [
+          "vfx-house",
+          "vendor"
+        ]
+      ],
+      "expect": "authorized",
+      "current": "authorized",
+      "negative_redelegate": true,
+      "negative_reason": "redelegation_forbidden"
+    },
+    {
+      "name": "freelance-reporter",
+      "world": "news-publishing",
+      "root": "publisher",
+      "actor": "freelancer",
+      "action": "publish",
+      "resource": "article-1",
+      "purpose": "news",
+      "sign": "2026-10-23T12:00:00Z",
+      "now": "2026-10-23T12:01:00Z",
+      "start": "2026-10-01T00:00:00Z",
+      "end": "2026-10-30T00:00:00Z",
+      "links": [
+        [
+          "publisher",
+          "freelancer"
+        ]
+      ],
+      "creative_credit": "freelancer",
+      "expect": "authorized",
+      "current": "authorized",
+      "negative_resource": "other-article",
+      "negative_reason": "requested_action_out_of_scope"
+    },
+    {
+      "name": "photographer-assistant",
+      "world": "photography-visual-arts",
+      "root": "photographer",
+      "actor": "assistant",
+      "action": "transform",
+      "resource": "photo-1",
+      "purpose": "editorial",
+      "sign": "2026-10-23T12:00:00Z",
+      "now": "2026-10-23T12:01:00Z",
+      "start": "2026-10-01T00:00:00Z",
+      "end": "2026-10-30T00:00:00Z",
+      "links": [
+        [
+          "photographer",
+          "assistant"
+        ]
+      ],
+      "creative_credit": "photographer",
+      "expect": "authorized",
+      "current": "authorized",
+      "negative_action": "create",
+      "negative_reason": "requested_action_out_of_scope"
+    }
+  ]
+}

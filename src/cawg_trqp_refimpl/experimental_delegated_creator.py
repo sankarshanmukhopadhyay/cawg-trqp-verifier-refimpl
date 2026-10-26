@@ -74,10 +74,14 @@ def evaluate(case: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(generator["id"], str) or not generator["id"].strip() or not isinstance(generator["reject_on_unverified"], bool):
         raise InvalidCase("generator_malformed")
     result = {"case_id": case["id"], "profile": PROFILE_ID, "coverage": "unverified",
+              "evidence_provenance": {"credential": "caller_supplied_simulation", "delegator_signature": "not_verified", "signing_time": "caller_supplied_untrusted", "linked_content": "local_digest_only"},
+              "historical_authority": "indeterminate", "current_authority": "indeterminate",
               "authority": "indeterminate", "generator": "rejected", "reason": "no_delegation",
               "evaluated_at": case["evaluated_at"], "evidence_sha256": None}
     def finish(reason: str, authority: str = "denied") -> dict[str, Any]:
         result["reason"], result["authority"] = reason, authority
+        result["historical_authority"] = authority
+        result["current_authority"] = authority
         result["generator"] = "accepted" if authority == "authorized" or (authority == "indeterminate" and not generator["reject_on_unverified"]) else "rejected"
         return result
 
@@ -129,10 +133,10 @@ def evaluate(case: dict[str, Any]) -> dict[str, Any]:
         revoked = _timestamp(edge["revoked_at"]) if edge["revoked_at"] else None
         if revoked is not None and revoked <= signed:
             return finish("revoked_at_signing")
-        if not (start <= now < end):
-            return finish("not_valid_at_evaluation")
-        if revoked is not None and revoked <= now:
-            return finish("revoked_at_evaluation")
+        # Historical authorization is not rewritten by subsequent expiry/revocation.
+        # Current authorization is a separate, explicitly provisional decision.
+        if not (start <= now < end) or (revoked is not None and revoked <= now):
+            result["current_authority"] = "denied"
         if not edge["evidence_uri"] or not any(link["uri"] == edge["evidence_uri"] for link in links):
             return finish("delegation_evidence_unavailable", "indeterminate")
         credential_backed = credential_backed and edge["credential_verified"]
@@ -145,4 +149,7 @@ def evaluate(case: dict[str, Any]) -> dict[str, Any]:
         return finish("actor_not_delegate")
     if case["action"] not in prev_actions or case["resource"] not in prev_resources or case["purpose"] not in prev_purposes:
         return finish("requested_action_out_of_scope")
-    return finish("authorized", "authorized")
+    current_status = "denied" if result["current_authority"] == "denied" else "authorized"
+    decision = finish("authorized", "authorized")
+    decision["current_authority"] = current_status
+    return decision
