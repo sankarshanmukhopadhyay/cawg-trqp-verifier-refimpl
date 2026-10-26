@@ -11,6 +11,10 @@ nav_order: 2
 
 This audit evaluates whether the repository documentation supports discovery, implementation, deployment, operation, interoperability, assurance review, contribution, and maintenance. It also checks whether documentation exposes authority, enforcement, revocation, evidence, and validation boundaries rather than presenting the implementation as an opaque code sample.
 
+## Public-surface reconciliation (26 October 2026)
+
+The earlier completion verdict records a point-in-time documentation review, not continuous assurance. The later v0.19.2 release and post-release experimental development caused drift in the README, release metadata, roadmap and changelog. This is addressed through release identity reconciliation, a publication validator and a separate public-HTTP link audit. A passing local check does **not** prove external HTTP links or deployed Pages URLs resolve.
+
 ## Coverage result
 
 | Documentation capability | Primary source | Assessment |
