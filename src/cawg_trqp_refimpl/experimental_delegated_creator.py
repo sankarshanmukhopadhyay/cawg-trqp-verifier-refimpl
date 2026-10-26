@@ -149,6 +149,7 @@ def evaluate(case: dict[str, Any]) -> dict[str, Any]:
         return finish("actor_not_delegate")
     if case["action"] not in prev_actions or case["resource"] not in prev_resources or case["purpose"] not in prev_purposes:
         return finish("requested_action_out_of_scope")
+    current_status = "denied" if result["current_authority"] == "denied" else "authorized"
     decision = finish("authorized", "authorized")
-    decision["current_authority"] = result["current_authority"] if result["current_authority"] == "denied" else "authorized"
+    decision["current_authority"] = current_status
     return decision
