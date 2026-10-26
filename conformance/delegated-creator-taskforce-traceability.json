@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "basis": {
+    "source": "CAWG Delegated Creator Taskforce kick-off recap, meeting 2026-10-23, circulated 2026-10-25",
+    "source_scope": "Summary email only; referenced minutes, slides, Padlet and issue discussions are not treated as reviewed sources.",
+    "authority": "informative repository-local mapping; not CAWG/TRQP normative conformance"
+  },
+  "status_definitions": {
+    "represented": "Directly supported by inspected repository evidence, not an upstream normative adoption claim.",
+    "partial": "Related capability or guidance exists, but the specific taskforce proposition is not fully implemented or evidenced.",
+    "missing": "The reviewed evidence does not establish the requirement.",
+    "external": "Action lies outside verifier ownership; taskforce or other authority must act."
+  },
+  "requirements": [
+    {
+      "id": "DC-01",
+      "title": "Use-case-first elicitation",
+      "status": "partial",
+      "evidence": [
+        "docs/sections/walkthroughs-index.md",
+        "docs/agentic-ai/index.md"
+      ],
+      "gap": "Walkthrough portfolio and agent archetypes exist; the five taskforce creative worlds and taskforce-approved stories are not established.",
+      "next": "await-taskforce"
+    },
+    {
+      "id": "DC-02",
+      "title": "Signing-time delegation statement; agreement and rights linked, not embedded",
+      "status": "partial",
+      "evidence": [
+        "docs/agentic-ai/delegation-and-authority.md",
+        "schemas/authorization-request.schema.json"
+      ],
+      "gap": "Temporal validity and authority evidence are described, but a CAWG manifest binding and linked consent/rights contract are not established by these artifacts.",
+      "next": "upstream-semantics"
+    },
+    {
+      "id": "DC-03",
+      "title": "Three coverage states: unverified, delegator-covered, credential-backed",
+      "status": "missing",
+      "evidence": [
+        "docs/agentic-ai/delegation-and-authority.md"
+      ],
+      "gap": "Existing non-positive verifier outcomes are not equivalent to the proposed taskforce three-tier coverage semantics.",
+      "next": "upstream-semantics"
+    },
+    {
+      "id": "DC-04",
+      "title": "Bounded chain depth and duration with original-party traceability",
+      "status": "partial",
+      "evidence": [
+        "docs/agentic-ai/delegation-and-authority.md"
+      ],
+      "gap": "Delegation tuple includes depth, temporal validity, and principal; no taskforce-established limit, chain representation, or root-consent evidence requirement is demonstrated.",
+      "next": "upstream-semantics"
+    },
+    {
+      "id": "DC-05",
+      "title": "Claim generator as witnessing third signer with rejection capability",
+      "status": "missing",
+      "evidence": [
+        "docs/agentic-ai/index.md"
+      ],
+      "gap": "Agent roles are discussed, but generator-as-third-signer and enforceable rejection obligations are not established by this repository evidence.",
+      "next": "upstream-semantics"
+    },
+    {
+      "id": "DC-06",
+      "title": "CAWG-specific narrower TRQP profile",
+      "status": "partial",
+      "evidence": [
+        "README.md",
+        "profiles/standard.json",
+        "profiles/high_assurance.json",
+        "schemas/verification-profile.schema.json",
+        "GOVERNANCE.md"
+      ],
+      "gap": "Implementation profiles constrain operational verification; they do not constitute a CAWG-authorized domain semantic TRQP profile.",
+      "next": "upstream-semantics"
+    },
+    {
+      "id": "DC-07",
+      "title": "Industry survey on costs of unverified authority",
+      "status": "external",
+      "evidence": [
+        "docs/sections/walkthroughs-index.md"
+      ],
+      "gap": "Survey administration and adoption evidence are taskforce activities, not reference-verifier behavior.",
+      "next": "await-taskforce"
+    }
+  ]
+}
