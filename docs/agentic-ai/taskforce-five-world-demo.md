@@ -23,6 +23,9 @@ The five portable scenario descriptions represent agency handover, AI voice tool
 
 ### Portable JSON decision report
 
+The exported report has a [Draft 2020-12 JSON Schema](../../schemas/experimental-taskforce-report.schema.json). CI validates it with `jsonschema` and rejects any attempt to label simulated results as independently assured. Independent callers can validate their copy of the JSON report without relying on undocumented Python object shapes.
+
+
 Run `python scripts/run_taskforce_five_world_demo.py --output /tmp/taskforce-report.json` to obtain the five-world decision report with per-scenario expected versus actual outcomes and explicit `independent_crypto_verification=false` and `independent_interoperability=false` flags. The report is deterministic and its CLI contract is regression-tested; it is not a cryptographically certified output. The `assured_authority` and `assured_coverage` fields are the applicable assurance-boundary outputs, never the simulated authorization labels.
 
 ## Assurance boundaries and semantics

@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Experimental Taskforce five-world decision report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format_version",
+    "source",
+    "independent_crypto_verification",
+    "independent_interoperability",
+    "all_match",
+    "results"
+  ],
+  "properties": {
+    "format_version": {
+      "const": "1"
+    },
+    "source": {
+      "const": "experimental; synthetic fixtures"
+    },
+    "independent_crypto_verification": {
+      "const": false
+    },
+    "independent_interoperability": {
+      "const": false
+    },
+    "all_match": {
+      "type": "boolean"
+    },
+    "results": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scenario",
+          "world",
+          "expected",
+          "actual",
+          "matches"
+        ],
+        "properties": {
+          "scenario": {
+            "type": "string"
+          },
+          "world": {
+            "type": "string"
+          },
+          "expected": {
+            "type": "object",
+            "required": [
+              "historical_authority",
+              "current_authority"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "historical_authority": {
+                "enum": [
+                  "authorized",
+                  "denied",
+                  "indeterminate"
+                ]
+              },
+              "current_authority": {
+                "enum": [
+                  "authorized",
+                  "denied",
+                  "indeterminate"
+                ]
+              }
+            }
+          },
+          "actual": {
+            "type": "object",
+            "required": [
+              "profile",
+              "historical_authority",
+              "current_authority",
+              "assured_authority",
+              "assured_coverage",
+              "assurance_reason",
+              "evidence_provenance",
+              "generator",
+              "reason"
+            ],
+            "properties": {
+              "profile": {
+                "type": "string"
+              },
+              "historical_authority": {
+                "enum": [
+                  "authorized",
+                  "denied",
+                  "indeterminate"
+                ]
+              },
+              "current_authority": {
+                "enum": [
+                  "authorized",
+                  "denied",
+                  "indeterminate"
+                ]
+              },
+              "assured_authority": {
+                "const": "indeterminate"
+              },
+              "assured_coverage": {
+                "const": "unverified"
+              },
+              "assurance_reason": {
+                "const": "independent_evidence_verification_unavailable"
+              },
+              "evidence_provenance": {
+                "type": "object",
+                "required": [
+                  "credential",
+                  "delegator_signature",
+                  "signing_time"
+                ],
+                "properties": {
+                  "credential": {
+                    "const": "caller_supplied_simulation"
+                  },
+                  "delegator_signature": {
+                    "const": "not_verified"
+                  },
+                  "signing_time": {
+                    "const": "caller_supplied_untrusted"
+                  }
+                }
+              },
+              "generator": {
+                "enum": [
+                  "accepted",
+                  "rejected"
+                ]
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          },
+          "matches": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
