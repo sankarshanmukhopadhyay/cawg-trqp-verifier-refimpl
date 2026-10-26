@@ -27,7 +27,7 @@ def test_public_report_schema_and_no_elevation():
 def test_scope_boundaries(field,fixture_field):
     for row in read_scenarios():
         c=make_case(row)
-        c[field]="outside-"+row[fixture_field]
+        c[field]=("create" if row["action"] != "create" else "publish") if field=="action" else "outside-"+row[fixture_field]
         result=evaluate(c)
         assert result["reason"]=="requested_action_out_of_scope"
         assert result["assured_authority"]=="indeterminate"
