@@ -1,0 +1,46 @@
+{
+  "profile_id": "experimental-delegated-creator/0.1",
+  "status": "experimental",
+  "authority": "repository-local; not adopted by CAWG",
+  "mapped_requirements": [
+    "DC-01",
+    "DC-02",
+    "DC-03",
+    "DC-04",
+    "DC-05",
+    "DC-06"
+  ],
+  "orthogonal_to": [
+    "standard",
+    "edge",
+    "high_assurance"
+  ],
+  "constraints": {
+    "max_chain_depth": 3,
+    "max_delegation_duration_seconds": 2592000,
+    "actions": [
+      "create",
+      "transform",
+      "publish"
+    ],
+    "times": "RFC3339/ISO8601 offset-aware input; signed_at and evaluated_at each checked against every link; [not_before,not_after) intervals",
+    "scopes": "actions,resources,purposes attenuate on every link",
+    "evidence_links": "HTTPS URI and SHA256 over locally supplied canonicalized JSON fixture content; NO remote dereferencing",
+    "coverage_classes": [
+      "unverified",
+      "delegator-covered",
+      "credential-backed"
+    ],
+    "coverage_boundary": "credential_verified is fixture-provided simulated issuer attestation; cryptographic credential verification not implemented",
+    "generator": "local generator rejection or acceptance recorded separately from authority; no actual generator signing or manifest emission"
+  },
+  "known_exclusions": [
+    "C2PA manifest parsing",
+    "cryptographic signature verification",
+    "TRQP wire transport",
+    "live issuer/trust anchor resolution",
+    "rights-contract interpretation",
+    "credential revocation checks beyond simulated chain state",
+    "independent interoperability assurance"
+  ]
+}
