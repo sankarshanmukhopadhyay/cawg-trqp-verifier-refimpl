@@ -29,7 +29,7 @@ if manifest_path.is_file():
             or (
                 manifest.get('release_alignment') == 'historical'
                 and isinstance(impl_version, str)
-                and re.fullmatch(r'v\\d+\\.\\d+\\.\\d+', impl_version)
+                and re.fullmatch(r'v\d+\.\d+\.\d+', impl_version)
                 and released_version is not None
                 and tuple(map(int, impl_version[1:].split('.')))
                     < tuple(map(int, released_version[1:].split('.')))
