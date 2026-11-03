@@ -31,7 +31,7 @@ No unreleased changes recorded.
 
 **Compatibility:** No intentional change to stable verifier APIs or operational profiles. New experimental representations are not cross-implementation or upstream-approved contracts.
 
-See [detailed release notes](../RELEASE_NOTES_v0.20.0.md).
+See [detailed release notes](RELEASE_NOTES_v0.20.0.md).
 
 ## Development working notes retained for context (not a release-scoped changelog)
 
