@@ -39,7 +39,8 @@ The [v0.20.0 experimental capability release](https://github.com/sankarshanmukho
 
 - [Guided learning paths](docs/guided-learning.md)
 - [Non-technical overview](docs/NON_TECHNICAL_OVERVIEW.md)
-- [Historical v0.19.2 explainer presentation](docs/presentation.md) (17 slides; excludes v0.20.0 experimental additions)
+- [Explainer presentation v4](docs/presentation-v4.md) (20 slides; pinned to v0.20.0)
+- [Historical explainer v3](docs/presentation.md) (17 slides; v0.19.2)
 - [Quickstart](QUICKSTART.md)
 - [Operator decision and replay walkthrough](docs/operator-decision-replay-walkthrough.md)
 - [HTTP to audit bundle adoption journey](docs/http-to-audit-bundle-adoption-journey.md)
