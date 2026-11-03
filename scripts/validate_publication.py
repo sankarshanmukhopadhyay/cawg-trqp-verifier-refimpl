@@ -54,9 +54,9 @@ require("No new release or normative version is implied." not in demo, "stale pr
 agentic = read("docs/agentic-ai/index.md")
 require("tests/test_enterprise_binding_assurance.py" in agentic, "agentic adoption path omits authority assurance tests")
 readiness = read("docs/release-readiness.md")
-require("python scripts/generate_release_checksums.py\\npython scripts/generate_release_checksums.py --check" in readiness,
+require("python scripts/generate_release_checksums.py\npython scripts/generate_release_checksums.py --check" in readiness,
         "release readiness checksum reproduction commands require generation before check")
-require("python scripts/generate_release_checksums.py\\npython scripts/generate_release_checksums.py --check" in readme,
+require("python scripts/generate_release_checksums.py\npython scripts/generate_release_checksums.py --check" in readme,
         "README checksum reproduction commands require generation before check")
 if errors:
     for error in errors:
