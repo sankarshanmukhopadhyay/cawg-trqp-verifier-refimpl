@@ -4,46 +4,62 @@ title: "Delegated Creator TRQP Traceability"
 parent: "Agentic AI Assurance"
 nav_order: 5
 ---
-# Delegated Creator Taskforce: TRQP profile traceability
+# Delegated Creator Taskforce: experimental TRQP traceability
 
-**Status:** informative, implementation-side gap analysis. **Not** an adopted CAWG profile, a proposed normative text, or a certification result.
+**Status:** Informative implementation-side feasibility mapping. This is not a CAWG-adopted profile, a normative specification or a certification result.
 
-This analysis is based on the CAWG Delegated Creator Taskforce kick-off **recap of 23 October 2026**, circulated **25 October 2026**. Its linked minutes, slides, Padlet and CAWG issue #285/#286 discussions were not supplied as authoritative evidence for this mapping. The recap summarizes intended directions, not approved conformance requirements. See the [machine-readable manifest](../../conformance/delegated-creator-taskforce-traceability.json).
+**Discussion baseline:** CAWG Delegated Creator Taskforce, 23 and 26 October 2026. No nonpublic discussion documents are required for running the repository-local experiments. See the [machine-readable requirement mapping](../../conformance/delegated-creator-taskforce-traceability.json) and [issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75).
 
-## Separate the two profile axes
+## Two independent profile axes
 
-- **Domain/application semantics:** the taskforce's potential CAWG-specific restrictions on TRQP (delegator/delegate, consent and rights reference, authority scope, signing-time state, chain provenance, evidence classes and generator responsibilities). These remain subject to CAWG decision.
-- **Verification/operational posture:** this repository's existing `standard`, `edge` and `high_assurance` profiles specify freshness, failure, revocation, transport, descriptor policy and replay. They are **not** an upstream-approved domain profile. Do not rename or silently reinterpret them.
+- **Domain semantics:** delegated creator, self-declared subject evidence, human-to-human delegation, optional professional vouching, enterprise binding, and separate creative-role attribution. CAWG retains authority over adoption and normative profiles.
+- **Operational verifier posture:** `standard`, `edge` and `high_assurance` are the repository's operational verification profiles. They are not CAWG-recognized delegated creator profiles.
 
-## Requirements-to-evidence map
+## Runnable evidence
 
-| ID | Recap proposition | Disposition | Existing evidence and material gap |
-|---|---|---|---|
-| DC-01 | Use cases first, including agentic/non-agentic creative worlds | **Partial** | [Walkthrough catalogue](../sections/walkthroughs-index.md) and [agentic model](index.md) support scenario exploration; no evidence maps these to all five taskforce-defined worlds. |
-| DC-02 | Manifest records delegation at signing; full agreement/consent/rights are linked | **Partial** | [Delegation and Authority](delegation-and-authority.md) covers temporal validity; [authorization schema](../../schemas/authorization-request.schema.json) captures actor/action/resource. Neither establishes CAWG manifest bindings or consent-reference semantics. |
-| DC-03 | Unverified, delegator-covered, credential-backed coverage | **Missing** | Distinct negative outcomes are described in [delegation guidance](delegation-and-authority.md), but these are not the proposed three coverage levels. Do not map an existing positive authorization decision onto credential-backed coverage. |
-| DC-04 | Limit chain depth and duration, trace to original consenting party | **Partial** | [Delegation tuple](delegation-and-authority.md) names principal, validity and depth. Taskforce-specific numeric limits, recursive chain proofs, root-consent binding and conformance fixtures are not established. |
-| DC-05 | Claim generator witnesses/rejects as a third signer | **Missing** | [Agent role model](index.md) establishes actor-role separation, not a normative third-signature or rejection requirement. |
-| DC-06 | Narrow CAWG profile of general TRQP | **Partial** | [Existing profiles](../../profiles/high_assurance.json) and [profile schema](../../schemas/verification-profile.schema.json) constrain **operational assurance**, not CAWG-approved delegated-creator semantics. [Governance](../../GOVERNANCE.md) preserves upstream authority. |
-| DC-07 | Survey the impact of unverified authority | **External** | Taskforce discovery/adoption activity. [Repository scenarios](../sections/walkthroughs-index.md) may inform questions but are not survey responses or evidence of industry prevalence. |
+The pre-existing [five-world scenario corpus](../../conformance/delegated-creator-five-world-scenarios.json) and [demonstration](taskforce-five-world-demo.md) remain unchanged. The [Session 2 synthetic scenario corpus](../../conformance/delegated-creator-session2-scenarios.json) exercises three additional discriminating use cases:
 
-Disposition here means **documented evidence of coverage**, not a failed conformance test. “Missing” is not proof no related code exists anywhere; it means the reviewed artifacts do not establish the proposition.
+1. A human creator authorizes a human manager for one scoped publishing action. Altered scope, false delegate identity and revocation are negative cases.
+2. A pseudonymous creator asserts uniqueness. The local harness records that claim but does not verify unique personhood, identity or authority.
+3. A creator presents optional professional-licence vouching. The local harness does not authenticate the issuer, bind a credential to the subject, check its revocation or confer publishing authority.
 
-## Bounded implementation and decision sequence
+The [experimental subject-evidence evaluator](../../src/cawg_trqp_refimpl/experimental_subject_evidence.py) returns explicit unverified/indeterminate assurance outputs for externally asserted evidence. It is not a credential verifier, unique-personhood system or an authorization engine.
 
-1. **Now:** preserve this seven-point machine-readable traceability baseline and validate its structure/links. This is completed by this documentation tranche, not a change to verifier decisions.
-2. **Upstream dependency:** obtain taskforce agreement on the *meaning* of three coverage categories, signing-time evidence binding, the original consenting principal and chain/expiry rules, the responsibilities of the claim generator, and the conformance status of the CAWG TRQP profile. Do not invent mandatory defaults locally.
-3. **After semantic agreement:** add a versioned, explicitly provisional CAWG domain profile separate from operational verifier profiles; add valid/invalid fixtures for no vouching, credential-backed evidence, scope mismatch, expired/revoked chain links, depth overflow, conflicting principals and generator rejection. Negative tests must not pass by accepting unknown authority.
-4. **Independent review:** run the same fixtures with an independently developed implementation or upstream reference and retain release-pinned evidence. Only CAWG can adopt a CAWG normative profile.
+The [experimental signer-binding evaluator](../../src/cawg_trqp_refimpl/experimental_binding_assurance.py) consumes a signature-verification outcome but deliberately does not convert it into verified subject identity, organizational binding or authority to delegate. The existing [Ed25519 verifier](../../src/cawg_trqp_refimpl/experimental_delegation_signature.py) proves statement integrity under locally supplied pinned public keys only. Binding a key to an enterprise, evaluating signing authority, trusted signing-time evidence and historical revocation still require external authoritative evidence.
 
-## Reproducible traceability check
+## Non-elevation invariants
+
+| Caller-supplied evidence | Result that must **not** be inferred |
+|---|---|
+| Pseudonymous subject identifier | Unique human or verified legal identity |
+| Claim of uniqueness | Independently assured uniqueness |
+| Licence / credential claim | Recognized issuer or authority to act for a third party |
+| Valid Ed25519 signature | Signer identity or enterprise authority |
+| Organizational affiliation | Authority to bind an enterprise |
+| Synthetic authorization at signing time | Independently assured historical authorization |
+
+Unsupported external checks are reported as `not_checked`, `unverified` or `indeterminate` as appropriate, never implicitly as PASS.
+
+### Verify locally
 
 ```bash
 python scripts/validate_delegated_creator_traceability.py
+pytest -q tests/test_taskforce_session2_scenarios.py tests/test_enterprise_binding_assurance.py
+make validate
 ```
 
-This verifies completeness of the seven summarized recap points, status vocabulary, nonempty explanations and valid repository-local evidence paths. It does **not** assert runtime enforcement, interoperability or CAWG conformance.
+The new test suite uses deterministic, publicly reproducible **synthetic** cases. It cannot establish real CAWG/C2PA assertion coverage, enterprise recognition, credential issuer trust, unique human status, external TRQP interoperability, or CAWG conformance. Its negative assertions establish that these unsupported claims are not elevated.
 
-## Change boundaries
+## Upstream dependency: endorsement assertion versus delegation
 
-No alteration to published TRQP, CAWG/C2PA standards; no change to production verifier semantics, result schema, CLI/API behaviour, existing operational profiles, or released evidence. No new release is warranted for this analysis alone.
+The relationship between CAWG endorsement/role assertions and multi-hop scoped delegation remains an upstream decision. A repository-local experimental statement is **not** an adopted CAWG wire format. This implementation does not choose between extending an endorsement assertion and creating a separate delegation assertion.
+
+### Public-draft comparison (S2-D)
+
+The [CAWG Endorsement Assertion 1.0 draft](https://cawg.io/endorsement/1.0-draft/) supports three specified C2PA ingredient actions (`published`, `transcoded`, and `repackaged`) and a credential/time-bound endorsement. The local experiment models resource/purpose constraints, multi-hop attenuation, and historical/current revocation separately.
+
+The published endorsement format does not by itself demonstrate general-purpose delegation, organizational authority to bind, or multi-hop authorization. Direct wire compatibility has not been tested. Whether to extend endorsement or define a separate delegation assertion remains an upstream decision. No new CAWG-labelled wire representation is introduced here.
+
+## Completion boundary
+
+This local increment is complete when the new scenarios, regression tests and traceability validation succeed and documented evidence matches executable behavior. It does **not** close the external interoperability gates in [#75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75). Preserve those as separately assessable dependencies.

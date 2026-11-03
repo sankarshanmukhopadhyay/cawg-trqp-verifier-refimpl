@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "conformance" / "delegated-creator-taskforce-traceability.json"
-EXPECTED = {f"DC-{i:02d}" for i in range(1, 8)}
+EXPECTED = {f"DC-{i:02d}" for i in range(1, 13)}
 STATUSES = {"represented", "partial", "missing", "external"}
 NEXT = {"upstream-semantics", "await-taskforce", "local-validation", "none"}
 
@@ -17,7 +17,7 @@ def validate():
     assert data["schema_version"] == "1.0"
     assert data["basis"]["authority"].startswith("informative")
     rows = data["requirements"]
-    assert isinstance(rows, list) and len(rows) == 7
+    assert isinstance(rows, list) and len(rows) == 12
     ids = [row["id"] for row in rows]
     assert len(ids) == len(set(ids)) and set(ids) == EXPECTED
     for row in rows:
@@ -33,4 +33,4 @@ def validate():
 
 if __name__ == "__main__":
     validate()
-    print("Delegated Creator traceability: 7 rows, valid evidence paths; semantic conformance NOT asserted")
+    print("Delegated Creator traceability: 12 rows, valid evidence paths; semantic conformance NOT asserted")

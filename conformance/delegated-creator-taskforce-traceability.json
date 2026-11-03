@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "basis": {
-    "source": "CAWG Delegated Creator Taskforce kick-off recap, meeting 2026-10-23, circulated 2026-10-25",
-    "source_scope": "Summary email only; referenced minutes, slides, Padlet and issue discussions are not treated as reviewed sources.",
+    "source": "CAWG Delegated Creator Taskforce discussions, 2026-10-23 and 2026-10-26",
+    "source_scope": "Informative engineering mapping of discussion propositions; unpublished materials are not prerequisites for independently reproducing the local tests. This mapping does not imply adopted requirements.",
     "authority": "informative repository-local mapping; not CAWG/TRQP normative conformance",
     "feasibility_note": "Experimental independent implementation may proceed without CAWG adoption; status still measures satisfaction of the taskforce's upstream-defined semantic contract."
   },
@@ -137,6 +137,70 @@
       "gap": "Survey administration and adoption evidence are taskforce activities, not reference-verifier behavior.",
       "next": "await-taskforce",
       "experimental_feasibility": "external"
+    },
+    {
+      "id": "DC-08",
+      "title": "Human-to-human scoped delegation",
+      "status": "represented",
+      "evidence": [
+        "conformance/delegated-creator-session2-scenarios.json",
+        "tests/test_taskforce_session2_scenarios.py"
+      ],
+      "gap": "Human manager delegated authority is modeled in locally simulated fixtures; trust, verified signer binding and independently authoritative grant are not established.",
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established"
+    },
+    {
+      "id": "DC-09",
+      "title": "Self-declared and anonymous-but-unique subject evidence",
+      "status": "partial",
+      "evidence": [
+        "src/cawg_trqp_refimpl/experimental_subject_evidence.py",
+        "tests/test_taskforce_session2_scenarios.py"
+      ],
+      "gap": "Self-declaration and claimed uniqueness are represented without asserting uniqueness proof or civil identity verification.",
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established"
+    },
+    {
+      "id": "DC-10",
+      "title": "Optional issuer-neutral creator vouching",
+      "status": "partial",
+      "evidence": [
+        "src/cawg_trqp_refimpl/experimental_subject_evidence.py",
+        "tests/test_taskforce_session2_scenarios.py"
+      ],
+      "gap": "Professional vouching can be represented as untrusted claims; issuer recognition, credential trust and revocation remain unsupported.",
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established"
+    },
+    {
+      "id": "DC-11",
+      "title": "Signature integrity separate from organizational binding and authority to delegate",
+      "status": "represented",
+      "evidence": [
+        "src/cawg_trqp_refimpl/experimental_binding_assurance.py",
+        "tests/test_enterprise_binding_assurance.py"
+      ],
+      "gap": "Local cryptographic statement integrity can be verified; external subject, enterprise, scope and signing-authority checks remain indeterminate.",
+      "next": "local-validation",
+      "experimental_feasibility": "implemented-local-experiment",
+      "upstream_adoption": "not-established"
+    },
+    {
+      "id": "DC-12",
+      "title": "CAWG endorsement assertion relation to delegated creator representation",
+      "status": "external",
+      "evidence": [
+        "docs/agentic-ai/delegated-creator-trqp-traceability.md"
+      ],
+      "gap": "Extension versus separate assertion is upstream-dependent; repository experiments have no authority to decide the CAWG representation.",
+      "next": "upstream-semantics",
+      "experimental_feasibility": "external",
+      "upstream_adoption": "not-established"
     }
   ]
 }
