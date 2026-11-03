@@ -7,11 +7,19 @@ nav_order: 3
 # CAWG-TRQP Explainer Presentation
 {: .fs-9 }
 
-A concise, presentation-ready explanation of how this reference implementation
-connects CAWG/C2PA content provenance to TRQP-backed authorization,
-recognition, decision receipts, agentic AI assurance, and replayable audit
-evidence.
+A versioned overview of the implementation as documented for **v0.19.2**.
+The deck is retained for historical orientation, not as a current v0.20.0
+capability inventory.
 {: .fs-6 .fw-300 }
+
+> **Historical presentation (v0.19.2 scope).** The v3 PDF predates the
+> [v0.20.0 experimental Delegated Creator release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0).
+> Its scenario counts and capability descriptions belong to the earlier
+> snapshot. For the current implementation, consult the
+> [v0.20.0 release notes](../RELEASE_NOTES_v0.20.0.md), the
+> [current walkthrough catalogue](sections/walkthroughs-index.md), and the
+> [Delegated Creator evidence guide](agentic-ai/delegated-creator-trqp-traceability.md).
+> The PDF and its integrity manifest are intentionally unchanged.
 
 [Open the presentation](../assets/presentations/cawg-trqp-explainer-v3.pdf){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [CAWG Input Contract](cawg-input-contract.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -51,8 +59,8 @@ for later releases, so it stops drifting silently between releases.
 
 ## How to use the presentation
 
-Use the deck as the ten- to twelve-minute orientation layer before moving
-into executable contracts and examples. It is especially useful for standards
+Use this historical deck as a ten- to twelve-minute orientation to the
+v0.19.2 architecture before moving into current executable contracts and examples. It is especially useful for standards
 reviewers, architects, policy owners, and contributors who need the complete
 system model before examining individual calls.
 
@@ -109,6 +117,10 @@ these implementation-grade artifacts:
   response examples suitable for interoperability review.
 
 ## Embedded viewer
+
+**Historical v0.19.2 presentation.** The embedded PDF does not cover the
+v0.20.0 experimental Delegated Creator work. Refer to the release notes and
+current implementation guides above for subsequent changes.
 
 Most browsers can display the presentation below. Use the **Open the
 presentation** button above when embedded PDF viewing is unavailable.
