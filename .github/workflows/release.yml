@@ -94,11 +94,12 @@ jobs:
             dist/* "release-assets/checksums-$TAG.json"
 
       - name: Confirm published release identity
-        if: steps.existing.outputs.exists == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.version.outputs.tag }}
         run: |
           test "$(gh release view "$TAG" --json tagName --jq '.tagName')" = "$TAG"
-          gh release view "$TAG" --json isLatest --jq '.isLatest' | grep -qx true
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq '.tag_name')" = "$TAG"
           gh release view "$TAG" --json assets --jq '.assets[].name' | grep -Fx "checksums-$TAG.json"
+          gh release view "$TAG" --json assets --jq '.assets[].name' | grep -Fx "cawg_trqp_refimpl-${TAG#v}-py3-none-any.whl"
+          gh release view "$TAG" --json assets --jq '.assets[].name' | grep -Fx "cawg_trqp_refimpl-${TAG#v}.tar.gz"
