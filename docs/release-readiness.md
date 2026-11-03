@@ -39,9 +39,18 @@ python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.j
 python scripts/validate_feed_descriptors.py
 python scripts/validate_photography_contest_example.py
 python scripts/export_conformance_pack.py --check
+python scripts/generate_release_checksums.py
 python scripts/generate_release_checksums.py --check
 ```
 
+
+The two checksum commands above generate a **local checkout manifest**, then
+verify that the generated manifest matches the selected source artifacts.
+The generated `release-assets/checksums-v0.20.0.json` is not committed; the
+[release-attached checksum asset](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/download/v0.20.0/checksums-v0.20.0.json)
+is the published evidence for the tagged release. Neither source checksum
+verification nor local tests establish independent trust or Delegated Creator
+interoperability.
 
 ## v0.16.0 readiness checklist
 
