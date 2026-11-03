@@ -42,7 +42,7 @@ for item in ("0.19.1", version):
     require("## [" + item + "]" in changelog, "changelog missing " + item)
 for path in ("CHANGELOG.md", "QUICKSTART.md", "GOVERNANCE.md", "ROADMAP.md", "SECURITY.md", "CONTRIBUTING.md"):
     require(read(path).startswith("---\n"), "root Jekyll page lacks leading front matter: " + path)
-require("post-v0.19.2" in readme, "README omits post-release development boundary")
+require("post-" + tag in readme, "README omits current release development boundary")
 require("experimental" in read("docs/external-c2pa-validation-boundary.md").lower(), "external validation experimental status missing")
 if errors:
     for error in errors:
