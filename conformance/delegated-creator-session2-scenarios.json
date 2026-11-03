@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1",
+  "status": "experimental synthetic inputs; not CAWG conformance",
+  "discussion_baseline": "CAWG Delegated Creator Taskforce 2026-10-26",
+  "scenarios": [
+    {
+      "id": "human-manager-delegation",
+      "kind": "delegation",
+      "root": "creator",
+      "delegate": "manager",
+      "action": "publish",
+      "resource": "post:1",
+      "purpose": "promotion",
+      "start": "2026-10-01T00:00:00Z",
+      "end": "2026-10-30T00:00:00Z",
+      "sign": "2026-10-23T00:00:00Z",
+      "now": "2026-10-23T01:00:00Z"
+    },
+    {
+      "id": "anonymous-unique-self-declaration",
+      "kind": "subject",
+      "subject": "pairwise:pseudonym-1",
+      "subject_kind": "pseudonymous",
+      "unique_claim": true,
+      "vouching": []
+    },
+    {
+      "id": "licensed-creator-vouch",
+      "kind": "subject",
+      "subject": "creator:1",
+      "subject_kind": "identified",
+      "unique_claim": false,
+      "vouching": [
+        {
+          "issuer": "issuer:professional-board",
+          "kind": "professional",
+          "claimed_status": "verified",
+          "scope": "creator-licence"
+        }
+      ]
+    }
+  ]
+}
