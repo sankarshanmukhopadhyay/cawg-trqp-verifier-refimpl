@@ -51,6 +51,26 @@ An agent can appear in one or more roles without gaining authority from another 
 - [Verification and Decision Boundaries](agentic-verification-boundaries.md)
 - [Agentic Walkthrough Pattern](agentic-walkthrough-pattern.md)
 
+## Experimental Delegated Creator path (v0.20.0)
+
+The [v0.20.0 release](../../RELEASE_NOTES_v0.20.0.md) adds **repository-local,
+non-normative** experiments. To evaluate them without implying verified
+CAWG/C2PA interoperability:
+
+1. Start with the [five-world demonstration](taskforce-five-world-demo.md) to export a deterministic synthetic decision report, compare expected and actual outcomes, and inspect separate historical/current and assured result fields.
+2. Run the [Session 2 scenarios](../../tests/test_taskforce_session2_scenarios.py) for human manager delegation, pseudonymous uniqueness claims and professional vouching; examine the [scenario catalogue](../../conformance/delegated-creator-session2-scenarios.json).
+3. Review the [enterprise-binding negative tests](../../tests/test_enterprise_binding_assurance.py) and [assurance traceability](delegated-creator-trqp-traceability.md) to understand why a valid signature or credential claim does not establish authority to act for an organization.
+
+```bash
+python scripts/run_taskforce_five_world_demo.py --output /tmp/taskforce-report.json
+pytest -q tests/test_taskforce_session2_scenarios.py tests/test_enterprise_binding_assurance.py
+```
+
+The five-world report's `assured_authority` and `assured_coverage` remain
+non-positive. This path is a testable feasibility demonstration, **not** proof
+of accepted CAWG delegation assertions, issuer trust or independent TRQP
+interoperability. External evidence remains tracked in [issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75).
+
 ## Executable archetypes
 
 The walkthrough portfolio includes three machine-readable agentic archetypes:
