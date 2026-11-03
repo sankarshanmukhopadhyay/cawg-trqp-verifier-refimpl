@@ -11,7 +11,7 @@ Even when the repository is not being formally released, it still needs a discip
 
 ## Published release versus current branch
 
-The latest published release is [v0.19.2](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2), whose wheel, source archive and checksum evidence are attached to GitHub Releases. Current `main` may contain later experimental work; resolve reproducible release evidence at the release tag rather than treating `main` as an immutable release.
+The current release baseline is [v0.20.0](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0). Source distribution, wheel, and the checksum evidence manifest for selected machine-readable artifacts are attached to GitHub Releases. The Delegated Creator and external C2PA work is experimental, not independently interoperable. Pin the release tag to reproduce the evidence; `main` may move after publication.
 
 ## Core handoff artifacts
 

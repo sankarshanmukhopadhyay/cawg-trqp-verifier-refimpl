@@ -39,5 +39,6 @@
     "agentic AI assurance model change",
     "walkthrough portfolio count or pattern change",
     "threat model or privacy governance package change"
-  ]
+  ],
+  "release_alignment": "historical"
 }

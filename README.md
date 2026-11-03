@@ -1,7 +1,7 @@
 # CAWG-TRQP Verifier Reference Implementation
 
 > **Portfolio status:** Flagship · Pilot-ready · Active validation  
-> **Latest published release:** v0.19.2 · **`main`:** post-v0.19.2 experimental development  
+> **Latest published release:** v0.20.0 · **`main`:** post-v0.20.0 development (release tag is the reproducible baseline)  
 > **Project status declaration:** [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml)
 
 | Portfolio tier | Flagship |
@@ -29,9 +29,11 @@ It does **not** treat provenance as truth, ownership, entitlement, clinical vali
 
 ## Published release and current development
 
-The [v0.19.2 release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2), published 1 September 2026, adds decision evidence isolation, typed process input validation, adversarial vectors and a unified `make validate` gate.
+The [v0.20.0 experimental capability release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0) adds an experimental Delegated Creator profile, reproducible five-world cases, additional human/subject/vouching scenarios, Ed25519 statement-integrity tests, independent signer-binding evidence states, and an optional guarded C2PA validator interface. See the [detailed release notes](RELEASE_NOTES_v0.20.0.md).
 
-Current `main` contains **unreleased experimental** Delegated Creator and external C2PA validation feasibility work. Local and mock-driven tests do **not** establish independent CAWG/C2PA/TRQP interoperability, trusted signer identity, delegated authority or trusted signing time. See the [external validation boundary](docs/external-c2pa-validation-boundary.md) and [open evidence gate #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75). Presence on `main` is not a release or certification claim.
+**Assurance boundary:** These are feasibility and local conformance-evidence experiments, not CAWG-endorsed delegated-creator rules, legal authorization, verified enterprise identity, trusted signing time, or independently demonstrated C2PA/TRQP interoperability. The stable verifier APIs and operational profiles remain separate. [Issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75) tracks remaining independent evidence.
+
+**For reproducibility:** use the versioned release/tag rather than later changes on `main`.
 
 ## Start here
 
@@ -132,7 +134,7 @@ See [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml), [`SECURITY.md`](SECURITY.md), 
 
 ## Release
 
-Latest release notes: [`RELEASE_NOTES_v0.19.2.md`](RELEASE_NOTES_v0.19.2.md)  
+Latest release notes: [`RELEASE_NOTES_v0.20.0.md`](RELEASE_NOTES_v0.20.0.md)  
 Changelog: [`CHANGELOG.md`](CHANGELOG.md)  
 Roadmap: [`ROADMAP.md`](ROADMAP.md)
 

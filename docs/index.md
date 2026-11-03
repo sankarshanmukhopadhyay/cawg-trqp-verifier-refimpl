@@ -53,7 +53,7 @@ For decision-makers and implementers exploring sector deployment, the [Industry 
 
 ## Publication boundary
 
-**Published baseline:** [v0.19.2](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2). **Current `main`:** post-release experimental [Delegated Creator](agentic-ai/experimental-delegated-creator-profile.md) and [external C2PA validation](external-c2pa-validation-boundary.md), not an independent CAWG/C2PA/TRQP conformance or trusted-signing-time claim. Evaluate release artifacts from their tag rather than assuming `main` is the release.
+**Published baseline:** [v0.20.0](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0), including an **experimental** [Delegated Creator](agentic-ai/experimental-delegated-creator-profile.md) feasibility model and [guarded external C2PA validation boundary](external-c2pa-validation-boundary.md). It does not establish independent CAWG/C2PA/TRQP conformance, verified delegated authority or trusted signing-time evidence. Resolve reproducible release artifacts by tag, not the moving `main` branch.
 
 ## What it enables today
 
@@ -84,8 +84,8 @@ for the full authority and decision-rights model.
 
 | Attribute | Value |
 |---|---|
-| Current release | v0.19.0 |
-| Test suite | 82/82 passing |
+| Current release | v0.20.0 (experimental Delegated Creator additions) |
+| Test suite | `make validate` and CI matrix; use current run evidence rather than historical counts |
 | Validation gate | `make validate` — see [Contributing](../CONTRIBUTING.md) |
 | Documentation | This site — see the section navigation on the left |
 {: .note }

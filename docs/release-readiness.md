@@ -11,9 +11,9 @@ This repository is no longer only organized around releases. It is also organize
 
 ## Current published baseline
 
-The latest published release is [v0.19.2](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2); its downloadable checksum is a **GitHub Release attachment**, not a committed `release-assets/checksums-v0.19.2.json` file. Newer Delegated Creator/C2PA feasibility work remains experimental and lacks independent external interoperability evidence ([#75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75)). Historical readiness checklists below are records of their stated milestones, not a fresh current validation report.
+The [v0.20.0 release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0) is an **experimental capability baseline**, not an independent CAWG/C2PA/TRQP interoperability result. Its checksum manifest is a **GitHub Release attachment**, not a committed `release-assets/checksums-v0.20.0.json` source file. Local Delegated Creator feasibility tests are reproducible, while external trust, trusted time and independently signed C2PA/CAWG delegation evidence remain open in [#75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75). Historical readiness checklists below describe their own milestones, not a fresh certification assessment.
 
-## Current readiness checklist
+## Current readiness checklist (existing verifier; not Delegated Creator certification)
 
 - [x] profiles and overlays are schema-driven and executable
 - [x] descriptor enforcement policy is explicit by feed type
