@@ -26,11 +26,19 @@ if manifest_path.is_file():
         valid_impl_version = impl_version is not None and (
             impl_version == released_version
             or impl_version == f"unreleased (post-{released_version})"
+            or (
+                manifest.get('release_alignment') == 'historical'
+                and isinstance(impl_version, str)
+                and re.fullmatch(r'v\\d+\\.\\d+\\.\\d+', impl_version)
+                and released_version is not None
+                and tuple(map(int, impl_version[1:].split('.')))
+                    < tuple(map(int, released_version[1:].split('.')))
+            )
         )
         if not valid_impl_version:
             errors.append(
                 f"presentation implementation_version '{impl_version}' is not aligned with "
-                f"declared release {released_version} or 'unreleased (post-{released_version})'"
+                f"declared release {released_version}, or explicitly historical prior-release evidence"
             )
         if manifest.get('status') != 'non-normative':
             errors.append('presentation authority status must be non-normative')
