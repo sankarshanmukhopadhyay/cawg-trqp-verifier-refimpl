@@ -6,7 +6,7 @@ nav_order: 7
 ---
 # Delegated Creator Taskforce: portable experimental demonstration
 
-**Provenance:** CAWG Delegated Creator Taskforce kick-off slides and minutes, 23 October 2026. These are proposed requirements, **not an adopted specification**.
+**Status:** Published as part of the [v0.20.0 experimental capability baseline](../../RELEASE_NOTES_v0.20.0.md). These are **synthetic, locally executable** scenarios informed by the CAWG Delegated Creator Taskforce discussion of 23 October 2026, not an adopted CAWG specification or independent interoperability demonstration.
 
 ## Run
 
@@ -43,7 +43,14 @@ The [machine-readable matrix](../../conformance/delegated-creator-taskforce-eigh
 
 ## External consumption gate
 
-A third party can reproduce **local synthetic decision semantics**, not independent cryptographic verification, credential recognition or CAWG/C2PA conformance. Real interoperability requires another implementation and authoritative upstream formats and trust anchors. No such evaluation has been conducted. No new release or normative version is implied.
+A third party can reproduce **local synthetic decision semantics** from the
+[v0.20.0 release tag](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0).
+The separately tested Ed25519 statement-integrity module verifies local signatures
+under supplied keys; it does **not** cryptographically authenticate the five-world
+simulated delegations or establish signer identity, issuer recognition, or CAWG/C2PA
+conformance. Real interoperability requires independently produced signed assets,
+upstream-approved representations and trusted verification inputs. No such
+cross-implementation evaluation is established by this release.
 
 ## Verification assurance contract (hardening)
 
@@ -52,13 +59,35 @@ The experimental kernel provides **two separate planes**:
 - `authority`, `historical_authority`, `current_authority` and `coverage` represent the **simulation result** over caller-normalized data. These are **not verified assertions**, even when the simulated result reads `authorized` or `credential-backed`.
 - `assured_authority=indeterminate`, `assured_coverage=unverified` and `assurance_reason=independent_evidence_verification_unavailable` are the **effective assurance outcomes** for consumers. No caller-set Boolean, opaque signature claim or unauthenticated timestamp can elevate these outcomes.
 
-The experimental evaluator **does not accept** a caller-supplied `verified=true` as a trusted proof. Until an actual cryptographic signature, covered-hash, issuer authorization, trust anchor, and signing-time verifier is implemented and integrated, the assured results must remain indeterminate/unverified. This is intentional fail-safe behaviour; it does not claim that missing evidence proves a negative fact.
+The experimental evaluator **does not accept** a caller-supplied `verified=true` as a trusted proof. A separate signature-integrity verifier exists, but it has **not** been integrated
+with trusted covered-hash, identity/issuer, authority and signing-time verification
+for these fixture decisions. Consequently the assured results remain
+indeterminate/unverified. This is intentional fail-safe behaviour; it does not claim that missing evidence proves a negative fact.
 
 CI includes `tests/test_taskforce_assurance_boundary.py`, including deliberate fake credential success, boundary times and tampered linked evidence. External interoperability, real credential acceptance and trusted time remain **unsupported** and are not silently waived.
 
 ### DCO privacy
 
 Contributors using private email must set their Git author/committer to the **GitHub-confirmed** account noreply address and use a matching `Signed-off-by` trailer. The address is available in GitHub Settings → Emails. The repository's automated GitHub contribution route must be checked for matching author and trailer; a successful DCO workflow is the acceptance evidence. Do not rewrite previously published commits merely to obscure signoffs.
+
+## Additional v0.20.0 experiments
+
+The [Session 2 synthetic scenario catalogue](../../conformance/delegated-creator-session2-scenarios.json)
+and [tests](../../tests/test_taskforce_session2_scenarios.py) add human-to-human
+manager delegation, pseudonymous self-declaration/uniqueness claims, and optional
+professional-licence vouching. These are **separate** experiments and do not alter
+the five-world report's fixed schema or make those results independently assured.
+
+Signer-to-organization binding and power-to-delegate claims are deliberately
+non-elevating; see the [binding evaluator](../../src/cawg_trqp_refimpl/experimental_binding_assurance.py),
+[adversarial tests](../../tests/test_enterprise_binding_assurance.py), and
+[full traceability map](delegated-creator-trqp-traceability.md).
+
+Run the additional scenarios with:
+
+```bash
+pytest -q tests/test_taskforce_session2_scenarios.py tests/test_enterprise_binding_assurance.py
+```
 
 ## Experimental real cryptographic statement binding
 

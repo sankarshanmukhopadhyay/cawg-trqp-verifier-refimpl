@@ -15,6 +15,36 @@ This audit evaluates whether the repository documentation supports discovery, im
 
 The earlier completion verdict records a point-in-time documentation review, not continuous assurance. The later v0.19.2 release and post-release experimental development caused drift in the README, release metadata, roadmap and changelog. This is addressed through release identity reconciliation, a publication validator and a separate public-HTTP link audit. A passing local check does **not** prove external HTTP links or deployed Pages URLs resolve.
 
+## v0.20.0 documentation reconciliation (3 November 2026)
+
+This checkpoint follows the published v0.20.0 experimental capability release.
+The earlier 26 October assessment is retained as a historical observation.
+The corrections are limited to consumer-facing inconsistencies and testable
+reproduction instructions:
+
+- Marked the v3 PDF **historical (v0.19.2 scope)** before both the download
+  link and embedded viewer. The PDF and its checksum manifest remain unchanged;
+  the current walkthrough catalogue, release notes, and experimental evidence
+  guide are linked separately. Historical counts are not rewritten.
+- Reconciled five-world and experimental profile pages to the v0.20.0 release,
+  explicitly separating the original DC-01–06 kernel from DC-08–12 extensions
+  and leaving DC-07 as an external taskforce activity.
+- Added an adoption/reproduction path for Session 2 scenarios, enterprise
+  authority non-elevation, and the versioned evidence/traceability inputs.
+- Corrected checksum instructions: generated manifests are absent from fresh
+  source checkouts, so `--check` is valid only after local generation or
+  provision of a manifest. Immutable published evidence remains on the release.
+
+### Acceptance evidence and limitations
+
+- `make validate` covers local repository, JSON and documentation contracts.
+- The Pages workflow must build and deploy successfully for the merged commit.
+- The scheduled/manual publication audit must check deployed internal links;
+  external failures are classified separately and may be transient.
+- Passing local checks does not prove live HTTP delivery or independent
+  CAWG/C2PA/TRQP interoperability. Any external deployment failure requires
+  follow-up evidence rather than an unverified closure assertion.
+
 ## Coverage result
 
 | Documentation capability | Primary source | Assessment |
