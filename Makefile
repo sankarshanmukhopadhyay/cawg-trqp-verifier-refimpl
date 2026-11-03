@@ -6,6 +6,7 @@
 validate:
 	python scripts/validate_publication.py
 	python scripts/validate_repository.py
+	python scripts/validate_presentation_v4.py
 	python scripts/validate_portfolio_contract.py
 	python scripts/validate_api_contract.py
 	python scripts/validate_examples.py
