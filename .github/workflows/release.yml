@@ -69,7 +69,17 @@ jobs:
           python scripts/generate_release_checksums.py --check
           python -m build
 
-      - name: Publish GitHub release
+      - name: Verify versioned publication material
+        if: steps.existing.outputs.exists == 'false'
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          test -s "RELEASE_NOTES_${TAG}.md"
+          test -s "release-assets/checksums-${TAG}.json"
+          test -n "$(ls -1 dist/*.whl)"
+          test -n "$(ls -1 dist/*.tar.gz)"
+
+      - name: Publish GitHub release as latest
         if: steps.existing.outputs.exists == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -78,22 +88,17 @@ jobs:
         run: |
           gh release create "$TAG" \
             --target "$GITHUB_SHA" \
-            --title "CAWG-TRQP Verifier v$VERSION — Decision Isolation and Assurance Hardening" \
-            --notes-file - \
-            dist/* "release-assets/checksums-$TAG.json" <<'EOF'
-          ## Decision isolation and assurance hardening
+            --latest \
+            --title "CAWG-TRQP Verifier v$VERSION — Experimental Delegated Creator and Assurance Evidence" \
+            --notes-file "RELEASE_NOTES_$TAG.md" \
+            dist/* "release-assets/checksums-$TAG.json"
 
-          This patch release closes the v0.19.x hardening tranche.
-
-          ### Fixed
-          - Isolates transient transport, revocation, descriptor and cache evidence by verification execution context so long-lived verifier instances cannot contaminate another decision receipt.
-          - Rejects malformed process evidence at the typed request boundary, including non-numeric, non-finite and out-of-range confidence values.
-
-          ### Assurance
-          - Makes `make validate` the authoritative repository completion gate used by CI.
-          - Adds machine-readable adversarial falsification vectors for delegated-authority misuse, gateway-route substitution, revoked issuer recognition, partial provenance stripping and replay-root confusion.
-          - Generates and verifies release checksum evidence during the release workflow and attaches it to this release.
-
-          ### Authority boundary
-          No CAWG/C2PA or TRQP normative authority is asserted by this release. Repository authority remains limited to reference implementation behavior, local profiles/fixtures, conformance evidence and generated assurance artifacts.
-          EOF
+      - name: Confirm published release identity
+        if: steps.existing.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          test "$(gh release view "$TAG" --json tagName --jq '.tagName')" = "$TAG"
+          gh release view "$TAG" --json isLatest --jq '.isLatest' | grep -qx true
+          gh release view "$TAG" --json assets --jq '.assets[].name' | grep -Fx "checksums-$TAG.json"
