@@ -8,6 +8,35 @@ nav_order: 1
 
 ## [Unreleased]
 
+No unreleased changes recorded.
+
+## [0.20.0] - 2026-11-03
+
+### Experimental Delegated Creator and assurance evidence
+
+- Added a repository-local, non-normative experimental Delegated Creator profile and five synthetic creative-industry scenario families with a reproducible JSON report and schema.
+- Added historical-versus-current scoped delegation evaluation, bounded chain attenuation, structural assertion-order tests and deterministic adverse vectors.
+- Added Ed25519 cryptographic integrity verification of a locally defined delegation statement using pinned test keys. Key ownership, organization authority, accepted CAWG assertion bindings and trusted signing time remain **unverified**.
+- Added three further human-manager, self-declaration/pseudonymous uniqueness and optional professional-vouching scenarios; caller-supplied claims cannot become positive assured authorization.
+- Added separate subject, organization and authority-to-bind evidence states with negative and adversarial non-elevation tests.
+- Added an optional, bounded `c2patool` subprocess adapter tested with mocks; no independently obtained signed-asset or TRQP trust-list interoperability demonstration has been performed.
+- Published traceability and proposed eight-test assessment with explicit demonstrated/simulated/partial/unsupported dispositions. External evidence remains tracked in [issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75).
+
+### Release and maintenance
+
+- Expanded release SHA-256 evidence to cover the experimental fixture/traceability/schema inputs.
+- Updated the release workflow to use version-matched release notes, validate its artifact inputs, and designate the release latest.
+- Added DCO and documentation-link audit workflows, branch housekeeping and dependency updates.
+- Published explanatory documentation, feasibility limits, reproduction instructions and an upstream endorsement/delegation boundary analysis.
+
+**Compatibility:** No intentional change to stable verifier APIs or operational profiles. New experimental representations are not cross-implementation or upstream-approved contracts.
+
+See [detailed release notes](../RELEASE_NOTES_v0.20.0.md).
+
+## Development working notes retained for context (not a release-scoped changelog)
+
+The following entries were carried over from earlier working notes and may describe work completed before v0.19.2. They are preserved for historical context, not presented as newly introduced in v0.20.0.
+
 ### Publication reconciliation (26 October 2026)
 
 - Corrected latest-release identity and metadata drift against v0.19.2.
