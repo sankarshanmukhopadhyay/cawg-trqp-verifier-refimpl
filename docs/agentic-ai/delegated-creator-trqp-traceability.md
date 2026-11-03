@@ -54,6 +54,12 @@ The new test suite uses deterministic, publicly reproducible **synthetic** cases
 
 The relationship between CAWG endorsement/role assertions and multi-hop scoped delegation remains an upstream decision. A repository-local experimental statement is **not** an adopted CAWG wire format. This implementation does not choose between extending an endorsement assertion and creating a separate delegation assertion.
 
+### Public-draft comparison (S2-D)
+
+The [CAWG Endorsement Assertion 1.0 draft](https://cawg.io/endorsement/1.0-draft/) supports three specified C2PA ingredient actions (`published`, `transcoded`, and `repackaged`) and a credential/time-bound endorsement. The local experiment models resource/purpose constraints, multi-hop attenuation, and historical/current revocation separately.
+
+The published endorsement format does not by itself demonstrate general-purpose delegation, organizational authority to bind, or multi-hop authorization. Direct wire compatibility has not been tested. Whether to extend endorsement or define a separate delegation assertion remains an upstream decision. No new CAWG-labelled wire representation is introduced here.
+
 ## Completion boundary
 
 This local increment is complete when the new scenarios, regression tests and traceability validation succeed and documented evidence matches executable behavior. It does **not** close the external interoperability gates in [#75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75). Preserve those as separately assessable dependencies.
