@@ -40,9 +40,13 @@ The repository remains **pilot-ready**, not an independent certification service
 
 The [v0.19.2 release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.19.2) closes [#38](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/38), [#39](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/39), [#40](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/40) and [#41](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/41). All four are completed, not current work.
 
-## Post-v0.19.2 experimental evidence gate
+## v0.20.0 experimental capability baseline and remaining evidence gate
 
-[Issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75) tracks Delegated Creator feasibility and optional external C2PA validation. Independent C2PA/TRQP interoperability, identity/trust anchoring, signing-time assurance and actual delegated C2PA coverage remain **not demonstrated**. The next useful work is independently reproducible real-asset and trust-endpoint evidence, not further synthetic scenario expansion.
+The [v0.20.0 release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0) versions the experimental Delegated Creator model, scenario corpus, cryptographic statement-integrity test, evidence non-elevation, bounded C2PA adapter, and reproducible local assurance reports. These are informative, repository-local experiments, not adopted CAWG semantics or proof of independent interoperability.
+
+
+
+[Issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75) remains open for external evidence closure and independent adoption validation. Independent C2PA/TRQP interoperability, identity/trust anchoring, signing-time assurance and actual delegated C2PA coverage remain **not demonstrated**. The next useful work is independently reproducible real-asset and trust-endpoint evidence, not further synthetic scenario expansion.
 
 ## Deferred capability work
 
