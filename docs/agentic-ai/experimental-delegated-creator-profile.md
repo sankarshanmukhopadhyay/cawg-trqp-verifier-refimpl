@@ -10,9 +10,19 @@ nav_order: 6
 
 ## Proposition and architecture
 
-Investigate DC-01 through DC-06 using a deterministic decision kernel driven by *already extracted* creator/delegation evidence. The experiment deliberately does not modify production verifier APIs, the three existing operational assurance profiles, or released conformance contracts. The [machine-readable experimental profile](../../conformance/experimental-delegated-creator-profile.json) is separate from those operational profiles.
+The **original deterministic decision kernel** covers DC-01 through DC-06,
+driven by *already extracted* creator/delegation evidence. The v0.20.0
+experimental release also includes independent work for DC-08 through DC-12:
+human-to-human delegation, subject/uniqueness assertions, optional professional
+vouching, signer-to-organization/authority separation, and an upstream-dependent
+endorsement-versus-delegation mapping. DC-07 remains an external taskforce
+activity. These extensions do **not** convert the original kernel into a
+CAWG-adopted delegated-creator profile. The experiment deliberately does not modify production verifier APIs, the three existing operational assurance profiles, or released conformance contracts. The [machine-readable experimental profile](../../conformance/experimental-delegated-creator-profile.json) is separate from those operational profiles.
 
-**Input trust boundary:** The caller supplies a normalized case with signer time, evaluation time, root principal, action/resource/purpose, delegation chain, external linked evidence payloads, and generator policy. This layer has no C2PA parser, signing key, credential issuer integration or TRQP network resolver. An input flag such as `credential_verified` merely *simulates* an upstream credential verification assertion and MUST NOT be used as independent proof of credential authenticity.
+**Input trust boundary:** The caller supplies a normalized case with signer time, evaluation time, root principal, action/resource/purpose, delegation chain, external linked evidence payloads, and generator policy. This kernel does not parse C2PA, perform cryptographic signing, verify issuer credentials,
+or resolve a TRQP network endpoint. A separate [experimental Ed25519 integrity checker](../../src/cawg_trqp_refimpl/experimental_delegation_signature.py)
+and [bounded external C2PA adapter](../external-c2pa-validation-boundary.md)
+exist, but they do not upgrade the kernel's authority assurance. An input flag such as `credential_verified` merely *simulates* an upstream credential verification assertion and MUST NOT be used as independent proof of credential authenticity.
 
 ## Selected use-case experiments (DC-01)
 
@@ -20,7 +30,10 @@ Investigate DC-01 through DC-06 using a deterministic decision kernel driven by 
 2. **Agentic publishing:** a studio subdelegates a narrower `publish` right to an agent within inherited scope and duration; scope expansion fails.
 3. **Unverified creator claim:** a generator sees no supporting delegation; it rejects by default; a generator configured to accept still cannot turn indeterminate authority into authorization.
 
-These are **illustrative scenarios**, not the taskforce's approved five-world use-case set.
+These are **illustrative kernel scenarios**, not a claim of Taskforce approval.
+The [five-world scenario demonstration](taskforce-five-world-demo.md) and
+[Session 2 scenario tests](../../tests/test_taskforce_session2_scenarios.py)
+provide the later, separately reproducible fixture coverage.
 
 ## Opinionated constraints
 
@@ -55,6 +68,15 @@ This is **not** a full C2PA implementation. It deliberately cannot establish tha
 ## Upstream decisions that would change this experiment
 
 CAWG must still decide the definitions of coverage, signing-time manifest binding and evidence references, chain semantics and limits, whether the claim generator is a distinct cryptographic signer, and the normative subset of TRQP. Revisions should be versioned and backed by compatibility/conformance fixtures. The upstream survey DC-07 is external and is not implemented here.
+
+## v0.20.0 evidence and interpretation
+
+- [Requirements DC-01–DC-12](delegated-creator-trqp-traceability.md) distinguish represented, partial, missing and external propositions; these are **local implementation dispositions**, not upstream conformance.
+- [Subject/vouching evidence evaluator](../../src/cawg_trqp_refimpl/experimental_subject_evidence.py) retains claimed uniqueness and professional credentials as caller-supplied assertions without verifying issuer trust or personhood.
+- [Signer binding evaluator](../../src/cawg_trqp_refimpl/experimental_binding_assurance.py) distinguishes valid statement integrity from subject/enterprise identity and authority to bind.
+- [Session 2 negative tests](../../tests/test_enterprise_binding_assurance.py) show that externally unverified relationship assertions cannot become assured permission.
+
+No independent CAWG/C2PA/TRQP interoperability has been demonstrated; the remaining evidence gate is [issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75).
 
 ## Taskforce-aligned demonstration
 
