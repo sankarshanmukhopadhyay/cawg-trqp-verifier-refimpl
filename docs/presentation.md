@@ -7,6 +7,10 @@ nav_order: 3
 # CAWG-TRQP Explainer Presentation
 {: .fs-9 }
 
+**Historical v3 explainer.** For the v0.20.0 baseline, use the
+[current v4 explainer](presentation-v4.md). This existing page and PDF are
+retained as an immutable explanation of the earlier state.
+
 A versioned overview of the implementation as documented for **v0.19.2**.
 The deck is retained for historical orientation, not as a current v0.20.0
 capability inventory.
@@ -21,7 +25,7 @@ capability inventory.
 > [Delegated Creator evidence guide](agentic-ai/delegated-creator-trqp-traceability.md).
 > The PDF and its integrity manifest are intentionally unchanged.
 
-[Open the presentation](../assets/presentations/cawg-trqp-explainer-v3.pdf){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Open historical v3 PDF](../assets/presentations/cawg-trqp-explainer-v3.pdf){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [CAWG Input Contract](cawg-input-contract.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [API Call Catalogue](api-call-catalogue.md){: .btn .fs-5 .mb-4 .mb-md-0 }
 

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artifact_type": "presentation",
+  "artifact_version": "v4",
+  "title": "CAWG–TRQP Verifier Reference Implementation — explainer v4",
+  "implementation_version": "v0.20.0",
+  "release_alignment": "historical_pinned",
+  "status": "non-normative",
+  "media_type": "application/pdf",
+  "page_count": 20,
+  "path": "assets/presentations/cawg-trqp-explainer-v4.pdf",
+  "sha256": "3f99d57e88b54fef20744843fd6f609551c2112907a940f07354f3731807d283",
+  "source": "uploaded user-supplied PDF (3 November 2026); byte-for-byte integrity hash",
+  "documentation_path": "docs/presentation-v4.md",
+  "authority": {
+    "normative": false,
+    "authoritative_sources": [
+      "api/openapi.json",
+      "schemas/",
+      "profiles/",
+      "docs/cawg-input-contract.md",
+      "docs/api-call-catalogue.md"
+    ]
+  },
+  "predecessor": {
+    "artifact_version": "v3",
+    "implementation_version": "v0.19.2",
+    "path": "assets/presentations/cawg-trqp-explainer-v3.pdf",
+    "manifest": "assets/presentations/manifest.json",
+    "retained_as": "historical presentation"
+  }
+}

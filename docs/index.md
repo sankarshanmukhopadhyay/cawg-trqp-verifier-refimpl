@@ -16,7 +16,7 @@ replayable audit evidence.
 
 [Quickstart](../QUICKSTART.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[Presentation (v0.19.2)](presentation.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Presentation v4 (v0.20.0)](presentation-v4.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -37,7 +37,7 @@ accountable, testable, and interoperable verifier looks like.
 
 | If you are&hellip; | Start with |
 |---|---|
-| New to this space, or reviewing it for context (governance, editorial, program management) | [Historical v0.19.2 presentation](presentation.md), [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) |
+| New to this space, or reviewing it for context (governance, editorial, program management) | [Presentation v4 (v0.20.0)](presentation-v4.md), [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md), then the [Photography Contest Walkthrough](workflows/photography-contest-verification.md) |
 | A CAWG or C2PA participant deciding what must change for TRQP integration | [CAWG-to-TRQP Integration Enablement](cawg-trqp-integration-enablement.md), then [CAWG Implementation Playbook](industry-adoption/cawg-implementation-playbook.md), [CAWG Input Contract](cawg-input-contract.md), and [API Call Catalogue](api-call-catalogue.md) |
 | An industry body or sector programme sponsor | [Industry Body Decision Brief](industry-adoption/industry-body-decision-brief.md), then the [Music-Industry Pilot Blueprint](industry-adoption/music-industry-pilot-blueprint.md) |
 | A developer integrating a verifier into your own system | [Quickstart](../QUICKSTART.md), then [CAWG Input Contract](cawg-input-contract.md), [API Call Catalogue](api-call-catalogue.md), and [Integration Guide](INTEGRATION_GUIDE.md) |
@@ -54,8 +54,7 @@ For decision-makers and implementers exploring sector deployment, the [Industry 
 The [v3 explainer presentation](presentation.md) is intentionally a
 **historical v0.19.2 overview**. It is useful for architectural orientation,
 but its counts and coverage should not be used as the v0.20.0 capability
-inventory. The current source of record is the versioned release notes and
-implementation documentation.
+inventory. The current [v4 explainer](presentation-v4.md) is pinned to v0.20.0; the source of record remains the versioned release notes and implementation documentation.
 
 ## Publication boundary
 

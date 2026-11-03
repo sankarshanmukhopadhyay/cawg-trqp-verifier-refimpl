@@ -47,6 +47,9 @@ require("experimental" in read("docs/external-c2pa-validation-boundary.md").lowe
 # Guard against presenting the historical v3 deck or synthetic taskforce cases as current assured capability.
 presentation = read("docs/presentation.md")
 require("Historical presentation (v0.19.2 scope)" in presentation, "presentation historical scope notice missing")
+require("presentation-v4.md" in presentation, "historic v3 page does not link to v4")
+require((ROOT / "docs/presentation-v4.md").is_file(), "v4 presentation landing page missing")
+require("presentation-v4.md" in read("docs/index.md"), "home page does not expose v4 presentation")
 require("v0.20.0" in presentation, "presentation lacks link to newer experimental baseline")
 demo = read("docs/agentic-ai/taskforce-five-world-demo.md")
 require("v0.20.0" in demo, "experimental demonstration release reference missing")
