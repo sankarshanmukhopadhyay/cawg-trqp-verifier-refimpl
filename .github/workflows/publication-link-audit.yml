@@ -20,7 +20,7 @@ jobs:
         run: python scripts/audit_public_links.py --output publication-link-audit.json
       - name: Upload link-audit evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: publication-link-audit
           path: publication-link-audit.json
