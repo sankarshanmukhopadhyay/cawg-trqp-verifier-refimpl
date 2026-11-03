@@ -39,7 +39,7 @@ The [v0.20.0 experimental capability release](https://github.com/sankarshanmukho
 
 - [Guided learning paths](docs/guided-learning.md)
 - [Non-technical overview](docs/NON_TECHNICAL_OVERVIEW.md)
-- [Explainer presentation](docs/presentation.md) (17-slide orientation deck)
+- [Historical v0.19.2 explainer presentation](docs/presentation.md) (17 slides; excludes v0.20.0 experimental additions)
 - [Quickstart](QUICKSTART.md)
 - [Operator decision and replay walkthrough](docs/operator-decision-replay-walkthrough.md)
 - [HTTP to audit bundle adoption journey](docs/http-to-audit-bundle-adoption-journey.md)
@@ -85,8 +85,17 @@ python scripts/validate_feed_descriptors.py
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
 python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
 python scripts/export_conformance_pack.py --check
+# Checksums are generated for the checked-out source tree, not committed:
+python scripts/generate_release_checksums.py
 python scripts/generate_release_checksums.py --check
 ```
+
+The checksum manifest validates selected release-evidence inputs for the
+current checkout; it is not a checksum of the built wheel or source archive.
+For immutable v0.20.0 publication evidence, use the
+[checksum asset attached to the release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/download/v0.20.0/checksums-v0.20.0.json)
+and pin the matching source tag. The published manifest is deliberately not
+stored as a generated file on `main`.
 
 ## Verification profiles
 
