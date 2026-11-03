@@ -25,7 +25,7 @@ evidence.
 |---|---|
 | Presentation | CAWG-TRQP Verifier Reference Implementation: From content provenance to verifiable trust decisions |
 | Presentation version | v3 |
-| Implementation state represented | Unreleased, post-v0.19.0 (current repository `HEAD`) |
+| Implementation state represented | v0.19.2 explanatory snapshot; not updated for v0.20.0 Delegated Creator changes |
 | Format | PDF, 17 slides |
 | Status | Explanatory, non-normative |
 | Canonical asset | `assets/presentations/cawg-trqp-explainer-v3.pdf` |
@@ -46,8 +46,8 @@ Agentic AI Variant, plus three cross-sector agentic archetypes), and shipped a
 full adversarial threat-model and privacy/personal-information governance
 package. v2 predates all of this and undercounts the current walkthrough
 portfolio and capability surface. v3 replaces it as the canonical deck and is
-explicitly versioned against the unreleased `HEAD` state rather than a stale
-release tag, so it stops drifting silently between releases.
+pinned to the v0.19.2 implementation state rather than silently repurposed
+for later releases, so it stops drifting silently between releases.
 
 ## How to use the presentation
 
