@@ -45,6 +45,22 @@ reproduction instructions:
   CAWG/C2PA/TRQP interoperability. Any external deployment failure requires
   follow-up evidence rather than an unverified closure assertion.
 
+## Explainer v4 publication (3 November 2026)
+
+The supplied 20-slide explainer v4 is pinned to the v0.20.0 experimental
+capability release and published as a separate, non-normative asset. The
+17-slide v3 presentation, its original SHA-256 manifest and its existing Pages
+route remain intact as historical v0.19.2 material.
+
+The publication acceptance gate requires that the original v4 PDF exists at
+`assets/presentations/cawg-trqp-explainer-v4.pdf`, matches the SHA-256
+recorded in `assets/presentations/manifest-v4.json`, and is linked from both
+`docs/presentation-v4.md` and the documentation home page. The source
+artifact is intentionally not modified, regenerated, or re-labelled.
+
+The Pages deployment must complete and the deployed PDF URL must resolve. A
+successful Jekyll build alone does not establish HTTP delivery of the binary.
+
 ## Coverage result
 
 | Documentation capability | Primary source | Assessment |
