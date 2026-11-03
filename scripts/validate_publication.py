@@ -44,6 +44,20 @@ for path in ("CHANGELOG.md", "QUICKSTART.md", "GOVERNANCE.md", "ROADMAP.md", "SE
     require(read(path).startswith("---\n"), "root Jekyll page lacks leading front matter: " + path)
 require("post-" + tag in readme, "README omits current release development boundary")
 require("experimental" in read("docs/external-c2pa-validation-boundary.md").lower(), "external validation experimental status missing")
+# Guard against presenting the historical v3 deck or synthetic taskforce cases as current assured capability.
+presentation = read("docs/presentation.md")
+require("Historical presentation (v0.19.2 scope)" in presentation, "presentation historical scope notice missing")
+require("v0.20.0" in presentation, "presentation lacks link to newer experimental baseline")
+demo = read("docs/agentic-ai/taskforce-five-world-demo.md")
+require("v0.20.0" in demo, "experimental demonstration release reference missing")
+require("No new release or normative version is implied." not in demo, "stale pre-release demonstration statement")
+agentic = read("docs/agentic-ai/index.md")
+require("tests/test_enterprise_binding_assurance.py" in agentic, "agentic adoption path omits authority assurance tests")
+readiness = read("docs/release-readiness.md")
+require("python scripts/generate_release_checksums.py\\npython scripts/generate_release_checksums.py --check" in readiness,
+        "release readiness checksum reproduction commands require generation before check")
+require("python scripts/generate_release_checksums.py\\npython scripts/generate_release_checksums.py --check" in readme,
+        "README checksum reproduction commands require generation before check")
 if errors:
     for error in errors:
         print("publication: FAIL: " + error)
