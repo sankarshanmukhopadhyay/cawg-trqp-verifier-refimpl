@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1",
+  "authority": "repository-local synthetic scenarios; not CAWG conformance",
+  "public_basis": "Creative-sector delegated authority and performer-consent questions raised in CAWG community discussions in November 2026; no unpublished source documents reproduced",
+  "scenarios": [
+    {
+      "name": "brand-agency-performer",
+      "delegation_world": "agency-handover",
+      "consent_case": {
+        "case_id": "brand-agency-performer",
+        "subject_ref": "performer:campaign",
+        "action": "publish",
+        "resource": "campaign",
+        "purpose": "marketing",
+        "used_at": "2026-10-22T12:00:00Z",
+        "evaluated_at": "2026-11-02T12:00:00Z",
+        "records": [
+          {
+            "record_id": "local-brand-agency-performer",
+            "subject_ref": "performer:campaign",
+            "actions": [
+              "publish"
+            ],
+            "resources": [
+              "campaign"
+            ],
+            "purposes": [
+              "marketing"
+            ],
+            "valid_from": "2026-10-01T00:00:00Z",
+            "valid_until": "2026-10-31T00:00:00Z",
+            "withdrawn_effective_at": null,
+            "withdrawal_observed_at": null,
+            "evidence_ref": "https://example.test/private/brand-agency-performer",
+            "evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ]
+      }
+    },
+    {
+      "name": "studio-ai-voice-performer",
+      "delegation_world": "ai-voice-tool",
+      "consent_case": {
+        "case_id": "studio-ai-voice-performer",
+        "subject_ref": "performer:voice",
+        "action": "transform",
+        "resource": "album-demos",
+        "purpose": "demo",
+        "used_at": "2026-10-23T12:00:00Z",
+        "evaluated_at": "2026-10-23T12:01:00Z",
+        "records": [
+          {
+            "record_id": "local-studio-ai-voice-performer",
+            "subject_ref": "performer:voice",
+            "actions": [
+              "transform"
+            ],
+            "resources": [
+              "album-demos"
+            ],
+            "purposes": [
+              "demo"
+            ],
+            "valid_from": "2026-10-01T00:00:00Z",
+            "valid_until": "2026-10-31T00:00:00Z",
+            "withdrawn_effective_at": null,
+            "withdrawal_observed_at": null,
+            "evidence_ref": "https://example.test/private/studio-ai-voice-performer",
+            "evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -35,6 +35,10 @@ The [v0.20.0 experimental capability release](https://github.com/sankarshanmukho
 
 **For reproducibility:** use the versioned release/tag rather than later changes on `main`.
 
+## Experimental consent-evidence boundary (post-v0.20.0 development)
+
+The repository also includes an independent, **non-authoritative** consent-evidence evaluator. It distinguishes claims about a represented person's consent from the actor's delegated authority and keeps historical use, withdrawal and current permissibility separate. All input evidence and times are caller-supplied; `assured_consent` remains indeterminate. The two synthetic integrated cases are reproducible with `python scripts/run_taskforce_consent_demo.py`. See the [experimental consent assurance documentation](docs/agentic-ai/experimental-consent-assurance.md). These additions do not change stable verifier APIs or close [#75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75).
+
 ## Start here
 
 - [Guided learning paths](docs/guided-learning.md)

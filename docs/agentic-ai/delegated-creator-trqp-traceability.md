@@ -63,3 +63,7 @@ The published endorsement format does not by itself demonstrate general-purpose 
 ## Completion boundary
 
 This local increment is complete when the new scenarios, regression tests and traceability validation succeed and documented evidence matches executable behavior. It does **not** close the external interoperability gates in [#75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75). Preserve those as separately assessable dependencies.
+
+## November 2026 public discussion alignment (informative)
+
+Public creator-taskforce discussions continue to distinguish creator identity (Q5), minimum delegated scope (Q6), organizational authority-to-bind (Q9), and endorsement-versus-delegation representation (Q10). These directions remain provisional; no upstream CAWG representation is adopted locally. Further questions about viewer-facing outcomes, trusted time/withdrawal and independently signed test material (Q11–Q13) remain external dependencies. Consent evidence for persons depicted or heard in content is independently assessed through the [experimental consent boundary](experimental-consent-assurance.md), without equating consent with delegation or legal permission. A separate [machine-readable traceability supplement](../../conformance/delegated-creator-consent-traceability.json) records the new experimental tests; the original DC-01–DC-12 set retains its numbering and status.

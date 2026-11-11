@@ -81,3 +81,7 @@ No independent CAWG/C2PA/TRQP interoperability has been demonstrated; the remain
 ## Taskforce-aligned demonstration
 
 See the [five-world portable scenario corpus and eight proposed design tests](taskforce-five-world-demo.md). Results expose `historical_authority`, `current_authority` and `evidence_provenance` separately. Experimental classifications are not independently verified signatures or credentials.
+
+## Independent consent evidence (post-v0.20.0 development)
+
+The [experimental consent evidence assessor](experimental-consent-assurance.md) is deliberately separate from this delegated-authority kernel. Matching a consent claim never authenticates a person, proves legal permission, or changes `assured_authority`. A valid delegation cannot upgrade `assured_consent`. Two synthetic scenarios exercise these non-elevation invariants without altering stable verifier APIs.
