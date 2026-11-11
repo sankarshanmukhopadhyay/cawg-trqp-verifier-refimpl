@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Experimental consent evidence assessment (not legal permission)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "case_id",
+    "consent_evidence_status",
+    "consent_scope_status",
+    "consent_at_use_time",
+    "consent_current_state",
+    "assured_consent",
+    "consent_time_provenance",
+    "consent_source_provenance",
+    "reason"
+  ],
+  "properties": {
+    "profile": {
+      "const": "experimental-consent-assurance/0.1"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "consent_evidence_status": {
+      "enum": [
+        "missing",
+        "unverified",
+        "contradictory"
+      ]
+    },
+    "consent_scope_status": {
+      "enum": [
+        "indeterminate",
+        "within_claimed_scope",
+        "outside_claimed_scope"
+      ]
+    },
+    "consent_at_use_time": {
+      "enum": [
+        "indeterminate",
+        "claimed_in_scope",
+        "claimed_out_of_scope"
+      ]
+    },
+    "consent_current_state": {
+      "enum": [
+        "indeterminate",
+        "claimed_active",
+        "claimed_withdrawn",
+        "claimed_expired"
+      ]
+    },
+    "assured_consent": {
+      "const": "indeterminate"
+    },
+    "consent_time_provenance": {
+      "const": "caller_supplied_untrusted"
+    },
+    "consent_source_provenance": {
+      "const": "caller_supplied_unverified"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}
