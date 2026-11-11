@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-09-01",
-  "release": "v0.20.0",
+  "release": "v0.21.0",
   "profiles": {
     "standard": {
       "positive_vectors": ["standard-v1", "gateway-standard-v1", "multi-authority-v1"],

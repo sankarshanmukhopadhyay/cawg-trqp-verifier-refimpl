@@ -1,7 +1,7 @@
 # CAWG-TRQP Verifier Reference Implementation
 
 > **Portfolio status:** Flagship · Pilot-ready · Active validation  
-> **Latest published release:** v0.20.0 · **`main`:** post-v0.20.0 development (release tag is the reproducible baseline)  
+> **Latest published release:** v0.21.0 · **`main`:** post-v0.21.0 development (release tag is the reproducible baseline)  
 > **Project status declaration:** [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml)
 
 | Portfolio tier | Flagship |
@@ -29,13 +29,16 @@ It does **not** treat provenance as truth, ownership, entitlement, clinical vali
 
 ## Published release and current development
 
+The [v0.21.0 experimental consent-evidence release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.21.0) adds independent *claimed* consent assessment and two synthetic cross-taskforce scenarios. This is not verified subject consent or legal authorization. See [v0.21.0 release notes](RELEASE_NOTES_v0.21.0.md) and [the consent-assurance explainer](docs/agentic-ai/experimental-consent-assurance.md).
+
+
 The [v0.20.0 experimental capability release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0) adds an experimental Delegated Creator profile, reproducible five-world cases, additional human/subject/vouching scenarios, Ed25519 statement-integrity tests, independent signer-binding evidence states, and an optional guarded C2PA validator interface. See the [detailed release notes](RELEASE_NOTES_v0.20.0.md).
 
 **Assurance boundary:** These are feasibility and local conformance-evidence experiments, not CAWG-endorsed delegated-creator rules, legal authorization, verified enterprise identity, trusted signing time, or independently demonstrated C2PA/TRQP interoperability. The stable verifier APIs and operational profiles remain separate. [Issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75) tracks remaining independent evidence.
 
 **For reproducibility:** use the versioned release/tag rather than later changes on `main`.
 
-## Experimental consent-evidence boundary (post-v0.20.0 development)
+## Experimental consent-evidence boundary (v0.21.0)
 
 The repository also includes an independent, **non-authoritative** consent-evidence evaluator. It distinguishes claims about a represented person's consent from the actor's delegated authority and keeps historical use, withdrawal and current permissibility separate. All input evidence and times are caller-supplied; `assured_consent` remains indeterminate. The two synthetic integrated cases are reproducible with `python scripts/run_taskforce_consent_demo.py`. See the [experimental consent assurance documentation](docs/agentic-ai/experimental-consent-assurance.md). These additions do not change stable verifier APIs or close [#75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75).
 
@@ -97,8 +100,8 @@ python scripts/generate_release_checksums.py --check
 
 The checksum manifest validates selected release-evidence inputs for the
 current checkout; it is not a checksum of the built wheel or source archive.
-For immutable v0.20.0 publication evidence, use the
-[checksum asset attached to the release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/download/v0.20.0/checksums-v0.20.0.json)
+For immutable v0.21.0 publication evidence, use the
+[checksum asset attached to the release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/download/v0.21.0/checksums-v0.21.0.json)
 and pin the matching source tag. The published manifest is deliberately not
 stored as a generated file on `main`.
 
@@ -148,7 +151,7 @@ See [`PROJECT-STATUS.yaml`](PROJECT-STATUS.yaml), [`SECURITY.md`](SECURITY.md), 
 
 ## Release
 
-Latest release notes: [`RELEASE_NOTES_v0.20.0.md`](RELEASE_NOTES_v0.20.0.md)  
+Latest release notes: [`RELEASE_NOTES_v0.21.0.md`](RELEASE_NOTES_v0.21.0.md)  
 Changelog: [`CHANGELOG.md`](CHANGELOG.md)  
 Roadmap: [`ROADMAP.md`](ROADMAP.md)
 

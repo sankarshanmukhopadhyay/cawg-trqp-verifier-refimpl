@@ -111,6 +111,6 @@
     "trqp_conformance_suite": "1.7.0",
     "trqp_tspp": "0.15.0"
   },
-  "release": "v0.20.0",
+  "release": "v0.21.0",
   "schema_version": "2026-09-01"
 }

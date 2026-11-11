@@ -29,3 +29,14 @@ make validate
 ```
 
 A successful run produces a structured verification result. Replay and audit-bundle examples are documented in `docs/reproducibility-guide.md` and `docs/audit-bundle-profile.md`.
+
+## Experimental consent-evidence demonstration (v0.21.0)
+
+The repository provides a separate, synthetic consent-claim evaluator for cross-taskforce assurance research. It is not a consent authenticator, rights service, or legal permission determination. After installing the package, run:
+
+```bash
+python scripts/run_taskforce_consent_demo.py
+pytest -q tests/test_experimental_consent_assurance.py tests/test_experimental_consent_temporal.py tests/test_taskforce_consent_scenarios.py
+```
+
+Results retain `assured_consent=indeterminate` and `assured_authority=indeterminate` even when caller-supplied claims are internally consistent. See [the experimental boundary](docs/agentic-ai/experimental-consent-assurance.md).
