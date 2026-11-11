@@ -10,6 +10,20 @@ nav_order: 1
 
 No unreleased changes recorded.
 
+## [0.21.0] - 2026-11-11
+
+### Experimental consent and delegated-creator evidence
+
+- Added an independent consent-claim evaluator and strict schema that preserve missing, unverified, contradictory and indeterminate evidence states; asserted matching scope never becomes independently assured consent.
+- Added temporal consent scope, withdrawal effective/observation time separation, and deterministic adverse cases that distinguish historical use claims from present state.
+- Added two publicly reproducible synthetic scenarios: brand-to-agency/performer and studio-to-AI-voice/performer, with a deterministic redacted decision report and cross-boundary non-elevation tests.
+- Extended public traceability for provisional creator delegation and consent questions without changing the existing 12-row Delegated Creator baseline or attributing normative authority to taskforce discussions.
+- Strengthened the existing delegation temporal regression matrix, verified stable verifier behavior, and synchronized documentation and publication metadata.
+
+**Compatibility:** Stable verification APIs, operational profiles and existing Delegated Creator report contracts are unchanged. New consent outputs are experimental; no real signed consent, issuer trust, trusted time, live TRQP or independent C2PA interoperability is demonstrated. Issue #75 remains open.
+
+[Detailed release notes](RELEASE_NOTES_v0.21.0.md).
+
 ## [0.20.0] - 2026-11-03
 
 ### Experimental Delegated Creator and assurance evidence

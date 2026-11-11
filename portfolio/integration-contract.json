@@ -6,7 +6,7 @@
   },
   "repository": {
     "name": "cawg-trqp-verifier-refimpl",
-    "version": "0.20.0",
+    "version": "0.21.0",
     "role": "reference-implementation",
     "authority_scope": "CAWG/C2PA evidence verification using TRQP-governed trust decisions"
   },
@@ -52,8 +52,8 @@
   "invalidation_effect": "integration-status-invalid",
   "authority_statement": "This repository governs only its implementation, repository-local schemas, profiles, fixtures, and evidence. It does not govern CAWG, C2PA, or TRQP specifications.",
   "published_release_evidence": {
-    "tag": "v0.20.0",
-    "checksum_asset": "https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/download/v0.20.0/checksums-v0.20.0.json",
+    "tag": "v0.21.0",
+    "checksum_asset": "https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/download/v0.21.0/checksums-v0.21.0.json",
     "location": "GitHub release asset; not a file on main"
   }
 }

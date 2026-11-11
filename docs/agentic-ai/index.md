@@ -47,6 +47,7 @@ An agent can appear in one or more roles without gaining authority from another 
 - [Delegation and Authority](delegation-and-authority.md)
 - [Delegated Creator TRQP Traceability](delegated-creator-trqp-traceability.md) (informative taskforce gap analysis)
 - [Experimental Delegated Creator Profile](experimental-delegated-creator-profile.md) (versioned local feasibility experiment)
+- [Experimental Consent Assurance](experimental-consent-assurance.md) (independent consent-claim and withdrawal boundary; v0.21.0)
 - [Taskforce Five-World Demonstration](taskforce-five-world-demo.md) (portable synthetic vectors and eight-test assessment)
 - [Verification and Decision Boundaries](agentic-verification-boundaries.md)
 - [Agentic Walkthrough Pattern](agentic-walkthrough-pattern.md)
@@ -70,6 +71,17 @@ The five-world report's `assured_authority` and `assured_coverage` remain
 non-positive. This path is a testable feasibility demonstration, **not** proof
 of accepted CAWG delegation assertions, issuer trust or independent TRQP
 interoperability. External evidence remains tracked in [issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75).
+
+## Experimental consent-claim path (v0.21.0)
+
+[Release v0.21.0](../../RELEASE_NOTES_v0.21.0.md) adds a stand-alone evaluator and two synthetic creative-world cases. The evaluator never establishes legal or independently authenticated consent. To reproduce the privacy-minimized result and temporal non-elevation tests:
+
+```bash
+python scripts/run_taskforce_consent_demo.py
+pytest -q tests/test_experimental_consent_assurance.py tests/test_experimental_consent_temporal.py tests/test_taskforce_consent_scenarios.py
+```
+
+The earlier v0.20.0 presentation and five-world report remain valid historical baselines; neither represents real C2PA/TRQP or consent interoperability.
 
 ## Executable archetypes
 

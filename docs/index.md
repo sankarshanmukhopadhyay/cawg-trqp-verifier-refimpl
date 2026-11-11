@@ -16,7 +16,7 @@ replayable audit evidence.
 
 [Quickstart](../QUICKSTART.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Non-Technical Overview](NON_TECHNICAL_OVERVIEW.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[Presentation v4 (v0.20.0)](presentation-v4.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Presentation v4 (historical v0.20.0)](presentation-v4.md){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View on GitHub](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
@@ -54,11 +54,11 @@ For decision-makers and implementers exploring sector deployment, the [Industry 
 The [v3 explainer presentation](presentation.md) is intentionally a
 **historical v0.19.2 overview**. It is useful for architectural orientation,
 but its counts and coverage should not be used as the v0.20.0 capability
-inventory. The current [v4 explainer](presentation-v4.md) is pinned to v0.20.0; the source of record remains the versioned release notes and implementation documentation.
+inventory. The [v4 explainer](presentation-v4.md) is intentionally pinned to v0.20.0 rather than being silently regenerated for v0.21.0; the source of record remains the versioned release notes and implementation documentation.
 
 ## Publication boundary
 
-**Published baseline:** [v0.20.0](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.20.0), including an **experimental** [Delegated Creator](agentic-ai/experimental-delegated-creator-profile.md) feasibility model and [guarded external C2PA validation boundary](external-c2pa-validation-boundary.md). It does not establish independent CAWG/C2PA/TRQP conformance, verified delegated authority or trusted signing-time evidence. Resolve reproducible release artifacts by tag, not the moving `main` branch.
+**Published baseline:** [v0.21.0](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.21.0), including an independent [experimental consent-evidence assessment](agentic-ai/experimental-consent-assurance.md) and two synthetic cross-taskforce scenarios. The v0.20.0 baseline introduced the **experimental** [Delegated Creator](agentic-ai/experimental-delegated-creator-profile.md) feasibility model and [guarded external C2PA validation boundary](external-c2pa-validation-boundary.md). It does not establish independent CAWG/C2PA/TRQP conformance, verified delegated authority or trusted signing-time evidence. Resolve reproducible release artifacts by tag, not the moving `main` branch.
 
 ## What it enables today
 
@@ -89,7 +89,7 @@ for the full authority and decision-rights model.
 
 | Attribute | Value |
 |---|---|
-| Current release | v0.20.0 (experimental Delegated Creator additions) |
+| Current release | v0.21.0 (experimental consent evidence and Delegated Creator cases; no independent conformance) |
 | Test suite | `make validate` and CI matrix; use current run evidence rather than historical counts |
 | Validation gate | `make validate` — see [Contributing](../CONTRIBUTING.md) |
 | Documentation | This site — see the section navigation on the left |

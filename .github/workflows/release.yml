@@ -89,7 +89,7 @@ jobs:
           gh release create "$TAG" \
             --target "$GITHUB_SHA" \
             --latest \
-            --title "CAWG-TRQP Verifier v$VERSION — Experimental Delegated Creator and Assurance Evidence" \
+            --title "CAWG-TRQP Verifier v$VERSION — Experimental Consent and Delegation Assurance Evidence" \
             --notes-file "RELEASE_NOTES_$TAG.md" \
             dist/* "release-assets/checksums-$TAG.json"
 
