@@ -126,7 +126,13 @@ def assess_consent(case: dict[str, Any]) -> dict[str, Any]:
     else:
         result.update(consent_at_use_time="claimed_in_scope",
                       reason="within_unverified_claimed_consent_scope")
-    if withdrawn is not None and withdrawn <= now:
+    # A withdrawal observed after the evaluation time must not be presented
+    # as an observed current state, even if it claims an earlier effective date.
+    observed = _time(record["withdrawal_observed_at"]) if withdrawn is not None else None
+    if withdrawn is not None and withdrawn <= now and observed > now:
+        result["consent_current_state"] = "indeterminate"
+        result["reason"] = "withdrawal_not_observed_as_of_evaluation"
+    elif withdrawn is not None and withdrawn <= now:
         result["consent_current_state"] = "claimed_withdrawn"
     elif not start <= now < end:
         result["consent_current_state"] = "claimed_expired"
