@@ -25,6 +25,7 @@ validate:
 	python scripts/export_conformance_pack.py --check
 	pytest -q tests/test_experimental_delegated_creator.py tests/test_taskforce_five_worlds.py tests/test_experimental_assertion_order.py tests/test_taskforce_assurance_boundary.py tests/test_taskforce_demo_cli.py tests/test_experimental_delegation_signature.py tests/test_taskforce_report_schema.py
 	pytest -q tests/test_taskforce_session2_scenarios.py tests/test_enterprise_binding_assurance.py
+	pytest -q tests/test_experimental_consent_assurance.py tests/test_experimental_consent_temporal.py tests/test_taskforce_consent_scenarios.py
 	pytest -q tests/test_external_c2pa_validation.py
 	pytest -q
 

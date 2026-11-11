@@ -48,6 +48,10 @@ The [v0.20.0 release](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifi
 
 [Issue #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75) remains open for external evidence closure and independent adoption validation. Independent C2PA/TRQP interoperability, identity/trust anchoring, signing-time assurance and actual delegated C2PA coverage remain **not demonstrated**. The next useful work is independently reproducible real-asset and trust-endpoint evidence, not further synthetic scenario expansion.
 
+## Post-v0.20.0 experimental consent evidence tranche
+
+The repository-local consent evaluator and two synthetic cross-taskforce scenarios separate consent evidence, delegated authority, historical use and current withdrawal. Matching claimed consent is not authentic consent; independent trust and signing-time evidence remain unsupported. This bounded extension does not constitute expansion into a consent registry, legal adjudication or a CAWG conformance profile. See [experimental consent assurance](docs/agentic-ai/experimental-consent-assurance.md) and [external gate #75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75).
+
 ## Deferred capability work
 
 ### Real binary CAWG/C2PA backend

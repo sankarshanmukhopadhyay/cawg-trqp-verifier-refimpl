@@ -1,0 +1,74 @@
+{
+  "schema_version": "0.1",
+  "status": "informative repository-local design tests; no adoption or legal conformance",
+  "basis": "Public CAWG community discussions on delegated creators, organizational authority, endorsement and consent (November 2026). The accompanying synthetic tests are independently reproducible without meeting materials.",
+  "propositions": [
+    {
+      "id": "DC-CONSENT-01",
+      "topic": "Signer/identity/delegation/consent non-elevation",
+      "disposition": "locally-tested",
+      "evidence": [
+        "tests/test_taskforce_consent_scenarios.py",
+        "tests/test_experimental_consent_assurance.py"
+      ]
+    },
+    {
+      "id": "DC-CONSENT-02",
+      "topic": "Claimed consent scope action/resource/purpose",
+      "disposition": "locally-tested",
+      "evidence": [
+        "src/cawg_trqp_refimpl/experimental_consent_assurance.py",
+        "tests/test_taskforce_consent_scenarios.py"
+      ]
+    },
+    {
+      "id": "DC-CONSENT-03",
+      "topic": "Historical use versus current withdrawal and expiry",
+      "disposition": "locally-tested",
+      "evidence": [
+        "tests/test_experimental_consent_temporal.py"
+      ]
+    },
+    {
+      "id": "DC-CONSENT-04",
+      "topic": "Independent authentic signed consent and identity binding",
+      "disposition": "external-evidence-required",
+      "evidence": [
+        "docs/agentic-ai/experimental-consent-assurance.md"
+      ]
+    },
+    {
+      "id": "DC-CONSENT-05",
+      "topic": "Delegation vs endorsement wire interoperability",
+      "disposition": "upstream-decision-required",
+      "evidence": [
+        "docs/agentic-ai/delegated-creator-trqp-traceability.md"
+      ]
+    },
+    {
+      "id": "DC-CONSENT-06",
+      "topic": "Independent organizational authority and trusted signing time",
+      "disposition": "external-evidence-required",
+      "evidence": [
+        "conformance/delegated-creator-taskforce-eight-tests.json"
+      ]
+    },
+    {
+      "id": "DC-CONSENT-07",
+      "topic": "Role-restricted public evidence and confidential agreements",
+      "disposition": "locally-tested",
+      "evidence": [
+        "tests/test_taskforce_consent_scenarios.py",
+        "schemas/experimental-consent-assurance.schema.json"
+      ]
+    },
+    {
+      "id": "DC-CONSENT-08",
+      "topic": "Independent consent registry, dispute resolution, legal rights determination",
+      "disposition": "out-of-scope",
+      "evidence": [
+        "docs/agentic-ai/experimental-consent-assurance.md"
+      ]
+    }
+  ]
+}
