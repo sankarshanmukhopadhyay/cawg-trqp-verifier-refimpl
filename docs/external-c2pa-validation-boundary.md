@@ -31,3 +31,46 @@ The runtime has a 30-second timeout, at most 4 MiB of captured output per stream
 ### Next evidence gate
 
 Supply a pinned tool version, license-cleared real signed positive/negative assets, pinned trust-list fingerprint, a reachable representative TRQP v2.0 authorization/recognition endpoint, and a repeatable recorded execution. Evidence receipts must name origin, trust anchors, failure distinctions and reproducibility metadata. The Taskforce's proposed profile remains non-normative until CAWG acts.
+
+## Independent real-asset evidence acceptance (Session 4 follow-up)
+
+The Taskforce's Q13 request for signed test files and a trusted root is an
+**external evidence dependency**, not an implementation pass. Record each
+independently supplied candidate with a permitted testing/redistribution
+licence, immutable file digest, source, acquisition date, pinned c2patool
+version and execution environment. Supply both a valid signed asset and an
+adversarial counterpart (for example, an intentionally altered signed asset).
+Do not commit private agreements, identity mappings or non-redistributable
+media. Test assets must not use a public fixture private key as an accepted
+production root.
+
+A meaningful #75 reproduction must establish independently:
+
+1. **C2PA path:** the external tool actually executes on the pinned asset and
+   records the result, including failures, without substituting mocked output.
+2. **Signer/source path:** the applicable trusted root, identity/key binding,
+   recognition policy and observation time are established separately;
+   `manifest_integrity=validated_by_external_tool` is insufficient.
+3. **Delegation path:** the delegated terms and covered asset are actually
+   bound by the relevant signatures, with action/resource/purpose and time
+   checked independently. A local Ed25519 statement fixture does not prove
+   CAWG assertion coverage.
+4. **Consent path, when required by the use case:** the external consent
+   source, its authority, record authenticity, subject binding, effective
+   time and observation time are verified separately from delegation. An
+   HTTPS reference and claimed digest alone never establish permission.
+5. **Independent replay:** a second operator reproduces outcomes using
+   pinned inputs and records discrepancies, non-positive states and source
+   provenance. No synthetic PASS is counted toward independent interop.
+
+Until these conditions have reproducible evidence, keep #75 open, preserve
+`not_evaluated` and `indeterminate` states, and describe the experiment
+as locally reproducible rather than externally interoperable.
+
+The adapter computes the asset digest in fixed-size blocks to avoid a
+whole-file memory allocation. The 4 MiB report limit is checked **after**
+the external command returns; `subprocess.run` still captures the process
+output before checking its length. Therefore this limit is not an
+operating-system-level output quota. Use external process/container output
+quotas for untrusted media or tools until a streaming subprocess-output
+limit is implemented and tested.
