@@ -17,15 +17,20 @@ def validate_c2pa_asset(asset_path: str | Path, *, executable: str = "c2patool",
     path = Path(asset_path).resolve(strict=True)
     if not path.is_file():
         raise ValueError("asset_not_file")
-    asset_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
-    receipt = {"adapter": "c2patool-cli-v1", "asset_sha256": asset_sha256,
-               "manifest_integrity": "indeterminate", "signer_trust": "not_evaluated",
-               "delegated_authority": "not_evaluated", "trusted_signing_time": "not_evaluated",
-               "tool_exit_code": None, "validation_codes": []}
     if not 1 <= timeout_seconds <= 120:
         raise ValueError("timeout_out_of_bounds")
     if not executable or "/" in executable or "\\" in executable:
         raise ValueError("executable_must_be_path_lookup_name")
+    # Large signed-media assets must not be loaded into memory just to
+    # identify the input whose external validation result is recorded.
+    digest = hashlib.sha256()
+    with path.open("rb") as asset:
+        for block in iter(lambda: asset.read(1024 * 1024), b""):
+            digest.update(block)
+    receipt = {"adapter": "c2patool-cli-v1", "asset_sha256": digest.hexdigest(),
+               "manifest_integrity": "indeterminate", "signer_trust": "not_evaluated",
+               "delegated_authority": "not_evaluated", "trusted_signing_time": "not_evaluated",
+               "tool_exit_code": None, "validation_codes": []}
     try:
         run = subprocess.run([executable, str(path)], shell=False,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE,
