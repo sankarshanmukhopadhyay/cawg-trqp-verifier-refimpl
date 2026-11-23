@@ -110,35 +110,25 @@ python scripts/validate_walkthrough_diagrams.py
 
 A successful documentation check is not a substitute for semantic verification, but it does prove that the published examples and reader-facing walkthroughs remain linked to the machine-readable scenario portfolio expected by CI.
 
-## 7. Inspect the canonical replay bundle
+## 7. Inspect historical replay evidence and its compatibility boundary
 
-The repository's canonical replay artifact is:
+The preserved pre-hardening replay artifact is `examples/reproducibility_bundle_standard.json`. It pins a revocation-feed issue time later than the original evaluation time. Earlier verifier behavior incorrectly treated this future-issued feed as fresh. The archive must not be rewritten or advertised as a passing replay under the current verifier.
 
-```text
-examples/reproducibility_bundle_standard.json
-```
-
-It pins the inputs needed to reconstruct the decision surface, including transport metadata, revocation status, and a replay contract describing which checks were performed. The key governance requirement is that replay evaluates preserved state rather than opportunistically querying today's state and pretending it was the state available at the original decision time.
-
-Check the bundle directly:
+Check the historical bundle's known, bounded incompatibility:
 
 ```bash
-python scripts/check_reproducibility.py examples/reproducibility_bundle_standard.json
+python scripts/validate_legacy_replay_freshness.py
 ```
 
-Then replay it:
+This check asserts the original bundle identity and the expected current differences: `fresh` becomes `stale_but_warned`, and replayed revocation-status evidence differs from the archived statement. It is an explicit **compatibility finding**, not a successful fresh replay.
+
+For a genuinely fresh positive replay with a pinned valid source time, run:
 
 ```bash
-python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
+pytest -q tests/test_cache_revocation_consistency.py -k fresh_pinned_replay
 ```
 
-For a trust-root constrained replay, use the repository's trusted root where required by the selected flow:
-
-```bash
-python scripts/replay_audit_bundle.py \
-  examples/reproducibility_bundle_standard.json \
-  --trusted-root .
-```
+For incident replay, preserve the policy source, evaluation instant, governing profile, feed issuance evidence and implementation version. A legacy PASS produced with future-dated inputs does not become authoritative merely because it is preserved in a signed artifact.
 
 ## 8. Understand deterministic replay
 
