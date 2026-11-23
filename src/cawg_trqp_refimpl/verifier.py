@@ -192,7 +192,9 @@ class Verifier:
             status = {"source": "none", "channel": "none", "age_seconds": None}
 
         age_seconds = status.get('age_seconds')
-        if age_seconds is not None and age_seconds > max_age:
+        if age_seconds is None:
+            failures.append("revocation feed issue time is missing, invalid, or beyond permitted clock skew")
+        elif age_seconds > max_age:
             failures.append(f"revocation data age {age_seconds}s exceeds allowed window {max_age}s")
         if profile.controls['revocation'].get('delta_channel_required') and status.get('channel') not in {'delta', 'live', 'mediated'}:
             failures.append(f"revocation channel {status.get('channel')!r} does not satisfy required delta/live semantics")
@@ -390,6 +392,27 @@ class Verifier:
         else:
             auth, auth_meta = self.cache.get_with_metadata(auth_key)
             rec, rec_meta = self.cache.get_with_metadata(rec_key)
+            # A TTL is a reuse bound, not proof that underlying governance
+            # authority is unchanged. Reject a cached representation when a
+            # newly observed revocation/policy epoch contradicts its epoch.
+            observed_epoch = self.last_revocation_status.get("policy_epoch")
+            if observed_epoch is not None:
+                for key, item, metadata in (
+                    (auth_key, auth, auth_meta),
+                    (rec_key, rec, rec_meta),
+                ):
+                    if item is not None and item.get("policy_epoch") != observed_epoch:
+                        metadata.update({
+                            "cache_hit": False,
+                            "epoch_mismatch": True,
+                            "cached_policy_epoch": item.get("policy_epoch"),
+                            "observed_policy_epoch": observed_epoch,
+                        })
+                        self.cache.invalidate(key)
+                        if key == auth_key:
+                            auth = None
+                        else:
+                            rec = None
 
         max_authority_age = int(profile.controls["freshness"].get("max_age_seconds", 0))
         stale_disposition = profile.controls["freshness"].get("stale_disposition", "defer")
