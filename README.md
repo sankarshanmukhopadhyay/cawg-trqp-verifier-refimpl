@@ -91,7 +91,7 @@ python scripts/validate_portfolio_contract.py
 python scripts/validate_adoption_journeys.py
 python scripts/validate_feed_descriptors.py
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
-python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
+python scripts/validate_legacy_replay_freshness.py
 python scripts/export_conformance_pack.py --check
 # Checksums are generated for the checked-out source tree, not committed:
 python scripts/generate_release_checksums.py
