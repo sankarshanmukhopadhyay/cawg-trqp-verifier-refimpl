@@ -1,8 +1,9 @@
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 from cawg_trqp_refimpl.feed_descriptor import load_feed_descriptor, validate_feed_descriptor
-from scripts.validate_photography_contest_example import main as validate_archived_photography_example
 
 EXAMPLE = Path("examples/photography_contest")
 
@@ -10,7 +11,7 @@ EXAMPLE = Path("examples/photography_contest")
 def test_photography_contest_archive_reports_known_future_feed_incompatibility():
     # Preserve the published artifact; the future-issued feed cannot prove
     # contemporary freshness under the corrected evaluation contract.
-    assert validate_archived_photography_example() == 0
+    subprocess.run([sys.executable, "scripts/validate_photography_contest_example.py"], check=True)
 
 
 def test_photography_contest_decision_receipt_aligns_with_replay_bundle():
