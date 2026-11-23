@@ -2,18 +2,15 @@ import json
 from pathlib import Path
 
 from cawg_trqp_refimpl.feed_descriptor import load_feed_descriptor, validate_feed_descriptor
-from cawg_trqp_refimpl.replay import replay_audit_bundle
+from scripts.validate_photography_contest_example import main as validate_archived_photography_example
 
 EXAMPLE = Path("examples/photography_contest")
 
 
-def test_photography_contest_example_replays_with_signed_feed_descriptors():
-    bundle = json.loads((EXAMPLE / "replay_bundle.json").read_text(encoding="utf-8"))
-    report = replay_audit_bundle(bundle)
-    assert report.matches is True
-    assert report.replayed_result["trust_outcome"] == "trusted"
-    assert report.replayed_result["policy_evidence"]["feed_descriptors"]["policy"]["reason_code"] == "fresh"
-    assert report.replayed_result["policy_evidence"]["feed_descriptors"]["revocation"]["reason_code"] == "fresh"
+def test_photography_contest_archive_reports_known_future_feed_incompatibility():
+    # Preserve the published artifact; the future-issued feed cannot prove
+    # contemporary freshness under the corrected evaluation contract.
+    assert validate_archived_photography_example() == 0
 
 
 def test_photography_contest_decision_receipt_aligns_with_replay_bundle():
