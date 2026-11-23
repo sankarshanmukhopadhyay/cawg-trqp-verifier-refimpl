@@ -1,6 +1,7 @@
 """Expanded conformance test suite for CAWG–TRQP verifier."""
 
 import json
+from unittest.mock import patch
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -82,7 +83,18 @@ class TestHighAssuranceProfile:
         assert len(cache.cache) > 0
 
         verifier2 = Verifier(service=service, cache=cache)
-        result = verifier2.verify(VerificationRequest(**data), profile="high_assurance")
+        # The signed test feed is issued on 2026-12-31. Evaluate this
+        # positive scenario just after issuance, not against today's clock.
+        from cawg_trqp_refimpl import mock_service
+
+        class EffectiveClock(datetime):
+            @classmethod
+            def now(cls, tz=None):
+                instant = datetime(2026, 12, 31, 0, 1, tzinfo=timezone.utc)
+                return instant if tz is None else instant.astimezone(tz)
+
+        with patch.object(mock_service, "datetime", EffectiveClock):
+            result = verifier2.verify(VerificationRequest(**data), profile="high_assurance")
         assert result.verification_mode == "online_full"
 
 
