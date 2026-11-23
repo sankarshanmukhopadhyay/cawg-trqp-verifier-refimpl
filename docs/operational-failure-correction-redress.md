@@ -230,9 +230,10 @@ python scripts/validate_audit_bundle.py \
   examples/exported_audit_bundle.signed.json \
   --trust-anchors data/trust_anchors.json
 
-python scripts/replay_audit_bundle.py \
-  examples/reproducibility_bundle_standard.json \
-  --trusted-root .
+# Historical bundle contains a future-issued revocation feed;
+# test the documented semantic incompatibility without rewriting its contents.
+python scripts/validate_legacy_replay_freshness.py
+pytest -q tests/test_cache_revocation_consistency.py -k fresh_pinned_replay
 ```
 
 The goal is an integration where enforcement, correction, replay, challenge, and closure are all observable governance events rather than undocumented operator judgment.
