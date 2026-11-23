@@ -1,10 +1,17 @@
 """Adversarial cache/revocation consistency contracts (issue #105)."""
 
+import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
+from cawg_trqp_refimpl import mock_service
+from cawg_trqp_refimpl.audit import build_audit_bundle
+from cawg_trqp_refimpl.http_service import HTTPTRQPService
+from cawg_trqp_refimpl.models import VerificationRequest
+from cawg_trqp_refimpl.replay import replay_audit_bundle
 from cawg_trqp_refimpl.fixture_loader import load_manifest_fixture
 from cawg_trqp_refimpl.mock_service import MockTRQPService
 from cawg_trqp_refimpl.profile import load_profile
@@ -84,3 +91,64 @@ def test_revocation_feed_age_boundary_is_explicit():
     result = Verifier(service=service).verify(request, profile=_strict_cached_profile())
     assert result.trust_outcome == "rejected"
     assert result.policy_evidence["revocation_status"]["freshness_ok"] is False
+
+
+def test_http_consumer_does_not_reuse_authorization_after_observed_epoch_change():
+    service = HTTPTRQPService(
+        policy_path=Path("data/policies.json"),
+        revocation_path=Path("data/revocations.json"),
+    )
+    service.app.config["TESTING"] = True
+    service.mock_service.revocations["issued_at"] = datetime.now(timezone.utc).isoformat()
+    client = service.app.test_client()
+    payload = json.loads(Path("examples/verification_request.json").read_text(encoding="utf-8"))
+
+    initial = client.post("/trqp/verify", json=payload)
+    assert initial.status_code == 200
+    assert initial.get_json()["actor_authorization"] == "authorized"
+    cached = client.post("/trqp/verify", json=payload)
+    assert cached.get_json()["policy_evidence"]["cache"]["authorization"]["cache_hit"] is True
+
+    service.mock_service.revocations["policy_epoch"] = "2026-Q2"
+    service.mock_service.revocations["revoked_entities"].append(payload["entity_id"])
+    after = client.post("/trqp/verify", json=payload)
+    assert after.status_code == 200
+    body = after.get_json()
+    assert body["actor_authorization"] == "not_authorized"
+    assert body["trust_outcome"] == "rejected"
+    assert body["policy_evidence"]["cache"]["authorization"]["cache_hit"] is False
+
+
+def test_fresh_pinned_replay_still_matches_after_freshness_hardening(tmp_path):
+    # Unlike the archived bundles, this fixture has an issuance time that
+    # precedes its explicitly pinned evaluation time.
+    policy_path = tmp_path / "policies.json"
+    revocation_path = tmp_path / "revocations.json"
+    policy_path.write_text(Path("data/policies.json").read_text(encoding="utf-8"))
+    revocations = json.loads(Path("data/revocations.json").read_text(encoding="utf-8"))
+    revocations["issued_at"] = "2026-11-24T00:59:30Z"
+    revocation_path.write_text(json.dumps(revocations), encoding="utf-8")
+
+    class PinnedClock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            instant = datetime(2026, 11, 24, 1, 0, tzinfo=timezone.utc)
+            return instant if tz is None else instant.astimezone(tz)
+
+    request = VerificationRequest(**json.loads(
+        Path("examples/verification_request.json").read_text(encoding="utf-8")
+    ))
+    with patch.object(mock_service, "datetime", PinnedClock):
+        verifier = Verifier(service=MockTRQPService(
+            policy_path, revocation_path, trust_anchors_path=None
+        ))
+        result = verifier.verify(request, profile="standard")
+        assert result.policy_freshness == "fresh"
+        bundle = build_audit_bundle(
+            request, result,
+            profile="standard",
+            policy_path=policy_path,
+            revocation_path=revocation_path,
+        ).to_dict()
+        replayed = replay_audit_bundle(bundle, trusted_root=tmp_path)
+    assert replayed.matches is True, replayed.differences
