@@ -28,3 +28,16 @@ def test_cache_metrics_and_clear():
     assert stats["misses"] == 1
     cache.clear()
     assert cache.stats()["entries"] == 0
+
+
+def test_cache_expiry_boundary_is_exclusive(monkeypatch):
+    now = [1000.0]
+    monkeypatch.setattr("cawg_trqp_refimpl.cache.time.time", lambda: now[0])
+    cache = TTLCache()
+    cache.set("authority", {"authorized": True}, ttl_class="medium")
+    now[0] += 3599
+    assert cache.get("authority") == {"authorized": True}
+    now[0] += 1
+    value, metadata = cache.get_with_metadata("authority")
+    assert value is None
+    assert metadata == {"cache_hit": False, "expired": True}
