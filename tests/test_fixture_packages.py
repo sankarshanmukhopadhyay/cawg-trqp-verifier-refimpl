@@ -1,8 +1,11 @@
 import json
+from datetime import datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
+from cawg_trqp_refimpl import mock_service
 from cawg_trqp_refimpl.models import VerificationRequest
 from cawg_trqp_refimpl.mock_service import MockTRQPService
 from cawg_trqp_refimpl.gateway import TrustGateway
@@ -59,7 +62,18 @@ def test_fixture_package_replays_to_expected_outcome(fixture_name, verifier_fact
     base = FIXTURE_ROOT / fixture_name
     request = VerificationRequest(**json.loads((base / 'request.json').read_text(encoding='utf-8')))
     expected = json.loads((base / 'expected_result.json').read_text(encoding='utf-8'))
-    result = verifier_factory().verify(request, profile=profile).to_dict()
+    if profile == "high_assurance":
+        # The immutable positive fixture's feed is effective on 2026-12-31.
+        class EffectiveClock(datetime):
+            @classmethod
+            def now(cls, tz=None):
+                instant = datetime(2026, 12, 31, 0, 1, tzinfo=timezone.utc)
+                return instant if tz is None else instant.astimezone(tz)
+
+        with patch.object(mock_service, "datetime", EffectiveClock):
+            result = verifier_factory().verify(request, profile=profile).to_dict()
+    else:
+        result = verifier_factory().verify(request, profile=profile).to_dict()
 
     assert result['trust_outcome'] == expected['trust_outcome']
     assert result['verification_mode'] == expected['verification_mode']
