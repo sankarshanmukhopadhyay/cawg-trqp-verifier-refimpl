@@ -401,18 +401,26 @@ class Verifier:
                     (auth_key, auth, auth_meta),
                     (rec_key, rec, rec_meta),
                 ):
-                    if item is not None and item.get("policy_epoch") != observed_epoch:
-                        metadata.update({
-                            "cache_hit": False,
-                            "epoch_mismatch": True,
-                            "cached_policy_epoch": item.get("policy_epoch"),
-                            "observed_policy_epoch": observed_epoch,
-                        })
-                        self.cache.invalidate(key)
-                        if key == auth_key:
-                            auth = None
+                    if item is not None:
+                        if item.get("policy_epoch") == observed_epoch:
+                            metadata["epoch_comparison"] = "matched"
                         else:
-                            rec = None
+                            metadata.update({
+                                "cache_hit": False,
+                                "epoch_comparison": "mismatch",
+                                "epoch_mismatch": True,
+                                "cached_policy_epoch": item.get("policy_epoch"),
+                                "observed_policy_epoch": observed_epoch,
+                            })
+                            self.cache.invalidate(key)
+                            if key == auth_key:
+                                auth = None
+                            else:
+                                rec = None
+            else:
+                for metadata in (auth_meta, rec_meta):
+                    if metadata.get("cache_hit"):
+                        metadata["epoch_comparison"] = "unavailable"
 
         max_authority_age = int(profile.controls["freshness"].get("max_age_seconds", 0))
         stale_disposition = profile.controls["freshness"].get("stale_disposition", "defer")
@@ -476,6 +484,30 @@ class Verifier:
                     explanations.append("Live recognition lookup executed")
             else:
                 explanations.append("Recognition cache hit")
+
+        # A refetch is not evidence of a coherent current determination if
+        # the authoritative response itself still reflects an incompatible
+        # policy epoch. Apply the configured enforcement posture explicitly.
+        observed_epoch = self.last_revocation_status.get("policy_epoch")
+        epoch_violations = []
+        if observed_epoch is not None:
+            for kind, item in (("authorization", auth), ("recognition", rec)):
+                if item is not None and item.get("policy_epoch") != observed_epoch:
+                    epoch_violations.append(
+                        f"{kind} policy epoch {item.get('policy_epoch')!r} "
+                        f"differs from observed revocation epoch {observed_epoch!r}"
+                    )
+        if epoch_violations:
+            self.last_revocation_status["freshness_ok"] = False
+            self.last_revocation_status.setdefault("violations", []).extend(epoch_violations)
+            if profile.controls["revocation"].get("enforcement") == "fail":
+                failure = self._transport_or_revocation_failure_result(
+                    profile, "policy_epoch_mismatch", "; ".join(epoch_violations)
+                )
+                failure.policy_evidence["cache"] = self.last_cache_evidence
+                return failure
+            revocation_ok = False
+            explanations.extend(epoch_violations)
 
         result = self._synthesize_result(
             auth=auth,
