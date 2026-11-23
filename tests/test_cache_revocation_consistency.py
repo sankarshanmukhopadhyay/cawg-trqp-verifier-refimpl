@@ -152,3 +152,60 @@ def test_fresh_pinned_replay_still_matches_after_freshness_hardening(tmp_path):
         ).to_dict()
         replayed = replay_audit_bundle(bundle, trusted_root=tmp_path)
     assert replayed.matches is True, replayed.differences
+
+
+def test_refetched_positive_old_epoch_fails_strict_freshness():
+    service, request = _setup()
+    verifier = Verifier(service=service)
+    assert verifier.verify(request, profile=_strict_cached_profile()).trust_outcome == "trusted"
+    service.revocations["policy_epoch"] = "2026-Q2"
+    # Policy source has not yet converged: a live refetch still says Q1.
+    result = verifier.verify(request, profile=_strict_cached_profile())
+    assert result.trust_outcome == "rejected"
+    assert result.policy_freshness == "policy_epoch_mismatch"
+    assert result.policy_evidence["revocation_status"]["freshness_ok"] is False
+    assert result.policy_evidence["cache"]["authorization"]["epoch_comparison"] == "mismatch"
+
+
+def test_refetched_positive_old_epoch_is_at_least_warned_in_standard():
+    service, request = _setup()
+    verifier = Verifier(service=service)
+    assert verifier.verify(request, profile="standard").policy_freshness == "fresh"
+    service.revocations["policy_epoch"] = "2026-Q2"
+    result = verifier.verify(request, profile="standard")
+    assert result.policy_freshness == "stale_but_warned"
+    assert result.policy_evidence["revocation_status"]["freshness_ok"] is False
+
+
+def test_missing_observed_epoch_is_explicit_in_cache_evidence():
+    service, request = _setup()
+    service.revocations.pop("policy_epoch", None)
+    verifier = Verifier(service=service)
+    verifier.verify(request, profile="standard")
+    result = verifier.verify(request, profile="standard")
+    assert result.policy_evidence["cache"]["authorization"]["cache_hit"] is True
+    assert result.policy_evidence["cache"]["authorization"]["epoch_comparison"] == "unavailable"
+
+
+def test_revocation_timestamp_skew_and_max_age_boundary():
+    service, request = _setup()
+    pinned = datetime(2026, 11, 24, 1, 0, tzinfo=timezone.utc)
+
+    class PinnedClock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return pinned if tz is None else pinned.astimezone(tz)
+
+    profile = _strict_cached_profile()
+    profile["controls"]["revocation"]["max_age_seconds"] = 300
+    with patch.object(mock_service, "datetime", PinnedClock):
+        for timestamp, expected in [
+            (pinned + timedelta(milliseconds=500), "fresh"),
+            (pinned - timedelta(seconds=300), "fresh"),
+            (pinned - timedelta(seconds=301), "revocation_stale"),
+            (pinned + timedelta(seconds=2), "revocation_stale"),
+        ]:
+            service.revocations["issued_at"] = timestamp.isoformat()
+            result = Verifier(service=service).verify(request, profile=profile)
+            assert result.policy_freshness == expected, timestamp
+            assert (result.trust_outcome == "rejected") == (expected == "revocation_stale")
