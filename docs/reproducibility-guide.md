@@ -9,11 +9,11 @@ nav_order: 4
 
 ## Canonical replay bundle
 
-The canonical reproducibility bundle remains:
+The historically published reproducibility bundle is:
 
 - `examples/reproducibility_bundle_standard.json`
 
-This is the fastest way to test whether the same request, profile, feeds, and replay contract yield the same result surface.
+**Compatibility limitation:** this immutable bundle records a revocation-feed issue time later than the evaluation date and therefore asserts `fresh` under obsolete verifier behavior. The corrected implementation appropriately reports `stale_but_warned` for that evidence. The archive remains useful for demonstrating a semantic change, but must **not** be presented as a passing current replay or as evidence of present authorization freshness. The original bundle identity is retained.
 
 ## What reproducibility now covers
 
@@ -38,14 +38,18 @@ These packages are useful when another implementation needs a stable exchange ar
 
 ## Recommended usage
 
-Use the reproducibility bundle when you want to confirm that a concrete audit artifact still replays correctly.
+Use the historical bundle to examine reproducibility boundaries and the explicitly documented pre/post-hardening difference. For a positive, genuinely fresh replay with an explicitly pinned evaluation instant, run the targeted regression test listed below.
 
-Use the fixture packages when you want to compare multiple implementations against a stable expected-result contract.
+Use fixture packages to compare implementations, but account for the declared evaluation time and any documented semantic compatibility change. A signed descriptor alone does not validate a future-issued revocation feed.
 
 ## Commands
 
 ```bash
-python scripts/check_reproducibility.py examples/reproducibility_bundle_standard.json
-python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json
+python scripts/validate_legacy_replay_freshness.py
+pytest -q tests/test_cache_revocation_consistency.py
 python scripts/validate_examples.py
+make validate
 ```
+
+
+The legacy validation command asserts a *known, bounded incompatibility* on a pinned assessment clock. Running `python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .` directly with the hardened verifier is expected to report differences, not to pass. Preserve these differences for forensic review rather than changing signed historical evidence to obtain a green replay.
