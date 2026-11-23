@@ -27,7 +27,9 @@ Process-aware verification can remain local for simple deployments. For larger d
 
 ## Operational considerations
 
-- cache policy answers with bounded TTLs and bounded cache size
+- cache policy answers with bounded TTLs and bounded cache size, but never treat TTL as a revocation guarantee
+- require verifiable feed issue times and a governed policy for missing or mismatched epochs; avoid assuming that the in-process mock source automatically reloads external registry changes
+- select `high_assurance` when live checks and fail-closed freshness are required; `standard` can return `trusted` together with `stale_but_warned`, which is not suitable for an unqualified current-authority assertion
 - keep gateway mediation receipts for incident analysis and interoperability review
 - export audit bundles for regulated or externally reviewed workloads
 - validate shipped examples and fixture packages as part of CI
