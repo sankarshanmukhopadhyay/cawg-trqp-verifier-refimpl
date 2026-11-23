@@ -1,9 +1,12 @@
 import copy
 import json
+from datetime import datetime, timezone
+from unittest.mock import patch
 from pathlib import Path
 
 import pytest
 
+from cawg_trqp_refimpl import mock_service
 from cawg_trqp_refimpl.audit import build_audit_bundle
 from cawg_trqp_refimpl.feed_descriptor import validate_feed_descriptor
 from cawg_trqp_refimpl.http_service import HTTPTRQPService
@@ -56,7 +59,16 @@ def test_high_assurance_accepts_valid_feed_descriptors():
         policy_descriptor_path="examples/feed_descriptors/policy-feed.signed.json",
         revocation_descriptor_path="examples/feed_descriptors/revocation-feed.signed.json",
     ))
-    result = verifier.verify(_request(), profile="high_assurance")
+    # Signed revocation feed is future-issued today; this positive scenario
+    # applies only just after its actual 2026-12-31 issuance.
+    class EffectiveClock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            instant = datetime(2026, 12, 31, 0, 1, tzinfo=timezone.utc)
+            return instant if tz is None else instant.astimezone(tz)
+
+    with patch.object(mock_service, "datetime", EffectiveClock):
+        result = verifier.verify(_request(), profile="high_assurance")
     assert result.trust_outcome == "trusted"
     assert result.policy_evidence["feed_descriptors"]["policy"]["reason_code"] == "fresh"
     assert result.policy_evidence["feed_descriptors"]["revocation"]["reason_code"] == "fresh"
