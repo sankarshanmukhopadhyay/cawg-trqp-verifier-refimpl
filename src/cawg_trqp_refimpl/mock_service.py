@@ -8,9 +8,17 @@ from .feed_descriptor import load_feed_descriptor, validate_feed_descriptor
 
 
 def _parse_utc(ts: str | None) -> datetime | None:
-    if not ts:
+    if not isinstance(ts, str) or not ts:
         return None
-    return datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(timezone.utc)
+    try:
+        parsed = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    # A local-time interpretation of an unqualified date is not reliable
+    # evidence for a governed revocation-feed freshness calculation.
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
+    return parsed.astimezone(timezone.utc)
 
 
 class MockTRQPService:
@@ -108,4 +116,8 @@ class MockTRQPService:
         if issued is None:
             return None
         delta = datetime.now(timezone.utc) - issued
+        # Do not convert a future-issued feed into a newly issued feed. Allow
+        # only sub-second clock/serialization skew, not arbitrary future dates.
+        if delta.total_seconds() < -1:
+            return None
         return max(int(delta.total_seconds()), 0)

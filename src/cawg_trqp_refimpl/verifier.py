@@ -192,7 +192,9 @@ class Verifier:
             status = {"source": "none", "channel": "none", "age_seconds": None}
 
         age_seconds = status.get('age_seconds')
-        if age_seconds is not None and age_seconds > max_age:
+        if age_seconds is None:
+            failures.append("revocation feed issue time is missing, invalid, or beyond permitted clock skew")
+        elif age_seconds > max_age:
             failures.append(f"revocation data age {age_seconds}s exceeds allowed window {max_age}s")
         if profile.controls['revocation'].get('delta_channel_required') and status.get('channel') not in {'delta', 'live', 'mediated'}:
             failures.append(f"revocation channel {status.get('channel')!r} does not satisfy required delta/live semantics")
@@ -390,6 +392,35 @@ class Verifier:
         else:
             auth, auth_meta = self.cache.get_with_metadata(auth_key)
             rec, rec_meta = self.cache.get_with_metadata(rec_key)
+            # A TTL is a reuse bound, not proof that underlying governance
+            # authority is unchanged. Reject a cached representation when a
+            # newly observed revocation/policy epoch contradicts its epoch.
+            observed_epoch = self.last_revocation_status.get("policy_epoch")
+            if observed_epoch is not None:
+                for key, item, metadata in (
+                    (auth_key, auth, auth_meta),
+                    (rec_key, rec, rec_meta),
+                ):
+                    if item is not None:
+                        if item.get("policy_epoch") == observed_epoch:
+                            metadata["epoch_comparison"] = "matched"
+                        else:
+                            metadata.update({
+                                "cache_hit": False,
+                                "epoch_comparison": "mismatch",
+                                "epoch_mismatch": True,
+                                "cached_policy_epoch": item.get("policy_epoch"),
+                                "observed_policy_epoch": observed_epoch,
+                            })
+                            self.cache.invalidate(key)
+                            if key == auth_key:
+                                auth = None
+                            else:
+                                rec = None
+            else:
+                for metadata in (auth_meta, rec_meta):
+                    if metadata.get("cache_hit"):
+                        metadata["epoch_comparison"] = "unavailable"
 
         max_authority_age = int(profile.controls["freshness"].get("max_age_seconds", 0))
         stale_disposition = profile.controls["freshness"].get("stale_disposition", "defer")
@@ -453,6 +484,30 @@ class Verifier:
                     explanations.append("Live recognition lookup executed")
             else:
                 explanations.append("Recognition cache hit")
+
+        # A refetch is not evidence of a coherent current determination if
+        # the authoritative response itself still reflects an incompatible
+        # policy epoch. Apply the configured enforcement posture explicitly.
+        observed_epoch = self.last_revocation_status.get("policy_epoch")
+        epoch_violations = []
+        if observed_epoch is not None:
+            for kind, item in (("authorization", auth), ("recognition", rec)):
+                if item is not None and item.get("policy_epoch") != observed_epoch:
+                    epoch_violations.append(
+                        f"{kind} policy epoch {item.get('policy_epoch')!r} "
+                        f"differs from observed revocation epoch {observed_epoch!r}"
+                    )
+        if epoch_violations:
+            self.last_revocation_status["freshness_ok"] = False
+            self.last_revocation_status.setdefault("violations", []).extend(epoch_violations)
+            if profile.controls["revocation"].get("enforcement") == "fail":
+                failure = self._transport_or_revocation_failure_result(
+                    profile, "policy_epoch_mismatch", "; ".join(epoch_violations)
+                )
+                failure.policy_evidence["cache"] = self.last_cache_evidence
+                return failure
+            revocation_ok = False
+            explanations.extend(epoch_violations)
 
         result = self._synthesize_result(
             auth=auth,

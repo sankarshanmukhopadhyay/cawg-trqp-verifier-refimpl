@@ -52,5 +52,7 @@ def test_runtime_exports_feed_descriptor_evidence():
     ))
     result = verifier.verify(req, profile="standard")
     assert result.trust_outcome == "trusted"
-    assert result.policy_freshness == "fresh"
+    # Signed descriptor validity does not establish revocation issue-time freshness.
+    assert result.policy_freshness == "stale_but_warned"
+    assert result.policy_evidence["revocation_status"]["freshness_ok"] is False
     assert result.policy_evidence["feed_descriptors"]["policy"]["reason_code"] == "fresh"

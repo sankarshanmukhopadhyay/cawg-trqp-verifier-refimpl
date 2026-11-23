@@ -78,6 +78,12 @@ The verifier records the required transport posture from the profile, the actual
 
 The verifier records the source, channel, age, maximum allowed age, enforcement mode, and any violations. This makes revocation handling inspectable rather than implicit.
 
+### Cache/epoch consistency
+
+For online decisions, the verifier evaluates the available revocation evidence before consuming cached policy responses. Cache TTL limits reuse time; it does not establish continuing authority. Where the observed revocation feed declares an epoch, cached authorization and recognition records with mismatched epochs are invalidated and refetched. A live response that still disagrees does not silently restore freshness: strict revocation enforcement rejects it, while warning enforcement records the inconsistency as `stale_but_warned`.
+
+When the feed issue time is missing, malformed or materially in the future, freshness is not established. A missing observed epoch is recorded as unavailable for cache-evidence comparison, not as proof of matching authority. This logic depends on a shared, meaningful epoch contract; it neither discovers changes to unrefreshed external feeds nor establishes distributed invalidation latency. The `high_assurance` profile bypasses cache-assisted authority decisions; `edge` uses snapshot-specific freshness controls.
+
 ### Gateway mediation
 
 When a trust gateway is used, the mediation layer becomes visible evidence. Route labels, target authority identifiers, and mediated recognition behavior become part of the decision surface rather than disappearing into infrastructure.

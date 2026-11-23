@@ -8,7 +8,14 @@ nav_order: 1
 
 ## [Unreleased]
 
-No unreleased changes recorded.
+### Cache and revocation consistency (PR #106, pending merge)
+
+- Classified absent, malformed, timezone-unqualified and materially future-issued revocation timestamps as unusable freshness evidence, with bounded one-second clock skew.
+- Invalidated authorization and recognition cache entries when their policy epoch conflicts with an observed revocation epoch. A refetched but still-incompatible positive determination is rejected under strict enforcement; warning profiles preserve the inconsistency explicitly.
+- Corrected the exact TTL expiry boundary and added verifier, HTTP-path, temporal and replay regressions.
+- Preserved previously published synthetic audit/replay bundles unchanged. Their historical future-feed freshness assertions now have explicitly recorded compatibility discrepancies; they must not be presented as passing current replay evidence.
+
+**Compatibility:** The change affects freshness classification and authority outcomes under certain profiles, despite unchanged HTTP request schemas. It establishes no external source-update discovery guarantee, authenticated epoch ordering or distributed revocation convergence. [Issue #105](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/105) and [PR #106](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/pull/106) contain implementation evidence. No new release is claimed.
 
 ## [0.21.0] - 2026-11-11
 

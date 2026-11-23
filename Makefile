@@ -20,7 +20,9 @@ validate:
 	python scripts/validate_feed_descriptors.py
 	python scripts/validate_adversarial_vectors.py
 	python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
-	python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
+	# The signed v1.3.0 archive records a future-issued feed. Preserve the archive;
+	# require the known freshness mismatch instead of claiming successful replay.
+	python scripts/validate_legacy_replay_freshness.py
 	python scripts/validate_photography_contest_example.py
 	python scripts/export_conformance_pack.py --check
 	pytest -q tests/test_experimental_delegated_creator.py tests/test_taskforce_five_worlds.py tests/test_experimental_assertion_order.py tests/test_taskforce_assurance_boundary.py tests/test_taskforce_demo_cli.py tests/test_experimental_delegation_signature.py tests/test_taskforce_report_schema.py

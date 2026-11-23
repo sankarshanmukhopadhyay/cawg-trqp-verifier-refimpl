@@ -71,7 +71,7 @@ class TTLCache:
 
     def _purge_expired_locked(self) -> None:
         now = time.time()
-        expired_keys = [key for key, entry in self._store.items() if now > entry.expires_at]
+        expired_keys = [key for key, entry in self._store.items() if now >= entry.expires_at]
         for key in expired_keys:
             self._store.pop(key, None)
             self._expirations += 1
@@ -106,7 +106,7 @@ class TTLCache:
                 self._misses += 1
                 return None, {"cache_hit": False}
             now = time.time()
-            if now > entry.expires_at:
+            if now >= entry.expires_at:
                 self._store.pop(key, None)
                 self._expirations += 1
                 self._misses += 1

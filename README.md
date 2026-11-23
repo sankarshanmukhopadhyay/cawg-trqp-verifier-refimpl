@@ -91,7 +91,7 @@ python scripts/validate_portfolio_contract.py
 python scripts/validate_adoption_journeys.py
 python scripts/validate_feed_descriptors.py
 python scripts/validate_audit_bundle.py examples/exported_audit_bundle.signed.json --trust-anchors data/trust_anchors.json
-python scripts/replay_audit_bundle.py examples/reproducibility_bundle_standard.json --trusted-root .
+python scripts/validate_legacy_replay_freshness.py
 python scripts/export_conformance_pack.py --check
 # Checksums are generated for the checked-out source tree, not committed:
 python scripts/generate_release_checksums.py
@@ -114,6 +114,14 @@ stored as a generated file on `main`.
 | `edge` | Offline or intermittently connected operation | uses governed snapshots and exposes staleness |
 
 Profiles are schema-backed by [`schemas/verification-profile.schema.json`](schemas/verification-profile.schema.json).
+
+### Cache and revocation consistency
+
+The in-process decision cache uses bounded TTLs, not a guarantee that an authorization remains operative until expiry. A verifier evaluates the available revocation-feed freshness on each online decision. When an observed non-null revocation/policy `policy_epoch` conflicts with a cached authorization or recognition response's epoch, the cached result is invalidated and looked up again. If the newly resolved positive determination still conflicts, an enforcement policy of `fail` rejects it; `warn` records `stale_but_warned`. Missing observed epochs are marked as unavailable for cached decisions, not interpreted as proven agreement. This assumes that the participating feeds use a shared, meaningful epoch namespace; it does not establish independent epoch authenticity, distributed invalidation, or instantaneous revocation convergence. Changes that are not published to the verifier's observed feed cannot be detected through this mechanism.
+
+Missing, malformed, timezone-unqualified, or materially future-issued revocation evidence cannot establish freshness. The `standard` profile can continue with `stale_but_warned`, retaining the recorded uncertainty. The `high_assurance` profile requires live evaluation and fails when required freshness or descriptor evidence is absent. `edge` continues to use its explicitly bounded snapshot policy. These policies must not be conflated with an upstream TRQP response-level cacheability extension.
+
+Older, immutable demonstration bundles contain revocation-feed issue times later than their original assessment times. They are retained as published evidence and now produce **documented freshness incompatibilities** rather than being silently rewritten or represented as current assurance. `make validate` checks those precise legacy discrepancies, alongside independent positive tests with explicitly pinned valid evaluation times.
 
 ## Walkthrough portfolio
 

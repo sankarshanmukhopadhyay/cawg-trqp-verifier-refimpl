@@ -56,6 +56,14 @@ The repository-local consent evaluator and two synthetic cross-taskforce scenari
 
 [v0.21.0](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/releases/tag/v0.21.0) adds a separate locally normalized consent-evidence evaluator, a strict output schema, withdrawal observation-time semantics and two executable synthetic scenarios. The existing verifier and operational profiles are unchanged. Input evidence, timestamps and consent records remain caller-provided; cryptographic authenticity, subject-to-key linkage, legal sufficiency and independent interoperability are not established. Work in [#90](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/90)–[#94](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/94) is bounded to this evidence surface; [#75](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/75) remains the external evidence gate.
 
+## Post-v0.21.0 verifier cache/revocation correctness tranche
+
+[Issue #105](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/issues/105) and [PR #106](https://github.com/sankarshanmukhopadhyay/cawg-trqp-verifier-refimpl/pull/106) address distinct revocation-feed freshness, observed-epoch cache reuse and exact TTL expiry defects. The implementation and negative/consumer-path validation are available on the PR branch; CI and DCO passed across the supported Python matrix. Merge and independent acceptance remain subject to the repository governance process. This is **unreleased** development, not part of the v0.21.0 tagged baseline.
+
+Legacy demonstration bundles with future-issued feeds have not been rewritten. Their old positive freshness determinations are compatibility evidence, not proof that the current verifier would reproduce them as fresh. The completion gate explicitly checks the known historical discrepancy and a separate genuinely fresh replay.
+
+The implementation cannot guarantee immediate notice of externally changed authority, cross-process invalidation, authenticated epoch semantics or a distributed propagation SLA. Any production deployment claiming these properties requires separate adapter-level and operational evidence.
+
 ## Deferred capability work
 
 ### Real binary CAWG/C2PA backend

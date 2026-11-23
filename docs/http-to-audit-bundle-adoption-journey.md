@@ -147,17 +147,15 @@ Validation should establish structural correctness, expected integrity/signature
 
 ## 9. Replay the preserved decision
 
-The canonical replay command is:
+The previously published replay artifact is intentionally retained as historical evidence, but its future-issued revocation feed no longer supports the archived freshness claim. Inspect that *known incompatibility* rather than presenting the artifact as a passing current replay:
 
 ```bash
-python scripts/replay_audit_bundle.py \
-  examples/reproducibility_bundle_standard.json \
-  --trusted-root .
+python scripts/validate_legacy_replay_freshness.py
 ```
 
-Replay should use preserved state. Do not query current policy or revocation state and then claim that the result reproduces the historical decision.
+A positive replay using an explicitly pinned, temporally valid feed is exercised by `pytest -q tests/test_cache_revocation_consistency.py -k fresh_pinned_replay`. An adopter-generated audit bundle may be replayed with `scripts/replay_audit_bundle.py` only with the matching implementation contract and preserved, appropriately timed source evidence.
 
-A valid replay result demonstrates that the same pinned inputs and implementation contract yield the same governed outcome and reason surface.
+Replay must use preserved state. A changed result under a corrected verifier is a compatibility finding, not proof that the historical record should be rewritten.
 
 ## 10. Prove correction without rewriting history
 
