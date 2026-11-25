@@ -187,3 +187,29 @@ these calls in this experiment. A future status-list design must separately
 consider distribution, caching, freshness, revocation latency, correlation
 and access authorization. No issuer call or private detail fetch is needed
 to reproduce these local tests.
+
+### Case-specific question answers and ambiguity controls
+
+The Wave 1 catalog contains separate provisional story cards and responses
+to Q5, Q6, Q9 and Q10 for each case. It records candidate assertions,
+applicable verifier tests, extensions, and policy-review questions. These
+are implementation-side proposals, not Taskforce-assigned use-case ownership
+or normative submissions. The Taskforce's use-case method refers to issue
+#286; no new upstream issues are created or assigned here.
+
+The [candidate controls matrix](../../conformance/delegated-creator-session5-6-controls.json)
+maps ten consequential ambiguity/failure conditions to the living inventory,
+local tests and upstream questions. It is an implementation contribution to
+the controls-matrix discussion scheduled for 4 December 2026, not an adopted
+matrix or viewer UI. In particular, the verifier must not show a verified
+sponsorship from signature validity alone, and absence of a verified label
+must not be interpreted as an absence of sponsorship or disclosure duty.
+
+The twelve legal/policy entries discussed on 23 November were grouped into
+disclosure (EU AI Act Article 50, California AI Transparency Act, New York
+synthetic performer rules, FTC Endorsement Guides), consent (California
+AB 2602/AB 1836, Tennessee ELVIS Act, Denmark copyright proposal, US NO FAKES
+Act proposal), and minors/intimate images (GDPR Article 8, Italy Law 132/2025,
+amended COPPA rule, TAKE IT DOWN Act). This is a record of the discussion
+topics, not independent verification of legal status, scope, or applicability.
+No verifier control substitutes for a legal assessment of each use case.
