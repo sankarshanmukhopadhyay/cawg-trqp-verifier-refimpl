@@ -4,14 +4,8 @@
   "basis": "CAWG Delegated Creator Taskforce 20 and 23 November 2026",
   "controls": [
     {
-      "id": "CTRL-01",
       "condition": "Valid signatures, missing recognized source",
       "disposition": "Report signature integrity only; authority indeterminate; no verified authority claim",
-      "inventory": [
-        "DC-A03",
-        "DC-A07",
-        "DC-C03"
-      ],
       "test": "tests/test_experimental_taskforce_source_evidence.py",
       "questions": [
         "Q9",
@@ -19,13 +13,8 @@
       ]
     },
     {
-      "id": "CTRL-02",
       "condition": "Missing, invalid, expired or revoked sponsorship evidence",
       "disposition": "Do not display a verified sponsorship label from this experiment. Distinguish lack of proof from affirmative denial and disclosure obligations.",
-      "inventory": [
-        "DC-B02",
-        "DC-D07"
-      ],
       "test": "tests/test_taskforce_operation_report_schema.py",
       "questions": [
         "Q11",
@@ -34,14 +23,8 @@
       ]
     },
     {
-      "id": "CTRL-03",
       "condition": "Delegation accepted, consent missing or withdrawn",
       "disposition": "Evaluate consent separately; no inferred permission. Preserve claimed historical and current states.",
-      "inventory": [
-        "DC-B04",
-        "DC-B08",
-        "DC-B10"
-      ],
       "test": "tests/test_taskforce_wave1_assessment.py",
       "questions": [
         "Q12",
@@ -49,14 +32,8 @@
       ]
     },
     {
-      "id": "CTRL-04",
       "condition": "Private pointer or signed reference",
       "disposition": "No automatic fetch and no proof from pointer alone; authorization and verification of fetched bytes remain separate.",
-      "inventory": [
-        "DC-B03",
-        "DC-D01",
-        "DC-D02"
-      ],
       "test": "tests/test_taskforce_wave1_assessment.py",
       "questions": [
         "Q15",
@@ -64,13 +41,8 @@
       ]
     },
     {
-      "id": "CTRL-05",
       "condition": "Unknown, substituted, stale or future source",
       "disposition": "No authenticated matching claim; preserve reason and non-positive assurance.",
-      "inventory": [
-        "DC-C02",
-        "DC-C08"
-      ],
       "test": "tests/test_experimental_taskforce_source_evidence.py",
       "questions": [
         "Q9",
@@ -78,14 +50,8 @@
       ]
     },
     {
-      "id": "CTRL-06",
       "condition": "Guardian or witness signatures",
       "disposition": "No inferred legal relationship or authority; external policy and evidence required.",
-      "inventory": [
-        "DC-A10",
-        "DC-B12",
-        "DC-B13"
-      ],
       "test": "tests/test_taskforce_operation_report_schema.py",
       "questions": [
         "Q14",
@@ -94,26 +60,16 @@
       ]
     },
     {
-      "id": "CTRL-07",
       "condition": "One principal, several delegates",
       "disposition": "Independently assess each grant and consent; missing acceptance and renewal must not propagate.",
-      "inventory": [
-        "DC-A11"
-      ],
       "test": "tests/test_taskforce_multi_recipient_isolation.py",
       "questions": [
         "Q23"
       ]
     },
     {
-      "id": "CTRL-08",
       "condition": "Trusted current observation, historical use time supplied by caller",
       "disposition": "Do not infer historical authority or trusted signing time; retention and authoritative historical status external.",
-      "inventory": [
-        "DC-A12",
-        "DC-B09",
-        "DC-F05"
-      ],
       "test": "tests/test_experimental_taskforce_source_evidence.py",
       "questions": [
         "Q12",
@@ -121,13 +77,8 @@
       ]
     },
     {
-      "id": "CTRL-09",
       "condition": "Public result with identity or agreement details",
       "disposition": "Closed output contract; no raw subject, key, reference or terms in public report.",
-      "inventory": [
-        "DC-D03",
-        "DC-D08"
-      ],
       "test": "tests/test_taskforce_operation_report_schema.py",
       "questions": [
         "Q11",
@@ -135,14 +86,8 @@
       ]
     },
     {
-      "id": "CTRL-10",
       "condition": "Actual signed asset or C2PA tool receipt",
       "disposition": "Keep content integrity, signer trust, delegation binding and consent separate; independent asset/trust gate remains open.",
-      "inventory": [
-        "DC-A05",
-        "DC-F01",
-        "DC-F03"
-      ],
       "test": "tests/test_external_c2pa_validation.py",
       "questions": [
         "Q13"

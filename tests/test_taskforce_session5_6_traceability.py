@@ -31,8 +31,8 @@ def test_story_and_controls_traceability():
         assert all((ROOT / p).is_file() for p in case["verifier_tests"])
     controls = json.loads((ROOT / "conformance/delegated-creator-session5-6-controls.json").read_text())
     assert len(controls["controls"]) == 10
-    assert len({c["id"] for c in controls["controls"]}) == 10
+    assert len({c["condition"] for c in controls["controls"]}) == 10
     for control in controls["controls"]:
-        assert control["condition"] and control["disposition"] and control["inventory"]
+        assert control["condition"] and control["disposition"] and control["questions"]
         assert (ROOT / control["test"]).is_file()
         assert all(q in {f"Q{i}" for i in range(1, 24)} for q in control["questions"])

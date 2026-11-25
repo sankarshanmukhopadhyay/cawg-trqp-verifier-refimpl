@@ -198,8 +198,8 @@ or normative submissions. The Taskforce's use-case method refers to issue
 #286; no new upstream issues are created or assigned here.
 
 The [candidate controls matrix](../../conformance/delegated-creator-session5-6-controls.json)
-maps ten consequential ambiguity/failure conditions to the living inventory,
-local tests and upstream questions. It is an implementation contribution to
+maps ten consequential ambiguity/failure conditions directly to the
+Taskforce's question numbers and local tests, without a parallel identifier scheme. It is an implementation contribution to
 the controls-matrix discussion scheduled for 4 December 2026, not an adopted
 matrix or viewer UI. In particular, the verifier must not show a verified
 sponsorship from signature validity alone, and absence of a verified label
