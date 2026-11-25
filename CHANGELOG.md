@@ -8,6 +8,8 @@ nav_order: 1
 
 ## [Unreleased]
 
+- Experimental Sessions 5–6 two-party delegation integrity, scope/consent assessment, offline source-claim authentication and closed public report schema. Six-case executable Wave 1 coverage and Q1–Q23 reconciliation; independent recognition, genuine signed-asset interoperability and legal consent remain unestablished.
+
 ### Cache and revocation consistency (PR #106, pending merge)
 
 - Classified absent, malformed, timezone-unqualified and materially future-issued revocation timestamps as unusable freshness evidence, with bounded one-second clock skew.

@@ -30,6 +30,7 @@ validate:
 	pytest -q tests/test_experimental_consent_assurance.py tests/test_experimental_consent_temporal.py tests/test_taskforce_consent_scenarios.py
 	pytest -q tests/test_taskforce_consent_traceability.py
 	pytest -q tests/test_external_c2pa_validation.py
+	pytest -q tests/test_experimental_two_party_delegation.py tests/test_taskforce_wave1_assessment.py tests/test_experimental_taskforce_source_evidence.py tests/test_taskforce_operation_report_schema.py tests/test_taskforce_wave1_demo_cli.py tests/test_taskforce_multi_recipient_isolation.py tests/test_taskforce_session5_6_traceability.py
 	pytest -q
 
 flagship-check:

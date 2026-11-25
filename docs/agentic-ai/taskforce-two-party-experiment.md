@@ -143,3 +143,47 @@ invariants; it is not an alternative to executing the verifier.
 pytest -q tests/test_taskforce_operation_report_schema.py
 make validate
 ```
+
+## Reproduce Wave 1 and question reconciliation
+
+```bash
+python scripts/run_taskforce_wave1_demo.py --output /tmp/taskforce-wave1.json
+pytest -q tests/test_taskforce_wave1_demo_cli.py tests/test_taskforce_multi_recipient_isolation.py tests/test_taskforce_session5_6_traceability.py
+```
+
+The public fixture keys are intentionally reproducible and never production
+trust roots. The CLI runs the actual assessment, validates the report schema,
+checks a wrong-actor counterexample for every case, and exits nonzero if the
+expected results differ. It makes no independent interoperability claim.
+The [Q1–Q23 crosswalk](../../conformance/delegated-creator-session5-6-questions.json)
+records the local contribution and unresolved decisions for every question.
+The Wave 1 catalog records candidate assertions and provisional answers to
+Q5, Q6, Q9 and Q10. These are not approved Taskforce use-case submissions.
+
+For Q23, independent two-party records per recipient are sufficient to
+demonstrate isolation of acceptance, scope, renewal and consent. A missing
+countersignature cannot verify; we do not claim to implement a pending
+workflow, a shared multi-recipient credential, or collective acceptance.
+The source and format of authoritative per-recipient lifecycle evidence
+remain external decisions.
+
+### Informative policy and disclosure boundaries
+
+The 23 November discussion grouped requirements into public disclosure,
+subject consent and safeguards for minors/intimate images. The sponsorship
+worked example names the FTC Endorsement Guides and, where a synthetic
+performer is involved, New York disclosure requirements. The verifier can
+help establish evidence for a claim, not determine legal applicability,
+rights, liability, insurance, certificate funding, removal obligations or
+guardianship. A minor's guardian signature requires separate proof of the
+relationship and authority under applicable policy. Do not infer that consent
+is unnecessary merely because no consent record was supplied. Public
+sponsorship verification is not equivalent to the obligation to disclose
+sponsorship; absence of proof is not proof of absence of a paid relationship.
+
+The privacy risk is not confined to private agreement retrieval: a
+per-viewer status query can also reveal activity. Offline evidence avoids
+these calls in this experiment. A future status-list design must separately
+consider distribution, caching, freshness, revocation latency, correlation
+and access authorization. No issuer call or private detail fetch is needed
+to reproduce these local tests.

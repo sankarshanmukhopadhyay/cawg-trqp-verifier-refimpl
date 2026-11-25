@@ -1,5 +1,4 @@
 """Consumer-path tests with real local signatures and simulated external claims."""
-import base64
 import copy
 import json
 from pathlib import Path
@@ -8,44 +7,14 @@ from unittest.mock import patch
 import pytest
 
 from cawg_trqp_refimpl.experimental_taskforce_assessment import assess_operation
-from cawg_trqp_refimpl.experimental_two_party_delegation import signing_bytes
-from test_experimental_two_party_delegation import KEYS, PUBLIC, CONTEXT
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG = json.loads((ROOT / "conformance/delegated-creator-wave1-coverage.json").read_text())
-CASES = CATALOG["cases"]
+import sys
+
+sys.path.insert(0, str(ROOT / 'scripts'))
+from taskforce_wave1_fixtures import CASES, CATALOG, inputs, PUBLIC, CONTEXT
 
 
-def inputs(case):
-    request = {k: case[k] for k in ("principal", "actor", "action", "resource",
-                                    "purpose", "consent_subject")}
-    request.update(used_at="2026-11-23T00:00:00Z",
-                   evaluated_at="2026-11-25T00:00:00Z", context_sha256=CONTEXT)
-    statement = {"delegator": case["principal"], "delegate": case["actor"],
-                 "actions": [case["action"]], "resources": [case["resource"]],
-                 "purposes": [case["purpose"]],
-                 "not_before": "2026-11-20T00:00:00Z",
-                 "not_after": "2026-12-04T00:00:00Z"}
-    envelope = {"statement": statement, "context_sha256": CONTEXT,
-                "signatures": {role: {
-                    "key_id": role, "signature_b64": base64.b64encode(key.sign(
-                        signing_bytes(statement, CONTEXT, role, role))).decode()
-                } for role, key in KEYS.items()}}
-    records = []
-    if case["consent_subject"]:
-        records.append({
-            "record_id": "private-record", "subject_ref": case["consent_subject"],
-            "actions": [case["action"]], "resources": [case["resource"]],
-            "purposes": [case["purpose"]], "valid_from": "2026-11-20T00:00:00Z",
-            "valid_until": "2026-12-04T00:00:00Z", "withdrawn_effective_at": None,
-            "withdrawal_observed_at": None,
-            "evidence_ref": "https://example.test/private/secret",
-            "evidence_sha256": "b" * 64,
-        })
-    subject = {"subject": case["actor"], "kind": "pseudonymous",
-               "unique_claim": True, "vouching": [{"issuer": "private-registry",
-                    "kind": "professional", "claimed_status": "verified", "scope": "creator"}]}
-    return request, envelope, records, subject
 
 
 def evaluate(request, envelope, records, subject, keys=PUBLIC):

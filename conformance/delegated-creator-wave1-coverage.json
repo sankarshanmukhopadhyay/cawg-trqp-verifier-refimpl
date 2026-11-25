@@ -11,7 +11,7 @@
     "Q9",
     "Q10"
   ],
-  "question_mapping_status": "review-required; no Taskforce adoption or definitive specification issue assigned",
+  "question_mapping_status": "Local provisional answers to Q5/Q6/Q9/Q10; Q1-Q23 crosswalk separately records open decisions. No CAWG adoption.",
   "test": "tests/test_taskforce_wave1_assessment.py",
   "cases": [
     {
@@ -25,7 +25,19 @@
       "consent_subject": "opaque:performer",
       "baseline": "agency-handover",
       "source": "conformance/delegated-creator-five-world-scenarios.json",
-      "notes": "New worked-case mapping: public sponsorship disclosure is distinct from consent to use a person's likeness."
+      "notes": "New worked-case mapping: public sponsorship disclosure is distinct from consent to use a person's likeness.",
+      "question_mapping": {
+        "Q5": "Actor references can be opaque; AI reference semantics remain upstream.",
+        "Q6": "Use signed principal, actor, action, resource, purpose and validity interval.",
+        "Q9": "Require source authority separately from the organization signature.",
+        "Q10": "No normative assertion selection; endorsement relationship remains upstream."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion creator/sponsor roles (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "No adopted issue assignment; CAWG review required (Q10).",
+      "policy_review": "Session 6 worked example identifies FTC Endorsement Guides and New York synthetic performer disclosure if applicable; applicability not adjudicated."
     },
     {
       "id": "manager-for-creator",
@@ -38,7 +50,19 @@
       "consent_subject": null,
       "baseline": "human-manager-delegation",
       "source": "conformance/delegated-creator-session2-scenarios.json",
-      "notes": "Manager acceptance does not establish authority outside the signed terms."
+      "notes": "Manager acceptance does not establish authority outside the signed terms.",
+      "question_mapping": {
+        "Q5": "Actor references can be opaque; AI reference semantics remain upstream.",
+        "Q6": "Use signed principal, actor, action, resource, purpose and validity interval.",
+        "Q9": "Require source authority separately from the organization signature.",
+        "Q10": "No normative assertion selection; endorsement relationship remains upstream."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "No adopted issue assignment; CAWG review required (Q10).",
+      "policy_review": "Confirm applicability with Taskforce; no legal determination."
     },
     {
       "id": "freelance-reporter",
@@ -51,7 +75,19 @@
       "consent_subject": null,
       "baseline": "freelance-reporter",
       "source": "conformance/delegated-creator-five-world-scenarios.json",
-      "notes": "Publishing authority does not establish the byline or legal authorship."
+      "notes": "Publishing authority does not establish the byline or legal authorship.",
+      "question_mapping": {
+        "Q5": "Actor references can be opaque; AI reference semantics remain upstream.",
+        "Q6": "Use signed principal, actor, action, resource, purpose and validity interval.",
+        "Q9": "Require source authority separately from the organization signature.",
+        "Q10": "No normative assertion selection; endorsement relationship remains upstream."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "No adopted issue assignment; CAWG review required (Q10).",
+      "policy_review": "Confirm applicability with Taskforce; no legal determination."
     },
     {
       "id": "assistant-on-set",
@@ -64,7 +100,19 @@
       "consent_subject": "opaque:depicted-subject",
       "baseline": "photographer-assistant",
       "source": "conformance/delegated-creator-five-world-scenarios.json",
-      "notes": "Creative-role attribution and subject consent remain separate."
+      "notes": "Creative-role attribution and subject consent remain separate.",
+      "question_mapping": {
+        "Q5": "Actor references can be opaque; AI reference semantics remain upstream.",
+        "Q6": "Use signed principal, actor, action, resource, purpose and validity interval.",
+        "Q9": "Require source authority separately from the organization signature.",
+        "Q10": "No normative assertion selection; endorsement relationship remains upstream."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "No adopted issue assignment; CAWG review required (Q10).",
+      "policy_review": "Confirm applicability with Taskforce; no legal determination."
     },
     {
       "id": "ai-voice-tool",
@@ -77,7 +125,19 @@
       "consent_subject": "opaque:voice-subject",
       "baseline": "ai-voice-tool",
       "source": "conformance/delegated-creator-five-world-scenarios.json",
-      "notes": "Tool delegation does not establish voice-use consent or training permission."
+      "notes": "Tool delegation does not establish voice-use consent or training permission.",
+      "question_mapping": {
+        "Q5": "Actor references can be opaque; AI reference semantics remain upstream.",
+        "Q6": "Use signed principal, actor, action, resource, purpose and validity interval.",
+        "Q9": "Require source authority separately from the organization signature.",
+        "Q10": "No normative assertion selection; endorsement relationship remains upstream."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "No adopted issue assignment; CAWG review required (Q10).",
+      "policy_review": "Confirm applicability with Taskforce; no legal determination."
     },
     {
       "id": "pseudonymous-creator",
@@ -90,7 +150,19 @@
       "consent_subject": null,
       "baseline": "anonymous-unique-self-declaration",
       "source": "conformance/delegated-creator-session2-scenarios.json",
-      "notes": "Self-declaration and key possession do not establish recognition or uniqueness."
+      "notes": "Self-declaration and key possession do not establish recognition or uniqueness.",
+      "question_mapping": {
+        "Q5": "Actor references can be opaque; AI reference semantics remain upstream.",
+        "Q6": "Use signed principal, actor, action, resource, purpose and validity interval.",
+        "Q9": "Require source authority separately from the organization signature.",
+        "Q10": "No normative assertion selection; endorsement relationship remains upstream."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "No adopted issue assignment; CAWG review required (Q10).",
+      "policy_review": "Confirm applicability with Taskforce; no legal determination."
     }
   ]
 }
