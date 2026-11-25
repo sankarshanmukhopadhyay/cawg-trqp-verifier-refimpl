@@ -33,3 +33,42 @@ fetched; output does not expose parties or delegation terms.
 Fixture keys are public test material, not deployable trust roots. External
 registry, consent and signed-asset evidence remain required for stronger
 claims. Do not describe this experiment as CAWG interoperability.
+
+## Integrated operation assessment and Wave 1
+
+The [operation assessment](../../src/cawg_trqp_refimpl/experimental_taskforce_assessment.py)
+combines two-party integrity, signed-term matching, claimed consent scope and
+subject evidence in a single local consumer path. It compares the request's
+principal, actor, action, resource, purpose, time and context with the signed
+statement. It does not grant authority. The two consent and delegation
+lifecycles remain separately visible. Consent may concern a subject other than
+the delegate. A missing consent subject does not mean consent is unnecessary.
+
+The [Wave 1 coverage catalog](../../conformance/delegated-creator-wave1-coverage.json)
+reuses prior scenario baselines and adds a bounded influencer sponsorship
+mapping. It covers the six use cases identified on 23 November 2026.
+It records the mandatory question identifiers Q5, Q6, Q9 and Q10 without
+asserting that local experiments settle the questions or constitute adopted
+specification issues. The exact CAWG assertions and the full question/controls
+matrix require upstream review.
+
+```bash
+pytest -q tests/test_experimental_two_party_delegation.py tests/test_taskforce_wave1_assessment.py
+make validate
+```
+
+Public output is allowlisted. Verification does not dereference private
+consent references or resolve an opaque identifier. Claimed registry status
+does not authenticate a registry, its governance or the asserted key binding.
+A status-list or other network retrieval mechanism would require explicit
+authorization, bounded retrieval, verified source authority and a privacy
+review; it is not introduced here. Current and historical scope labels concern
+signed terms or caller-supplied consent claims, not independently established
+revocation or historical authority. A two-party signature does not establish
+guardian authority, witness authority, legal consent, public disclosure
+compliance or creative credit.
+
+The catalog is a local, executable coverage reconciliation, not six authentic
+signed C2PA assets or complete Taskforce use-case submissions. Authentic
+assets, trusted time, recognized registry/consent status, industry schema
+semantics and independent reproduction remain external gates in #75.

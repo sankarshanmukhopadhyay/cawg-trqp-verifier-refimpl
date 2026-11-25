@@ -1,0 +1,96 @@
+{
+  "schema_version": "0.1",
+  "status": "experimental repository-local evidence; not CAWG conformance",
+  "meeting_basis": [
+    "Session 5, 2026-11-20",
+    "Session 6, 2026-11-23"
+  ],
+  "required_questions": [
+    "Q5",
+    "Q6",
+    "Q9",
+    "Q10"
+  ],
+  "question_mapping_status": "review-required; no Taskforce adoption or definitive specification issue assigned",
+  "test": "tests/test_taskforce_wave1_assessment.py",
+  "cases": [
+    {
+      "id": "influencer-sponsorship",
+      "name": "Influencer sponsorship",
+      "principal": "brand",
+      "actor": "creator",
+      "action": "publish",
+      "resource": "sponsored-post",
+      "purpose": "advertising",
+      "consent_subject": "opaque:performer",
+      "baseline": "agency-handover",
+      "source": "conformance/delegated-creator-five-world-scenarios.json",
+      "notes": "New worked-case mapping: public sponsorship disclosure is distinct from consent to use a person's likeness."
+    },
+    {
+      "id": "manager-for-creator",
+      "name": "Manager for a creator",
+      "principal": "creator",
+      "actor": "manager",
+      "action": "publish",
+      "resource": "post:1",
+      "purpose": "promotion",
+      "consent_subject": null,
+      "baseline": "human-manager-delegation",
+      "source": "conformance/delegated-creator-session2-scenarios.json",
+      "notes": "Manager acceptance does not establish authority outside the signed terms."
+    },
+    {
+      "id": "freelance-reporter",
+      "name": "Freelance reporter",
+      "principal": "publisher",
+      "actor": "freelancer",
+      "action": "publish",
+      "resource": "article-1",
+      "purpose": "news",
+      "consent_subject": null,
+      "baseline": "freelance-reporter",
+      "source": "conformance/delegated-creator-five-world-scenarios.json",
+      "notes": "Publishing authority does not establish the byline or legal authorship."
+    },
+    {
+      "id": "assistant-on-set",
+      "name": "Assistant on set",
+      "principal": "photographer",
+      "actor": "assistant",
+      "action": "transform",
+      "resource": "photo-1",
+      "purpose": "editorial",
+      "consent_subject": "opaque:depicted-subject",
+      "baseline": "photographer-assistant",
+      "source": "conformance/delegated-creator-five-world-scenarios.json",
+      "notes": "Creative-role attribution and subject consent remain separate."
+    },
+    {
+      "id": "ai-voice-tool",
+      "name": "AI voice tool",
+      "principal": "artist",
+      "actor": "voice-agent",
+      "action": "transform",
+      "resource": "album-demos",
+      "purpose": "demo",
+      "consent_subject": "opaque:voice-subject",
+      "baseline": "ai-voice-tool",
+      "source": "conformance/delegated-creator-five-world-scenarios.json",
+      "notes": "Tool delegation does not establish voice-use consent or training permission."
+    },
+    {
+      "id": "pseudonymous-creator",
+      "name": "Pseudonymous creator",
+      "principal": "opaque:principal",
+      "actor": "pairwise:pseudonym-1",
+      "action": "publish",
+      "resource": "post:1",
+      "purpose": "promotion",
+      "consent_subject": null,
+      "baseline": "anonymous-unique-self-declaration",
+      "source": "conformance/delegated-creator-session2-scenarios.json",
+      "notes": "Self-declaration and key possession do not establish recognition or uniqueness."
+    }
+  ]
+}
