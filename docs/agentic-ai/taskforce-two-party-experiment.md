@@ -128,3 +128,18 @@ The tests use a separate deterministic fixture source key to authenticate
 local evidence, exercise substitution, unknown source, wrong scope, stale
 and future evidence, revoked status and consent-record replay. These are
 local integration tests, not evidence of external trust governance.
+
+## Public report contract
+
+The [operation report schema](../../schemas/experimental-taskforce-operation.schema.json)
+defines a closed output vocabulary. Unsupported assurance, identity, trusted
+time and asset-binding results cannot be advertised as verified. The schema
+also rejects a positive signed-term applicability result after failed or
+indeterminate signature integrity, unauthenticated source states advertised as
+active, and undeclared output fields. Schema validation checks report shape and
+invariants; it is not an alternative to executing the verifier.
+
+```bash
+pytest -q tests/test_taskforce_operation_report_schema.py
+make validate
+```
