@@ -47,6 +47,7 @@ An agent can appear in one or more roles without gaining authority from another 
 - [Delegation and Authority](delegation-and-authority.md)
 - [Delegated Creator TRQP Traceability](delegated-creator-trqp-traceability.md) (informative taskforce gap analysis)
 - [Experimental Delegated Creator Profile](experimental-delegated-creator-profile.md) (versioned local feasibility experiment)
+- [Taskforce Sessions 5–6 experiment](taskforce-two-party-experiment.md) (post-v0.21.0 local two-party integrity, source evidence and Wave 1 demonstration)
 - [Experimental Consent Assurance](experimental-consent-assurance.md) (independent consent-claim and withdrawal boundary; v0.21.0)
 - [Taskforce Five-World Demonstration](taskforce-five-world-demo.md) (portable synthetic vectors and eight-test assessment)
 - [Verification and Decision Boundaries](agentic-verification-boundaries.md)

@@ -1,0 +1,97 @@
+{
+  "schema_version": "0.1",
+  "status": "candidate repository-local controls; not Taskforce-approved",
+  "basis": "CAWG Delegated Creator Taskforce 20 and 23 November 2026",
+  "controls": [
+    {
+      "condition": "Valid signatures, missing recognized source",
+      "disposition": "Report signature integrity only; authority indeterminate; no verified authority claim",
+      "test": "tests/test_experimental_taskforce_source_evidence.py",
+      "questions": [
+        "Q9",
+        "Q11"
+      ]
+    },
+    {
+      "condition": "Missing, invalid, expired or revoked sponsorship evidence",
+      "disposition": "Do not display a verified sponsorship label from this experiment. Distinguish lack of proof from affirmative denial and disclosure obligations.",
+      "test": "tests/test_taskforce_operation_report_schema.py",
+      "questions": [
+        "Q11",
+        "Q17",
+        "Q19"
+      ]
+    },
+    {
+      "condition": "Delegation accepted, consent missing or withdrawn",
+      "disposition": "Evaluate consent separately; no inferred permission. Preserve claimed historical and current states.",
+      "test": "tests/test_taskforce_wave1_assessment.py",
+      "questions": [
+        "Q12",
+        "Q19"
+      ]
+    },
+    {
+      "condition": "Private pointer or signed reference",
+      "disposition": "No automatic fetch and no proof from pointer alone; authorization and verification of fetched bytes remain separate.",
+      "test": "tests/test_taskforce_wave1_assessment.py",
+      "questions": [
+        "Q15",
+        "Q21"
+      ]
+    },
+    {
+      "condition": "Unknown, substituted, stale or future source",
+      "disposition": "No authenticated matching claim; preserve reason and non-positive assurance.",
+      "test": "tests/test_experimental_taskforce_source_evidence.py",
+      "questions": [
+        "Q9",
+        "Q12"
+      ]
+    },
+    {
+      "condition": "Guardian or witness signatures",
+      "disposition": "No inferred legal relationship or authority; external policy and evidence required.",
+      "test": "tests/test_taskforce_operation_report_schema.py",
+      "questions": [
+        "Q14",
+        "Q19",
+        "Q20"
+      ]
+    },
+    {
+      "condition": "One principal, several delegates",
+      "disposition": "Independently assess each grant and consent; missing acceptance and renewal must not propagate.",
+      "test": "tests/test_taskforce_multi_recipient_isolation.py",
+      "questions": [
+        "Q23"
+      ]
+    },
+    {
+      "condition": "Trusted current observation, historical use time supplied by caller",
+      "disposition": "Do not infer historical authority or trusted signing time; retention and authoritative historical status external.",
+      "test": "tests/test_experimental_taskforce_source_evidence.py",
+      "questions": [
+        "Q12",
+        "Q18"
+      ]
+    },
+    {
+      "condition": "Public result with identity or agreement details",
+      "disposition": "Closed output contract; no raw subject, key, reference or terms in public report.",
+      "test": "tests/test_taskforce_operation_report_schema.py",
+      "questions": [
+        "Q11",
+        "Q15"
+      ]
+    },
+    {
+      "condition": "Actual signed asset or C2PA tool receipt",
+      "disposition": "Keep content integrity, signer trust, delegation binding and consent separate; independent asset/trust gate remains open.",
+      "test": "tests/test_external_c2pa_validation.py",
+      "questions": [
+        "Q13"
+      ]
+    }
+  ]
+}

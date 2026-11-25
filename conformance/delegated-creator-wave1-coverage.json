@@ -1,0 +1,252 @@
+{
+  "schema_version": "0.1",
+  "status": "experimental repository-local evidence; not CAWG conformance",
+  "meeting_basis": [
+    "Session 5, 2026-11-20",
+    "Session 6, 2026-11-23"
+  ],
+  "required_questions": [
+    "Q5",
+    "Q6",
+    "Q9",
+    "Q10"
+  ],
+  "question_mapping_status": "Local provisional answers to Q5/Q6/Q9/Q10; Q1-Q23 crosswalk separately records open decisions. No CAWG adoption.",
+  "test": "tests/test_taskforce_wave1_assessment.py",
+  "cases": [
+    {
+      "id": "influencer-sponsorship",
+      "name": "Influencer sponsorship",
+      "principal": "brand",
+      "actor": "creator",
+      "action": "publish",
+      "resource": "sponsored-post",
+      "purpose": "advertising",
+      "consent_subject": "opaque:performer",
+      "baseline": "agency-handover",
+      "source": "conformance/delegated-creator-five-world-scenarios.json",
+      "notes": "New worked-case mapping: public sponsorship disclosure is distinct from consent to use a person's likeness.",
+      "question_mapping": {
+        "Q5": "Creator can use a recognized opaque subject; no routine legal identity resolution. AI performer representation remains open.",
+        "Q6": "Brand and creator, publish, sponsored-post resource, advertising purpose, validity interval; does not grant likeness reuse.",
+        "Q9": "Organization signature must be bound to a recognized brand signer with authority to commit that brand; local source authentication is not independent recognition.",
+        "Q10": "Creator and sponsor roles are candidate public assertions; separately scoped co-signed grant/acceptance. CAWG decides endorsement relationship."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion creator/sponsor roles (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "CAWG use-case method refers to #286; case-specific normative issue assignment remains for Taskforce.",
+      "policy_review": "Session 6 identifies FTC Endorsement Guides and New York synthetic-performer disclosure if applicable. No legal applicability finding.",
+      "story": {
+        "vision": "A creator and platform want to substantiate a paid sponsorship claim without contacting the brand for every view.",
+        "actors": "Brand, creator, platform, viewer; any person whose likeness is reused.",
+        "scope": "A particular paid post. Likeness reuse in advertising and legal disclosure obligations are separate.",
+        "preconditions": "Actual brand authority, signed sponsorship terms, creator acceptance, valid Content Credentials and appropriate status evidence.",
+        "success": "Verify signed terms, subject/key and brand authority evidence independently; show a verified sponsorship only if the applicable public-claim policy is satisfied.",
+        "extensions": "Missing deal, expired or revoked sponsorship: no verified label; absence is not proof of no sponsorship. Reuse of likeness: separate consent. Private agreement: pointer only.",
+        "frequency": "Per relevant publication/use; no frequency estimate asserted.",
+        "special_requirements": "No automatic private lookup; no inferred identity or consent; distinguish evidence from policy conclusion."
+      },
+      "verifier_tests": [
+        "tests/test_taskforce_wave1_assessment.py",
+        "tests/test_experimental_taskforce_source_evidence.py"
+      ]
+    },
+    {
+      "id": "manager-for-creator",
+      "name": "Manager for a creator",
+      "principal": "creator",
+      "actor": "manager",
+      "action": "publish",
+      "resource": "post:1",
+      "purpose": "promotion",
+      "consent_subject": null,
+      "baseline": "human-manager-delegation",
+      "source": "conformance/delegated-creator-session2-scenarios.json",
+      "notes": "Manager acceptance does not establish authority outside the signed terms.",
+      "question_mapping": {
+        "Q5": "Manager and creator have distinct opaque references and keys. No need to reveal personal identity to every viewer.",
+        "Q6": "Publish post:1 for promotion in the stated interval; no inference of negotiation or onward delegation powers.",
+        "Q9": "A company employing the manager does not automatically possess the creator's authority; separately establish delegation and corporate binding if used.",
+        "Q10": "Candidate creator/manager role plus separate authority terms; endorsement alone cannot authorize publication."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "CAWG use-case method refers to #286; case-specific normative issue assignment remains for Taskforce.",
+      "policy_review": "Review disclosure/consent applicability by use; no specific legal rule assigned by the meeting.",
+      "story": {
+        "vision": "A manager wants to demonstrate authority to publish a creator's specified post, without acquiring the creator's identity or unlimited mandate.",
+        "actors": "Creator, manager, publishing service, viewer.",
+        "scope": "Specified publishing action for one promotional post, not general representation or transfer of authorship.",
+        "preconditions": "Creator's recognized authority, manager key binding, both signatures, current status and bounded terms.",
+        "success": "Check the manager's own countersignature and exact scope; independently evaluate recognition and authority.",
+        "extensions": "Manager replaced, wrong post, expired grant, missing acceptance or new recipient: do not inherit prior permission.",
+        "frequency": "Per relevant publication/use; no frequency estimate asserted.",
+        "special_requirements": "No automatic private lookup; no inferred identity or consent; distinguish evidence from policy conclusion."
+      },
+      "verifier_tests": [
+        "tests/test_taskforce_wave1_assessment.py",
+        "tests/test_taskforce_multi_recipient_isolation.py"
+      ]
+    },
+    {
+      "id": "freelance-reporter",
+      "name": "Freelance reporter",
+      "principal": "publisher",
+      "actor": "freelancer",
+      "action": "publish",
+      "resource": "article-1",
+      "purpose": "news",
+      "consent_subject": null,
+      "baseline": "freelance-reporter",
+      "source": "conformance/delegated-creator-five-world-scenarios.json",
+      "notes": "Publishing authority does not establish the byline or legal authorship.",
+      "question_mapping": {
+        "Q5": "Reporter can be pseudonymous where publisher governance permits; binding and recognition remain necessary.",
+        "Q6": "Publish article-1 for news within dates; not arbitrary articles or republishing rights.",
+        "Q9": "Publisher organizational credential or key is insufficient without proof the signer may authorize this reporter.",
+        "Q10": "Candidate creator role and publisher/endorsement semantics remain separate from scoped delegation; upstream decides representation."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "CAWG use-case method refers to #286; case-specific normative issue assignment remains for Taskforce.",
+      "policy_review": "Review applicable publication and subject-consent obligations; no legal conclusion from a valid byline.",
+      "story": {
+        "vision": "A freelance reporter wants a publisher and reader to distinguish publication authority from authorship.",
+        "actors": "Publisher, reporter, editor or platform, reader.",
+        "scope": "Publication of one article for news, not a general byline, editorial endorsement or copyright transfer.",
+        "preconditions": "Recognized publisher, signer authorized to bind it, reporter acceptance, relevant signed manifest.",
+        "success": "Verify publisher-to-reporter authority for the requested publication while preserving independent creative attribution.",
+        "extensions": "Wrong article, substituted reporter, expired grant, byline dispute: no inferred authorship or authority.",
+        "frequency": "Per relevant publication/use; no frequency estimate asserted.",
+        "special_requirements": "No automatic private lookup; no inferred identity or consent; distinguish evidence from policy conclusion."
+      },
+      "verifier_tests": [
+        "tests/test_taskforce_wave1_assessment.py",
+        "tests/test_experimental_taskforce_source_evidence.py"
+      ]
+    },
+    {
+      "id": "assistant-on-set",
+      "name": "Assistant on set",
+      "principal": "photographer",
+      "actor": "assistant",
+      "action": "transform",
+      "resource": "photo-1",
+      "purpose": "editorial",
+      "consent_subject": "opaque:depicted-subject",
+      "baseline": "photographer-assistant",
+      "source": "conformance/delegated-creator-five-world-scenarios.json",
+      "notes": "Creative-role attribution and subject consent remain separate.",
+      "question_mapping": {
+        "Q5": "Assistant and depicted subject are distinct references; no assumption that the delegate is the consent subject.",
+        "Q6": "Transform photo-1 for editorial purpose in validity interval; no implied creation or unrelated use.",
+        "Q9": "Studio signature requires authority to bind the production, not automatic rights over the depicted subject.",
+        "Q10": "Candidate creative-role assertion must not substitute for the delegation; precise assertion and independent contribution signature remain open."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "CAWG use-case method refers to #286; case-specific normative issue assignment remains for Taskforce.",
+      "policy_review": "Review subject permission and minor/intimate-image safeguards as applicable; no legal determination.",
+      "story": {
+        "vision": "A production assistant wants the production team to verify permission for a specific transformation, without being treated as the author or subject-consent authority.",
+        "actors": "Photographer, assistant, production platform, depicted subject.",
+        "scope": "Transform photo-1 for editorial use; excludes creation, new purposes, or consent granted on behalf of depicted people.",
+        "preconditions": "Recognized principal and assistant bindings, co-signed terms, any independently governed subject permission required.",
+        "success": "Check allowed transformation, separate consent to use, and independent creative contribution if asserted.",
+        "extensions": "Wrong action, changed photo, missing consent or minor subject: withhold unsupported conclusions; guardian authority is separate.",
+        "frequency": "Per relevant publication/use; no frequency estimate asserted.",
+        "special_requirements": "No automatic private lookup; no inferred identity or consent; distinguish evidence from policy conclusion."
+      },
+      "verifier_tests": [
+        "tests/test_taskforce_wave1_assessment.py",
+        "tests/test_taskforce_operation_report_schema.py"
+      ]
+    },
+    {
+      "id": "ai-voice-tool",
+      "name": "AI voice tool",
+      "principal": "artist",
+      "actor": "voice-agent",
+      "action": "transform",
+      "resource": "album-demos",
+      "purpose": "demo",
+      "consent_subject": "opaque:voice-subject",
+      "baseline": "ai-voice-tool",
+      "source": "conformance/delegated-creator-five-world-scenarios.json",
+      "notes": "Tool delegation does not establish voice-use consent or training permission.",
+      "question_mapping": {
+        "Q5": "Tool can be referenced by an opaque identifier; accountable principal and AI representation remain open under CAWG terminology.",
+        "Q6": "Transform album-demos for demo within validity dates; training or unrelated album excluded.",
+        "Q9": "A producer or tool company cannot confer performer consent solely by signing; verify organizational authority and subject consent separately.",
+        "Q10": "Candidate identity/creative roles plus scoped tool authorization; no adopted AI or endorsement assertion representation."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "CAWG use-case method refers to #286; case-specific normative issue assignment remains for Taskforce.",
+      "policy_review": "Review the meeting's digital-replica/voice consent and synthetic-content disclosure group where applicable; no legal applicability finding.",
+      "story": {
+        "vision": "An artist wants a verifier to distinguish a voice tool's authorization to transform album demos from permission to use a person's voice.",
+        "actors": "Artist or producer, voice tool/operator, performer, publisher.",
+        "scope": "Transform specified album demos for demonstration, not training, general commercialization or voice ownership.",
+        "preconditions": "Recognized principal, tool binding/representation, signed scope and independently governed voice-use consent as applicable.",
+        "success": "Validate terms for the particular tool, resource, purpose and period; assess voice consent separately.",
+        "extensions": "Wrong tool, album, purpose, expiry, withdrawn consent: independent non-positive outcomes; long-term rights/history require external evidence.",
+        "frequency": "Per relevant publication/use; no frequency estimate asserted.",
+        "special_requirements": "No automatic private lookup; no inferred identity or consent; distinguish evidence from policy conclusion."
+      },
+      "verifier_tests": [
+        "tests/test_taskforce_wave1_assessment.py",
+        "tests/test_experimental_taskforce_source_evidence.py"
+      ]
+    },
+    {
+      "id": "pseudonymous-creator",
+      "name": "Pseudonymous creator",
+      "principal": "opaque:principal",
+      "actor": "pairwise:pseudonym-1",
+      "action": "publish",
+      "resource": "post:1",
+      "purpose": "promotion",
+      "consent_subject": null,
+      "baseline": "anonymous-unique-self-declaration",
+      "source": "conformance/delegated-creator-session2-scenarios.json",
+      "notes": "Self-declaration and key possession do not establish recognition or uniqueness.",
+      "question_mapping": {
+        "Q5": "Opaque subject can be a registry identifier, not a publicly resolvable personal identity; AI-reference semantics separately open.",
+        "Q6": "Publish post:1 for promotion within dates; registry membership does not expand scope.",
+        "Q9": "A guild or employer assertion cannot itself prove the principal granted the specific authority.",
+        "Q10": "Candidate identity assertion with opaque subject plus distinct delegation; upstream determines representation and identity detail disclosure."
+      },
+      "candidate_assertions": [
+        "CAWG identity assertion (candidate)",
+        "experimental two-party delegation terms"
+      ],
+      "specification_issue": "CAWG use-case method refers to #286; case-specific normative issue assignment remains for Taskforce.",
+      "policy_review": "Review privacy, disclosure and consent obligations in context; do not treat pseudonymity as exemption.",
+      "story": {
+        "vision": "A creator wants a platform to evaluate permission without revealing legal identity or treating a pseudonym as proof of uniqueness.",
+        "actors": "Creator, principal, industry registry, platform, viewer.",
+        "scope": "Specific publication under a scoped opaque identity; no claim of uniqueness, universal identity or unbounded authority.",
+        "preconditions": "Recognized source governance and pinned keys, opaque subject/key binding, valid delegation, relevant status evidence.",
+        "success": "Use independently authenticated binding and authority evidence without private identity lookup; keep unresolved recognition visible.",
+        "extensions": "Wrong key or subject, unrecognized source, stale or revoked evidence: no assured authority; role-restricted disclosure external.",
+        "frequency": "Per relevant publication/use; no frequency estimate asserted.",
+        "special_requirements": "No automatic private lookup; no inferred identity or consent; distinguish evidence from policy conclusion."
+      },
+      "verifier_tests": [
+        "tests/test_taskforce_wave1_assessment.py",
+        "tests/test_experimental_taskforce_source_evidence.py"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "schema_version": "0.1",
+  "basis": "CAWG Delegated Creator Taskforce, 20 and 23 November 2026",
+  "status": "informative local interpretation; not adopted decisions",
+  "questions": [
+    {
+      "id": "Q1",
+      "topic": "Build on CAWG 2.0 or later?",
+      "disposition": "upstream",
+      "assessment": "No local version selection; preserve existing experimental boundary."
+    },
+    {
+      "id": "Q2",
+      "topic": "“Attested by”?",
+      "disposition": "upstream",
+      "assessment": "Distinguish source claim, subject and authority; terminology remains for CAWG."
+    },
+    {
+      "id": "Q3",
+      "topic": "Certificates or credentials first?",
+      "disposition": "upstream",
+      "assessment": "Local Ed25519 evidence is not a CAWG credential or certificate profile."
+    },
+    {
+      "id": "Q4",
+      "topic": "Where does “commissioned” go?",
+      "disposition": "upstream",
+      "assessment": "Identity/creative roles are not permission; candidate existing role mappings need review."
+    },
+    {
+      "id": "Q5",
+      "topic": "AI by reference; a no-ID path?",
+      "disposition": "local-partial",
+      "assessment": "Opaque actor/key evidence; AI representation and recognized registry remain open."
+    },
+    {
+      "id": "Q6",
+      "topic": "How structured should scope be?",
+      "disposition": "local-partial",
+      "assessment": "Signed action, resource, purpose and dates; industry vocabulary not adopted."
+    },
+    {
+      "id": "Q7",
+      "topic": "TRQP through a CAWG profile?",
+      "disposition": "external-upstream",
+      "assessment": "Local authenticated source claims, not normative TRQP responses."
+    },
+    {
+      "id": "Q8",
+      "topic": "What story or risk did we miss?",
+      "disposition": "local-partial",
+      "assessment": "Wave 1 and adversarial tests; additional stories may emerge."
+    },
+    {
+      "id": "Q9",
+      "topic": "Does a company signature bind it?",
+      "disposition": "local-partial",
+      "assessment": "Integrity plus separately pinned authority claim; actual company authority external."
+    },
+    {
+      "id": "Q10",
+      "topic": "Build on endorsement?",
+      "disposition": "upstream",
+      "assessment": "Separate scoped delegation semantics; no decision on assertion representation."
+    },
+    {
+      "id": "Q11",
+      "topic": "What should viewers see?",
+      "disposition": "local-partial",
+      "assessment": "Closed independent evidence report; badge/display policy not decided."
+    },
+    {
+      "id": "Q12",
+      "topic": "Trusted time and withdrawal: from where?",
+      "disposition": "external-upstream",
+      "assessment": "Separate current source freshness and claimed effective/observed times; no trusted history."
+    },
+    {
+      "id": "Q13",
+      "topic": "Who can lend real test files?",
+      "disposition": "external",
+      "assessment": "Obtain licensed signed files and accepted roots; #75 gate."
+    },
+    {
+      "id": "Q14",
+      "topic": "Who is liable for what a delegate does?",
+      "disposition": "upstream",
+      "assessment": "No allocation by verifier."
+    },
+    {
+      "id": "Q15",
+      "topic": "Who may see which identity details?",
+      "disposition": "local-partial",
+      "assessment": "Minimized offline output; actual role-gated access remains external."
+    },
+    {
+      "id": "Q16",
+      "topic": "Does “entity” exclude AI?",
+      "disposition": "upstream",
+      "assessment": "No terminology decision inferred."
+    },
+    {
+      "id": "Q17",
+      "topic": "A negative claim, or evidence?",
+      "disposition": "local-partial",
+      "assessment": "Missing/invalid/stale distinguished from authenticated denied or revoked claim."
+    },
+    {
+      "id": "Q18",
+      "topic": "Can a delegation survive music?",
+      "disposition": "external-upstream",
+      "assessment": "Historical and multi-authority retention and recognized evidence remain open."
+    },
+    {
+      "id": "Q19",
+      "topic": "Which law does each use case answer?",
+      "disposition": "upstream",
+      "assessment": "Informative mapping only; applicability and legal interpretation require review."
+    },
+    {
+      "id": "Q20",
+      "topic": "Who pays for a signing certificate?",
+      "disposition": "upstream",
+      "assessment": "Economic/adoption issue, not a verifier output."
+    },
+    {
+      "id": "Q21",
+      "topic": "How does a pointer avoid looking like proof?",
+      "disposition": "local-partial",
+      "assessment": "No automatic fetch, no assurance from reference; report schema."
+    },
+    {
+      "id": "Q22",
+      "topic": "Where does insurance sit?",
+      "disposition": "upstream",
+      "assessment": "Risk allocation not established by signatures."
+    },
+    {
+      "id": "Q23",
+      "topic": "One delegation, many delegates?",
+      "disposition": "local-partial",
+      "assessment": "Independent per-recipient records, missing countersignature, renewal and consent isolation; common multi-party representation open."
+    }
+  ]
+}

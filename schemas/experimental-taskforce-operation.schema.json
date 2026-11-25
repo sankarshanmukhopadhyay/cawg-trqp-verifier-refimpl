@@ -1,0 +1,678 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sankarshanmukhopadhyay.github.io/cawg-trqp-verifier-refimpl/schemas/experimental-taskforce-operation.schema.json",
+  "title": "Experimental Taskforce operation report",
+  "type": "object",
+  "required": [
+    "profile",
+    "request_status",
+    "statement_integrity",
+    "delegation_at_use",
+    "delegation_current",
+    "subject_binding",
+    "subject_evidence_status",
+    "consent_evidence_status",
+    "consent_at_use",
+    "consent_current",
+    "assured_authority",
+    "assured_consent",
+    "guardian_authority",
+    "witness_authority",
+    "registry_recognition",
+    "delegation_status_evidence",
+    "trusted_time",
+    "c2pa_binding",
+    "reason",
+    "source_evidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "profile": {
+      "const": "experimental-taskforce-operation/0.1"
+    },
+    "request_status": {
+      "enum": [
+        "valid",
+        "invalid"
+      ]
+    },
+    "statement_integrity": {
+      "enum": [
+        "verified",
+        "invalid",
+        "indeterminate",
+        "not_checked"
+      ]
+    },
+    "delegation_at_use": {
+      "enum": [
+        "signed_terms_in_scope",
+        "signed_terms_out_of_scope",
+        "indeterminate"
+      ]
+    },
+    "delegation_current": {
+      "enum": [
+        "signed_terms_in_scope",
+        "signed_terms_out_of_scope",
+        "indeterminate"
+      ]
+    },
+    "subject_binding": {
+      "const": "indeterminate"
+    },
+    "subject_evidence_status": {
+      "enum": [
+        "not_checked",
+        "subject_mismatch",
+        "caller_supplied_simulation",
+        "invalid"
+      ]
+    },
+    "consent_evidence_status": {
+      "enum": [
+        "not_checked",
+        "missing",
+        "unverified",
+        "contradictory",
+        "invalid",
+        "subject_missing"
+      ]
+    },
+    "consent_at_use": {
+      "enum": [
+        "indeterminate",
+        "claimed_in_scope",
+        "claimed_out_of_scope"
+      ]
+    },
+    "consent_current": {
+      "enum": [
+        "indeterminate",
+        "claimed_active",
+        "claimed_expired",
+        "claimed_withdrawn"
+      ]
+    },
+    "assured_authority": {
+      "const": "indeterminate"
+    },
+    "assured_consent": {
+      "const": "indeterminate"
+    },
+    "guardian_authority": {
+      "const": "not_checked"
+    },
+    "witness_authority": {
+      "const": "not_checked"
+    },
+    "registry_recognition": {
+      "const": "not_checked"
+    },
+    "delegation_status_evidence": {
+      "const": "not_checked"
+    },
+    "trusted_time": {
+      "const": "not_checked"
+    },
+    "c2pa_binding": {
+      "const": "not_checked"
+    },
+    "reason": {
+      "enum": [
+        "request_invalid",
+        "independent_evidence_required",
+        "envelope_malformed",
+        "context_mismatch",
+        "signer_roles_invalid",
+        "signer_malformed",
+        "signer_keys_not_distinct",
+        "key_unrecognized",
+        "signature_or_statement_invalid"
+      ]
+    },
+    "source_evidence": {
+      "type": "object",
+      "required": [
+        "delegator_binding",
+        "delegate_binding",
+        "authority_to_delegate",
+        "delegation_status",
+        "consent_record"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "delegator_binding": {
+          "type": "object",
+          "required": [
+            "status",
+            "reason",
+            "state"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "not_checked",
+                "missing",
+                "unrecognized",
+                "invalid",
+                "indeterminate",
+                "stale",
+                "mismatch",
+                "authenticated_source_claim"
+              ]
+            },
+            "reason": {
+              "enum": [
+                "source_not_supplied",
+                "source_package_missing",
+                "source_policy_missing_or_wrong_kind",
+                "source_policy_invalid",
+                "source_clock_unavailable",
+                "source_package_malformed",
+                "claim_shape_invalid",
+                "descriptor_shape_invalid",
+                "descriptor_profile_invalid",
+                "source_binding_mismatch",
+                "source_scope_mismatch",
+                "feed_contract_invalid",
+                "freshness_contract_invalid",
+                "source_interval_invalid",
+                "source_signature_invalid",
+                "source_body_digest_mismatch",
+                "source_authority_mismatch",
+                "source_observation_outside_freshness",
+                "source_claim_does_not_match_operation",
+                "pinned_source_claim_matches",
+                "source_evidence_malformed",
+                "source_inputs_invalid",
+                "matching_operation_claim_unavailable",
+                "source_clock_mismatch_or_unavailable"
+              ]
+            },
+            "state": {
+              "enum": [
+                "not_checked",
+                "active",
+                "revoked",
+                "suspended",
+                "unknown"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "authenticated_source_claim"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "state": {
+                    "enum": [
+                      "active",
+                      "revoked",
+                      "suspended",
+                      "unknown"
+                    ]
+                  },
+                  "reason": {
+                    "const": "pinned_source_claim_matches"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "state": {
+                    "const": "not_checked"
+                  },
+                  "reason": {
+                    "not": {
+                      "const": "pinned_source_claim_matches"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "delegate_binding": {
+          "type": "object",
+          "required": [
+            "status",
+            "reason",
+            "state"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "not_checked",
+                "missing",
+                "unrecognized",
+                "invalid",
+                "indeterminate",
+                "stale",
+                "mismatch",
+                "authenticated_source_claim"
+              ]
+            },
+            "reason": {
+              "enum": [
+                "source_not_supplied",
+                "source_package_missing",
+                "source_policy_missing_or_wrong_kind",
+                "source_policy_invalid",
+                "source_clock_unavailable",
+                "source_package_malformed",
+                "claim_shape_invalid",
+                "descriptor_shape_invalid",
+                "descriptor_profile_invalid",
+                "source_binding_mismatch",
+                "source_scope_mismatch",
+                "feed_contract_invalid",
+                "freshness_contract_invalid",
+                "source_interval_invalid",
+                "source_signature_invalid",
+                "source_body_digest_mismatch",
+                "source_authority_mismatch",
+                "source_observation_outside_freshness",
+                "source_claim_does_not_match_operation",
+                "pinned_source_claim_matches",
+                "source_evidence_malformed",
+                "source_inputs_invalid",
+                "matching_operation_claim_unavailable",
+                "source_clock_mismatch_or_unavailable"
+              ]
+            },
+            "state": {
+              "enum": [
+                "not_checked",
+                "active",
+                "revoked",
+                "suspended",
+                "unknown"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "authenticated_source_claim"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "state": {
+                    "enum": [
+                      "active",
+                      "revoked",
+                      "suspended",
+                      "unknown"
+                    ]
+                  },
+                  "reason": {
+                    "const": "pinned_source_claim_matches"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "state": {
+                    "const": "not_checked"
+                  },
+                  "reason": {
+                    "not": {
+                      "const": "pinned_source_claim_matches"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "authority_to_delegate": {
+          "type": "object",
+          "required": [
+            "status",
+            "reason",
+            "state"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "not_checked",
+                "missing",
+                "unrecognized",
+                "invalid",
+                "indeterminate",
+                "stale",
+                "mismatch",
+                "authenticated_source_claim"
+              ]
+            },
+            "reason": {
+              "enum": [
+                "source_not_supplied",
+                "source_package_missing",
+                "source_policy_missing_or_wrong_kind",
+                "source_policy_invalid",
+                "source_clock_unavailable",
+                "source_package_malformed",
+                "claim_shape_invalid",
+                "descriptor_shape_invalid",
+                "descriptor_profile_invalid",
+                "source_binding_mismatch",
+                "source_scope_mismatch",
+                "feed_contract_invalid",
+                "freshness_contract_invalid",
+                "source_interval_invalid",
+                "source_signature_invalid",
+                "source_body_digest_mismatch",
+                "source_authority_mismatch",
+                "source_observation_outside_freshness",
+                "source_claim_does_not_match_operation",
+                "pinned_source_claim_matches",
+                "source_evidence_malformed",
+                "source_inputs_invalid",
+                "matching_operation_claim_unavailable",
+                "source_clock_mismatch_or_unavailable"
+              ]
+            },
+            "state": {
+              "enum": [
+                "not_checked",
+                "active",
+                "denied",
+                "revoked",
+                "unknown"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "authenticated_source_claim"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "state": {
+                    "enum": [
+                      "active",
+                      "denied",
+                      "revoked",
+                      "unknown"
+                    ]
+                  },
+                  "reason": {
+                    "const": "pinned_source_claim_matches"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "state": {
+                    "const": "not_checked"
+                  },
+                  "reason": {
+                    "not": {
+                      "const": "pinned_source_claim_matches"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "delegation_status": {
+          "type": "object",
+          "required": [
+            "status",
+            "reason",
+            "state"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "not_checked",
+                "missing",
+                "unrecognized",
+                "invalid",
+                "indeterminate",
+                "stale",
+                "mismatch",
+                "authenticated_source_claim"
+              ]
+            },
+            "reason": {
+              "enum": [
+                "source_not_supplied",
+                "source_package_missing",
+                "source_policy_missing_or_wrong_kind",
+                "source_policy_invalid",
+                "source_clock_unavailable",
+                "source_package_malformed",
+                "claim_shape_invalid",
+                "descriptor_shape_invalid",
+                "descriptor_profile_invalid",
+                "source_binding_mismatch",
+                "source_scope_mismatch",
+                "feed_contract_invalid",
+                "freshness_contract_invalid",
+                "source_interval_invalid",
+                "source_signature_invalid",
+                "source_body_digest_mismatch",
+                "source_authority_mismatch",
+                "source_observation_outside_freshness",
+                "source_claim_does_not_match_operation",
+                "pinned_source_claim_matches",
+                "source_evidence_malformed",
+                "source_inputs_invalid",
+                "matching_operation_claim_unavailable",
+                "source_clock_mismatch_or_unavailable"
+              ]
+            },
+            "state": {
+              "enum": [
+                "not_checked",
+                "active",
+                "revoked",
+                "suspended",
+                "unknown"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "authenticated_source_claim"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "state": {
+                    "enum": [
+                      "active",
+                      "revoked",
+                      "suspended",
+                      "unknown"
+                    ]
+                  },
+                  "reason": {
+                    "const": "pinned_source_claim_matches"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "state": {
+                    "const": "not_checked"
+                  },
+                  "reason": {
+                    "not": {
+                      "const": "pinned_source_claim_matches"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "consent_record": {
+          "type": "object",
+          "required": [
+            "status",
+            "reason",
+            "state"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "not_checked",
+                "missing",
+                "unrecognized",
+                "invalid",
+                "indeterminate",
+                "stale",
+                "mismatch",
+                "authenticated_source_claim"
+              ]
+            },
+            "reason": {
+              "enum": [
+                "source_not_supplied",
+                "source_package_missing",
+                "source_policy_missing_or_wrong_kind",
+                "source_policy_invalid",
+                "source_clock_unavailable",
+                "source_package_malformed",
+                "claim_shape_invalid",
+                "descriptor_shape_invalid",
+                "descriptor_profile_invalid",
+                "source_binding_mismatch",
+                "source_scope_mismatch",
+                "feed_contract_invalid",
+                "freshness_contract_invalid",
+                "source_interval_invalid",
+                "source_signature_invalid",
+                "source_body_digest_mismatch",
+                "source_authority_mismatch",
+                "source_observation_outside_freshness",
+                "source_claim_does_not_match_operation",
+                "pinned_source_claim_matches",
+                "source_evidence_malformed",
+                "source_inputs_invalid",
+                "matching_operation_claim_unavailable",
+                "source_clock_mismatch_or_unavailable"
+              ]
+            },
+            "state": {
+              "enum": [
+                "not_checked",
+                "attested",
+                "disputed",
+                "unknown"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "authenticated_source_claim"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "state": {
+                    "enum": [
+                      "attested",
+                      "disputed",
+                      "unknown"
+                    ]
+                  },
+                  "reason": {
+                    "const": "pinned_source_claim_matches"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "state": {
+                    "const": "not_checked"
+                  },
+                  "reason": {
+                    "not": {
+                      "const": "pinned_source_claim_matches"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "statement_integrity": {
+            "not": {
+              "const": "verified"
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "delegation_at_use": {
+            "const": "indeterminate"
+          },
+          "delegation_current": {
+            "const": "indeterminate"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "request_status": {
+            "const": "invalid"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "statement_integrity": {
+            "const": "not_checked"
+          },
+          "reason": {
+            "const": "request_invalid"
+          }
+        }
+      }
+    }
+  ]
+}
