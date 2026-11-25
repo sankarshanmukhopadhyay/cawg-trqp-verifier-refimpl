@@ -1,6 +1,5 @@
 """Deterministic local cryptographic tests; fixture keys are not trust roots."""
 import base64
-import copy
 import json
 
 import pytest

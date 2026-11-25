@@ -7,7 +7,6 @@ No network access or consent inference is performed.
 from __future__ import annotations
 
 import base64
-import hashlib
 import json
 import re
 from datetime import datetime
@@ -22,7 +21,7 @@ ROLES = ("delegator", "delegate")
 
 
 def signing_bytes(statement, context, role, key_id):
-    """Bind role, key identifier, terms and manifest digest to each signature."""
+    """Bind role, key identifier, terms and context digest to each signature."""
     if role not in ROLES or not isinstance(key_id, str) or not key_id:
         raise ValueError("signer_invalid")
     canonical_bytes(statement)  # Reuse the existing statement shape contract.

@@ -72,3 +72,59 @@ The catalog is a local, executable coverage reconciliation, not six authentic
 signed C2PA assets or complete Taskforce use-case submissions. Authentic
 assets, trusted time, recognized registry/consent status, industry schema
 semantics and independent reproduction remain external gates in #75.
+
+## Offline authenticated source evidence (local experimental body)
+
+The [source evidence adapter](../../src/cawg_trqp_refimpl/experimental_source_evidence.py)
+reuses the existing signed feed descriptor validation and adds strict source
+key/authority/scope binding, exact body matching, explicit observation time,
+bounded input bytes, duplicate-JSON rejection and fail-closed freshness checks.
+It does not define a CAWG credential, TRQP response or status-list format.
+
+Pass already available descriptor/body byte pairs through the operation
+assessment's optional `source_packages` argument. The relying party separately
+configures `source_policies` using `PinnedEvidenceSource` (expected kind,
+authority identifier, key identifier, Ed25519 public PEM and maximum age).
+Supply `source_observed_at` from the relying party's clock; it must match the
+operation's evaluation instant. Neither the evidence nor an asset can select
+its own trust policy, initiate a fetch or upgrade the time of use.
+
+The experimental body is a JSON object with exactly `profile`
+(`experimental-taskforce-source-claim/0.1`), `kind`, `claim` and `state`.
+Each descriptor binds the exact body bytes, uses the existing descriptor
+version 1.0.0, and contains the scope `experimental-taskforce:<kind>`.
+
+| Package key | Kind | Exact claim fields | Allowed source states |
+|---|---|---|---|
+| delegator_binding, delegate_binding | subject-key-binding | subject_ref, key_sha256 (raw Ed25519 public key) | active, revoked, suspended, unknown |
+| authority_to_delegate | authority-to-delegate | statement_sha256, delegator_key_sha256, delegate_key_sha256 | active, denied, revoked, unknown |
+| delegation_status | delegation-status | same exact signed-terms and key digests | active, revoked, suspended, unknown |
+| consent_record | consent-record | subject_ref, record_sha256 (canonical normalized consent record) | attested, disputed, unknown |
+
+The statement digest is SHA-256 of the existing role-bound delegator signing
+bytes; the context digest is included. The delegation-status package uses a
+revocation feed descriptor; others use a policy feed descriptor. A consent
+receipt authenticates a source's attestation to a normalized record, not the
+bytes behind its private reference or legal permission. A current observation
+does not prove an earlier signing-time state. The operation output exposes
+only status/state/reason, never raw evidence, keys, subjects or URLs.
+
+`authenticated_source_claim` means the explicitly configured key signed the
+matching body and freshness conditions passed. It does **not** establish
+independent governance of that key, a recognized CAWG/TRQP authority, trusted
+historical time, valid consent, or actual C2PA assertion coverage. Even a
+locally authenticated active claim does not elevate `assured_authority` or
+`assured_consent`; a revoked, denied or disputed source state remains visible.
+Independent recognition of the source policy and genuine external evidence are
+still required. No source key independence or legal identity is inferred
+from distinct identifiers.
+
+```bash
+pytest -q tests/test_experimental_taskforce_source_evidence.py
+make validate
+```
+
+The tests use a separate deterministic fixture source key to authenticate
+local evidence, exercise substitution, unknown source, wrong scope, stale
+and future evidence, revoked status and consent-record replay. These are
+local integration tests, not evidence of external trust governance.
